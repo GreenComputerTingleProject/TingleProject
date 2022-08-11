@@ -8,6 +8,5 @@
 <h1><%= "우리의 새로운 모험!" %>
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
 </body>
 </html>
