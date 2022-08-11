@@ -28,7 +28,6 @@ public class UserDAO {
 
     // 회원가입
     public void join(UserDTO dto) {
-
         try {
             sql = "insert into user (login_id, login_pw, name, nickname, phone_number, email_address, profile_image, " +
                     "join_type, join_date, membership, personal_type) " +
@@ -54,10 +53,30 @@ public class UserDAO {
         }
     }
 
+    // 회원가입 ID 중복확인
+    // return 0이면 중복 ID 없음 --> safe
+    public int join_validation(String login_id) {
+        try {
+            sql = "select id from user where login_id = ?";
+
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setString(1, login_id);
+
+            return ptmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return 0;
+    }
+
     // 로그인
     // return한 UserDTO를 session에 담아주세요
     public UserDTO login(UserDTO dto) {
-
         UserDTO res = new UserDTO();
 
         try {
