@@ -8,5 +8,6 @@
 <h1><%= "우리의 새로운 모험!" %>
 </h1>
 <br/>
+<a href="user/UserLoginCheck">로그인</a>
 </body>
 </html>
