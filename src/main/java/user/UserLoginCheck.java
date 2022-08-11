@@ -5,8 +5,10 @@ import model.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class UserLoginCheck implements UserService {
+
 
 
     @Override
@@ -26,6 +28,9 @@ public class UserLoginCheck implements UserService {
          if(dtocheck.getLogin_id() == null || dtocheck.getLogin_pw() == null ){
              msg = "로그인 실패";
              check = false;
+         } else {
+             HttpSession session = null;
+             session.setAttribute("userdata", dtocheck);
          }
 
         /*
