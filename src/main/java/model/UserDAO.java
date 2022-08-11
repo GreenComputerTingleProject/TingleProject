@@ -33,7 +33,7 @@ public class UserDAO {
         try {
             sql = "insert into user (login_id, login_pw, name, nickname, phone_number, email_address, profile_image, " +
                     "join_type, join_date, membership, personal_type) " +
-                    "values(?, ?, ?, ?, ?, ?, ?, ?, sysdate(), 1, ?)";
+                    "values(?, ?, ?, ?, ?, ?, ?, 1, sysdate(), 1, ?)";
 
             ptmt = con.prepareStatement(sql);
             ptmt.setString(1, dto.login_id);
@@ -43,7 +43,6 @@ public class UserDAO {
             ptmt.setString(5, dto.phone_number);
             ptmt.setString(6, dto.email_address);
             ptmt.setString(7, dto.profile_image);
-            ptmt.setInt(8, dto.join_type);
             ptmt.setString(9, dto.personal_type);
 
             ptmt.executeUpdate();
