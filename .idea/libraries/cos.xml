@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="cos">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/cos.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../Temp/javalib/cos.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
