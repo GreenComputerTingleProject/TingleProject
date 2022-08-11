@@ -1,3 +1,4 @@
+/*
 package user;
 
 import java.util.HashMap;
@@ -5,10 +6,12 @@ import org.json.simple.JSONObject;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
+*/
 /**
  * @class ExampleSend
  * @brief This sample code demonstrate how to send sms through CoolSMS Rest API PHP
- */
+ *//*
+
 
 // Message 객체 생성 -> send 메서드 사용
 public class SMSSend {
@@ -43,3 +46,4 @@ public class SMSSend {
 		return certificationNumber;
 	}
 }
+*/

@@ -9,8 +9,8 @@
 <html>
 <head>
     <title>Login</title>
-    <script src="../bootstrap/css/bootstrap.min.css"></script>
-    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../bootstrap/css/bootstrap.min.css"></script>
+    <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
     <style>
         .login-form{
 

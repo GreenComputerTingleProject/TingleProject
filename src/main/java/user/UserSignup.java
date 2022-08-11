@@ -1,7 +1,6 @@
 package user;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import model.UserDAO;
 import model.UserDTO;
 
@@ -24,7 +23,7 @@ public class UserSignup implements UserService {
 
             dto.setLogin_id(request.getParameter("id"));
             dto.setLogin_pw(request.getParameter("pw"));
-            dto.setNickname(request.getParameter("nickname"));
+        /*    dto.setNickname(request.getParameter("nickname"));*/
 
         /*    dto.setLogin_id("ohjs0293");
             dto.setLogin_pw("123456");
@@ -35,9 +34,7 @@ public class UserSignup implements UserService {
 
             new UserDAO().join(dto);
 
-            request.setAttribute("msg", msg);
-            request.setAttribute("mainUrl", "alert.jsp");
-            request.setAttribute("goUrl", "signup.jsp");
+
         } else  {
             msg = "회원가입 실패";
 
@@ -46,7 +43,7 @@ public class UserSignup implements UserService {
     //    request.setAttribute("check", check);
         request.setAttribute("msg", msg);
         request.setAttribute("mainUrl", "alert.jsp");
-        request.setAttribute("goUrl", "login.jsp");
+        request.setAttribute("goUrl", "Login/login.jsp");
 
     }
 }

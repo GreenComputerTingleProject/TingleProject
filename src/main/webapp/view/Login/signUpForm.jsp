@@ -9,8 +9,8 @@
 <html>
 <head>
     <title>signUp</title>
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-    <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
     <style>
         header{
             font-size: 30px;
@@ -88,7 +88,7 @@
     <h1>회원가입</h1>
     </div>
 
-    <form action="signUpReg.jsp" method="post">
+    <form action="UserSignup" method="post">
     <div class="form-id">
         <input type="text" id="emailId" name="emailId" tabindex="0" placeholder="아이디(이메일)">
         <button type="button" class="btn-close" aria-label="Close"></button>
