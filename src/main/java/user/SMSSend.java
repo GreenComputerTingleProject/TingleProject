@@ -1,4 +1,4 @@
-package User;
+package user;
 
 import java.util.HashMap;
 import org.json.simple.JSONObject;
@@ -42,5 +42,4 @@ public class SMSSend {
 		
 		return certificationNumber;
 	}
-  
 }
