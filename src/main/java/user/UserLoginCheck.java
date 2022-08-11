@@ -1,27 +1,32 @@
-package User;
+package user;
+
+import model.UserDAO;
+import model.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UserCheck implements UserService {
+public class UserLoginCheck implements UserService {
 
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("UserLogin execute");
 
         boolean check = true;
         String msg = "로그인 되었습니다";
 
-        request.getAttribute("id");
-        request.getAttribute("pw");
+         UserDTO dto = new UserDTO();
+         dto.setLogin_id((String)request.getAttribute("id"));
+         dto.setLogin_pw((String)request.getAttribute("pw"));
+       // dto.setLogin_id("test");
+       // dto.setLogin_pw("123");
 
-     /*   UserDTO dto = new UserDAO().아이디를 전부 가져오는 메소드();
+        UserDTO dtocheck = new UserDAO().login(dto);
 
-
-
-      */
-
+         if(dtocheck.getLogin_id() == null || dtocheck.getLogin_pw() == null ){
+             msg = "로그인 실패";
+             check = false;
+         }
 
         /*
         로그인 체크
@@ -35,9 +40,12 @@ public class UserCheck implements UserService {
           2_2 비밀번호가 다를시 check = false, msg = 비밀번호가 잘못되었습니다
         */
 
+       // System.out.println(check);
+
         request.setAttribute("mainUrl", "alert.jsp");
         request.setAttribute("msg", msg);
         request.setAttribute("check", check);
+
 
     }
 }
