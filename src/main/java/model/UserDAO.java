@@ -43,7 +43,7 @@ public class UserDAO {
             ptmt.setString(5, dto.phone_number);
             ptmt.setString(6, dto.email_address);
             ptmt.setString(7, dto.profile_image);
-            ptmt.setString(9, dto.personal_type);
+            ptmt.setString(8, dto.personal_type);
 
             ptmt.executeUpdate();
 
