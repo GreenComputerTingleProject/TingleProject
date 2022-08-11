@@ -33,7 +33,7 @@ public class UserDAO {
         try {
             sql = "insert into user (login_id, login_pw, name, nickname, phone_number, email_address, profile_image, " +
                     "join_type, join_date, membership, personal_type) " +
-                    "values(?, ?, ?, ?, ?, ?, ?, ?, sysdate(), 1, ?)";
+                    "values(?, ?, ?, ?, ?, ?, ?, 1, sysdate(), 1, ?)";
 
             ptmt = con.prepareStatement(sql);
             ptmt.setString(1, dto.login_id);
@@ -43,7 +43,6 @@ public class UserDAO {
             ptmt.setString(5, dto.phone_number);
             ptmt.setString(6, dto.email_address);
             ptmt.setString(7, dto.profile_image);
-            ptmt.setInt(8, dto.join_type);
             ptmt.setString(9, dto.personal_type);
 
             ptmt.executeUpdate();
@@ -122,6 +121,59 @@ public class UserDAO {
         }
 
         return res;
+    }
+
+    public String find_id(String name, String phone_number) {
+        String login_id = null;
+
+        try {
+            sql = "select login_id from user where name = ? and phone_number = ?";
+
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setString(1, name);
+            ptmt.setString(2, phone_number);
+
+            rs = ptmt.executeQuery();
+
+            if(rs.next()) {
+                login_id = rs.getString("login_id");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return login_id;
+    }
+
+    public String find_pw(String login_id, String name, String phone_number) {
+        String login_pw = null;
+
+        try {
+            sql = "select login_pw from user where login_id = ? and name = ? and phone_number = ?";
+
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setString(1, login_id);
+            ptmt.setString(2, name);
+            ptmt.setString(3, phone_number);
+
+            rs = ptmt.executeQuery();
+
+            if(rs.next()) {
+                login_pw = rs.getString("login_pw");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return login_pw;
     }
 
     public void close() {
