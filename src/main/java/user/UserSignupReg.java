@@ -26,10 +26,12 @@ public class UserSignupReg implements UserService {
         if(check1 && check2 ) {
             UserDTO dto = new UserDTO();
 
+
             dto.setLogin_id(login_id);
             dto.setLogin_pw(pw);
             dto.setName(name);
             dto.setPhone_number(phone_number);
+
 
         /*    dto.setLogin_id("ohjs0293");
             dto.setLogin_pw("123456");
@@ -40,9 +42,7 @@ public class UserSignupReg implements UserService {
 
             new UserDAO().join(dto);
 
-            request.setAttribute("msg", msg);
-            request.setAttribute("mainUrl", "alert.jsp");
-            request.setAttribute("goUrl", "signup.jsp");
+
         } else  {
             msg = "회원가입 실패";
 
@@ -51,7 +51,7 @@ public class UserSignupReg implements UserService {
     //    request.setAttribute("check", check);
         request.setAttribute("msg", msg);
         request.setAttribute("mainUrl", "alert.jsp");
-        request.setAttribute("goUrl", "login.jsp");
+        request.setAttribute("goUrl", "Login/login.jsp");
 
     }
 }
