@@ -1,37 +1,46 @@
 package user;
 
 import model.UserDAO;
+import org.json.simple.JSONObject;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.regex.Pattern;
 
-public class UserSignupIdCheck implements UserService {
+public class UserSignupIdCheck extends HttpServlet implements UserService {
 
 
     boolean check = true;
-
-    // 영문으로 시작하며 _제외한 특수문자 불가
-    // 영문, 숫자, '_'으로만 이루어진 3~12자 이하 형식
-    String regex = "^[a-zA-Z]{1}[a-zA-Z0-9_]{2,11}$";
     String msg = "사용 가능한 아이디 입니다";
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        String id = request.getParameter("id");
-      //  id = "test";
+        String login_id = request.getParameter("login_id");
 
-            if(new UserDAO().join_validation(id) > 0){
-                msg = "중복된 아이디입니다";
-                check = false;
-            }
+        int check_validation = new UserDAO().join_validation(login_id);
 
-        System.out.println(check);
+        if(check_validation > 0){
+            msg = "중복된 아이디입니다";
+            check = false;
+        }
 
-        request.setAttribute("check", check);
-        request.setAttribute("msg", msg);
-        request.setAttribute("mainUrl", "alert.jsp");
-        request.setAttribute("goUrl", "signup.jsp");
+        try {
+        JSONObject jo = new JSONObject();
+            jo.put("check", check);
+            jo.put("msg", URLEncoder.encode(msg, "UTF-8"));
+
+        String data = jo.toJSONString();
+        System.out.println(data);
+
+        response.getWriter().append(data);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
 
 
     }

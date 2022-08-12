@@ -5,8 +5,10 @@ import model.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class UserLoginCheck implements UserService {
+public class UserLoginCheckReg implements UserService {
+
 
 
     @Override
@@ -16,16 +18,20 @@ public class UserLoginCheck implements UserService {
         String msg = "로그인 되었습니다";
 
          UserDTO dto = new UserDTO();
-         dto.setLogin_id((String)request.getAttribute("id"));
-         dto.setLogin_pw((String)request.getAttribute("pw"));
+         dto.setLogin_id((String)request.getAttribute("login_id"));
+         dto.setLogin_pw((String)request.getAttribute("login_pw"));
        // dto.setLogin_id("test");
        // dto.setLogin_pw("123");
 
-        UserDTO dtocheck = new UserDAO().login(dto);
+        UserDTO userdata = new UserDAO().login(dto);
 
-         if(dtocheck.getLogin_id() == null || dtocheck.getLogin_pw() == null ){
+         if(userdata.getLogin_id() == null || userdata.getLogin_pw() == null ){
              msg = "로그인 실패";
              check = false;
+         } else {
+             HttpSession session = null;
+             session.setAttribute("userdata", userdata);
+
          }
 
         /*
