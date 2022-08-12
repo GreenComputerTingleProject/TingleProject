@@ -1,30 +1,35 @@
 package user;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import model.UserDAO;
 import model.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UserSignup implements UserService {
+public class UserSignupReg implements UserService {
 
     String msg = "회원가입 성공";
+
 
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        boolean check = Boolean.parseBoolean(request.getParameter("check"));
-        check = true;
+        boolean check1 = Boolean.parseBoolean(request.getParameter("check1"));
+        boolean check2 = Boolean.parseBoolean(request.getParameter("check2"));
+        String login_id = request.getParameter("login_id");
+        String pw = request.getParameter("login_pw");
+        String name = request.getParameter("name");
+        String phone_number = request.getParameter("phone_number");
 
-        if(check) {
+        if(check1 && check2 ) {
             UserDTO dto = new UserDTO();
 
-            dto.setLogin_id(request.getParameter("id"));
-            dto.setLogin_pw(request.getParameter("pw"));
-            dto.setNickname(request.getParameter("nickname"));
+            dto.setLogin_id(login_id);
+            dto.setLogin_pw(pw);
+            dto.setName(name);
+            dto.setPhone_number(phone_number);
 
         /*    dto.setLogin_id("ohjs0293");
             dto.setLogin_pw("123456");
