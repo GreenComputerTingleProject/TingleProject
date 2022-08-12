@@ -1,6 +1,6 @@
 package model;
 
-import user.SMSSend;
+/*import user.SMSSend;*/
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -57,6 +57,8 @@ public class UserDAO {
     // 회원가입 ID 중복확인
     // return 0이면 중복 ID 없음 --> safe
     public int join_validation(String login_id) {
+
+        int res = 0;
         try {
             sql = "select id from user where login_id = ?";
 
@@ -64,7 +66,11 @@ public class UserDAO {
 
             ptmt.setString(1, login_id);
 
-            return ptmt.executeUpdate();
+            rs =  ptmt.executeQuery();
+
+            if(rs.next()) {
+                res = rs.getInt("id");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,17 +78,17 @@ public class UserDAO {
             close();
         }
 
-        return 0;
+        return res;
     }
 
     // 회원가입 전화번호 인증
     // return은 인증번호. front단에서 res와 사용자가 입력한 번호가 일치하는지 확인시키면됨
-    public String join_phone_outh(String phone_number) {
-
-        String res = new SMSSend(phone_number).send();
-
-        return res;
-    }
+//    public String join_phone_outh(String phone_number) {
+//
+//        String res = new SMSSend(phone_number).send();
+//
+//        return res;
+//    }
 
     // 로그인
     // return한 UserDTO를 session에 담아주세요

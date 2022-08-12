@@ -19,7 +19,7 @@ public class UserController extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/template.jsp");
             dispatcher.forward(request,response);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
