@@ -26,16 +26,12 @@ public class UserSignupReg implements UserService {
         if(check1 && check2 ) {
             UserDTO dto = new UserDTO();
 
-<<<<<<<< HEAD:src/main/java/user/UserSignup.java
-            dto.setLogin_id(request.getParameter("id"));
-            dto.setLogin_pw(request.getParameter("pw"));
-        /*    dto.setNickname(request.getParameter("nickname"));*/
-========
+
             dto.setLogin_id(login_id);
             dto.setLogin_pw(pw);
             dto.setName(name);
             dto.setPhone_number(phone_number);
->>>>>>>> origin/master:src/main/java/user/UserSignupReg.java
+
 
         /*    dto.setLogin_id("ohjs0293");
             dto.setLogin_pw("123456");

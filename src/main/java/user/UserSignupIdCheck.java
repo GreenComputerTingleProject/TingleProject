@@ -1,6 +1,7 @@
 package user;
 
 import model.UserDAO;
+
 import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServlet;
@@ -28,7 +29,7 @@ public class UserSignupIdCheck extends HttpServlet implements UserService {
         }
 
         try {
-        JSONObject jo = new JSONObject();
+            JSONObject jo = new JSONObject();
             jo.put("check", check);
             jo.put("msg", URLEncoder.encode(msg, "UTF-8"));
 

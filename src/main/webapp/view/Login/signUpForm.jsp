@@ -88,13 +88,13 @@
     </div>
     <form action="UserSignup" method="post">
         <div class="form-id">
-            <input type="text" id="id" name="id" tabindex="0" placeholder="아이디">
+            <input type="text" id="login_id" name="login_id" tabindex="0" placeholder="아이디">
             <button type="button" class="btn-close"></button>
             <button type="button" id="idcheck" class="idcheck" >중복확인</button>
             <span id="checkresult"></span>
         </div>
         <div class="form-pw">
-            <input type="text" id="pw" name="pw" placeholder="비밀번호">
+            <input type="text" id="login_pw" name="login_pw" placeholder="비밀번호">
         </div>
         <div class="form-pwcheck">
             <input type="text" id="pwcheck" name="pwcheck" placeholder="비밀번호 확인">
@@ -122,7 +122,7 @@
     $(function () {
         $('#idcheck').click(function () {
 
-            if ($('#id').val() != '') {
+            if ($('#login_id').val() != '') {
 
                 // 아이디를 서버로 전송 > DB 유효성 검사 > 결과 반환받기
                 $.ajax({
@@ -146,7 +146,7 @@
 
             } else {
                 alert('아이디를 입력하세요.');
-                $('#id').focus();
+                $('#login_id').focus();
             }
         });
     })
