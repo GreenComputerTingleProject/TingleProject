@@ -86,7 +86,7 @@
     <div class="logo">
         <h1>회원가입</h1>
     </div>
-    <form action="UserSignup" method="post">
+    <form action="UserSignupReg" method="post">
         <div class="form-id">
             <input type="text" id="login_id" name="login_id" tabindex="0" placeholder="아이디">
             <button type="button" class="btn-close"></button>
@@ -126,20 +126,17 @@
 
                 // 아이디를 서버로 전송 > DB 유효성 검사 > 결과 반환받기
                 $.ajax({
-
                     type: 'GET',
                     url:'<c:url value="/user/UserSignupIdCheck"/>',
-                    data: 'id=' + $('#id').val(),
+                    data: 'login_id=' + $('#login_id').val(),
+                    async: false,
                     dataType: 'json',
                     success: function(result) {
-                        if (result == '0') {
-                            $('#checkresult').text('사용 가능한 아이디입니다.');
-                        } else {
-                            $('#checkresult').text('이미 사용중인 아이디입니다.');
-                        }
+                        console.log(result)
+                        $('#checkresult').text(decodeURI(result.msg));
                     },
-                    error: function(a, b, c) {
-                        console.log(a, b, c);
+                    error: function(e) {
+                        console.log(e);
                     }
 
                 });

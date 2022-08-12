@@ -57,6 +57,8 @@ public class UserDAO {
     // 회원가입 ID 중복확인
     // return 0이면 중복 ID 없음 --> safe
     public int join_validation(String login_id) {
+
+        int res = 0;
         try {
             sql = "select id from user where login_id = ?";
 
@@ -64,7 +66,11 @@ public class UserDAO {
 
             ptmt.setString(1, login_id);
 
-            return ptmt.executeUpdate();
+            rs =  ptmt.executeQuery();
+
+            if(rs.next()) {
+                res = rs.getInt("id");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +78,7 @@ public class UserDAO {
             close();
         }
 
-        return 0;
+        return res;
     }
 
     // 회원가입 전화번호 인증

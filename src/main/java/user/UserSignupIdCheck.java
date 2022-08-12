@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.regex.Pattern;
 
@@ -23,7 +24,7 @@ public class UserSignupIdCheck extends HttpServlet implements UserService {
 
         int check_validation = new UserDAO().join_validation(login_id);
 
-        if(check_validation > 0){
+        if(check_validation != 0){
             msg = "중복된 아이디입니다";
             check = false;
         }
@@ -33,10 +34,10 @@ public class UserSignupIdCheck extends HttpServlet implements UserService {
             jo.put("check", check);
             jo.put("msg", URLEncoder.encode(msg, "UTF-8"));
 
-        String data = jo.toJSONString();
-        System.out.println(data);
-
-        response.getWriter().append(data);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().print(jo);
+            response.getWriter().flush();
 
         } catch (Exception e) {
             throw new RuntimeException(e);

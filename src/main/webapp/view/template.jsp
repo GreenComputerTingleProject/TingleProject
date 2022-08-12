@@ -9,10 +9,6 @@
 <html>
 <head>
     <title>Main</title>
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
-    <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../../jquery/jquery-3.6.0.js"></script>
-    <script src="../../jquery/jquery-ui.min.js"></script>
     <style>
         * {
             margin: 0;
