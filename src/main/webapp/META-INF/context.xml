@@ -5,7 +5,7 @@
             auth="Container"
             type="javax.sql.DataSource"
             driverClassName="org.mariadb.jdbc.Driver"
-            url="jdbc:mariadb://192.168.20.30:3306/tingle_db"
+            url="jdbc:mariadb://192.168.1.21:3306/tingle_db"
             username="tingle_master"
             password="123456"
     />
