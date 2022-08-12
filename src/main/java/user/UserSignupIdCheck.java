@@ -21,12 +21,6 @@ public class UserSignupIdCheck implements UserService {
         String id = request.getParameter("id");
       //  id = "test";
 
-        if(!Pattern.matches(regex, id)){
-            msg = "아이디 형식이 다릅니다";
-            check = false;
-        }
-
-
             if(new UserDAO().join_validation(id) > 0){
                 msg = "중복된 아이디입니다";
                 check = false;
