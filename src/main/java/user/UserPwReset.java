@@ -7,21 +7,24 @@ import javax.servlet.http.HttpServletResponse;
 
 public class UserPwReset implements UserService{
 
-    boolean checknum = false;
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
+        String msg = "비밀번호 변경 실패";
+
         String login_id = request.getParameter("login_id");
-        String name = request.getParameter("name");
-        String phone_number = request.getParameter("phone_number");
+        String login_pw = request.getParameter("login_pw");
+        boolean check = Boolean.parseBoolean(request.getParameter("check"));
 
-        String num = new UserDAO().join_phone_outh(phone_number);
+        if(check){
+            new UserDAO().reset_pw(login_pw, login_id);
+        } else {
+            msg = "비밀번호 변경 성공";
+        }
 
+        request.setAttribute("msg", msg);
 
-        System.out.println(num);
-
-
-        request.setAttribute("checknum", checknum);
     }
 }
