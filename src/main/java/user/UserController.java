@@ -13,9 +13,9 @@ public class UserController extends HttpServlet {
     HashMap <String, String> nonService = new HashMap<String, String>();
 
     UserController () {
-        nonService.put("UserSignupForm","user/signupFrom.jsp");
-        nonService.put("UserIdFindForm","user/IdFindFrom.jsp");
-        nonService.put("UserPwFindForm","user/PwFindFrom.jsp");
+        nonService.put("UserSignup","Login/signUpForm.jsp");
+        nonService.put("UserIdFind","Login/idFindFrom.jsp");
+        nonService.put("UserPwReset","Login/pwFindFrom.jsp");
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
