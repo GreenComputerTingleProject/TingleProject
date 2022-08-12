@@ -5,10 +5,10 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "우리의 새로운 모험!!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
-<a href="user/UserSignup">login</a>
+<h1><%= "우리의 새로운 모험!" %></h1>
+<a href="user/UserTest">팅글</a>
+
+
+
 </body>
 </html>

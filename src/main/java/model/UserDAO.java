@@ -2,6 +2,8 @@ package model;
 
 /*import user.SMSSend;*/
 
+import user.SMSSend;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -83,12 +85,12 @@ public class UserDAO {
 
     // 회원가입 전화번호 인증
     // return은 인증번호. front단에서 res와 사용자가 입력한 번호가 일치하는지 확인시키면됨
-//    public String join_phone_outh(String phone_number) {
-//
-//        String res = new SMSSend(phone_number).send();
-//
-//        return res;
-//    }
+    public String join_phone_outh(String phone_number) {
+
+       String res = new SMSSend(phone_number).send();
+
+        return res;
+    }
 
     // 로그인
     // return한 UserDTO를 session에 담아주세요
