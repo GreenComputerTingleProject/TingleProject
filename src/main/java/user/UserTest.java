@@ -11,7 +11,7 @@ public class UserTest implements UserService {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        String test = new UserDAO().find_pw("test", "ocy", "0103333");
-        System.out.println(test);
+        int res = new UserDAO().reset_pw("123456", "test");
+        System.out.println(res);
     }
 }

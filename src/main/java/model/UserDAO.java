@@ -43,7 +43,7 @@ public class UserDAO {
             ptmt.setString(5, dto.phone_number);
             ptmt.setString(6, dto.email_address);
             ptmt.setString(7, dto.profile_image);
-            ptmt.setString(9, dto.personal_type);
+            ptmt.setString(8, dto.personal_type);
 
             ptmt.executeUpdate();
 
@@ -123,6 +123,10 @@ public class UserDAO {
         return res;
     }
 
+    // 아이디 찾기
+    // 해당 메소드 호출 전에 전화번호 인증 스텝을 진행해주세요
+    // name과 phone_number를 받아서 login_id를 반환한다
+    // return이 null인 경우 "아이디 없음"
     public String find_id(String name, String phone_number) {
         String login_id = null;
 
@@ -149,23 +153,20 @@ public class UserDAO {
         return login_id;
     }
 
-    public String find_pw(String login_id, String name, String phone_number) {
-        String login_pw = null;
-
+    // 비밀번호 재설정
+    // 해당 메소드 호출 전에 전화번호 인증 스텝을 진행해주세요
+    // id와 변경할 pw를 받아서  해당 id의 암호를 재설정합니다.
+    // return이 0이면 재설정 실패. 0이 아니면 성공입니다.
+    public int reset_pw(String login_pw, String login_id) {
         try {
-            sql = "select login_pw from user where login_id = ? and name = ? and phone_number = ?";
+            sql = "update user set login_pw = ? where login_id = ?";
 
             ptmt = con.prepareStatement(sql);
 
-            ptmt.setString(1, login_id);
-            ptmt.setString(2, name);
-            ptmt.setString(3, phone_number);
+            ptmt.setString(1, login_pw);
+            ptmt.setString(2, login_id);
 
-            rs = ptmt.executeQuery();
-
-            if(rs.next()) {
-                login_pw = rs.getString("login_pw");
-            }
+            return ptmt.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,7 +174,7 @@ public class UserDAO {
             close();
         }
 
-        return login_pw;
+        return 0;
     }
 
     public void close() {
