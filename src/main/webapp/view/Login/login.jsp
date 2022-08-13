@@ -27,14 +27,14 @@
 <body>
 
 
-<form action="" method="post" class="login-form" >
+<form action="UserLoginCheckReg" method="post" class="login-form" >
     <div class="input-box">
-        <input id="username" type="text" name="username" placeholder="아이디">
+        <input id="username" type="text" name="login_id" placeholder="아이디">
         <label for="username">아이디</label>
     </div>
 
     <div class="input-box">
-        <input id="password" type="password" name="password" placeholder="비밀번호">
+        <input id="password" type="password" name="login_pw" placeholder="비밀번호">
         <label for="password">비밀번호</label>
     </div>
     <div id="forgot">비밀번호 찾기</div>

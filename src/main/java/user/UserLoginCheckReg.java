@@ -17,22 +17,19 @@ public class UserLoginCheckReg implements UserService {
         boolean check = true;
         String msg = "로그인 되었습니다";
 
-         UserDTO dto = new UserDTO();
-         dto.setLogin_id((String)request.getAttribute("login_id"));
-         dto.setLogin_pw((String)request.getAttribute("login_pw"));
-       // dto.setLogin_id("test");
-       // dto.setLogin_pw("123");
+        UserDTO dto = new UserDTO();
+        dto.setLogin_id((String)request.getAttribute("login_id"));
+        dto.setLogin_pw((String)request.getAttribute("login_pw"));
 
         UserDTO userdata = new UserDAO().login(dto);
 
-         if(userdata.getLogin_id() == null || userdata.getLogin_pw() == null ){
-             msg = "로그인 실패";
-             check = false;
-         } else {
-             HttpSession session = null;
-             session.setAttribute("userdata", userdata);
-
-         }
+        if(userdata.getName() == null){
+            check = false;
+            msg = "로그인 실패";
+        } else {
+            HttpSession session = null;
+            session.setAttribute("userdata", userdata);
+        }
 
         /*
         로그인 체크
@@ -49,8 +46,8 @@ public class UserLoginCheckReg implements UserService {
        // System.out.println(check);
 
         request.setAttribute("mainUrl", "alert.jsp");
-        request.setAttribute("msg", msg);
         request.setAttribute("check", check);
+        request.setAttribute("msg", msg);
 
 
     }
