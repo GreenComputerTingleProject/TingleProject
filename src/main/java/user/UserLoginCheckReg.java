@@ -31,7 +31,6 @@ public class UserLoginCheckReg implements UserService {
          } else {
              HttpSession session = null;
              session.setAttribute("userdata", userdata);
-
          }
 
         /*
