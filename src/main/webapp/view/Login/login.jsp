@@ -13,7 +13,6 @@
     <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
     <style>
         .login-form{
-
             width: 700px;
             height: 600px;
             border: 1px solid #aaa;
@@ -21,12 +20,9 @@
             justify-content: center;
             align-items: center;
         }
-
     </style>
 </head>
 <body>
-
-
 <form action="UserLoginCheckReg" method="post" class="login-form" >
     <div class="input-box">
         <input id="username" type="text" name="login_id" placeholder="아이디">
@@ -39,9 +35,6 @@
     </div>
     <div id="forgot">비밀번호 찾기</div>
     <input type="submit" value="로그인">
-
 </form>
-
-
 </body>
 </html>
