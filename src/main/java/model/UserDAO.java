@@ -3,6 +3,7 @@ package model;
 /*import user.SMSSend;*/
 
 import user.SMSSend;
+import user.SMSSend_V2;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -84,12 +85,14 @@ public class UserDAO {
     }
 
     // 회원가입 전화번호 인증
+    // phone_number는 반드시 01012345678 형태로 입력되어야 합니다.
     // return은 인증번호. front단에서 res와 사용자가 입력한 번호가 일치하는지 확인시키면됨
     public String join_phone_outh(String phone_number) {
 
-       String res = new SMSSend(phone_number).send();
+//       String res = new SMSSend(phone_number).send();
+       String res = new SMSSend_V2().sendOne(phone_number);
 
-        return res;
+       return res;
     }
 
     // 로그인
