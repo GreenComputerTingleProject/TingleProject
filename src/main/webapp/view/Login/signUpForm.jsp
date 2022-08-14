@@ -35,7 +35,7 @@
             box-sizing: border-box;
             margin: 70px auto 0 auto;
             background-color: #fff;
-            border: 1px solid #d9d9d9;
+            border: 1px solid gray;
         }
 
         input[type=text] {
@@ -102,9 +102,10 @@
         <div class="form-name">
             <input type="text" id="name" name="name" placeholder="이름">
         </div>
-        <div class="form-tel">
-            <input type="text" id="tel" name="tel" placeholder="휴대폰번호 (-제외)">
-            <button type="button">인증번호 전송</button>
+        <div class="form-phone_number">
+            <input type="text" id="phone_number" name="phone_number" placeholder="휴대폰번호 (-제외)">
+            <button type="button" id="phone_number_send">인증번호 전송</button>
+            <input id="checknum" type="hidden" >
         </div>
         <div>
             <input type="submit" class="btn-complete" value="가입완료"/>
@@ -113,12 +114,12 @@
 
 </div>
 <script>
-    var id = document.getElementById("id");
-    var pw = document.getElementById("pw");
+    var id = document.getElementById("login_id");
+    var pw = document.getElementById("login_pw");
     var pwcheck = document.getElementById("pwcheck");
     var idcheck = document.getElementById("idcheck")
 
-
+//중복확인
     $(function () {
         $('#idcheck').click(function () {
 
@@ -146,7 +147,41 @@
                 $('#login_id').focus();
             }
         });
-    })
+
+// 휴대폰 인증
+        $('#phone_number_send').click(function () {
+            var  phoneNumber = $('#phone_number').val();
+            alert('인증번호 발송완료');
+            $("#phone_number").attr("disabled",true);
+            $("#checknum").attr("type","tel");
+            $('#checknum').focus();
+            $.ajax({
+                type:'GET',
+                url:'<c:url value="/user/UserPhoneCertification"/>',
+                data: 'phone_number=' + $('#phone_number').val(),
+                async: false,
+                dataType: 'json',
+                success: function(result) {
+                    console.log(result)
+         /*           $('#phone_number_result').text(decodeURI(result.msg));*/
+                },
+                error: function(e) {
+                    console.log(e);
+                }
+
+            });
+            })
+
+
+
+
+
+    });
+
+
+
+
+
 
 
 

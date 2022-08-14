@@ -4,7 +4,6 @@
   Date: 2022-08-11
   Time: 오후 2:58
   To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -92,7 +91,7 @@
     <div class="form-id">
         <input type="text" id="emailId" name="id" tabindex="0" placeholder="아이디(이메일)">
         <button type="button" class="btn-close" aria-label="Close"></button>
-<%--        </input>
+&lt;%&ndash;        </input>
             <span>@</span>
         <select name="emailUrl" id="emailUrl">
             <option value=""> 선택 </option>
@@ -107,7 +106,7 @@
             <option value="paran.com"> paran.com </option>
             <option value="dreamwiz.com"> dreamwiz.com </option>
             <option value="직접입력"> 직접입력 </option>
-        </select>--%>
+        </select>&ndash;%&gt;
     </div>
     <div class="form-pw">
         <input type="text" id="pw-first" name="pw" placeholder="비밀번호">
@@ -129,3 +128,4 @@
 
 </body>
 </html>
+--%>
