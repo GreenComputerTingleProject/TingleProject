@@ -9,26 +9,27 @@ import javax.servlet.http.HttpSession;
 
 public class UserLoginCheckReg implements UserService {
 
-
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
+        String goUrl = request.getContextPath() + "/music/MusicList";
         boolean check = true;
         String msg = "로그인 되었습니다";
 
         UserDTO dto = new UserDTO();
-        dto.setLogin_id((String)request.getAttribute("login_id"));
-        dto.setLogin_pw((String)request.getAttribute("login_pw"));
+        dto.setLogin_id(request.getParameter("login_id"));
+        dto.setLogin_pw(request.getParameter("login_pw"));
 
-        UserDTO userdata = new UserDAO().login(dto);
+        UserDTO userData = new UserDAO().login(dto);
 
-        if(userdata.getName() == null){
+        System.out.println(userData);
+
+        if(userData.getId() == null){
+            goUrl = "UserLogIn";
             check = false;
             msg = "로그인 실패";
         } else {
-            HttpSession session = null;
-            session.setAttribute("userdata", userdata);
+            request.getSession().setAttribute("userData", userData);
         }
 
         /*
@@ -43,12 +44,9 @@ public class UserLoginCheckReg implements UserService {
           2_2 비밀번호가 다를시 check = false, msg = 비밀번호가 잘못되었습니다
         */
 
-       // System.out.println(check);
-
         request.setAttribute("mainUrl", "alert.jsp");
+        request.setAttribute("goUrl", goUrl);
         request.setAttribute("check", check);
         request.setAttribute("msg", msg);
-
-
     }
 }

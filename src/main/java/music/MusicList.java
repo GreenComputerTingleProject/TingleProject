@@ -14,12 +14,9 @@ public class MusicList implements MusicService {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        System.out.println("MusicList 접근 성공!");
+        UserDTO userData = (UserDTO) request.getSession().getAttribute("userData");
 
-        UserDTO dto = new UserDTO();
-        dto.setId(1);
-
-        ArrayList<MusicDTO> musicList = new MusicDAO().music_list(dto);
+        ArrayList<MusicDTO> musicList = new MusicDAO().music_list(userData);
 
         request.setAttribute("musicList", musicList);
         request.setAttribute("mainUrl", "Music/musicList.jsp");
