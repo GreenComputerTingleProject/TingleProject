@@ -15,7 +15,6 @@
         position: absolute;
         bottom: 0;
     }
-
 </style>
 <h1>플레이어에요</h1>
-<audio controls></audio>
+<audio id="audio"></audio>

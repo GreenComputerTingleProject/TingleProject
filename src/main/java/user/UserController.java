@@ -12,7 +12,8 @@ public class UserController extends HttpServlet {
 
     /*HashMap <String, String> nonService = new HashMap<String, String>();
 
-    UserController () {
+    public UserController () {
+        nonService.put("UserLogIn","Login/login.jsp");
         nonService.put("UserSignup","Login/signUpForm.jsp");
         nonService.put("UserIdFind","Login/idFindFrom.jsp");
         nonService.put("UserPwReset","Login/pwFindFrom.jsp");
