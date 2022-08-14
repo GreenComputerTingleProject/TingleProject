@@ -12,7 +12,7 @@ public class UserLoginCheckReg implements UserService {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        String goUrl = request.getContextPath() + "/music/MusicList";
+        String goUrl = request.getContextPath();
         boolean check = true;
         String msg = "로그인 되었습니다";
 
@@ -44,7 +44,7 @@ public class UserLoginCheckReg implements UserService {
           2_2 비밀번호가 다를시 check = false, msg = 비밀번호가 잘못되었습니다
         */
 
-        request.setAttribute("mainUrl", "alert.jsp");
+        request.setAttribute("mainUrl", "/view/alert.jsp");
         request.setAttribute("goUrl", goUrl);
         request.setAttribute("check", check);
         request.setAttribute("msg", msg);
