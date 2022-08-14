@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AdminDAO {
 
@@ -55,25 +56,132 @@ public class AdminDAO {
             return res;
         }
 
-        public ArrayList<AdminDTO> musiclist(){
-            ArrayList<AdminDTO> res = new ArrayList<AdminDTO>();
-            sql = "select * from board order by id desc";
+        public ArrayList<MusicDTO> musicList(){
+            ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
+            sql = "select * from music order by id desc";
 
             try {
                 ptmt = con.prepareStatement(sql);
                 rs = ptmt.executeQuery();
 
                 while (rs.next()){
-                    AdminDTO dto = new AdminDTO();
+                    MusicDTO dto = new MusicDTO();
 
+                    dto.setId(rs.getInt("id"));
+                    dto.setTitle(rs.getString("title"));
+                    dto.setArtist(rs.getString("artist"));
+                    dto.setAlbum(rs.getString("album"));
+                    dto.setGenre(rs.getString("genre"));
+                    dto.setMood(rs.getString("mood"));
+                    dto.setFile_path(rs.getString("file_path"));
+                    dto.setCover_img(rs.getString("cover_img"));
+                    dto.setRelease_date(rs.getDate("release_date"));
+                    dto.setCnt(rs.getInt("cnt"));
+                    dto.setLyrics(rs.getString("lyrics"));
 
+                    res.add(dto);
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
+            } finally {
+                close();
+            }
+            return res;
+        }
+
+        public MusicDTO musicDetail(String id){
+            MusicDTO dto = new MusicDTO();
+            sql = "select * from music where id = ?";
+
+            try {
+                ptmt = con.prepareStatement(sql);
+                ptmt.setString(1, id);
+                rs = ptmt.executeQuery();
+
+                if(rs.next()){
+                    dto.setId(rs.getInt("id"));
+                    dto.setTitle(rs.getString("title"));
+                    dto.setArtist(rs.getString("artist"));
+                    dto.setAlbum(rs.getString("album"));
+                    dto.setGenre(rs.getString("genre"));
+                    dto.setMood(rs.getString("mood"));
+                    dto.setFile_path(rs.getString("file_path"));
+                    dto.setCover_img(rs.getString("cover_img"));
+                    dto.setRelease_date(rs.getDate("release_date"));
+                    dto.setCnt(rs.getInt("cnt"));
+                    dto.setLyrics(rs.getString("lyrics"));
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                close();
+            }
+        return dto;
+        }
+
+        public void musicInsert(MusicDTO dto){
+            try {
+            sql = "insert into music (title, artist, album, genre, mood, file_path, cover_img, cnt, lyrics, release_date)"
+                    + "values(?, ?, ?, ?, ?, ?, ?, 0, ?, sysdate())";
+
+                ptmt = con.prepareStatement(sql);
+
+                ptmt.setString(1,dto.title);
+                ptmt.setString(2,dto.artist);
+                ptmt.setString(3,dto.album);
+                ptmt.setString(4,dto.genre);
+                ptmt.setString(5,dto.mood);
+                ptmt.setString(6,dto.file_path);
+                ptmt.setString(7,dto.cover_img);
+                ptmt.setString(8,dto.lyrics);
+
+                ptmt.executeUpdate();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                close();
+            }
+        }
+
+        public void musicDelete(int id){
+
+            sql = "delete from music where id = ?";
+
+            try {
+                ptmt = con.prepareStatement(sql);
+                ptmt.setInt(1, id);
+                rs = ptmt.executeQuery();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public void musicModify(MusicDTO dto){
+            sql = "update music  set title = ?, artist = ?, album = ?, genre =?, mood =?, file_path = ?, cover_img = ?, lyrics = ? where id = ?";
+
+            try {
+                ptmt = con.prepareStatement(sql);
+
+                ptmt.setString(1, dto.title);
+                ptmt.setString(2, dto.artist);
+                ptmt.setString(3, dto.album);
+                ptmt.setString(4, dto.genre);
+                ptmt.setString(5, dto.mood);
+                ptmt.setString(6, dto.file_path);
+                ptmt.setString(7, dto.cover_img);
+                ptmt.setString(8, dto.lyrics);
+                ptmt.setInt(9, dto.id);
+
+                ptmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                close();
             }
 
 
-            return res;
         }
 
     public void close() {

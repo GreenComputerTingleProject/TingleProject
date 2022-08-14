@@ -17,13 +17,25 @@
         background: #f0f0f0;
     }
 
+    td {
+        align-items: center;
+    }
+
 </style>
+
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id = adminUrl>
     <h2>음악 페이지입니다</h2>
     <table border="" width="100%">
+        <tr>
+            <td colspan="11">
+                <input type="text" id = "mname"><input type="button" value="검색" id="mSerch"/>
+            </td>
+        </tr>
+
         <tr>
             <td>아이디</td>
             <td>제목</td>
@@ -39,19 +51,24 @@
         </tr>
         <c:forEach items="${musicData }" var="dto" >
             <tr>
-                <td>${musicData.id }</td>
-                <td>${musicData.title}</td>
-                <td>${musicData.artist}</td>
-                <td>${musicData.album}</td>
-                <td>${musicData.genre}</td>
-                <td>${musicData.mood}</td>
-                <td>${musicData.file_path}</td>
-                <td>${musicData.cover_img}</td>
-                <td>${musicData.release_date}</td>
-                <td>${musicData.cnt}</td>
-                <td>${musicDate.lyrics }</td>
+                <td><a href=AdminMusicDetail?id=${dto.id }">${dto.id }</a></td>
+                <td>${dto.title}</td>
+                <td>${dto.artist}</td>
+                <td>${dto.album}</td>
+                <td>${dto.genre}</td>
+                <td>${dto.mood}</td>
+                <td>${dto.file_path}</td>
+                <td>${dto.cover_img}</td>
+                <td>${dto.release_date}</td>
+                <td>${dto.cnt}</td>
+                <td>${dto.lyrics }</td>
             </tr>
         </c:forEach>
+        <tr>
+            <td colspan="11" align="right">
+                <a href="AdminMusicInsert">음원등록</a>
+            </td>
+        </tr>
     </table>
 
 </div>

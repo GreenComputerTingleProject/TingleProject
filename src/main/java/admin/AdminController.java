@@ -15,17 +15,25 @@ import java.util.HashMap;
 @WebServlet(name = "AdminController", value = "/admin/*")
 public class AdminController extends HttpServlet {
 
+    HashMap<String, String> nonService = new HashMap<String, String>();
+    public AdminController() {
+        nonService.put("AdminMusicInsert", "menu/music/musicInsertForm.jsp");
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println(request.getContextPath());
+
         String service = request.getRequestURI().substring((request.getContextPath() + "/admin/").length());
-        System.out.println(service);
+
         try {
 
+            if(nonService.containsKey(service)){
+                request.setAttribute("adminUrl", nonService.get(service));
+                System.out.println(nonService.get(service));
+            } else {
                 AdminService as = (AdminService)Class.forName("admin."+ service).newInstance();
-               as.execute(request, response);
-
+                as.execute(request, response);
+            }
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/template.jsp");
             dispatcher.forward(request,response);

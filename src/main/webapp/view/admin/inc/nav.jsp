@@ -35,7 +35,7 @@
 
 <div id = nav>
     <div><a href = "AdminPage">관리자페이지</a></div>
-    <div> <a href = "AdminMusic">등록/삭제</a></div>
+    <div> <a href = "AdminMusicList">등록/삭제</a></div>
     <div><a href = "AdminBoard">게시판</a></div>
     <div> <a href = "AdminUser">회원관리</a></div>
     <div> <a href = "AdminCalculate">정산</a></div>
