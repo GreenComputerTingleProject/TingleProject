@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 public class UserPhoneCertification implements UserService{
 
@@ -21,9 +22,11 @@ public class UserPhoneCertification implements UserService{
         JSONObject jo = new JSONObject();
         jo.put("checknum", checknum);
 
-        String data = jo.toJSONString();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().print(jo);
+            response.getWriter().flush();
 
-        response.getWriter().append(data);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
