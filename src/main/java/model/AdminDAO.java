@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class AdminDAO {
 
@@ -50,6 +51,27 @@ public class AdminDAO {
             } finally {
                 close();
             }
+
+            return res;
+        }
+
+        public ArrayList<AdminDTO> musiclist(){
+            ArrayList<AdminDTO> res = new ArrayList<AdminDTO>();
+            sql = "select * from board order by id desc";
+
+            try {
+                ptmt = con.prepareStatement(sql);
+                rs = ptmt.executeQuery();
+
+                while (rs.next()){
+                    AdminDTO dto = new AdminDTO();
+
+
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
 
             return res;
         }

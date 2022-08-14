@@ -19,7 +19,7 @@
 
 </style>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id = adminUrl>
     <h2>음악 페이지입니다</h2>
