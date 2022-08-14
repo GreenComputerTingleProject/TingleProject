@@ -11,7 +11,7 @@ public class UserTest implements UserService {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        int res = new UserDAO().reset_pw("123456", "test");
+        int res = new UserDAO().reset_pw("1111", "test");
         System.out.println(res);
     }
 }

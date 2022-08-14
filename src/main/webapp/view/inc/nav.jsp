@@ -8,11 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style>
     nav {
-        width: 10%;
+        width: 30%;
         height: 100%;
         background: #0a53be;
         float: left;
     }
-
 </style>
 
