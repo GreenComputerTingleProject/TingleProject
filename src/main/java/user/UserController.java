@@ -14,9 +14,9 @@ public class UserController extends HttpServlet {
 
     public UserController () {
         nonService.put("UserLogIn","/view/Login/login.jsp");
-        nonService.put("UserSignup","Login/signUpForm.jsp");
-        nonService.put("UserIdFind","Login/idFindFrom.jsp");
-        nonService.put("UserPwReset","Login/pwFindFrom.jsp");
+        nonService.put("UserSignUp","/view/Login/signUpForm.jsp");
+        nonService.put("UserIdFind","/view/Login/idFindForm.jsp");
+        nonService.put("UserPwReset","/view/Login/pwResetForm.jsp");
     }
 
     @Override

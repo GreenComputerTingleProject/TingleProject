@@ -5,9 +5,7 @@ import model.UserDAO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UserPwReset implements UserService{
-
-
+public class UserPwResetReg implements UserService{
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -16,15 +14,15 @@ public class UserPwReset implements UserService{
 
         String login_id = request.getParameter("login_id");
         String login_pw = request.getParameter("login_pw");
-        boolean check = Boolean.parseBoolean(request.getParameter("check"));
 
-        if(check){
-            new UserDAO().reset_pw(login_pw, login_id);
-        } else {
-            msg = "비밀번호 변경 성공";
+        int res = new UserDAO().reset_pw(login_pw, login_id);
+
+        if(res != 0) {
+            msg = "비밀번호가 변경되었습니다.";
         }
 
+        request.setAttribute("mainUrl", "/view/alert.jsp");
+        request.setAttribute("goUrl", "UserLogIn");
         request.setAttribute("msg", msg);
-
     }
 }
