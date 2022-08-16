@@ -4,10 +4,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -180,8 +177,41 @@ public class AdminDAO {
             } finally {
                 close();
             }
+        }
 
 
+        public ArrayList<MusicDTO> mNameSerch(String mname){
+            ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
+
+
+            sql = "select * from music where title like = ?";
+
+            try {
+                ptmt = con.prepareStatement(sql);
+                ptmt.setString(1, mname);
+                rs = ptmt.executeQuery();
+
+                while (rs.next()){
+                    MusicDTO dto = new MusicDTO();
+
+                    dto.setId(rs.getInt("id"));
+                    dto.setTitle(rs.getString("title"));
+                    dto.setArtist(rs.getString("artist"));
+                    dto.setAlbum(rs.getString("album"));
+                    dto.setGenre(rs.getString("genre"));
+                    dto.setMood(rs.getString("mood"));
+                    dto.setFile_path(rs.getString("file_path"));
+                    dto.setCover_img(rs.getString("cover_img"));
+                    dto.setRelease_date(rs.getDate("release_date"));
+                    dto.setCnt(rs.getInt("cnt"));
+                    dto.setLyrics(rs.getString("lyrics"));
+
+                    res.add(dto);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return res;
         }
 
     public void close() {

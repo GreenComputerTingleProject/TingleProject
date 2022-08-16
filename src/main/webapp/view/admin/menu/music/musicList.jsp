@@ -5,6 +5,10 @@
   Time: 오전 1:41
   To change this template use File | Settings | File Templates.
 --%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <style>
     *{
         margin: 0px;
@@ -23,10 +27,39 @@
 
 </style>
 
+<script>
+    $(function(){
+        $("#mSerch").click(function(){
+
+            $.ajax({
+                url:'<c:url value="/admin/MnameSerch"/>',
+                type:'GET',
+                data:{mname:$("#mname").val()},
+                async:false,
+                dataType:'json',  //지정하지 않으면 문자열로 처리
+                success:function(dd){
+                    // musicData를 받으면된다
+                    var ttt = decodeURIComponent(dd.name)
+                    console.log(ttt)
+                    console.log(dd.tel)
+                    console.log(dd.age)
+                    //var ttt = decodeURIComponent(dd)
+                    //console.log(ttt)
+                },
+                error:function(e){
+                    console.log(e.responseText)
+                }
+            })
+        })
+    })
+    /* var aaa = [
+        {name:'김태희', tel:'010-1111-1111' , age:32},
+        {name:'김중희', tel:'010-1111-1111' , age:24}]
+    console.log(aaa) */
+
+</script>
 
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id = adminUrl>
     <h2>음악 페이지입니다</h2>
     <table border="" width="100%">
