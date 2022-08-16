@@ -6,11 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Login</title>
-    <script src="../../bootstrap/css/bootstrap.min.css"></script>
-    <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="<c:url value="/bootstrap/"/>css/bootstrap.min.css">
+    <script type="text/javascript" src="<c:url value="/bootstrap/"/>js/bootstrap.bundle.min.js"></script>
     <style>
         .login-form{
             width: 700px;
@@ -24,17 +25,11 @@
 </head>
 <body>
 <form action="UserLoginCheckReg" method="post" class="login-form" >
-    <div class="input-box">
-        <input id="username" type="text" name="login_id" placeholder="아이디">
-        <label for="username">아이디</label>
-    </div>
-
-    <div class="input-box">
-        <input id="password" type="password" name="login_pw" placeholder="비밀번호">
-        <label for="password">비밀번호</label>
-    </div>
-    <div id="forgot">비밀번호 찾기</div>
+    <input type="text" name="login_id" placeholder="아이디">
+    <input type="password" name="login_pw" placeholder="비밀번호">
     <input type="submit" value="로그인">
+    <a href="#">아이디 찾기</a>
+    <a href="#">비밀번호 찾기</a>
 </form>
 </body>
 </html>
