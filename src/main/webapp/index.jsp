@@ -11,7 +11,7 @@
 <a href="user/UserLogIn">로그인</a>
 <a href="user/UserPhoneCertification?phone_number=01033339573">폰번호 테스트(조심 돈나감)</a>
 <a href="user/UserTest">팅글</a>
-<a href="view/contents/chartMain.jsp">차트</a>
+<a href="view/chart/chartMain.jsp">차트</a>
 
 
 </body>
