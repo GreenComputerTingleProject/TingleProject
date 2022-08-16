@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>IdFind</title>
     <script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
     <script src="<c:url value="/jquery/"/>jquery-ui.min.js"></script>
     <link rel="stylesheet" href="<c:url value="/bootstrap/"/>css/bootstrap.min.css">
@@ -16,7 +16,7 @@
             display: block;
         }
 
-        .login-container {
+        .sign-container {
             margin-top: 100px;
             padding: 60px 120px;
             width: 680px;
@@ -61,11 +61,6 @@
             justify-content: center;
         }
 
-        .btn-primary {
-            margin: 5px;
-            float: right;
-        }
-
         .btn-success {
             margin: 5px;
             float: left;
@@ -76,24 +71,28 @@
 <header class="logo">
     <h4>Tingle</h4>
 </header>
-<div class="login-container">
+<div class="sign-container">
     <div class="logo">
-        <h1>로그인</h1>
+        <h1>아이디 찾기</h1>
     </div>
-    <form action="<c:url value="/user/UserLoginReg"/>" method="post">
-        <input type="text" id="login_id" name="login_id" tabindex="0" placeholder="아이디" value="${login_id}">
-        <input type="password" id="login_pw" name="login_pw" placeholder="비밀번호">
-        <input type="submit" class="btn-complete" value="로그인"/>
-        <a href="<c:url value="/"/>" class="btn btn-success">홈으로</a>
-        <a href="<c:url value="/user/UserSignUp"/>" class="btn btn-success">회원 가입</a>
-        <a href="<c:url value="/user/UserPwReset"/>" class="btn btn-primary">비밀번호 재설정</a>
-        <a href="<c:url value="/user/UserIdFind"/>" class="btn btn-primary">아이디 찾기</a>
+    <form action="<c:url value="/user/UserIdFindReg"/>" method="post">
+        <div class="form-name">
+            <input type="text" id="name" name="name" placeholder="이름">
+        </div>
+        <div class="form-tel">
+            <input type="text" id="tel" name="tel" placeholder="휴대폰 번호 (-제외)">
+        </div>
+        <div>
+            <input type="submit" class="btn-complete" value="아이디 찾기"/>
+        </div>
+        <a href="<c:url value="/user/UserLogIn"/>" class="btn btn-success">돌아가기</a>
     </form>
+
     <div id="modal1" class="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4>로그인 실패</h4>
+                    <h4>아이디 찾기 실패</h4>
                     <button class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body"></div>
