@@ -15,12 +15,12 @@ public class UserPhoneCertification implements UserService{
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            String num = request.getParameter("phone_number");
-            System.out.println(num);
-            String checknum = new UserDAO().join_phone_outh(num);
+        String num = request.getParameter("phone_number");
 
-            JSONObject jo = new JSONObject();
-            jo.put("checknum", checknum);
+        String checknum = new UserDAO().join_phone_outh(num);
+
+        JSONObject jo = new JSONObject();
+        jo.put("checknum", checknum);
 
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
@@ -34,3 +34,4 @@ public class UserPhoneCertification implements UserService{
 
     }
 }
+

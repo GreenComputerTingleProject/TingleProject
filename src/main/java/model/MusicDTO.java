@@ -1,11 +1,14 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MusicDTO {
     Integer id, cnt;
     String title, artist, album, genre, mood, file_path, cover_img, lyrics;
     Date release_date;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 (E) HH:mm:ss");
 
     public MusicDTO() {
 
@@ -107,6 +110,10 @@ public class MusicDTO {
 
     public Date getRelease_date() {
         return release_date;
+    }
+
+    public String getRelease_dateStr() {
+        return sdf.format(release_date);
     }
 
     public void setRelease_date(Date release_date) {
