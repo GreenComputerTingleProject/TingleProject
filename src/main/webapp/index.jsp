@@ -94,7 +94,7 @@
             <li><a href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
-            <li><a href="admin/AdminLogin">관리자</a></li>
+            <li><a href="admin/AdminLogin?logincheck=false">관리자</a></li>
         </ul>
     </div>
     <!-- /사이드바 -->

@@ -36,6 +36,8 @@
             if ($('#mname').val() != '') {
                var mname = $('#mname').val();
                location.href="AdminMnameSerch?mname="+mname;
+            } else {
+                alert("검색어를 입력해주세요")
             }
         })
     })

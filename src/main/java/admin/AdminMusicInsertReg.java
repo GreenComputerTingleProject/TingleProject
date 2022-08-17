@@ -51,7 +51,7 @@ public class AdminMusicInsertReg implements AdminService{
 
         request.setAttribute("msg", msg);
         request.setAttribute("adminUrl", "menu/music/alert.jsp");
-      //  request.setAttribute("adminUrl", "menu/music/musicList.jsp");
+      //  request.setAttribute("adminUrl", "menu/music/userList.jsp");
         request.setAttribute("goUrl", "AdminMusicList");
 
         } catch (IOException e) {

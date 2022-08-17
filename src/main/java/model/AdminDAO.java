@@ -239,6 +239,147 @@ public class AdminDAO {
             }
         }
 
+    public ArrayList<UserDTO> userList(){
+        ArrayList<UserDTO> res = new  ArrayList<UserDTO>();
+        sql = "select * from user order by id desc";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            rs = ptmt.executeQuery();
+
+            while (rs.next()){
+                UserDTO dto = new UserDTO();
+
+                dto.setId(rs.getInt("id"));
+                dto.setLogin_id(rs.getString("login_id"));
+                dto.setLogin_pw(rs.getString("login_pw"));
+                dto.setName(rs.getString("name"));
+                dto.setNickname(rs.getString("nickname"));
+                dto.setPhone_number(rs.getString("phone_number"));
+                dto.setEmail_address(rs.getString("email_address"));
+                dto.setProfile_image(rs.getString("profile_image"));
+                dto.setJoin_type(rs.getInt("join_type"));
+                dto.setJoin_date(rs.getDate("join_date"));
+                dto.setMembership(rs.getInt("membership"));
+                dto.setPersonal_type(rs.getString("personal_type"));
+
+                res.add(dto);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            close();
+        }
+        return res;
+    }
+
+    public UserDTO userDetail(String id){
+        UserDTO dto = new UserDTO();
+        sql = "select * from user where id = ?";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setString(1, id);
+            rs = ptmt.executeQuery();
+
+            if(rs.next()){
+                dto.setId(rs.getInt("id"));
+                dto.setLogin_id(rs.getString("login_id"));
+                dto.setLogin_pw(rs.getString("login_pw"));
+                dto.setName(rs.getString("name"));
+                dto.setNickname(rs.getString("nickname"));
+                dto.setPhone_number(rs.getString("phone_number"));
+                dto.setEmail_address(rs.getString("email_address"));
+                dto.setProfile_image(rs.getString("profile_image"));
+                dto.setJoin_type(rs.getInt("join_type"));
+                dto.setJoin_date(rs.getDate("join_date"));
+                dto.setMembership(rs.getInt("membership"));
+                dto.setPersonal_type(rs.getString("personal_type"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close();
+        }
+        return dto;
+    }
+
+    public void userDelete(int id){
+
+        sql = "delete from user where id = ?";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setInt(1, id);
+            rs = ptmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void userModify(UserDTO dto){
+        sql = "update user  set login_id = ?, login_pw = ?, name = ?, nickname =?, phone_number =?, email_address = ?, profile_image = ?, join_type = ?,"
+               + "membership = ?, personal_type = ? where id = ?";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setString(1, dto.login_id);
+            ptmt.setString(2, dto.login_pw);
+            ptmt.setString(3, dto.name);
+            ptmt.setString(4, dto.nickname);
+            ptmt.setString(5, dto.phone_number);
+            ptmt.setString(6, dto.email_address);
+            ptmt.setString(7, dto.profile_image);
+            ptmt.setInt(8, dto.join_type);
+            ptmt.setInt(9, dto.membership);
+            ptmt.setString(10, dto.personal_type);
+            ptmt.setInt(11, dto.id);
+
+            ptmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close();
+        }
+    }
+
+    public ArrayList<UserDTO> uNameSerch(String uname){
+        ArrayList<UserDTO> res = new ArrayList<UserDTO>();
+        System.out.println("데이터베이스 조회 키워드 = :" + uname);
+        sql = "SELECT * FROM user WHERE name LIKE concat('%', ? , '%')";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setString(1, uname);
+            rs = ptmt.executeQuery();
+
+            System.out.println(sql);
+            while (rs.next()){
+                UserDTO dto = new UserDTO();
+
+                dto.setId(rs.getInt("id"));
+                dto.setLogin_id(rs.getString("login_id"));
+                dto.setLogin_pw(rs.getString("login_pw"));
+                dto.setName(rs.getString("name"));
+                dto.setNickname(rs.getString("nickname"));
+                dto.setPhone_number(rs.getString("phone_number"));
+                dto.setEmail_address(rs.getString("email_address"));
+                dto.setProfile_image(rs.getString("profile_image"));
+                dto.setJoin_type(rs.getInt("join_type"));
+                dto.setJoin_date(rs.getDate("join_date"));
+                dto.setMembership(rs.getInt("membership"));
+                dto.setPersonal_type(rs.getString("personal_type"));
+
+                System.out.println("추가완료");
+
+                res.add(dto);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
 
     public void close() {
         if(rs!=null) try {rs.close();} catch (SQLException e) {}
