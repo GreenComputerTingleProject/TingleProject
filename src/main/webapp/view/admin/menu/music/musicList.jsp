@@ -1,4 +1,6 @@
-<%--
+<%@ page import="java.lang.reflect.Array" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.MusicDTO" %><%--
   Created by IntelliJ IDEA.
   User: 82108
   Date: 2022-08-13
@@ -26,37 +28,17 @@
     }
 
 </style>
-
+<script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
 <script>
-    $(function(){
-        $("#mSerch").click(function(){
-
-            $.ajax({
-                url:'<c:url value="/admin/MnameSerch"/>',
-                type:'GET',
-                data:{mname:$("#mname").val()},
-                async:false,
-                dataType:'json',  //지정하지 않으면 문자열로 처리
-                success:function(dd){
-                    // musicData를 받으면된다
-                    var ttt = decodeURIComponent(dd.name)
-                    console.log(ttt)
-                    console.log(dd.tel)
-                    console.log(dd.age)
-                    //var ttt = decodeURIComponent(dd)
-                    //console.log(ttt)
-                },
-                error:function(e){
-                    console.log(e.responseText)
-                }
-            })
+    var mSerch = document.getElementById("mSerch")
+    $(function () {
+        $("#mSerch").click(function (){
+            if ($('#mname').val() != '') {
+               var mname = $('#mname').val();
+               location.href="AdminMnameSerch?mname="+mname;
+            }
         })
     })
-    /* var aaa = [
-        {name:'김태희', tel:'010-1111-1111' , age:32},
-        {name:'김중희', tel:'010-1111-1111' , age:24}]
-    console.log(aaa) */
-
 </script>
 
 
@@ -88,7 +70,7 @@
                 <td>${dto.title}</td>
                 <td>${dto.artist}</td>
                 <td>${dto.album}</td>
-                <td>${dto.genre}</td>
+                <td>${dto.genre}</td>n
                 <td>${dto.mood}</td>
                 <td>${dto.file_path}</td>
                 <td>${dto.cover_img}</td>
