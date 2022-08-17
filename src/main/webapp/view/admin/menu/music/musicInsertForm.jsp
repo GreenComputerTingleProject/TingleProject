@@ -7,7 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<form action="AdminMusicInsertReg" method="get">
+
+<form action="AdminMusicInsertReg" method="post" enctype="multipart/form-data">
     <Table border="">
         <tr>
             <td>제목</td>
@@ -30,12 +31,12 @@
             <td><input type = "text" name ="mood"></td>
         </tr>
         <tr>
-            <td><input type ="file" value="음악파일선택"></td>
-            <td><input type = "text" name ="file_path"></td>
+            <td>음악파일선택</td>
+            <td colspan><input type ="file" name = file_path ></td>
         </tr>
         <tr>
-            <td><input type ="file" value="이미지파일선택"></td>
-            <td><input type = "text" name ="cover_img"></td>
+            <td>이미지파일선택</td>
+            <td colspan><input type ="file" name = cover_img></td>
         </tr>
         <tr>
             <td>가사</td>
@@ -43,7 +44,7 @@
         </tr>
         <tr>
             <td colspan="2" align="right">
-                <input type="submit" value="등록하기">
+                <input type="submit" value="등록하기" id = "submit">
                 <a href="AdminMusicList">목록으로</a>
             </td>
         </tr>

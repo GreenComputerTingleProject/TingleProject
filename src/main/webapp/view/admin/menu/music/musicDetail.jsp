@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <Table border="">
     <tr>
@@ -34,8 +34,10 @@
         <td>${musicData.mood}</td>
     </tr>
     <tr>
-        <td>음악파일</td>
-        <td>${musicData.file_path}</td>
+        <td>파일</td>
+        <td>
+            ${musicData.file_path}
+        </td>
     </tr>
     <tr>
         <td>이미지</td>

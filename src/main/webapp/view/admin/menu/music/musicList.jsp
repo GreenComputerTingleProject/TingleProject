@@ -1,10 +1,16 @@
-<%--
+<%@ page import="java.lang.reflect.Array" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.MusicDTO" %><%--
   Created by IntelliJ IDEA.
   User: 82108
   Date: 2022-08-13
   Time: 오전 1:41
   To change this template use File | Settings | File Templates.
 --%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <style>
     *{
         margin: 0px;
@@ -22,11 +28,20 @@
     }
 
 </style>
+<script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
+<script>
+    var mSerch = document.getElementById("mSerch")
+    $(function () {
+        $("#mSerch").click(function (){
+            if ($('#mname').val() != '') {
+               var mname = $('#mname').val();
+               location.href="AdminMnameSerch?mname="+mname;
+            }
+        })
+    })
+</script>
 
 
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id = adminUrl>
     <h2>음악 페이지입니다</h2>
     <table border="" width="100%">
@@ -55,7 +70,7 @@
                 <td>${dto.title}</td>
                 <td>${dto.artist}</td>
                 <td>${dto.album}</td>
-                <td>${dto.genre}</td>
+                <td>${dto.genre}</td>n
                 <td>${dto.mood}</td>
                 <td>${dto.file_path}</td>
                 <td>${dto.cover_img}</td>
