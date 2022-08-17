@@ -34,12 +34,10 @@
         <td><input type = "text" name ="mood" value="${musicData.mood}"></td>
     </tr>
     <tr>
-        <td><input type ="file" value="음악파일선택"></td>
-        <td><input type = "text" name ="file_path" value="${musicData.file_path}"></td>
+        <td><input type ="file" value="음악파일선택">${musicData.file_path}</td>
     </tr>
     <tr>
-        <td><input type ="file" value="이미지파일선택"></td>
-        <td><input type = "text" name ="cover_img" value="${musicData.cover_img}"></td>
+        <td><input type ="file" value="이미지파일선택">${musicData.cover.img}</td>
     </tr>
     <tr>
         <td>날짜</td>
