@@ -121,6 +121,10 @@ public class UserDTO {
         return join_date;
     }
 
+    public String getJoin_dateStr() {
+        return sdf.format(join_date);
+    }
+
     public void setJoin_date(Date join_date) {
         this.join_date = join_date;
     }
