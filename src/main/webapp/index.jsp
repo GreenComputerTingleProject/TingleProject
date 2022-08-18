@@ -6,6 +6,7 @@
     <title>Tingle</title>
     <link rel="shortcut icon" href="#">
     <script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
+    <script src="<c:url value="/jquery/"/>jquery-ui.min.js"></script>
     <link rel="stylesheet" href="<c:url value="/bootstrap/"/>css/bootstrap.min.css">
     <script type="text/javascript" src="<c:url value="/bootstrap/"/>js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
@@ -102,6 +103,11 @@
 
         /* 메인 컨텐츠 스타일 */
 
+        #main_contents {
+            overflow-y: auto;
+            margin-bottom: 100px;
+        }
+
         i:hover {
             cursor: pointer;
         }
@@ -142,6 +148,29 @@
             display: none;
             width: 300px;
             height: 75px;
+        }
+
+        #playList_items {
+            color: white;
+        }
+
+        #player-title{
+            color: white;
+            line-height: 50px;
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+
+        .progress {
+            width: 300px;
+            height: 5px;
+            margin-top: 50px;
+        }
+
+        #currentTime, #duration {
+            line-height: 100px;
+            margin: 0 5px 0 5px;
+            color: white;
         }
     </style>
 </head>
@@ -203,10 +232,17 @@
     <!--플레이어-->
     <div id="bottom-player-wrapper">
         <audio id="audio"></audio>
+        <img id="player-img" src="" alt="">
+        <div id="player-title"></div>
         <i class="player-control fa-solid fa-backward"></i>
         <i id="player-play" class="player-control fa-solid fa-play"></i>
         <i id="player-pause" class="player-control fa-solid fa-pause" style="display: none"></i>
         <i class="player-control fa-solid fa-forward"></i>
+        <span id="currentTime"></span>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <span id="duration"></span>
         <i id="player-list" class="player-control fa-solid fa-list"></i>
     </div>
     <!--/플레이어-->
@@ -232,7 +268,7 @@
     <div id="btn-group" class="btn-group">
         <button id="unCheck" class="btn btn-primary"><i class="fa-solid fa-x"></i></button>
         <button id="modal_play" class="btn btn-primary"><i class="selectPlay fa-solid fa-play"></i></button>
-        <button class="btn btn-primary"><i class="fa-solid fa-list"></i></button>
+        <button id="modal_list" class="btn btn-primary"><i class="fa-solid fa-list"></i></button>
         <button class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>
     </div>
     <!--/미니모달-->
@@ -242,8 +278,8 @@
     $(function () {
         let s_UserData;
         let s_LibraryData;
-        let audio;
         let isSessionLoaded = false;
+        let audio;
         let nowPlayList = [];
         let coverImgList = [];
         let loaded = 0;
@@ -263,6 +299,8 @@
                 nowPlayList[i] = "<c:url value="/mp3/"/>" + s_LibraryData[i].file_path;
                 coverImgList[i] = "<c:url value="/img/"/>" + s_LibraryData[i].cover_img;
             }
+
+            playListInit();
 
             audio = document.getElementById("audio");
 
@@ -304,10 +342,30 @@
                     return;
                 }
                 play(audioIndex);
+                playListInit();
             };
+
+            audio.ontimeupdate = function () {
+                $('.progress-bar').css("width", (audio.currentTime / audio.duration) * 300);
+
+                $('#currentTime').html(convertTime(Math.floor(audio.currentTime)));
+                $('#duration').html(convertTime(Math.floor(audio.duration)));
+            }
 
             // 첫곡은 장전시켜둔다.
             audio.src = nowPlayList[0];
+        }
+        
+        function convertTime(time) {
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+
+            function padTo2Digits(num) {
+                return num.toString().padStart(2, '0');
+            }
+
+            const result = padTo2Digits(minutes) + ':' + padTo2Digits(seconds);
+            return result;
         }
 
         function play(index) {
@@ -338,11 +396,14 @@
                 if (audioIndex == nowPlayList.length) {
                     audioIndex--;
                 }
+
                 if ($('#player-play').css('display') == 'none') {
                     play(audioIndex);
                 } else {
                     audio.src = nowPlayList[audioIndex];
                 }
+
+                playListInit();
             }
         })
 
@@ -353,11 +414,14 @@
                 if (audioIndex == -1) {
                     audioIndex++;
                 }
+
                 if ($('#player-play').css('display') == 'none') {
                     play(audioIndex);
                 } else {
                     audio.src = nowPlayList[audioIndex];
                 }
+
+                playListInit();
             }
         })
 
@@ -387,7 +451,7 @@
                 html += '<td>' + s_LibraryData[i].title + '<br>' + s_LibraryData[i].album + '</td>';
                 html += '<td>' + s_LibraryData[i].artist + '</td>';
                 html += '<td>' + '<i class="selectPlay fa-solid fa-play"></i>' + '</td>';
-                html += '<td>' + '<i class="fa-solid fa-list"></i>' + '</td>';
+                html += '<td>' + '<i class="selectList fa-solid fa-list"></i>' + '</td>';
                 html += '<td>' + '<i class="fa-solid fa-folder-plus"></i>' + '</td>';
                 html += '<td>' + '<i class="fa-solid fa-ellipsis-vertical"></i>' + '</td>';
                 html += '</tr>';
@@ -398,6 +462,7 @@
 
             let innerImg = document.getElementsByClassName("innerImg");
             let selectPlay = document.getElementsByClassName("selectPlay");
+            let selectList = document.getElementsByClassName("selectList");
             let check = document.getElementsByClassName("check");
             let totalCheck = document.getElementById("totalCheckbox");
             let unCheck = document.getElementById("unCheck");
@@ -406,11 +471,32 @@
                 innerImg[i].src = coverImgList[i];
 
                 selectPlay[i].addEventListener('click', function () {
+                    $('#player-play').css('display', 'block');
+                    $('#player-pause').css('display', 'none');
                     audio.pause();
-                    audioIndex = i;
-                    $('#player-play').css('display', 'none');
-                    $('#player-pause').css('display', 'block');
-                    play(audioIndex);
+
+                    nowPlayList = [];
+                    nowPlayList.push("<c:url value="/mp3/"/>" + s_LibraryData[i].file_path);
+
+                    for (const i in nowPlayList) {
+                        preloadAudio(nowPlayList[i]);
+                    }
+
+                    audioIndex = 0;
+
+                    playListInit();
+
+                    setTimeout(() => {
+                        $('#player-play').css('display', 'none');
+                        $('#player-pause').css('display', 'block');
+                        audio.play();
+                    }, 100);
+                })
+
+                selectList[i].addEventListener('click', function () {
+                    nowPlayList.push("<c:url value="/mp3/"/>" + s_LibraryData[i].file_path);
+
+                    playListInit();
                 })
 
                 check[i].addEventListener('change', function () {
@@ -420,7 +506,7 @@
 
             totalCheck.addEventListener('change', function () {
                 totalChange(totalCheck, check);
-            });
+            })
 
             unCheck.addEventListener('click', function () {
                 totalCheck.checked = false;
@@ -461,31 +547,90 @@
             }
         }
 
-        <%--$('#modal_play').click(function () {--%>
-        <%--    let check = document.getElementsByClassName("check");--%>
-        <%--    let checkNum = [];--%>
+        $('#modal_play').click(function () {
+            let check = document.getElementsByClassName("check");
+            let checkNum = [];
 
-        <%--    audio.pause();--%>
+            $('#player-play').css('display', 'block');
+            $('#player-pause').css('display', 'none');
+            audio.pause();
 
-        <%--    for (const i in check) {--%>
-        <%--        if(check[i].checked) {--%>
-        <%--            checkNum.push(i);--%>
-        <%--        }--%>
-        <%--    }--%>
+            for (const i in check) {
+                if (check[i].checked) {
+                    checkNum.push(i);
+                }
+            }
 
-        <%--    nowPlayList = [];--%>
+            nowPlayList = [];
 
-        <%--    for (const i in checkNum) {--%>
-        <%--        nowPlayList.push("<c:url value="/mp3/"/>" + s_LibraryData[checkNum[i]].file_path);--%>
-        <%--    }--%>
+            for (const i in checkNum) {
+                nowPlayList.push("<c:url value="/mp3/"/>" + s_LibraryData[checkNum[i]].file_path);
+            }
 
-        <%--    for (const i in nowPlayList) {--%>
-        <%--        preloadAudio(nowPlayList[i]);--%>
-        <%--    }--%>
+            for (const i in nowPlayList) {
+                preloadAudio(nowPlayList[i]);
+            }
 
-        <%--    audio.load();--%>
-        <%--    audio.play();--%>
-        <%--})--%>
+            audioIndex = 0;
+
+            playListInit();
+
+            setTimeout(() => {
+                $('#player-play').css('display', 'none');
+                $('#player-pause').css('display', 'block');
+                audio.play();
+            }, 100);
+        })
+
+        $('#modal_list').click(function () {
+            let check = document.getElementsByClassName("check");
+            let checkNum = [];
+
+            for (const i in check) {
+                if (check[i].checked) {
+                    checkNum.push(i);
+                }
+            }
+
+            for (const i in checkNum) {
+                nowPlayList.push("<c:url value="/mp3/"/>" + s_LibraryData[checkNum[i]].file_path);
+            }
+
+            playListInit();
+        })
+
+        function playListInit() {
+            let html = "";
+
+            for (const i in nowPlayList) {
+                if(i == audioIndex) {
+                    html += '<div style="color: red">' + nowPlayList[i] + '</div>';
+                } else {
+                    html += '<div>' + nowPlayList[i] + '</div>';
+                }
+            }
+
+            $("#playList_items").empty();
+            $("#playList_items").append(html);
+
+            for (const i in s_LibraryData) {
+                if(("<c:url value="/mp3/"/>" + s_LibraryData[i].file_path) == nowPlayList[audioIndex]) {
+                    $("#player-img").attr('src', "<c:url value="/img/"/>" + s_LibraryData[i].cover_img);
+
+                    let html = s_LibraryData[i].title + '<br>' + s_LibraryData[i].album
+                    $("#player-title").empty();
+                    $("#player-title").append(html);
+                }
+            }
+        }
+
+        $(".progress").click(function (e) {
+            let x = e.pageX - $('.progress').offset().left;
+            $('.progress-bar').css("width", x);
+
+            audio.currentTime = audio.duration * ((x / 3) / 100);
+            // console.log((x / 3) / 100);
+        });
     })
 </script>
 </html>
