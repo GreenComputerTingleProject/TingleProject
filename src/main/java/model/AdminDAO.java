@@ -1,5 +1,7 @@
 package model;
 
+import admin.AdminMusicInsertReg;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -236,6 +238,7 @@ public class AdminDAO {
                 }
             } else {
                 System.out.println("이미지파일로 이동실패");
+
             }
         }
 

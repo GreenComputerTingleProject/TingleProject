@@ -30,9 +30,6 @@ public class AdminMusicInsertReg implements AdminService{
                     "UTF-8",
                     new DefaultFileRenamePolicy());
 
-
-
-
         MusicDTO musicData = new MusicDTO();
         musicData.setTitle(mr.getParameter("title"));
         musicData.setArtist(mr.getParameter("artist"));
@@ -41,16 +38,14 @@ public class AdminMusicInsertReg implements AdminService{
         musicData.setMood(mr.getParameter("mood"));
         musicData.setFile_path(mr.getFilesystemName("file_path"));
         musicData.setCover_img(mr.getFilesystemName("cover_img"));
-
         // 이미지파일은 img 폴더로 넣기
         dao.findImgFile(mr.getFilesystemName("cover_img"));
-
         musicData.setLyrics(mr.getParameter("lyrics"));
 
         dao.musicInsert(musicData);
 
         request.setAttribute("msg", msg);
-        request.setAttribute("adminUrl", "menu/music/alert.jsp");
+        request.setAttribute("adminUrl", "alert.jsp");
       //  request.setAttribute("adminUrl", "menu/music/userList.jsp");
         request.setAttribute("goUrl", "AdminMusicList");
 

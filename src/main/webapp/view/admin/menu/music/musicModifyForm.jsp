@@ -9,8 +9,8 @@
 
 <form action="AdminMusicModifyReg" method="post" enctype="multipart/form-data">
 <Table border="">
-    <input type = "text" value="${musicData.file_path}" name = "filecheck1">
-    <input type = "text" value="${musicData.cover_img}" name = "filecheck2">
+    <input type = "hidden" value="${musicData.file_path}" name = "filecheck1">
+    <input type = "hidden" value="${musicData.cover_img}" name = "filecheck2">
     <tr>
         <td>id</td>
         <td><input type ="text" name = "id" value="${musicData.id}"></td>

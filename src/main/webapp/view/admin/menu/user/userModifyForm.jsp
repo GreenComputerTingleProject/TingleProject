@@ -7,8 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<form action="AdminUserModifyReg" method="get">
+<form action="AdminUserModifyReg" method="post" enctype="multipart/form-data">
 <Table border="">
+    <input type = "hidden" value="${userData.profile_image}" name = "filecheck">
     <tr>
         <td>아이디</td>
         <td><input type ="text" name = "id" value="${userData.id}"></td>
@@ -39,7 +40,7 @@
     </tr>
     <tr>
         <td>프로필사진</td>
-        <td><input type ="file" value="프로필사진">${userData.profile_image}</td>
+        <td><input type ="file" name = "profile_image" value="프로필사진"></td>
     </tr>
     <tr>
         <td>계정종류</td>
