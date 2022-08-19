@@ -4,28 +4,34 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MusicDTO {
-    Integer id, cnt;
-    String title, artist, album, genre, mood, file_path, cover_img, lyrics;
+    Integer id, cnt, genre_no;
+    String title, artist, album, genre, mood, file_path, cover_img, aritst_img, lyrics;
     Date release_date;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 (E) HH:mm:ss");
 
-    public MusicDTO() {
-
+    @Override
+    public String toString() {
+        return "MusicDTO{" +
+                "id=" + id +
+                ", cnt=" + cnt +
+                ", genre_no=" + genre_no +
+                ", title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                ", aritst_img='" + aritst_img + '\'' +
+                ", album='" + album + '\'' +
+                ", genre='" + genre + '\'' +
+                ", mood='" + mood + '\'' +
+                ", file_path='" + file_path + '\'' +
+                ", cover_img='" + cover_img + '\'' +
+                ", lyrics='" + lyrics + '\'' +
+                ", release_date=" + release_date +
+                ", sdf=" + sdf +
+                '}';
     }
 
-    public MusicDTO(Integer id, Integer cnt, String title, String artist, String album, String genre, String mood, String file_path, String cover_img, String lyrics, Date release_date) {
-        this.id = id;
-        this.cnt = cnt;
-        this.title = title;
-        this.artist = artist;
-        this.album = album;
-        this.genre = genre;
-        this.mood = mood;
-        this.file_path = file_path;
-        this.cover_img = cover_img;
-        this.lyrics = lyrics;
-        this.release_date = release_date;
+    public MusicDTO() {
+
     }
 
     public Integer getId() {
@@ -42,6 +48,14 @@ public class MusicDTO {
 
     public void setCnt(Integer cnt) {
         this.cnt = cnt;
+    }
+
+    public Integer getGenre_no() {
+        return genre_no;
+    }
+
+    public void setGenre_no(Integer genre_no) {
+        this.genre_no = genre_no;
     }
 
     public String getTitle() {
@@ -112,28 +126,40 @@ public class MusicDTO {
         return release_date;
     }
 
-    public String getRelease_dateStr() {
-        return sdf.format(release_date);
-    }
-
     public void setRelease_date(Date release_date) {
         this.release_date = release_date;
     }
 
-    @Override
-    public String toString() {
-        return "MusicDTO{" +
-                "id=" + id +
-                ", cnt=" + cnt +
-                ", title='" + title + '\'' +
-                ", artist='" + artist + '\'' +
-                ", album='" + album + '\'' +
-                ", genre='" + genre + '\'' +
-                ", mood='" + mood + '\'' +
-                ", file_path='" + file_path + '\'' +
-                ", cover_img='" + cover_img + '\'' +
-                ", lyrics='" + lyrics + '\'' +
-                ", release_date=" + release_date +
-                '}';
+    public SimpleDateFormat getSdf() {
+        return sdf;
+    }
+
+    public void setSdf(SimpleDateFormat sdf) {
+        this.sdf = sdf;
+    }
+
+    public String getAritst_img() {
+        return aritst_img;
+    }
+
+    public void setAritst_img(String aritst_img) {
+        this.aritst_img = aritst_img;
+    }
+
+    public MusicDTO(Integer id, Integer cnt, Integer genre_no, String title, String artist, String album, String genre, String mood, String file_path, String cover_img, String aritst_img, String lyrics, Date release_date, SimpleDateFormat sdf) {
+        this.id = id;
+        this.cnt = cnt;
+        this.genre_no = genre_no;
+        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.genre = genre;
+        this.mood = mood;
+        this.file_path = file_path;
+        this.cover_img = cover_img;
+        this.aritst_img = aritst_img;
+        this.lyrics = lyrics;
+        this.release_date = release_date;
+        this.sdf = sdf;
     }
 }
