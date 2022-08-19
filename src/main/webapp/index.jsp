@@ -92,13 +92,13 @@
         }
 
         #player-play, #player-pause {
-            margin: 20px;
-            font-size: 60px;
+            margin: 25px;
+            font-size: 50px;
         }
 
-        .fa-backward, .fa-forward, #player-list {
-            margin: 30px;
-            font-size: 40px;
+        .fa-backward, .fa-forward, #player-volume, #player-volume-mute, #player-list {
+            margin: 35px;
+            font-size: 30px;
         }
 
         /* 메인 컨텐츠 스타일 */
@@ -155,6 +155,7 @@
         }
 
         #player-title{
+            width: 300px;
             color: white;
             line-height: 50px;
             margin-left: 25px;
@@ -167,10 +168,51 @@
             margin-top: 50px;
         }
 
+        .progress:hover{
+            cursor: pointer;
+        }
+
         #currentTime, #duration {
             line-height: 100px;
             margin: 0 5px 0 5px;
+            color: gray;
+        }
+
+        #player-volume, #player-volume-mute{
+            margin-right: 5px;
+        }
+
+        #player-volume-range{
+            width: 100px;
+            margin-top: 38px;
+        }
+
+        #control-zone{
+            line-height: 50px;
+            font-size: 20px;
+        }
+
+        .player-control2 {
+            color: gray;
+        }
+
+        .player-control2:hover {
+            color: darkgray;
+            cursor: pointer;
+        }
+
+        .player-control2-change {
             color: white;
+        }
+
+        .player-control2-change:hover {
+            color: darkgray;
+            cursor: pointer;
+        }
+
+        #player-repeat-1 {
+            width: 20px;
+            padding-left: 5px;
         }
     </style>
 </head>
@@ -211,7 +253,7 @@
                     <th scope="col" width="15%">아티스트</th>
                     <th scope="col" width="5%">듣기</th>
                     <th scope="col" width="5%">재생목록</th>
-                    <th scope="col" width="5%">내 리스트</th>
+<%--                    <th scope="col" width="5%">내 리스트</th>--%>
                     <th scope="col" width="5%">더보기</th>
                 </tr>
                 </thead>
@@ -232,8 +274,14 @@
     <!--플레이어-->
     <div id="bottom-player-wrapper">
         <audio id="audio"></audio>
-        <img id="player-img" src="" alt="">
+        <img id="player-img" src="<c:url value="/img/"/>default_image.png" alt="">
         <div id="player-title"></div>
+        <div id="control-zone">
+            <i id="player-shuffle" class="player-control2 fa-solid fa-shuffle"></i>
+            <br>
+            <i id="player-repeat" class="player-control2 fa-solid fa-repeat"></i>
+            <i id="player-repeat-1" class="player-control fa-solid fa-1" style="display: none"></i>
+        </div>
         <i class="player-control fa-solid fa-backward"></i>
         <i id="player-play" class="player-control fa-solid fa-play"></i>
         <i id="player-pause" class="player-control fa-solid fa-pause" style="display: none"></i>
@@ -243,6 +291,9 @@
             <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <span id="duration"></span>
+        <i id="player-volume" class="player-control fa-solid fa-volume-high"></i>
+        <i id="player-volume-mute" class="player-control fa-solid fa-volume-xmark" style="display: none"></i>
+        <input id="player-volume-range" type="range" class="form-range" value="100">
         <i id="player-list" class="player-control fa-solid fa-list"></i>
     </div>
     <!--/플레이어-->
@@ -264,14 +315,24 @@
     </div>
     <!--/모달-->
 
-    <!--미니모달-->
+    <!--보관함에서 쓰는 미니모달-->
     <div id="btn-group" class="btn-group">
         <button id="unCheck" class="btn btn-primary"><i class="fa-solid fa-x"></i></button>
         <button id="modal_play" class="btn btn-primary"><i class="selectPlay fa-solid fa-play"></i></button>
         <button id="modal_list" class="btn btn-primary"><i class="fa-solid fa-list"></i></button>
-        <button class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>
+<%--        <button id="modal_folder" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>--%>
     </div>
     <!--/미니모달-->
+
+    <!--더보기 드롭다운 메뉴-->
+    <div id="drop-down">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <!--/더보기 드롭다운 메뉴-->
 </div>
 </body>
 <script>
@@ -281,9 +342,13 @@
         let isSessionLoaded = false;
         let audio;
         let nowPlayList = [];
+        let deepCopyPlayList;
         let coverImgList = [];
         let loaded = 0;
         let audioIndex = 0;
+        let nowVolume = 1;
+        let isShuffle = false;
+        let repeatMode = 0;
 
         if (${userData != null}) {
             init();
@@ -392,9 +457,19 @@
         $('.fa-forward').click(function () {
             if (isSessionLoaded) {
                 audio.pause();
-                audioIndex++;
-                if (audioIndex == nowPlayList.length) {
-                    audioIndex--;
+
+                if(!isShuffle) {
+                    audioIndex++;
+
+                    if (audioIndex == nowPlayList.length) {
+                        if(repeatMode == 0 || repeatMode == 2) {
+                            audioIndex--;
+                        } else if(repeatMode == 1) {
+                            audioIndex = 0;
+                        }
+                    }
+                } else {
+                    audioIndex = Math.floor(Math.random() * nowPlayList.length);
                 }
 
                 if ($('#player-play').css('display') == 'none') {
@@ -410,9 +485,20 @@
         $('.fa-backward').click(function () {
             if (isSessionLoaded) {
                 audio.pause();
-                audioIndex--;
-                if (audioIndex == -1) {
-                    audioIndex++;
+
+                if(!isShuffle) {
+                    audioIndex--;
+
+                    if (audioIndex == -1) {
+
+                        if(repeatMode == 0 || repeatMode == 2) {
+                            audioIndex++;
+                        } else if(repeatMode == 1) {
+                            audioIndex = nowPlayList.length - 1;
+                        }
+                    }
+                } else {
+                    audioIndex = Math.floor(Math.random() * nowPlayList.length);
                 }
 
                 if ($('#player-play').css('display') == 'none') {
@@ -452,7 +538,7 @@
                 html += '<td>' + s_LibraryData[i].artist + '</td>';
                 html += '<td>' + '<i class="selectPlay fa-solid fa-play"></i>' + '</td>';
                 html += '<td>' + '<i class="selectList fa-solid fa-list"></i>' + '</td>';
-                html += '<td>' + '<i class="fa-solid fa-folder-plus"></i>' + '</td>';
+                // html += '<td>' + '<i class="fa-solid fa-folder-plus"></i>' + '</td>';
                 html += '<td>' + '<i class="fa-solid fa-ellipsis-vertical"></i>' + '</td>';
                 html += '</tr>';
             }
@@ -625,12 +711,158 @@
         }
 
         $(".progress").click(function (e) {
-            let x = e.pageX - $('.progress').offset().left;
-            $('.progress-bar').css("width", x);
+            if (isSessionLoaded) {
+                let x = e.pageX - $('.progress').offset().left;
+                $('.progress-bar').css("width", x);
 
-            audio.currentTime = audio.duration * ((x / 3) / 100);
-            // console.log((x / 3) / 100);
+                audio.currentTime = audio.duration * ((x / 3) / 100);
+            }
         });
+        
+        $("#player-volume").click(function () {
+            $("#player-volume").css("display", "none");
+            $("#player-volume-mute").css("display", "block");
+
+            audio.volume = 0;
+            $("#player-volume-range").val(0);
+        })
+
+        $("#player-volume-mute").click(function () {
+            $("#player-volume").css("display", "block");
+            $("#player-volume-mute").css("display", "none");
+
+            audio.volume = nowVolume;
+            $("#player-volume-range").val(nowVolume * 100);
+        })
+
+        $("#player-volume-range").change(function () {
+            $("#player-volume").css("display", "block");
+            $("#player-volume-mute").css("display", "none");
+            nowVolume = ($("#player-volume-range").val()) / 100;
+            audio.volume = nowVolume;
+        })
+
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+        }
+
+        $("#player-shuffle").click(function () {
+            if(!isShuffle) {
+                isShuffle = true;
+                $("#player-shuffle").removeClass("player-control2");
+                $("#player-shuffle").addClass("player-control2-change");
+
+                audio.onended = function () {
+
+                    if(repeatMode != 2) {
+                        audioIndex = Math.floor(Math.random() * nowPlayList.length);
+
+                        if (audioIndex >= nowPlayList.length) {
+                            // 끝
+                            $('#player-play').css('display', 'block');
+                            $('#player-pause').css('display', 'none');
+                            audioIndex = 0;
+                            audio.src = nowPlayList[0];
+
+                            if(repeatMode == 0) {
+                                return;
+                            }
+                        }
+                    }
+
+                    play(audioIndex);
+                    playListInit();
+                };
+            } else {
+                isShuffle = false;
+                $("#player-shuffle").removeClass("player-control2-change");
+                $("#player-shuffle").addClass("player-control2");
+
+                audio.onended = function () {
+
+                    if(repeatMode != 2) {
+                        audioIndex++;
+
+                        if (audioIndex >= nowPlayList.length) {
+                            // 끝
+                            $('#player-play').css('display', 'block');
+                            $('#player-pause').css('display', 'none');
+                            audioIndex = 0;
+                            audio.src = nowPlayList[0];
+
+                            if(repeatMode == 0) {
+                                return;
+                            }
+                        }
+                    }
+
+                    play(audioIndex);
+                    playListInit();
+                };
+            }
+        })
+
+        $("#player-repeat").click(function () {
+            if(repeatMode == 0) {
+                repeatMode = 1;
+                $("#player-repeat").removeClass("player-control2");
+                $("#player-repeat").addClass("player-control2-change");
+
+                audio.onended = function () {
+                    if(isShuffle){
+                        audioIndex = Math.floor(Math.random() * nowPlayList.length);
+                    } else {
+                        audioIndex++;
+                    }
+
+                    if (audioIndex >= nowPlayList.length) {
+                        // 끝
+                        audioIndex = 0;
+                        audio.src = nowPlayList[0];
+                    }
+                    play(audioIndex);
+                    playListInit();
+                };
+            } else if(repeatMode == 1) {
+                repeatMode = 2;
+                $("#player-repeat").removeClass("player-control2-change");
+                $("#player-repeat").addClass("player-control2");
+                $("#player-repeat").css("display", "none");
+                $("#player-repeat-1").css("display", "inline-block");
+
+                audio.onended = function () {
+                    play(audioIndex);
+                    playListInit();
+                };
+            }
+        })
+
+        $("#player-repeat-1").click(function () {
+            if(repeatMode == 2) {
+                repeatMode = 0;
+                $("#player-repeat").css("display", "inline-block");
+                $("#player-repeat-1").css("display", "none");
+
+                audio.onended = function () {
+                    if(isShuffle){
+                        audioIndex = Math.floor(Math.random() * nowPlayList.length);
+                    } else {
+                        audioIndex++;
+                    }
+
+                    if (audioIndex >= nowPlayList.length) {
+                        // 끝
+                        $('#player-play').css('display', 'block');
+                        $('#player-pause').css('display', 'none');
+                        audioIndex = 0;
+                        audio.src = nowPlayList[0];
+                        return;
+                    }
+                    play(audioIndex);
+                    playListInit();
+                };
+            }
+        })
     })
 </script>
 </html>

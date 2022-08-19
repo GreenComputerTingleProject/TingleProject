@@ -26,7 +26,7 @@ public class SMSSend_V2 {
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
         message.setFrom("01033339573");
         message.setTo(phone);
-        message.setText("[팅글] 인증번호 : " + certificationNumber);
+        message.setText("[팅글] : " + certificationNumber);
 
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
         System.out.println(response);
