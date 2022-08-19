@@ -27,7 +27,7 @@ public class MusicDAO {
         }
     }
 
-    public ArrayList<MusicDTO> music_list(UserDTO dto) {
+    public ArrayList<MusicDTO> music_list(int id) {
         ArrayList<MusicDTO> res = new ArrayList<>();
 
         try {
@@ -42,7 +42,7 @@ public class MusicDAO {
 
             ptmt = con.prepareStatement(sql);
 
-            ptmt.setInt(1, dto.id);
+            ptmt.setInt(1, id);
 
             rs = ptmt.executeQuery();
 

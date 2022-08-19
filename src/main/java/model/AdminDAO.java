@@ -4,12 +4,16 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class AdminDAO {
 
@@ -180,9 +184,61 @@ public class AdminDAO {
             } finally {
                 close();
             }
-
-
         }
+
+
+        public ArrayList<MusicDTO> mNameSerch(String mname){
+            ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
+            System.out.println("데이터베이스 조회 키워드 = :" + mname);
+            sql = "SELECT * FROM music WHERE title LIKE  concat('%', ? , '%')";
+
+            try {
+                ptmt = con.prepareStatement(sql);
+                ptmt.setString(1, mname);
+                rs = ptmt.executeQuery();
+
+                System.out.println(sql);
+                while (rs.next()){
+                    MusicDTO dto = new MusicDTO();
+
+                    dto.setId(rs.getInt("id"));
+                    dto.setTitle(rs.getString("title"));
+                    dto.setArtist(rs.getString("artist"));
+                    dto.setAlbum(rs.getString("album"));
+                    dto.setGenre(rs.getString("genre"));
+                    dto.setMood(rs.getString("mood"));
+                    dto.setFile_path(rs.getString("file_path"));
+                    dto.setCover_img(rs.getString("cover_img"));
+                    dto.setRelease_date(rs.getDate("release_date"));
+                    dto.setCnt(rs.getInt("cnt"));
+                    dto.setLyrics(rs.getString("lyrics"));
+
+                    System.out.println("추가완료");
+
+                    res.add(dto);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return res;
+        }
+
+        public void findImgFile(String filename) {
+            String pp = ".*[.](jpeg|jpg|bmp|png|gif|pdf)";
+            Path mpath = Paths.get("C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\mp3\\" + filename);
+            Path ipath = Paths.get("C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\img\\" + filename);
+            if (Pattern.matches(pp, filename)) {
+                try {
+                    Files.move(mpath, ipath, StandardCopyOption.ATOMIC_MOVE);
+                    System.out.println("이미지파일로 이동성공");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                System.out.println("이미지파일로 이동실패");
+            }
+        }
+
 
     public void close() {
         if(rs!=null) try {rs.close();} catch (SQLException e) {}
@@ -190,3 +246,4 @@ public class AdminDAO {
         if(con!=null) try {con.close();} catch (SQLException e) {}
     }
 }
+
