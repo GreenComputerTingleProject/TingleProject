@@ -143,6 +143,37 @@
             width: 300px;
             height: 75px;
         }
+
+        /*현석 스타일*/
+
+        #suggestion_album {
+            width: 100%;
+            height: 300px;
+            background: #1a1e21;
+            margin-bottom: 40px;
+        }
+
+        .suggestion_table{
+            width: 100%;
+            height: 270px;
+            padding-left: 10px;
+            border-collapse: separate;
+            border-spacing: 10px;
+        }
+
+        td {
+            background: #0dcaf0;
+        }
+
+        td > button {
+            width: 100%;
+            height: 80%;
+        }
+
+        td > button > img {
+            width: 100%;
+            height: 60%;
+        }
     </style>
 </head>
 <body>
@@ -161,7 +192,7 @@
                     <li><a href="<c:url value="/user/UserLogOut"/>">로그아웃</a></li>
                 </c:otherwise>
             </c:choose>
-            <li><a href="#">추천</a></li>
+            <li><a id="suggestion" href="#">추천</a></li>
             <li><a href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
@@ -199,6 +230,18 @@
         </div>
     </div>
     <!-- /본문 -->
+
+    <%--현석 본문--%>
+    <div id="page-content-wrapper">
+        <div id="main_contents2" class="container-fluid">
+            <div id ="suggestion_body">
+
+            </div>
+
+
+        </div>
+    </div>
+
 
     <!--플레이어-->
     <div id="bottom-player-wrapper">
@@ -239,9 +282,13 @@
 </div>
 </body>
 <script>
+
+
+
     $(function () {
         let s_UserData;
         let s_LibraryData;
+        let s_SuggestionList;
         let audio;
         let isSessionLoaded = false;
         let nowPlayList = [];
@@ -256,7 +303,7 @@
         function init() {
             s_UserData = JSON.parse('${sessionScope.userData}');
             s_LibraryData = JSON.parse('${sessionScope.musicList}');
-
+            s_SuggestionList = JSON.parse('${sessionScope.suggestionList}');
             isSessionLoaded = true;
 
             for (const i in s_LibraryData) {
@@ -461,6 +508,54 @@
             }
         }
 
+        /*현석 스크립트*/
+
+
+
+        $('#suggestion').click(function (){
+
+            if(!isSessionLoaded){
+                $('modal-body1').text('로그인 후에 이용할 수 있습니다');
+                $('#modal1').modal('toggle');
+                return;
+            }
+            let html = '';
+            let jArrays
+
+            $('#suggestion_body').css('display', 'block');
+            html += '<div id ="suggestion_album"></div>';
+
+            for (const i in s_SuggestionList) {
+                jArrays = s_SuggestionList[i];
+                html += '<h2>'+jArrays[0].kind+'</h2>';
+                html += '<table class = suggestion_table>';
+                html += '<tr>';
+                for (const i in jArrays) {
+                    html += '<td width="20%"><button type="button" class="suggestion_imgbtn">';
+                    html += '<img src=img/' + jArrays[i].cover_img + ' alt =""></button>' + jArrays[i].title;
+                    html += '<i class="selectPlay fa-solid fa-play"></i>';
+                    html += '<i class="fa-solid fa-list"></i>' + '</td>';
+                }
+                html += '</tr>';
+                html += '</table>'
+
+            }
+
+            $("#suggestion_body").empty();
+            $("#suggestion_body").append(html);
+
+            document.querySelector('.suggestion_imgbtn').addEventListener('click', function (){
+                console.log("이벤트 버튼 클릭");
+                $("#suggestion_body").empty();
+            })
+        })
+
+
+
+
+
+
+
         <%--$('#modal_play').click(function () {--%>
         <%--    let check = document.getElementsByClassName("check");--%>
         <%--    let checkNum = [];--%>
@@ -487,5 +582,6 @@
         <%--    audio.play();--%>
         <%--})--%>
     })
+
 </script>
 </html>
