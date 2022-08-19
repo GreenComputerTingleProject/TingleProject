@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TingleProject:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>TingleProject</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="TingleProject-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="TingleProject:war exploded" />
+    </root>
+  </artifact>
+</component>
