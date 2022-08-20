@@ -2,15 +2,15 @@ package music;
 
 import model.MusicDAO;
 import model.MusicDTO;
-import model.UserDTO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class MusicAddLibrary implements MusicService {
+public class MusicRemoveLibrary implements MusicService {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
@@ -19,7 +19,7 @@ public class MusicAddLibrary implements MusicService {
         String[] music_idList = request.getParameterValues("music_id");
 
         for (String music_id : music_idList) {
-            new MusicDAO().library_add(user_id, Integer.parseInt(music_id));
+            new MusicDAO().library_remove(user_id, Integer.parseInt(music_id));
         }
     }
 }
