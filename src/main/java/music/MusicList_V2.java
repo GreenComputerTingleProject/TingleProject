@@ -38,8 +38,11 @@ public class MusicList_V2 implements MusicService {
 
                 jArray.add(jObject);
             }
-            System.out.println(jArray);
-            request.getSession().setAttribute("musicList", jArray);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().print(jArray);
+            response.getWriter().flush();
         } catch (Exception e) {
             e.printStackTrace();
         }

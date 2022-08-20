@@ -325,13 +325,11 @@
     <!--/미니모달-->
 
     <!--더보기 드롭다운 메뉴-->
-    <div id="drop-down">
-        <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-    </div>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+    </ul>
     <!--/더보기 드롭다운 메뉴-->
 </div>
 </body>
@@ -341,8 +339,7 @@
         let s_LibraryData;
         let isSessionLoaded = false;
         let audio;
-        let nowPlayList = [];
-        let deepCopyPlayList;
+        let nowPlayList;
         let coverImgList = [];
         let loaded = 0;
         let audioIndex = 0;
@@ -351,14 +348,31 @@
         let repeatMode = 0;
 
         if (${userData != null}) {
-            init();
+            getLibrary();
         }
 
-        function init() {
+        function getLibrary() {
+            $.ajax({
+                type: 'GET',
+                url: '<c:url value="/music/MusicList_V2"/>',
+                async: false,
+                dataType: 'text',
+                success: function (result) {
+                    init(JSON.parse(result));
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
+
+        function init(libraryData) {
             s_UserData = JSON.parse('${sessionScope.userData}');
-            s_LibraryData = JSON.parse('${sessionScope.musicList}');
+            s_LibraryData = libraryData;
 
             isSessionLoaded = true;
+
+            nowPlayList = [];
 
             for (const i in s_LibraryData) {
                 nowPlayList[i] = "<c:url value="/mp3/"/>" + s_LibraryData[i].file_path;
@@ -526,6 +540,10 @@
                 return;
             }
 
+            drawLibraryList();
+        })
+
+        function drawLibraryList() {
             let html = "";
 
             $('#dynamicTable').css('display', 'block');
@@ -539,7 +557,14 @@
                 html += '<td>' + '<i class="selectPlay fa-solid fa-play"></i>' + '</td>';
                 html += '<td>' + '<i class="selectList fa-solid fa-list"></i>' + '</td>';
                 // html += '<td>' + '<i class="fa-solid fa-folder-plus"></i>' + '</td>';
-                html += '<td>' + '<i class="fa-solid fa-ellipsis-vertical"></i>' + '</td>';
+                html += '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                    + '<ul class="dropdown-menu">'
+                    + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                    + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                    + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                    + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                    + '<li><a class="dropRemove dropdown-item" href="#">보관함에서 삭제</a></li>'
+                    + '</ul>' + '</td>';
                 html += '</tr>';
             }
 
@@ -549,6 +574,8 @@
             let innerImg = document.getElementsByClassName("innerImg");
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
+            let dropRemove = document.getElementsByClassName("dropRemove");
+
             let check = document.getElementsByClassName("check");
             let totalCheck = document.getElementById("totalCheckbox");
             let unCheck = document.getElementById("unCheck");
@@ -585,6 +612,22 @@
                     playListInit();
                 })
 
+                dropRemove[i].addEventListener('click', function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '<c:url value="/music/MusicRemoveLibrary"/>',
+                        data: 'music_id=' + s_LibraryData[i].id,
+                        async: false,
+                        success: function (result) {
+                            getLibrary();
+                            drawLibraryList();
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                })
+
                 check[i].addEventListener('change', function () {
                     checkBoxJudge(totalCheck, check);
                 })
@@ -598,7 +641,7 @@
                 totalCheck.checked = false;
                 totalChange(totalCheck, check);
             })
-        })
+        }
 
         function totalChange(totalCheck, check) {
             for (let i = 0; i < check.length; i++) {
@@ -741,10 +784,6 @@
             nowVolume = ($("#player-volume-range").val()) / 100;
             audio.volume = nowVolume;
         })
-
-        function shuffle(array) {
-            array.sort(() => Math.random() - 0.5);
-        }
 
         $("#player-shuffle").click(function () {
             if(!isShuffle) {
