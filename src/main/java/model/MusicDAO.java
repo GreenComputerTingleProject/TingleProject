@@ -1,9 +1,5 @@
 package model;
 
-import kotlinx.serialization.json.Json;
-import kotlinx.serialization.json.JsonArray;
-import org.json.simple.JSONObject;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;

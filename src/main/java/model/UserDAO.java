@@ -4,6 +4,7 @@ package model;
 
 import user.SMSSend;
 import user.SMSSend_V2;
+import user.SMSSend_V3;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -90,7 +91,7 @@ public class UserDAO {
     public String join_phone_outh(String phone_number) {
 
 //       String res = new SMSSend(phone_number).send();
-       String res = new SMSSend_V2().sendOne(phone_number);
+       String res = new SMSSend_V3().sendSMS(phone_number);
 
        return res;
     }

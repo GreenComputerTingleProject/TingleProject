@@ -3,7 +3,6 @@ package user;
 import model.UserDAO;
 import model.UserDTO;
 import music.MusicList_V2;
-import music.MusicSuggestion;
 import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,8 +46,7 @@ public class UserLoginReg implements UserService {
             jObject.put("join_date", userData.getJoin_dateStr());
 
             request.getSession().setAttribute("userData", jObject);
-            new MusicList_V2().execute(request, response);
-            new MusicSuggestion().execute(request, response);
+//            new MusicList_V2().execute(request, response);
         }
 
         request.setAttribute("mainUrl", "/view/alert.jsp");
