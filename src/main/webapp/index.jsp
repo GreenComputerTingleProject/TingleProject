@@ -143,6 +143,77 @@
             width: 300px;
             height: 75px;
         }
+
+
+        /*현석 스타일*/
+
+        #suggestion_album {
+            width: 100%;
+            height: 300px;
+            background: #1a1e21;
+            margin-bottom: 40px;
+        }
+
+        .suggestion_table{
+            width: 100%;
+            height: 20vh;
+            padding-left: 10px;
+            border-collapse: separate;
+            border-spacing: 10px;
+        }
+
+        .suggestion_detail {
+            width: 100%;
+            height: 300px;
+            background: #ffffff;
+            padding: 10px;
+            border: 1px #1a1e21 solid;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        #suggestion_lylics {
+            width: 100%;
+            height: 600px;
+            background: #ffffff;
+            border: 1px #1a1e21 solid;
+            padding: 10px;
+        }
+
+        .suggestion_detail > img {
+            width: 20%;
+            height: 30vh;
+        }
+
+
+        #detailInfo{
+            width: 58%;
+            height: 30vh;
+            background: #ffffff;
+        }
+
+        #indexbtn {
+            width: 18%;
+            height: 30vh;
+            background: #ffffff;
+        }
+
+        td {
+            background: #0dcaf0;
+        }
+
+        td > button {
+            width: 100%;
+            height: 30vh;
+        }
+
+        td > button > img {
+            width: 100%;
+            height: 30vh;
+        }
     </style>
 </head>
 <body>
@@ -161,7 +232,7 @@
                     <li><a href="<c:url value="/user/UserLogOut"/>">로그아웃</a></li>
                 </c:otherwise>
             </c:choose>
-            <li><a href="#">추천</a></li>
+            <li><a id="suggestion" href="#">추천</a></li>
             <li><a href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
@@ -211,6 +282,17 @@
     </div>
     <!--/플레이어-->
 
+    <%--현석 본문--%>
+    <div id="page-content-wrapper">
+        <div id="main_contents2" class="container-fluid">
+            <div id ="suggestion_body">
+
+            </div>
+
+
+        </div>
+    </div>
+
     <!--모달1-->
     <div id="modal1" class="modal">
         <div class="modal-dialog">
@@ -244,6 +326,7 @@
         let s_LibraryData;
         let audio;
         let isSessionLoaded = false;
+        let s_SuggestionList;
         let nowPlayList = [];
         let coverImgList = [];
         let loaded = 0;
@@ -256,7 +339,7 @@
         function init() {
             s_UserData = JSON.parse('${sessionScope.userData}');
             s_LibraryData = JSON.parse('${sessionScope.musicList}');
-
+            s_SuggestionList = JSON.parse('${sessionScope.suggestionList}')
             isSessionLoaded = true;
 
             for (const i in s_LibraryData) {
@@ -461,6 +544,93 @@
             }
         }
 
+        /*현석 스크립트*/
+
+
+
+        $('#suggestion').click(function (){
+            suggestion();
+
+        })
+
+        var suggestion = function (){
+            if(!isSessionLoaded){
+                $('modal-body1').text('로그인 후에 이용할 수 있습니다');
+                $('#modal1').modal('toggle');
+                return;
+            }
+            let html = '';
+            let jArrays;
+            var data = new Array();
+
+            $('#suggestion_body').css('display', 'block');
+            html += '<div id ="suggestion_album"></div>';
+            $("#suggestion_body").empty();
+
+            for (const i in s_SuggestionList) {
+                let jArrays = s_SuggestionList[i];
+                html += '<h2>'+jArrays[0].kind+'</h2>';
+                html += '<table class = suggestion_table>';
+                html += '<tr>';
+                for (const i in jArrays) {
+                    data.push(jArrays[i])
+                    html += '<td width="20%">' + '<button type ="button" class = "viewDetail" onclick="">';
+                    html += '<img src="img/'+jArrays[i].cover_img+'"/></button>';
+                    html += jArrays[i].title;
+                    html += '<i class="selectPlay fa-solid fa-play"></i>';
+                    html += '<i class="fa-solid fa-list"></i>';
+                    html += '</td>';
+                }
+                html += '</tr>';
+                html += '</table>';
+            }
+
+            $("#suggestion_body").empty();
+            $("#suggestion_body").append(html);
+
+            // 버튼 배열
+            let viewDetail = document.getElementsByClassName('viewDetail');
+            let selectPlay = document.getElementsByClassName("selectPlay");
+
+            for (let i = 0; i < viewDetail.length; i++) {
+                selectPlay[i].addEventListener('click', function () {
+                    audio.pause();
+                    audioIndex = i;
+                    $('#player-play').css('display', 'none');
+                    $('#player-pause').css('display', 'block');
+                    play(audioIndex);
+                    console.log("재생눌렸어요 " + i + "번째")
+                })
+            }
+            for (let i = 0; i < viewDetail.length; i++) {
+                viewDetail[i].addEventListener('click', function (){
+                    // 오브젝트 배열
+                    console.log(data[i])
+                    console.log("버튼눌렸어요 "+i+"번째")
+                    $("#suggestion_body").empty();
+                    $('#suggestion_body').css('display', 'block');
+                    let html = '';
+
+                    html += '<div class="suggestion_detail"><img src="img/'+data[i].cover_img+'">';
+                    html += '<div id="detailInfo"><div><h2>'+data[i].title+'<h2></div>'
+                    html += '<div><h4>'+data[i].artist+'</h4></div>';
+                    html += '<div><i class="selectPlay fa-solid fa-play"></i>'
+                    html += '<i class="fa-solid fa-list"></i></div></div>'
+                    html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                    html += '</div>'
+                    html += '<div id ="suggestion_lylics">'
+                    html += '<h2>가사</h2></div>'
+                    $("#suggestion_body").append(html);
+
+                    document.getElementById('go_suggestion').addEventListener('click',function (){
+                        suggestion();
+                    })
+                })
+            }
+        }
+
+
+
         <%--$('#modal_play').click(function () {--%>
         <%--    let check = document.getElementsByClassName("check");--%>
         <%--    let checkNum = [];--%>
@@ -469,6 +639,7 @@
 
         <%--    for (const i in check) {--%>
         <%--        if(check[i].checked) {--%>
+
         <%--            checkNum.push(i);--%>
         <%--        }--%>
         <%--    }--%>
@@ -486,6 +657,7 @@
         <%--    audio.load();--%>
         <%--    audio.play();--%>
         <%--})--%>
+
     })
 </script>
 </html>
