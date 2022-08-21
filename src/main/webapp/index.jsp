@@ -214,6 +214,37 @@
             width: 20px;
             padding-left: 5px;
         }
+
+        input[type=text], [type=password] {
+            font-size: 16px;
+            padding-right: 30px;
+            border: 0;
+            border-bottom: 1px solid #ebebeb;
+            width: 70%;
+            height: 58px;
+            font-size: 15px;
+            color: #181818;
+            border-radius: 0;
+            background-color: transparent;
+            -webkit-border-radius: 0;
+            vertical-align: middle;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        input[type=file] {
+            width: 70%;
+            margin: 10px auto 0;
+        }
+
+        .form-select {
+            width: 70%;
+            margin: 10px auto 0;
+        }
+
+        #submitBtn{
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -236,6 +267,7 @@
             <li><a href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
+            <li><a id="myPage" href="#">마이페이지</a></li>
             <li><a href="admin/AdminLogin">관리자</a></li>
         </ul>
     </div>
@@ -261,6 +293,11 @@
 
                 </tbody>
             </table>
+
+            <div id="myPageDiv" style="display: none">
+
+            </div>
+
             <div id="playList" style="display: none">
                 <h3 id="playList_title">재생목록</h3>
                 <div id="playList_items">
@@ -368,6 +405,7 @@
 
         function init(libraryData) {
             s_UserData = JSON.parse('${sessionScope.userData}');
+            console.log(s_UserData);
             s_LibraryData = libraryData;
 
             isSessionLoaded = true;
@@ -543,10 +581,21 @@
             drawLibraryList();
         })
 
-        function drawLibraryList() {
-            let html = "";
+        $("#myPage").click(function () {
+            if (!isSessionLoaded) {
+                $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
+                $('#modal1').modal('toggle');
+                return;
+            }
 
+            drawMyPageList();
+        })
+
+        function drawLibraryList() {
             $('#dynamicTable').css('display', 'block');
+            $('#myPageDiv').css('display', 'none');
+
+            let html = "";
 
             for (const i in s_LibraryData) {
                 html += '<tr>';
@@ -641,6 +690,64 @@
                 totalCheck.checked = false;
                 totalChange(totalCheck, check);
             })
+        }
+        
+        function drawMyPageList() {
+            $('#dynamicTable').css('display', 'none');
+            $('#myPageDiv').css('display', 'block');
+
+            let html = "";
+
+            html += '<h2>' + '마이페이지' + '</h2>';
+            html += '<div class="card">';
+            html += '<div class="card-body">';
+            html += '<img src="" id="profile-img">';
+            html += s_UserData.nickname + '님';
+            if (s_UserData.membership == 0) {
+                html += '<br>' + '비회원';
+            } else if (s_UserData.membership == 1) {
+                html += '<br>' + '일반 회원';
+            } else {
+                html += '<br>' + '구독 회원';
+            }
+            html += '<div style="float : right">';
+            html += '<a href="#"/>멤버쉽 가입하기';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>' + '<br>';
+
+            html += '<div class="btn-group">';
+            html += '<button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#box2"/>회원 정보 변경'
+            html += '</div>';
+            html += '<div class="collapse" id="box2"><div class="card card-body">';
+            html += '<form action="<c:url value="/user/UserInfoUpdate"/>" align=center method="post" enctype="multipart/form-data">';
+            html += '<input type="hidden" id="session_id" name="id">';
+            html += '<input type="text" id="nickname" name="nickname" placeholder="닉네임">';
+            html += '<input type="text" id="phone" name="phone" placeholder="전화번호">';
+            html += '<input type="text" id="email" name="email" placeholder="이메일">';
+            html += '<input class="form-control" type="file" id="image" name="image">';
+            html += '<select class="form-select" name="personal_type" aria-label="성향을 선택해 주세요">';
+            html += '<option value="classic">클래식</option>';
+            html += '<option value="rock">락</option>';
+            html += '<option value="blues">블루스</option>';
+            html += '<option value="ballad">발라드</option>';
+            html += '<option value="rnb">R&B</option>';
+            html += '<option value="pop">팝</option>';
+            html += '<option value="hiphop">힙합</option>';
+            html += '<option value="metal">메탈</option>';
+            html += '<option value="jazz">재즈</option>';
+            html += '</select>';
+            html += '<button type="submit" id="submitBtn" class="btn btn-primary">제출</button>';
+            html += '</form>';
+            html += '</div>';
+
+            $("#myPageDiv").empty();
+            $("#myPageDiv").append(html);
+
+            $('#session_id').val(s_UserData.id);
+            $('#profile-img').attr('src', "<c:url value="/img/"></c:url>" + s_UserData.profile_image);
+
+            console.log(s_UserData.profile_image);
         }
 
         function totalChange(totalCheck, check) {
