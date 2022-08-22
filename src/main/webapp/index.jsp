@@ -215,6 +215,37 @@
             padding-left: 5px;
         }
 
+        input[type=text], [type=password] {
+            font-size: 16px;
+            padding-right: 30px;
+            border: 0;
+            border-bottom: 1px solid #ebebeb;
+            width: 70%;
+            height: 58px;
+            font-size: 15px;
+            color: #181818;
+            border-radius: 0;
+            background-color: transparent;
+            -webkit-border-radius: 0;
+            vertical-align: middle;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        input[type=file] {
+            width: 70%;
+            margin: 10px auto 0;
+        }
+
+        .form-select {
+            width: 70%;
+            margin: 10px auto 0;
+        }
+
+        #submitBtn{
+            margin-top: 10px;
+        }
+
         /*현석 스타일*/
 
         #suggestion_album {
@@ -307,6 +338,7 @@
             <li><a href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
+            <li><a id="myPage" href="#">마이페이지</a></li>
             <li><a href="admin/AdminLogin">관리자</a></li>
         </ul>
     </div>
@@ -324,7 +356,7 @@
                     <th scope="col" width="15%">아티스트</th>
                     <th scope="col" width="5%">듣기</th>
                     <th scope="col" width="5%">재생목록</th>
-<%--                    <th scope="col" width="5%">내 리스트</th>--%>
+                    <%--                    <th scope="col" width="5%">내 리스트</th>--%>
                     <th scope="col" width="5%">더보기</th>
                 </tr>
                 </thead>
@@ -332,6 +364,11 @@
 
                 </tbody>
             </table>
+
+            <div id="myPageDiv" style="display: none">
+
+            </div>
+
             <div id="playList" style="display: none">
                 <h3 id="playList_title">재생목록</h3>
                 <div id="playList_items">
@@ -402,7 +439,7 @@
         <button id="unCheck" class="btn btn-primary"><i class="fa-solid fa-x"></i></button>
         <button id="modal_play" class="btn btn-primary"><i class="selectPlay fa-solid fa-play"></i></button>
         <button id="modal_list" class="btn btn-primary"><i class="fa-solid fa-list"></i></button>
-<%--        <button id="modal_folder" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>--%>
+        <%--        <button id="modal_folder" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>--%>
     </div>
     <!--/미니모달-->
 
@@ -517,7 +554,7 @@
             // 첫곡은 장전시켜둔다.
             audio.src = nowPlayList[0];
         }
-        
+
         function convertTime(time) {
             const minutes = Math.floor(time / 60);
             const seconds = time % 60;
@@ -626,10 +663,21 @@
             drawLibraryList();
         })
 
-        function drawLibraryList() {
-            let html = "";
+        $("#myPage").click(function () {
+            if (!isSessionLoaded) {
+                $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
+                $('#modal1').modal('toggle');
+                return;
+            }
 
+            drawMyPageList();
+        })
+
+        function drawLibraryList() {
             $('#dynamicTable').css('display', 'block');
+            $('#myPageDiv').css('display', 'none');
+
+            let html = "";
 
             for (const i in s_LibraryData) {
                 html += '<tr>';
@@ -724,6 +772,64 @@
                 totalCheck.checked = false;
                 totalChange(totalCheck, check);
             })
+        }
+
+        function drawMyPageList() {
+            $('#dynamicTable').css('display', 'none');
+            $('#myPageDiv').css('display', 'block');
+
+            let html = "";
+
+            html += '<h2>' + '마이페이지' + '</h2>';
+            html += '<div class="card">';
+            html += '<div class="card-body">';
+            html += '<img src="" id="profile-img">';
+            html += s_UserData.nickname + '님';
+            if (s_UserData.membership == 0) {
+                html += '<br>' + '비회원';
+            } else if (s_UserData.membership == 1) {
+                html += '<br>' + '일반 회원';
+            } else {
+                html += '<br>' + '구독 회원';
+            }
+            html += '<div style="float : right">';
+            html += '<a href="#"/>멤버쉽 가입하기';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>' + '<br>';
+
+            html += '<div class="btn-group">';
+            html += '<button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#box2"/>회원 정보 변경'
+            html += '</div>';
+            html += '<div class="collapse" id="box2"><div class="card card-body">';
+            html += '<form action="<c:url value="/user/UserInfoUpdate"/>" align=center method="post" enctype="multipart/form-data">';
+            html += '<input type="hidden" id="session_id" name="id">';
+            html += '<input type="text" id="nickname" name="nickname" placeholder="닉네임">';
+            html += '<input type="text" id="phone" name="phone" placeholder="전화번호">';
+            html += '<input type="text" id="email" name="email" placeholder="이메일">';
+            html += '<input class="form-control" type="file" id="image" name="image">';
+            html += '<select class="form-select" name="personal_type" aria-label="성향을 선택해 주세요">';
+            html += '<option value="classic">클래식</option>';
+            html += '<option value="rock">락</option>';
+            html += '<option value="blues">블루스</option>';
+            html += '<option value="ballad">발라드</option>';
+            html += '<option value="rnb">R&B</option>';
+            html += '<option value="pop">팝</option>';
+            html += '<option value="hiphop">힙합</option>';
+            html += '<option value="metal">메탈</option>';
+            html += '<option value="jazz">재즈</option>';
+            html += '</select>';
+            html += '<button type="submit" id="submitBtn" class="btn btn-primary">제출</button>';
+            html += '</form>';
+            html += '</div>';
+
+            $("#myPageDiv").empty();
+            $("#myPageDiv").append(html);
+
+            $('#session_id').val(s_UserData.id);
+            $('#profile-img').attr('src', "<c:url value="/img/"></c:url>" + s_UserData.profile_image);
+
+            console.log(s_UserData.profile_image);
         }
 
         function totalChange(totalCheck, check) {
@@ -844,7 +950,7 @@
                 audio.currentTime = audio.duration * ((x / 3) / 100);
             }
         });
-        
+
         $("#player-volume").click(function () {
             $("#player-volume").css("display", "none");
             $("#player-volume-mute").css("display", "block");
@@ -1108,23 +1214,23 @@
             for (let i = 0; i < selectList.length; i++) {
 
                 selectPlay[i].addEventListener('click', function () {
-                            $('#player-play').css('display', 'block');
-                            $('#player-pause').css('display', 'none');
-                            audio.pause();
+                    $('#player-play').css('display', 'block');
+                    $('#player-pause').css('display', 'none');
+                    audio.pause();
 
-                            nowPlayList = [];
-                            nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
+                    nowPlayList = [];
+                    nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
 
-                            for (const i in nowPlayList) {
-                                preloadAudio(nowPlayList[i]);
-                            }
+                    for (const i in nowPlayList) {
+                        preloadAudio(nowPlayList[i]);
+                    }
 
-                            audioIndex = 0;
+                    audioIndex = 0;
 
-                            playListInit2(data);
+                    playListInit2(data);
 
-                            setTimeout(() => {
-                                $('#player-play').css('display', 'none');
+                    setTimeout(() => {
+                        $('#player-play').css('display', 'none');
                         $('#player-pause').css('display', 'block');
                         audio.play();
                     }, 100);
@@ -1196,6 +1302,7 @@
         var empty = function (){
             var dt = document.getElementById("dynamicTable");
             dt.style.display = "none";
+            $("#myPageDiv").empty();
             $("#dynamicTbody").empty();
             $("#suggestion_body").empty();
         }
