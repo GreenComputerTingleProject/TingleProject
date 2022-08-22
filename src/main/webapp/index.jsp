@@ -303,7 +303,7 @@
                     <li><a href="<c:url value="/user/UserLogOut"/>">로그아웃</a></li>
                 </c:otherwise>
             </c:choose>
-            <li><a id="suggestion" href="#">추천</a></li>
+            <li><a href="#">추천</a></li>
             <li><a href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
@@ -453,7 +453,6 @@
             s_UserData = JSON.parse('${sessionScope.userData}');
             s_LibraryData = libraryData;
             s_SuggestionList = JSON.parse('${sessionScope.suggestionList}')
-            console.log(s_SuggestionList);
             isSessionLoaded = true;
 
             nowPlayList = [];

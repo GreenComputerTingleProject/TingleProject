@@ -189,6 +189,30 @@ public class UserDAO {
         return 0;
     }
 
+    public int update_info(UserDTO dto) {
+        try {
+            sql = "update user set nickname = ?, phone_number = ?, email_address = ?, profile_image = ?, personal_type = ? where id = ?";
+
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setString(1, dto.getNickname());
+            ptmt.setString(2, dto.getPhone_number());
+            ptmt.setString(3, dto.getEmail_address());
+            ptmt.setString(4, dto.getProfile_image());
+            ptmt.setString(5, dto.getPersonal_type());
+            ptmt.setInt(6, dto.getId());
+
+            return ptmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return 0;
+    }
+
     public void close() {
         if(rs!=null) try {rs.close();} catch (SQLException e) {}
         if(ptmt!=null) try {ptmt.close();} catch (SQLException e) {}
