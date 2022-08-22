@@ -7,8 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<form action="AdminMusicModifyReg" method="get">
+<form action="AdminMusicModifyReg" method="post" enctype="multipart/form-data">
 <Table border="">
+    <input type = "hidden" value="${musicData.file_path}" name = "filecheck1">
+    <input type = "hidden" value="${musicData.cover_img}" name = "filecheck2">
     <tr>
         <td>id</td>
         <td><input type ="text" name = "id" value="${musicData.id}"></td>
@@ -34,10 +36,12 @@
         <td><input type = "text" name ="mood" value="${musicData.mood}"></td>
     </tr>
     <tr>
-        <td><input type ="file" value="음악파일선택">${musicData.file_path}</td>
+        <td>음악파일</td>
+        <td><input type ="file" name = file_path value="${musicData.file_path}" ></td>
     </tr>
     <tr>
-        <td><input type ="file" value="이미지파일선택">${musicData.cover.img}</td>
+        <td>이미지파일</td>
+        <td><input type ="file" name = cover_img value="${musicData.cover_img}"></td>
     </tr>
     <tr>
         <td>날짜</td>
@@ -45,11 +49,11 @@
     </tr>
     <tr>
         <td>스트리밍횟수</td>
-        <td><input type = "text" id ="cnt" value="${musicData.cnt}"></td>
+        <td><input type = "text" name ="cnt" value="${musicData.cnt}"></td>
     </tr>
     <tr>
         <td>가사</td>
-        <td><input type = "text" id ="lyrics" value="${musicData.lyrics}"></td>
+        <td><input type = "text" name ="lyrics" value="${musicData.lyrics}"></td>
     </tr>
     <tr>
         <td colspan="2" align="right">
@@ -57,6 +61,7 @@
             <a href="AdminMusicDetail?id=${musicData.id}">뒤로</a>
         </td>
     </tr>
+
 
 </Table>
 </form>
