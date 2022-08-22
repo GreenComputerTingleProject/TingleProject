@@ -8,6 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+    img {
+        width: 100px;
+        height: 100px;
+    }
+
+</style>
+
 <Table border="">
     <tr>
         <td>아이디</td>
@@ -34,14 +42,22 @@
         <td>${musicData.mood}</td>
     </tr>
     <tr>
-        <td>파일</td>
+        <td>음악파일</td>
         <td>
             ${musicData.file_path}
         </td>
     </tr>
     <tr>
-        <td>이미지</td>
-        <td>${musicData.cover_img}</td>
+        <td>커버이미지</td>
+       <%-- <td><img src ="<c:url value="/img/"/>${musicData.cover_img }" alt=""></td>--%>
+        <td><c:choose>
+            <c:when test="${musicData.cover_img != null}">
+                <img src="<c:url value="/img/"/>${musicData.cover_img }" alt="" />
+            </c:when>
+            <c:otherwise>
+                커버 이미지 없음
+            </c:otherwise>
+        </c:choose></td>
     </tr>
     <tr>
         <td>날짜</td>

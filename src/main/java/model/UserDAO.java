@@ -4,6 +4,7 @@ package model;
 
 import user.SMSSend;
 import user.SMSSend_V2;
+import user.SMSSend_V3;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -90,7 +91,7 @@ public class UserDAO {
     public String join_phone_outh(String phone_number) {
 
 //       String res = new SMSSend(phone_number).send();
-       String res = new SMSSend_V2().sendOne(phone_number);
+       String res = new SMSSend_V3().sendSMS(phone_number);
 
        return res;
     }
@@ -176,6 +177,30 @@ public class UserDAO {
 
             ptmt.setString(1, login_pw);
             ptmt.setString(2, login_id);
+
+            return ptmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return 0;
+    }
+
+    public int update_info(UserDTO dto) {
+        try {
+            sql = "update user set nickname = ?, phone_number = ?, email_address = ?, profile_image = ?, personal_type = ? where id = ?";
+
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setString(1, dto.getNickname());
+            ptmt.setString(2, dto.getPhone_number());
+            ptmt.setString(3, dto.getEmail_address());
+            ptmt.setString(4, dto.getProfile_image());
+            ptmt.setString(5, dto.getPersonal_type());
+            ptmt.setInt(6, dto.getId());
 
             return ptmt.executeUpdate();
 

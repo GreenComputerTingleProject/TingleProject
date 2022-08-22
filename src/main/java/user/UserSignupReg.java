@@ -22,6 +22,7 @@ public class UserSignupReg implements UserService {
         String login_id = request.getParameter("login_id");
         String pw = request.getParameter("login_pw");
         String name = request.getParameter("name");
+        String nickName = request.getParameter("nickName");
         String phone_number = request.getParameter("tel");
 
         UserDTO dto = new UserDTO();
@@ -29,6 +30,7 @@ public class UserSignupReg implements UserService {
         dto.setLogin_id(login_id);
         dto.setLogin_pw(pw);
         dto.setName(name);
+        dto.setNickname(nickName);
         dto.setPhone_number(phone_number);
 
         new UserDAO().join(dto);

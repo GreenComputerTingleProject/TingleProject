@@ -21,7 +21,7 @@
 <script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
 <script>
     $(function () {
-        if(${mainUrl == "Music/musicList.jsp"}) {
+        if(${mainUrl == "Music/userList.jsp"}) {
             const audio = document.getElementById("audio");
 
             $(".musicBtn").click(function () {

@@ -7,7 +7,7 @@ public class AdminLogin implements AdminService{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-        boolean logincheck = false;
+        boolean logincheck = Boolean.parseBoolean(request.getParameter("logincheck"));
 
         request.setAttribute("adminUrl", "menu/login.jsp");
         request.setAttribute("logincheck" , logincheck);
