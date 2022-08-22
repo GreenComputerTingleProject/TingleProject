@@ -405,7 +405,6 @@
 
         function init(libraryData) {
             s_UserData = JSON.parse('${sessionScope.userData}');
-            console.log(s_UserData);
             s_LibraryData = libraryData;
 
             isSessionLoaded = true;
