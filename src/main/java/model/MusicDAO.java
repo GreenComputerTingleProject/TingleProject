@@ -1,5 +1,7 @@
 package model;
 
+import org.json.simple.JSONObject;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -71,6 +73,48 @@ public class MusicDAO {
         }
 
         return res;
+    }
+
+    public int library_add(int user_id, int music_id) {
+
+        try {
+            sql = "insert into library ( user_id, music_id, reg_date ) values( ?, ?, sysdate() )";
+
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setInt(1, user_id);
+            ptmt.setInt(2, music_id);
+
+            return ptmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return 0;
+    }
+
+    public int library_remove(int user_id, int music_id) {
+
+        try {
+            sql = "delete from library where user_id = ? and music_id = ?";
+
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setInt(1, user_id);
+            ptmt.setInt(2, music_id);
+
+            return ptmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return 0;
     }
 
     public ArrayList<ArrayList<MusicDTO>> suggestionList(){
