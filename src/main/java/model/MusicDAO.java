@@ -117,6 +117,68 @@ public class MusicDAO {
         return 0;
     }
 
+    public ArrayList<ArrayList<MusicDTO>> suggestionList(){
+        ArrayList<ArrayList<MusicDTO>> res = new ArrayList<ArrayList<MusicDTO>>();
+        ArrayList<MusicDTO> todayMusic = new ArrayList<MusicDTO>();
+        ArrayList<MusicDTO> funnyMusic = new ArrayList<MusicDTO>();
+
+        try {
+            // 투데이 데이터 추출
+            sql = "select * from music order by rand() limit 5";
+            ptmt = con.prepareStatement(sql);
+            rs = ptmt.executeQuery();
+
+            while (rs.next()){
+                MusicDTO music = new MusicDTO();
+
+                music.setId(rs.getInt("music.id"));
+                music.setTitle(rs.getString("title"));
+                music.setArtist(rs.getString("artist"));
+                music.setAlbum(rs.getString("album"));
+                music.setGenre(rs.getString("genre"));
+                music.setMood(rs.getString("mood"));
+                music.setFile_path(rs.getString("file_path"));
+                music.setCover_img(rs.getString("cover_img"));
+                music.setCnt(rs.getInt("cnt"));
+                music.setLyrics(rs.getString("lyrics"));
+                music.setRelease_date(rs.getTimestamp("release_date"));
+
+                todayMusic.add(music);
+            }
+
+            // funny 데이터 추출
+            sql = "select * from music where mood = ? order by rand() limit 5 ";
+            ptmt = con.prepareStatement(sql);
+            ptmt.setString(1,"funny");
+            rs = ptmt.executeQuery();
+
+            while (rs.next()){
+                MusicDTO music = new MusicDTO();
+
+                music.setId(rs.getInt("music.id"));
+                music.setTitle(rs.getString("title"));
+                music.setArtist(rs.getString("artist"));
+                music.setAlbum(rs.getString("album"));
+                music.setGenre(rs.getString("genre"));
+                music.setMood(rs.getString("mood"));
+                music.setFile_path(rs.getString("file_path"));
+                music.setCover_img(rs.getString("cover_img"));
+                music.setCnt(rs.getInt("cnt"));
+                music.setLyrics(rs.getString("lyrics"));
+                music.setRelease_date(rs.getTimestamp("release_date"));
+
+                funnyMusic.add(music);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        res.add(todayMusic);
+        res.add(funnyMusic);
+        return res;
+    }
+
     public void close() {
         if(rs!=null) try {rs.close();} catch (SQLException e) {}
         if(ptmt!=null) try {ptmt.close();} catch (SQLException e) {}

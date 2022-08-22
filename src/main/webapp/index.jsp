@@ -245,6 +245,77 @@
         #submitBtn{
             margin-top: 10px;
         }
+
+        /*현석 스타일*/
+
+        #suggestion_album {
+            width: 100%;
+            height: 300px;
+            background: #1a1e21;
+            margin-bottom: 40px;
+        }
+
+        .suggestion_table{
+            width: 100%;
+            height: 20vh;
+            padding-left: 10px;
+            border-collapse: separate;
+            border-spacing: 10px;
+            margin-bottom: 100px;
+        }
+
+        .suggestion_detail {
+            width: 100%;
+            height: 300px;
+            background: #ffffff;
+            padding: 10px;
+            border: 1px #1a1e21 solid;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        #suggestion_lylics {
+            width: 100%;
+            height: 600px;
+            background: #ffffff;
+            border: 1px #1a1e21 solid;
+            padding: 10px;
+        }
+
+        .suggestion_detail > img {
+            width: 20%;
+            height: 30vh;
+        }
+
+
+        #detailInfo{
+            width: 58%;
+            height: 30vh;
+            background: #ffffff;
+        }
+
+        #indexbtn {
+            width: 18%;
+            height: 30vh;
+            background: #ffffff;
+        }
+
+        td {
+            background: #0dcaf0;
+        }
+
+        td > button {
+            width: 100%;
+            height: 30vh;
+        }
+
+        td > button > img {
+            width: 100%;
+            height: 30vh;
+        }
     </style>
 </head>
 <body>
@@ -263,7 +334,7 @@
                     <li><a href="<c:url value="/user/UserLogOut"/>">로그아웃</a></li>
                 </c:otherwise>
             </c:choose>
-            <li><a href="#">추천</a></li>
+            <li><a id="suggestion" href="#">추천</a></li>
             <li><a href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
@@ -285,7 +356,7 @@
                     <th scope="col" width="15%">아티스트</th>
                     <th scope="col" width="5%">듣기</th>
                     <th scope="col" width="5%">재생목록</th>
-<%--                    <th scope="col" width="5%">내 리스트</th>--%>
+                    <%--                    <th scope="col" width="5%">내 리스트</th>--%>
                     <th scope="col" width="5%">더보기</th>
                 </tr>
                 </thead>
@@ -335,6 +406,17 @@
     </div>
     <!--/플레이어-->
 
+    <%--현석 본문--%>
+    <div id="page-content-wrapper">
+        <div id="main_contents2" class="container-fluid">
+            <div id ="suggestion_body">
+
+            </div>
+
+
+        </div>
+    </div>
+
     <!--모달1-->
     <div id="modal1" class="modal">
         <div class="modal-dialog">
@@ -357,7 +439,7 @@
         <button id="unCheck" class="btn btn-primary"><i class="fa-solid fa-x"></i></button>
         <button id="modal_play" class="btn btn-primary"><i class="selectPlay fa-solid fa-play"></i></button>
         <button id="modal_list" class="btn btn-primary"><i class="fa-solid fa-list"></i></button>
-<%--        <button id="modal_folder" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>--%>
+        <%--        <button id="modal_folder" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>--%>
     </div>
     <!--/미니모달-->
 
@@ -383,6 +465,7 @@
         let nowVolume = 1;
         let isShuffle = false;
         let repeatMode = 0;
+        let s_SuggestionList;
 
         if (${userData != null}) {
             getLibrary();
@@ -406,7 +489,7 @@
         function init(libraryData) {
             s_UserData = JSON.parse('${sessionScope.userData}');
             s_LibraryData = libraryData;
-
+            s_SuggestionList = JSON.parse('${sessionScope.suggestionList}')
             isSessionLoaded = true;
 
             nowPlayList = [];
@@ -471,7 +554,7 @@
             // 첫곡은 장전시켜둔다.
             audio.src = nowPlayList[0];
         }
-        
+
         function convertTime(time) {
             const minutes = Math.floor(time / 60);
             const seconds = time % 60;
@@ -690,7 +773,7 @@
                 totalChange(totalCheck, check);
             })
         }
-        
+
         function drawMyPageList() {
             $('#dynamicTable').css('display', 'none');
             $('#myPageDiv').css('display', 'block');
@@ -867,7 +950,7 @@
                 audio.currentTime = audio.duration * ((x / 3) / 100);
             }
         });
-        
+
         $("#player-volume").click(function () {
             $("#player-volume").css("display", "none");
             $("#player-volume-mute").css("display", "block");
@@ -1008,6 +1091,222 @@
                 };
             }
         })
+
+        /*현석 스크립트*/
+
+
+
+        $('#suggestion').click(function (){
+            empty();
+            suggestion();
+        })
+
+        let suggestion = function (){
+            if(!isSessionLoaded){
+                $('modal-body1').text('로그인 후에 이용할 수 있습니다');
+                $('#modal1').modal('toggle');
+                return;
+            }
+            let html = '';
+            let data = new Array();
+            $("#dynamicTbody").empty();
+            $("#suggestion_body").empty();
+            $('#suggestion_body').css('display', 'block');
+            html += '<div id ="suggestion_album"></div>';
+
+            for (const i in s_SuggestionList) {
+                let jArrays = s_SuggestionList[i];
+                html += '<h2>'+jArrays[0].kind+'</h2>';
+                html += '<table class = suggestion_table>';
+                html += '<tr>';
+                for (const i in jArrays) {
+                    data.push(jArrays[i])
+                    html += '<td width="20%">' + '<button type ="button" class = "viewDetail" >';
+                    html += '<img src="img/'+jArrays[i].cover_img+'"/></button>';
+                    html += jArrays[i].title;
+                    html += '<i class="selectPlay fa-solid fa-play"></i>';
+                    html += '<i class="selectList fa-solid fa-list"></i>';
+                    html += '<i class="fa-solid fa-folder-plus"></i>';
+                    html += '</td>';
+                }
+                html += '</tr>';
+                html += '</table>';
+            }
+
+            $("#suggestion_body").empty();
+            $("#suggestion_body").append(html);
+
+            // 배열
+            let viewDetail = document.getElementsByClassName('viewDetail');
+            let selectPlay = document.getElementsByClassName("selectPlay");
+            let selectList = document.getElementsByClassName("selectList");
+
+            console.log("재생버튼 개수" + selectPlay.length);
+            suggestion_player(data, selectPlay, selectList)
+
+
+            for (let i = 0; i < viewDetail.length; i++) {
+                viewDetail[i].addEventListener('click', function (){
+                    // 오브젝트 배열
+                    console.log(data[i])
+                    console.log("버튼눌렸어요 "+i+"번째")
+                    $("#suggestion_body").empty();
+                    $('#suggestion_body').css('display', 'block');
+                    let html = '';
+
+                    html += '<div class="suggestion_detail"><img src="img/'+data[i].cover_img+'">';
+                    html += '<div id="detailInfo"><div><h2>'+data[i].title+'<h2></div>'
+                    html += '<div><h4>'+data[i].artist+'</h4></div>';
+                    html += '<div><i class="selectPlay fa-solid fa-play"></i>'
+                    html += '<i class="selectList fa-solid fa-list" id = "selectList"></i></div></div>'
+                    html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                    html += '</div>'
+                    html += '<div id ="suggestion_lylics">'
+                    html += '<h2>가사</h2></div>'
+                    $("#suggestion_body").append(html);
+
+                    let selectPlay = document.getElementsByClassName("selectPlay");
+
+                    selectPlay[0].addEventListener('click', function () {
+                        $('#player-play').css('display', 'block');
+                        $('#player-pause').css('display', 'none');
+                        audio.pause();
+                        console.log("눌렸어용");
+
+                        nowPlayList = [];
+                        nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
+
+                        for (const i in nowPlayList) {
+                            preloadAudio(nowPlayList[i]);
+                        }
+
+                        audioIndex = 0;
+
+                        playListInit3(data[i]);
+
+                        setTimeout(() => {
+                            $('#player-play').css('display', 'none');
+                            $('#player-pause').css('display', 'block');
+                            audio.play();
+                        }, 100);
+
+
+                        selectList[0].addEventListener('click', function () {
+                            nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
+
+                            playListInit3(data[i]);
+                        })
+                    })
+
+
+                    document.getElementById('go_suggestion').addEventListener('click',function (){
+                        suggestion();
+                    })
+
+                })
+            }
+
+
+        }
+
+        let suggestion_player = function (data,selectPlay,selectList){
+
+            for (let i = 0; i < selectList.length; i++) {
+
+                selectPlay[i].addEventListener('click', function () {
+                    $('#player-play').css('display', 'block');
+                    $('#player-pause').css('display', 'none');
+                    audio.pause();
+
+                    nowPlayList = [];
+                    nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
+
+                    for (const i in nowPlayList) {
+                        preloadAudio(nowPlayList[i]);
+                    }
+
+                    audioIndex = 0;
+
+                    playListInit2(data);
+
+                    setTimeout(() => {
+                        $('#player-play').css('display', 'none');
+                        $('#player-pause').css('display', 'block');
+                        audio.play();
+                    }, 100);
+
+
+                    selectList[i].addEventListener('click', function () {
+                        nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
+
+                        playListInit2(data);
+                    })
+                })
+
+
+            }
+        }
+
+        function playListInit2(data) {
+            let html = "";
+
+            for (const i in nowPlayList) {
+                if(i == audioIndex) {
+                    html += '<div style="color: red">' + nowPlayList[i] + '</div>';
+                } else {
+                    html += '<div>' + nowPlayList[i] + '</div>';
+                }
+            }
+
+            $("#playList_items").empty();
+            $("#playList_items").append(html);
+
+            for (const i in data) {
+                if(("<c:url value="/mp3/"/>" + data[i].file_path) == nowPlayList[audioIndex]) {
+                    $("#player-img").attr('src', "<c:url value="/img/"/>" + data[i].cover_img);
+
+                    let html = data[i].title + '<br>' + data[i].album;
+                    $("#player-title").empty();
+                    $("#player-title").append(html);
+                    console.log("플레이어 인잇2 성공");
+                }
+            }
+        }
+
+        function playListInit3(data) {
+            let html = "";
+
+            for (const i in nowPlayList) {
+                if(i == audioIndex) {
+                    html += '<div style="color: red">' + nowPlayList[i] + '</div>';
+                } else {
+                    html += '<div>' + nowPlayList[i] + '</div>';
+                }
+            }
+
+            $("#playList_items").empty();
+            $("#playList_items").append(html);
+
+            for (const i in data) {
+                if(("<c:url value="/mp3/"/>" + data.file_path) == nowPlayList[audioIndex]) {
+                    $("#player-img").attr('src', "<c:url value="/img/"/>" + data.cover_img);
+
+                    let html = data.title + '<br>' + data.album;
+                    $("#player-title").empty();
+                    $("#player-title").append(html);
+                    console.log("플레이어 인잇2 성공");
+                }
+            }
+        }
+
+        var empty = function (){
+            var dt = document.getElementById("dynamicTable");
+            dt.style.display = "none";
+            $("#myPageDiv").empty();
+            $("#dynamicTbody").empty();
+            $("#suggestion_body").empty();
+        }
+
     })
 </script>
 </html>
