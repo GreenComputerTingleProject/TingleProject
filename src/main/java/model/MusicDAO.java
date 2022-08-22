@@ -298,7 +298,7 @@ public class MusicDAO {
                 dto.setCnt(rs.getInt("cnt"));
                 dto.setTitle(rs.getString("title"));
                 dto.setArtist(rs.getString("artist"));
-                dto.setAritst_img(rs.getString("artist_img"));
+                dto.setArtist_img(rs.getString("artist_img"));
                 dto.setAlbum(rs.getString("album"));
                 dto.setGenre(rs.getString("genre"));
                 dto.setGenre_no(rs.getInt("genre_no"));
@@ -333,7 +333,7 @@ public class MusicDAO {
                 dto.setCnt(rs.getInt("cnt"));
                 dto.setTitle(rs.getString("title"));
                 dto.setArtist(rs.getString("artist"));
-                dto.setAritst_img(rs.getString("artist_img"));
+                dto.setArtist_img(rs.getString("artist_img"));
                 dto.setCover_img(rs.getString("cover_img"));
                 dto.setAlbum(rs.getString("album"));
                 dto.setGenre(rs.getString("genre"));
@@ -370,7 +370,7 @@ public class MusicDAO {
                 dto.setTitle(rs.getString("title"));
                 dto.setAlbum(rs.getString("album"));
                 dto.setArtist(rs.getString("artist"));
-                dto.setAritst_img(rs.getString("artist_img"));
+                dto.setArtist_img(rs.getString("artist_img"));
                 dto.setCover_img(rs.getString("cover_img"));
                 dto.setLyrics(rs.getString("lyrics"));
                 dto.setGenre(rs.getString("genre"));

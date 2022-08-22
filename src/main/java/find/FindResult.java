@@ -46,7 +46,7 @@ public class FindResult implements FindService {
                 dataTitle.put("t_cnt", ft.getCnt());
                 dataTitle.put("t_title", ft.getTitle());
                 dataTitle.put("t_album", ft.getAlbum());
-                dataTitle.put("t_artistImg", ft.getAritst_img());
+                dataTitle.put("t_artistImg", ft.getArtist_img());
                 dataTitle.put("t_coverImg", ft.getCover_img());
                 dataTitle.put("t_artist", ft.getArtist());
                 dataTitle.put("t_genre", ft.getGenre());
@@ -64,7 +64,7 @@ public class FindResult implements FindService {
                 dataArtist.put("a_title", fa.getTitle());
                 dataArtist.put("a_album", fa.getAlbum());
                 dataArtist.put("a_artist", fa.getArtist());
-                dataArtist.put("a_artistImg", fa.getAritst_img());
+                dataArtist.put("a_artistImg", fa.getArtist_img());
                 dataArtist.put("a_coverImg", fa.getCover_img());
                 dataArtist.put("a_genre", fa.getGenre());
                 dataArtist.put("a_genre_no", fa.getGenre_no());
@@ -79,12 +79,12 @@ public class FindResult implements FindService {
                 dataAlbum.put("b_title", fa.getTitle());
                 dataAlbum.put("b_album", fa.getAlbum());
                 dataAlbum.put("b_artist", fa.getArtist());
-                dataAlbum.put("b_artistImg", fa.getAritst_img());
+                dataAlbum.put("b_artistImg", fa.getArtist_img());
                 dataAlbum.put("b_coverImg", fa.getCover_img());
                 dataAlbum.put("b_genre", fa.getGenre());
                 dataAlbum.put("b_genre_no", fa.getGenre_no());
                 dataAlbum.put("b_file_path", fa.getFile_path());
-                dataAlbum.put("b_release_date", fa.getRelease_date());
+                dataAlbum.put("b_release_date", fa.getRelease_dateStr());
                 albumArray.add(dataAlbum);
             }
 
@@ -95,13 +95,13 @@ public class FindResult implements FindService {
                 dataLyrics.put("l_title", fl.getTitle());
                 dataLyrics.put("l_album", fl.getAlbum());
                 dataLyrics.put("l_artist", fl.getArtist());
-                dataLyrics.put("l_artistImg", fl.getAritst_img());
+                dataLyrics.put("l_artistImg", fl.getArtist_img());
                 dataLyrics.put("l_coverImg", fl.getCover_img());
                 dataLyrics.put("l_lyrics",fl.getLyrics());
                 dataLyrics.put("l_genre", fl.getGenre());
                 dataLyrics.put("l_genre_no", fl.getGenre_no());
                 dataLyrics.put("l_file_path", fl.getFile_path());
-                dataLyrics.put("l_release_date", fl.getRelease_date());
+                dataLyrics.put("l_release_date", fl.getRelease_dateStr());
 
                 lyricsArray.add(dataLyrics);
             }

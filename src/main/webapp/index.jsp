@@ -292,7 +292,7 @@
             padding-left: 5px;
         }
 
-        input[type=text], [type=password] {
+     /*   input[type=text], [type=password] {
             font-size: 16px;
             padding-right: 30px;
             border: 0;
@@ -307,7 +307,7 @@
             vertical-align: middle;
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
-        }
+        }*/
 
         input[type=file] {
             width: 70%;
@@ -467,18 +467,15 @@
                     <li><a href="<c:url value="/user/UserLogOut"/>">로그아웃</a></li>
                 </c:otherwise>
             </c:choose>
-            <li><a id="suggestion" href="#">추천</a></li>
-            <li><a href="#">차트</a></li>
 
             <li>
                 <fieldset class="find_fieldset">
                     <i id="ficon" class="fa-solid fa-magnifying-glass "></i>
                     <input id="findEnter" class=" find-input iptxt" type="text" placeholder="검색"
-                           />
+                    />
                 </fieldset>
             </li>
-
-            <li><a href="#">추천</a></li>
+            <li><a id="suggestion" href="#">추천</a></li>
             <li><a class="chart" id="chart" href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
@@ -694,6 +691,7 @@
 </body>
 <script>
     $(function () {
+
         let s_UserData;
         let s_LibraryData;
         let isSessionLoaded = false;
@@ -729,6 +727,7 @@
         function init(libraryData) {
             s_UserData = JSON.parse('${sessionScope.userData}');
             s_LibraryData = libraryData;
+            <%--console.log(JSON.parse(${sessionScope.suggestionList}));--%>
             s_SuggestionList = JSON.parse('${sessionScope.suggestionList}')
             isSessionLoaded = true;
 
@@ -900,6 +899,7 @@
                 return;
             }
 
+            allEmpty();
             drawLibraryList();
         })
 
@@ -910,6 +910,8 @@
                 return;
             }
 
+            console.log(coverImgList);
+            allEmpty();
             drawMyPageList();
         })
 
@@ -1337,7 +1339,7 @@
 
 
         $('#suggestion').click(function (){
-            empty();
+            allEmpty();
             suggestion();
         })
 
@@ -1539,25 +1541,28 @@
             }
         }
 
-        var empty = function (){
-            var dt = document.getElementById("dynamicTable");
-            dt.style.display = "none";
-            $("#myPageDiv").empty();
-            $("#dynamicTbody").empty();
-            $("#suggestion_body").empty();
-        }
+         function allEmpty() {
+             var dt = document.getElementById("dynamicTable");
+             dt.style.display = "none";
+             $("#myPageDiv").empty();
+             $("#dynamicTbody").empty();
+             $("#suggestion_body").empty();
+             $(".find_Container").empty();
+             $(".chartContainer").empty();
+             $(".chartTable").attr("style","display:none")
 
-    })
-
+         }
 
         //차트 클릭시
 
         $('.chart').click(function () {
+
+            allEmpty();
             $('#top100').attr("style", "background: purple")
-            // $('.find_Container').empty();
             $('.chartTable').attr("style", "display:");
             $('.chartContainer').attr("style", "display:");
             $('#chart_h1').html("TOP100");
+
 
             $.ajax({
                 url: "<c:url value="/chart/ChartTop100"/>",
@@ -1599,9 +1604,16 @@
                             '<td>' +
                             '<i class="fa-solid fa-folder-plus"></i>' +
                             '</td>' +
-                            '<td>' +
-                            '<i class="fa-solid fa-ellipsis-vertical"></i>' +
-                            '</td>' +
+                            '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                            + '<ul class="dropdown-menu">'
+                            + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                            + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                            + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                            + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                            + '</ul>' + '</td>'+
+                            // '<td>' +
+                            // '<i class="fa-solid fa-ellipsis-vertical"></i>' +
+                            // '</td>' +
                             '</tr>');
 
                         $(".chartTbody").append(html);
@@ -1791,9 +1803,16 @@
                         '<td>' +
                         '<i class="fa-solid fa-folder-plus"></i>' +
                         '</td>' +
-                        '<td>' +
-                        '<i class="fa-solid fa-ellipsis-vertical"></i>' +
-                        '</td>' +
+                        '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                        + '<ul class="dropdown-menu">'
+                        + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                        + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                        + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                        + '</ul>' + '</td>'+
+                        // '<td>' +
+                        // '<i class="fa-solid fa-ellipsis-vertical"></i>' +
+                        // '</td>' +
                         '</tr>');
                     $(".chartTbody").append(html);
                 })
@@ -1813,6 +1832,8 @@
             let check = document.getElementsByClassName("check");
             let totalCheck = document.getElementById("ChartTotalCheckbox");
             let unCheck = document.getElementById("unCheck");
+
+            console.log(totalCheck)
 
             for (let i = 0; i < selectList.length; i++) {
 
@@ -2017,7 +2038,7 @@
                         data: 'find-input=' + $('.find-input').val(),
                         async: false,
                         success: function (data) {
-
+                            console.log($('.find-input').val());
                             const json = JSON.parse(data);
                             console.log(json);
                             if (json[0].length > 0) {
@@ -2270,9 +2291,14 @@
                 }
             }
 
-        });
 
-    });//요기 onload
+        });//요기 onload
+
+
+    })
+
+
+
 
 
 

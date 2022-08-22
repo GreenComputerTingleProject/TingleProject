@@ -34,7 +34,7 @@ public class MusicList_V2 implements MusicService {
                 jObject.put("cover_img", music.getCover_img());
                 jObject.put("cnt", music.getCnt());
                 jObject.put("lyrics", music.getLyrics());
-                jObject.put("release_date", music.getRelease_date());
+                jObject.put("release_date", music.getRelease_dateStr());
 
                 jArray.add(jObject);
             }
