@@ -89,6 +89,7 @@ public class MusicDAO {
                 dto.setTitle(rs.getString("title"));
                 dto.setArtist(rs.getString("artist"));
                 dto.setAlbum(rs.getString("album"));
+                dto.setCover_img(rs.getString("cover_img"));
                 dto.setFile_path(rs.getString("file_path"));
                 res.add(dto);
             }
@@ -120,6 +121,7 @@ public class MusicDAO {
                 dto.setCnt(rs.getInt("cnt"));
                 dto.setTitle(rs.getString("title"));
                 dto.setArtist(rs.getString("artist"));
+                dto.setCover_img(rs.getString("cover_img"));
                 dto.setAlbum(rs.getString("album"));
                 dto.setGenre(rs.getString("genre"));
                 dto.setGenre_no(rs.getInt("genre_no"));
@@ -206,6 +208,7 @@ public class MusicDAO {
         return res;
     }
 
+
     public ArrayList<MusicDTO> findAlbum(String album) {
         ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
         System.out.println("데이터베이스 조회 키워드 = :" + album );
@@ -242,15 +245,15 @@ public class MusicDAO {
         return res;
     }
 
-    public ArrayList<MusicDTO> findLylics(String lylics) {
+    public ArrayList<MusicDTO> findLyrics(String lyrics) {
         ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
-        System.out.println("데이터베이스 조회 키워드 = :" + lylics );
-        sql = "SELECT * FROM music WHERE album LIKE concat('%', ? , '%')";
+        System.out.println("데이터베이스 조회 키워드 = :" + lyrics );
+        sql = "SELECT * FROM music WHERE Lyrics LIKE concat('%', ? , '%')";
 
         try {
             ptmt = con.prepareStatement(sql);
 
-            ptmt.setString(1, lylics);
+            ptmt.setString(1, lyrics);
 
             rs = ptmt.executeQuery();
             System.out.println("rs"+rs);
@@ -259,12 +262,15 @@ public class MusicDAO {
                 dto.setId(rs.getInt("id"));
                 dto.setCnt(rs.getInt("cnt"));
                 dto.setTitle(rs.getString("title"));
+                dto.setAlbum(rs.getString("album"));
                 dto.setArtist(rs.getString("artist"));
                 dto.setAritst_img(rs.getString("artist_img"));
-                dto.setAlbum(rs.getString("album"));
+                dto.setCover_img(rs.getString("cover_img"));
+                dto.setLyrics(rs.getString("lyrics"));
                 dto.setGenre(rs.getString("genre"));
                 dto.setGenre_no(rs.getInt("genre_no"));
                 dto.setFile_path(rs.getString("file_path"));
+                dto.setRelease_date(rs.getTimestamp("release_date"));
                 res.add(dto);
             }
 

@@ -21,6 +21,7 @@ public class FindResult implements FindService {
         ArrayList<MusicDTO> findTitle = new MusicDAO().findTitle(findInput);
         ArrayList<MusicDTO> findArtist = new MusicDAO().findArtist(findInput);
         ArrayList<MusicDTO> findAlbum = new MusicDAO().findAlbum(findInput);
+        ArrayList<MusicDTO> findLyrics = new MusicDAO().findLyrics(findInput);
 
         System.out.println("chartFind  타이틀 실행이얏  "+findTitle);
         System.out.println("chartFind 아티스트 실행이얏 "+findArtist);
@@ -34,6 +35,7 @@ public class FindResult implements FindService {
         JSONArray titleArray = new JSONArray();
         JSONArray artistArray = new JSONArray();
         JSONArray albumArray = new JSONArray();
+        JSONArray lyricsArray = new JSONArray();
 
 
         try {
@@ -86,9 +88,30 @@ public class FindResult implements FindService {
                 albumArray.add(dataAlbum);
             }
 
+            for (MusicDTO fl : findLyrics) {
+                JSONObject dataLyrics = new JSONObject();
+                dataLyrics.put("l_id", fl.getId());
+                dataLyrics.put("l_cnt", fl.getCnt());
+                dataLyrics.put("l_title", fl.getTitle());
+                dataLyrics.put("l_album", fl.getAlbum());
+                dataLyrics.put("l_artist", fl.getArtist());
+                dataLyrics.put("l_artistImg", fl.getAritst_img());
+                dataLyrics.put("l_coverImg", fl.getCover_img());
+                dataLyrics.put("l_lyrics",fl.getLyrics());
+                dataLyrics.put("l_genre", fl.getGenre());
+                dataLyrics.put("l_genre_no", fl.getGenre_no());
+                dataLyrics.put("l_file_path", fl.getFile_path());
+                dataLyrics.put("l_release_date", fl.getRelease_date());
+
+                lyricsArray.add(dataLyrics);
+            }
+
+
+
             jsonArray.add(titleArray);
             jsonArray.add(artistArray);
             jsonArray.add(albumArray);
+            jsonArray.add(lyricsArray);
 
 
 

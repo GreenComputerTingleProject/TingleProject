@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class ChartBallad implements ChartService {
+public class ChartDance implements ChartService {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -19,7 +19,7 @@ public class ChartBallad implements ChartService {
 
             System.out.println("chart 실행");
 
-            ArrayList<MusicDTO> genreList = new MusicDAO().genreList(1);
+            ArrayList<MusicDTO> genreList = new MusicDAO().genreList(4);
             System.out.println("chart 실행"+genreList);
             JSONArray jsonArray = new JSONArray();
 

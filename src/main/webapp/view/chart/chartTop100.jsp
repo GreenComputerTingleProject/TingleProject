@@ -164,7 +164,151 @@
     $('<table class="wrap"></table>').appendTo("#main_contents");
     $('<tr class="h-wrap"></tr>').appendTo('.wrap');
     $('<td><input type="checkbox"></td><td>순위</td><td>곡/앨범</td><td>아티스트</td><td>듣기</td><td>재생목록</td>').appendTo('.h-wrap');
+
     --%>
+
+
+<%--    let selectPlay = document.getElementsByClassName("selectPlay");--%>
+<%--    let selectList = document.getElementsByClassName("selectList");--%>
+<%--    let check = document.getElementsByClassName("check");--%>
+<%--    let totalCheck = document.getElementById("totalCheckbox");--%>
+<%--    let unCheck = document.getElementById("unCheck");--%>
+
+<%--    for (let i = 0; i < selectList.length; i++) {--%>
+
+
+<%--    // innerImg[i].src = coverImgList[i];--%>
+<%--    // console.log("sp"+selectPlay.length);--%>
+<%--    // console.log("sl"+selectList.length);--%>
+<%--    selectPlay[i].addEventListener('click', function () {--%>
+<%--    $('#player-play').css('display', 'block');--%>
+<%--    $('#player-pause').css('display', 'none');--%>
+<%--    audio.pause();--%>
+
+<%--    nowPlayList = [];--%>
+<%--    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);--%>
+
+<%--    for (const i in nowPlayList) {--%>
+<%--    preloadAudio(nowPlayList[i]);--%>
+<%--    }--%>
+
+<%--    audioIndex = 0;--%>
+
+<%--    playListInit();--%>
+
+<%--    setTimeout(() => {--%>
+<%--    $('#player-play').css('display', 'none');--%>
+<%--    $('#player-pause').css('display', 'block');--%>
+<%--    audio.play();--%>
+<%--    }, 100);--%>
+<%--    })--%>
+<%--    // console.log(selectList[i]);--%>
+<%--    selectList[i].addEventListener('click', function () {--%>
+<%--    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);--%>
+
+<%--    playListInit();--%>
+<%--    })--%>
+
+<%--    check[i].addEventListener('change', function () {--%>
+<%--    checkBoxJudge(totalCheck, check);--%>
+<%--    })--%>
+
+<%--    }--%>
+
+<%--    totalCheck.addEventListener('change', function () {--%>
+<%--    totalChange(totalCheck, check);--%>
+<%--    })--%>
+
+<%--    unCheck.addEventListener('click', function () {--%>
+<%--    totalCheck.checked = false;--%>
+<%--    totalChange(totalCheck, check);--%>
+<%--    })--%>
+<%--    function totalChange(totalCheck, check) {--%>
+<%--    for (let i = 0; i < check.length; i++) {--%>
+<%--    check[i].checked = totalCheck.checked;--%>
+<%--    }--%>
+
+<%--    checkBoxJudge(totalCheck, check);--%>
+<%--    }--%>
+
+<%--    function checkBoxJudge(totalCheck, check) {--%>
+<%--    let isChecked = false;--%>
+<%--    let cnt = 0;--%>
+
+<%--    for (const i in check) {--%>
+<%--    if (check[i].checked) {--%>
+<%--    cnt++;--%>
+<%--    isChecked = true;--%>
+<%--    }--%>
+<%--    }--%>
+
+<%--    if (cnt == check.length) {--%>
+<%--    totalCheck.checked = true;--%>
+<%--    } else {--%>
+<%--    totalCheck.checked = false;--%>
+<%--    }--%>
+
+<%--    if (isChecked) {--%>
+<%--    $('#btn-group').css('display', 'inline-flex');--%>
+<%--    } else {--%>
+<%--    totalCheck.checked = false;--%>
+<%--    $('#btn-group').css('display', 'none');--%>
+<%--    }--%>
+<%--    }--%>
+
+<%--    $('#modal_play').click(function () {--%>
+<%--    let check = document.getElementsByClassName("check");--%>
+<%--    let checkNum = [];--%>
+
+<%--    $('#player-play').css('display', 'block');--%>
+<%--    $('#player-pause').css('display', 'none');--%>
+<%--    audio.pause();--%>
+
+<%--    for (const i in check) {--%>
+<%--    if (check[i].checked) {--%>
+<%--    checkNum.push(i);--%>
+<%--    }--%>
+<%--    }--%>
+
+<%--    nowPlayList = [];--%>
+
+<%--    for (const i in checkNum) {--%>
+<%--    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);--%>
+<%--    }--%>
+
+<%--    for (const i in nowPlayList) {--%>
+<%--    preloadAudio(nowPlayList[i]);--%>
+<%--    }--%>
+
+<%--    audioIndex = 0;--%>
+
+<%--    playListInit();--%>
+
+<%--    setTimeout(() => {--%>
+<%--    $('#player-play').css('display', 'none');--%>
+<%--    $('#player-pause').css('display', 'block');--%>
+<%--    audio.play();--%>
+<%--    }, 100);--%>
+<%--    })--%>
+
+<%--    $('#modal_list').click(function () {--%>
+<%--    let check = document.getElementsByClassName("check");--%>
+<%--    let checkNum = [];--%>
+
+<%--    for (const i in check) {--%>
+<%--    if (check[i].checked) {--%>
+<%--    checkNum.push(i);--%>
+<%--    }--%>
+<%--    }--%>
+
+<%--    for (const i in checkNum) {--%>
+<%--    nowPlayList.push("<c:url value="/mp3/"/>" +json[i].file_path);--%>
+<%--    }--%>
+
+<%--    playListInit();--%>
+<%--    })--%>
+
+
 </footer>
 </body>
 </html>

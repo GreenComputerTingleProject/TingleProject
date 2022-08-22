@@ -34,6 +34,7 @@ public class ChartRock implements ChartService {
                 data.put("title", ch.getTitle());
                 data.put("album", ch.getAlbum());
                 data.put("artist", ch.getArtist());
+                data.put("cover_img", ch.getCover_img());
                 data.put("genre", ch.getGenre());
                 data.put("genre_no", ch.getGenre());
                 data.put("file_path", ch.getFile_path());

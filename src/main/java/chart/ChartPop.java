@@ -19,7 +19,7 @@ public class ChartPop implements ChartService {
 
             System.out.println("chart 실행");
 
-            ArrayList<MusicDTO> genreList = new MusicDAO().genreList(8);
+            ArrayList<MusicDTO> genreList = new MusicDAO().genreList(7);
             System.out.println("chart 실행"+genreList);
             JSONArray jsonArray = new JSONArray();
 
@@ -34,6 +34,7 @@ public class ChartPop implements ChartService {
                 data.put("title", ch.getTitle());
                 data.put("album", ch.getAlbum());
                 data.put("artist", ch.getArtist());
+                data.put("cover_img", ch.getCover_img());
                 data.put("genre", ch.getGenre());
                 data.put("genre_no", ch.getGenre());
                 data.put("file_path", ch.getFile_path());
