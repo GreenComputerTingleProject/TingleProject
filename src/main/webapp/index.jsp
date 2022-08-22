@@ -710,7 +710,9 @@
                 html += '<br>' + '구독 회원';
             }
             html += '<div style="float : right">';
-            html += '<a href="#"/>멤버쉽 가입하기';
+            if(s_UserData.membership == 0 || s_UserData.membership == 1) {
+                html += '<a href="<c:url value="/pay/PayMembership"/>"/>멤버쉽 가입하기';
+            }
             html += '</div>';
             html += '</div>';
             html += '</div>' + '<br>';
