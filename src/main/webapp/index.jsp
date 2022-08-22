@@ -303,7 +303,7 @@
                     <li><a href="<c:url value="/user/UserLogOut"/>">로그아웃</a></li>
                 </c:otherwise>
             </c:choose>
-            <li><a href="#">추천</a></li>
+            <li><a id="suggestion" href="#">추천</a></li>
             <li><a href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
@@ -991,8 +991,8 @@
 
 
         $('#suggestion').click(function (){
+            empty();
             suggestion();
-
         })
 
         let suggestion = function (){
@@ -1193,6 +1193,12 @@
             }
         }
 
+        var empty = function (){
+            var dt = document.getElementById("dynamicTable");
+            dt.style.display = "none";
+            $("#dynamicTbody").empty();
+            $("#suggestion_body").empty();
+        }
 
     })
 </script>
