@@ -4,9 +4,33 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MusicDTO {
-    Integer id, cnt;
-    String title, artist, album, genre, mood, file_path, cover_img, lyrics;
+    Integer id, cnt, genre_no;
+    String title, artist, album, genre, mood, file_path, cover_img, lyrics, artist_img;
     Date release_date;
+
+    public Integer getGenre_no() {
+        return genre_no;
+    }
+
+    public void setGenre_no(Integer genre_no) {
+        this.genre_no = genre_no;
+    }
+
+    public String getArtist_img() {
+        return artist_img;
+    }
+
+    public void setArtist_img(String artist_img) {
+        this.artist_img = artist_img;
+    }
+
+    public SimpleDateFormat getSdf() {
+        return sdf;
+    }
+
+    public void setSdf(SimpleDateFormat sdf) {
+        this.sdf = sdf;
+    }
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 (E) HH:mm:ss");
 
