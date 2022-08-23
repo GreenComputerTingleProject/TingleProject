@@ -649,7 +649,7 @@
     <!--/플레이어-->
 
     <!--모달1-->
-    <div id="modal1" class="modal">
+    <div id="modal1" class="modal" style="display: none">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -672,14 +672,6 @@
         <button id="modal_list" class="btn btn-primary"><i class="fa-solid fa-list"></i></button>
     </div>
     <!--/미니모달-->
-
-    <!--더보기 드롭다운 메뉴-->
-    <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
-    </ul>
-    <!--/더보기 드롭다운 메뉴-->
 </div>
 </body>
 <script>
