@@ -258,10 +258,8 @@
         .suggestion_table{
             width: 100%;
             height: 20vh;
-            padding-left: 10px;
-            border-collapse: separate;
-            border-spacing: 10px;
-            margin-bottom: 100px;
+            padding: 20px;
+            margin-bottom: 50px;
         }
 
         .suggestion_detail {
@@ -303,8 +301,11 @@
             background: #ffffff;
         }
 
-        td {
-            background: #0dcaf0;
+        suggestion_table > tr > td {
+            border: 1px #1a1e21 solid;
+            border-collapse: separate;
+            border-spacing: 10px;
+
         }
 
         td > button {
@@ -337,7 +338,7 @@
             <li><a id="suggestion" href="#">추천</a></li>
             <li><a href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
-            <li><a href="#">게시판</a></li>
+            <li><a id= "selfSong_board" href="#">자작곡 게시판</a></li>
             <li><a id="myPage" href="#">마이페이지</a></li>
             <li><a href="admin/AdminLogin">관리자</a></li>
         </ul>
@@ -674,6 +675,7 @@
         })
 
         function drawLibraryList() {
+            $("#suggestion_body").empty();
             $('#dynamicTable').css('display', 'block');
             $('#myPageDiv').css('display', 'none');
 
@@ -775,6 +777,7 @@
         }
 
         function drawMyPageList() {
+            $("#suggestion_body").empty();
             $('#dynamicTable').css('display', 'none');
             $('#myPageDiv').css('display', 'block');
 
@@ -1121,12 +1124,13 @@
                 html += '<tr>';
                 for (const i in jArrays) {
                     data.push(jArrays[i])
-                    html += '<td width="20%">' + '<button type ="button" class = "viewDetail" >';
+                    html += '<td width="15%">' + '<button type ="button" class = "viewDetail" >';
                     html += '<img src="img/'+jArrays[i].cover_img+'"/></button>';
-                    html += jArrays[i].title;
+                    html += jArrays[i].title+'<br>';
+                    html += jArrays[i].artist+'<br>';
                     html += '<i class="selectPlay fa-solid fa-play"></i>';
                     html += '<i class="selectList fa-solid fa-list"></i>';
-                    html += '<i class="fa-solid fa-folder-plus"></i>';
+                    html += '<i class="dropadd fa-solid fa-folder-plus"></i>';
                     html += '</td>';
                 }
                 html += '</tr>';
@@ -1140,6 +1144,7 @@
             let viewDetail = document.getElementsByClassName('viewDetail');
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
+            let dropadd = document.getElementsByClassName("dropadd");
 
             console.log("재생버튼 개수" + selectPlay.length);
             suggestion_player(data, selectPlay, selectList)
@@ -1204,10 +1209,26 @@
                     })
 
                 })
+
+                dropadd[i].addEventListener('click', function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '<c:url value="/music/MusicAddLibrary"/>',
+                        data: 'music_id=' + data[i].id,
+                        async: false,
+                        success: function (result) {
+                            getLibrary();
+                        //    drawLibraryList();
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                })
             }
-
-
         }
+
+
 
         let suggestion_player = function (data,selectPlay,selectList){
 
@@ -1303,10 +1324,34 @@
             var dt = document.getElementById("dynamicTable");
             dt.style.display = "none";
             $("#myPageDiv").empty();
+
+            $("#container-fluid").empty();
             $("#dynamicTbody").empty();
             $("#suggestion_body").empty();
         }
+ /*
+        $('#selfSong_board').click(function (){
+            if(!isSessionLoaded){
+                $('modal-body1').text('로그인 후에 이용할 수 있습니다');
+                $('#modal1').modal('toggle');
+                return;
+            }
+            $("#suggestion_body").empty();
+            $('#suggestion_body').css('display', 'block');
 
+            let html = '';
+
+         html += '<div class="btn-group">';
+            html += '<button class="btn btn-outline-danger">전체</button>';
+            html += ' <button class="btn btn-outline-danger">힙합</button>';
+            html += ' <button class="btn btn-outline-danger">발라드</button>';
+            html += '<button class="btn btn-outline-danger">팝송</button>';
+            html += '</div>';
+
+            $("#suggestion_body").append(html);
+
+        })
+*/
     })
 </script>
 </html>

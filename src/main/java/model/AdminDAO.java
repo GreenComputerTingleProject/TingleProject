@@ -6,6 +6,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -382,6 +383,28 @@ public class AdminDAO {
             throw new RuntimeException(e);
         }
         return res;
+    }
+
+    public int calculate(String sDay, String eDay){
+        int cnt = 0;
+
+        System.out.println("sDay =" + sDay);
+        System.out.println("eDay =" + eDay);
+        sql = "select * from user where membership = 2 and membership_start BETWEEN sDay = ? AND eDay = ?";
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setString(1, sDay);
+            ptmt.setString(2, eDay);
+            rs = ptmt.executeQuery();
+
+            while (rs.next()){
+                cnt++;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cnt;
     }
 
     public void close() {
