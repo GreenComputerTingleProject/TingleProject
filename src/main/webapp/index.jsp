@@ -448,6 +448,9 @@
             /*text-overflow: ellipsis;*/
 
         }
+        .select_icon> i{
+            padding-right: 15px;
+        }
 
     </style>
 </head>
@@ -495,6 +498,13 @@
 
                 </div>
             </div>
+
+                <%-- 상세보기 --%>
+                <div id="detail" style="display:none">
+
+                </div>
+
+
 
             <%--차트--%>
             <div class="chartContainer" style="display: none">
@@ -1394,13 +1404,13 @@
                     html += '<div class="suggestion_detail"><img src="img/' + data[i].cover_img + '">';
                     html += '<div id="detailInfo"><div><h2>' + data[i].title + '<h2></div>'
                     html += '<div><h4>' + data[i].artist + '</h4></div>';
-                    html += '<div><i class="selectPlay fa-solid fa-play"></i>'
+                    html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
                     html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
                     html += '<i class="detail_selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
                     html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
-                    html += '<div id ="suggestion_lylics">'
-                    html += '<h2>가사</h2></div>'
+                    html += '<div id ="suggestion_lylics">' ;
+                    html += '<h2>가사</h2>'+data[i].artist+'</div>'
                     $("#suggestion_body").append(html);
 
                     let selectPlay = document.getElementsByClassName("selectPlay");
@@ -1648,6 +1658,46 @@
                        // 플레이버튼 클릭
 
                     playButtonCLick(json);
+
+                    // //상세보기
+                    // $('.dropMusicInfo').click(function () {
+                    //
+                    //    allEmpty();
+                    //
+                    //     $('#detail').css("display", "");
+                    //
+                    //     $.each(json, function (i, item) {
+                    //         console.log(item)
+                    //         html = $('<div class="suggestion_detail">' +
+                    //             '<img src="img/' + item.cover_img + '">'+
+                    //         '<div id="detailInfo">' +
+                    //         '<div>' +
+                    //         '<h2>' + item.title + '<h2>' +
+                    //         '</div>'+
+                    //         '<div>' +
+                    //         '<h4>' + item.artist + '</h4>' +
+                    //         '</div>'+
+                    //         '<div class="select_icon">' +
+                    //         '<i class="selectPlay fa-solid fa-play">' +
+                    //         '</i>'+
+                    //         '<i class="selectList fa-solid fa-list" id = "selectList">' +
+                    //         '</i>'+
+                    //         '<i class="detail_selectAdd fa-solid fa-folder-plus"></i>' + '</div>' +
+                    //         '</div>'+
+                    //         '<div id="indexbtn">' +
+                    //         '<button type="button" id="go_suggestion" >' +
+                    //         '<h5>뒤로<h5>' +
+                    //         '</button>' +
+                    //         '</div>'+
+                    //         '</div>'+
+                    //         '<div id ="suggestion_lylics">'+
+                    //         '<h2>가사</h2>' +
+                    //         '</div>');
+                    //
+                    //     });
+                    //     $("#detail").append(html);
+                    // });
+
 
                     //발라드 클릭시
                     $('#ballad').click(function () {
@@ -2181,7 +2231,9 @@
                                     $('.b-wrap').attr("style", "display:");
 
                                 });
+
                             });
+
 
                             $('.find-input').val("");
                             playButtonCLick(json[0]);
