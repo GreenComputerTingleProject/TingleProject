@@ -49,7 +49,7 @@ public class AdminMusicModifyReg implements AdminService {
             }
             if(mr.getFilesystemName("cover_img")!= null){
                 musicData.setCover_img(mr.getFilesystemName("cover_img"));
-                dao.findImgFile(mr.getFilesystemName("cover_img"));
+                dao.findImgFile(request, mr.getFilesystemName("cover_img"));
             } else {
                 musicData.setCover_img(mr.getParameter("filecheck2"));
             }

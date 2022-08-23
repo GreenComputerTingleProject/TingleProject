@@ -16,11 +16,12 @@ public class AdminMusicInsertReg implements AdminService{
         System.out.println("AdminMusicInsertReg execute실행");
 
         String msg = "음원등록이 완료되었습니다";
-        String path = "C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\mp3";
+//        String path = "C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\mp3";
+        String path = request.getRealPath("/mp3");
 
         AdminDAO dao = new AdminDAO();
 
-        int size = 1024*1024*10;
+        int size = 1024*1024*100;
 
         try {
             MultipartRequest mr = new MultipartRequest(
@@ -38,8 +39,10 @@ public class AdminMusicInsertReg implements AdminService{
         musicData.setMood(mr.getParameter("mood"));
         musicData.setFile_path(mr.getFilesystemName("file_path"));
         musicData.setCover_img(mr.getFilesystemName("cover_img"));
+
         // 이미지파일은 img 폴더로 넣기
-        dao.findImgFile(mr.getFilesystemName("cover_img"));
+        dao.findImgFile(request, mr.getFilesystemName("cover_img"));
+
         musicData.setLyrics(mr.getParameter("lyrics"));
 
         dao.musicInsert(musicData);

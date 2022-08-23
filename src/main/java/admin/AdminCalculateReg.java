@@ -1,6 +1,7 @@
 package admin;
 
 import model.AdminDAO;
+import model.PayDAO;
 import model.PayDTO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +24,10 @@ public class AdminCalculateReg implements AdminService{
         String eDay = request.getParameter("endday");
 
         try {
-           Date startday = dateFormat.parse(request.getParameter("startday"));
-           Date endday = dateFormat.parse(request.getParameter("endday"));
+            Date startday = dateFormat.parse(request.getParameter("startday"));
+            Date endday = dateFormat.parse(request.getParameter("endday"));
+
             // 날짜비교
-
-
-
             if(!startday.before(endday)){
                 msg = "검색가능한 날짜 형식이 틀립니다";
 
@@ -36,33 +35,29 @@ public class AdminCalculateReg implements AdminService{
                 request.setAttribute("adminUrl", "alert.jsp");
                 //  request.setAttribute("adminUrl", "menu/music/userList.jsp");
                 request.setAttribute("goUrl", "AdminCalculate");
-
             } else {
-                System.out.println("서비스 sday = " + sDay);
-                System.out.println("서비스 eday = " + eDay);
+                System.out.println("서비스 sday= " + sDay);
+                System.out.println("서비스 eday= " + eDay);
+
                 ArrayList<PayDTO> dto = new AdminDAO().calculate(sDay, eDay);
+
                 int period_income = 0;
+
                 for (PayDTO pay : dto) {
                     period_income += pay.getPaid_amount();
                 }
 
+                int total_amount = new PayDAO().pay_total_amount();
 
-
+                request.setAttribute("sDay", sDay);
+                request.setAttribute("eDay", eDay);
+                request.setAttribute("total_amount", total_amount);
                 request.setAttribute("period_income", period_income);
+                request.setAttribute("calculate_pay", dto);
                 request.setAttribute("adminUrl", "menu/calculate/calculate.jsp");
             }
-
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
-
-
-
-
-
-
-
-
     }
 }
