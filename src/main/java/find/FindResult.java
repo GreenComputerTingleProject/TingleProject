@@ -42,16 +42,16 @@ public class FindResult implements FindService {
 
             for (MusicDTO ft : findTitle) {
                 JSONObject dataTitle = new JSONObject();
-                dataTitle.put("t_id", ft.getId());
-                dataTitle.put("t_cnt", ft.getCnt());
-                dataTitle.put("t_title", ft.getTitle());
-                dataTitle.put("t_album", ft.getAlbum());
-                dataTitle.put("t_artistImg", ft.getArtist_img());
-                dataTitle.put("t_coverImg", ft.getCover_img());
-                dataTitle.put("t_artist", ft.getArtist());
-                dataTitle.put("t_genre", ft.getGenre());
-                dataTitle.put("t_genre_no", ft.getGenre_no());
-                dataTitle.put("t_file_path", ft.getFile_path());
+                dataTitle.put("id", ft.getId());
+                dataTitle.put("cnt", ft.getCnt());
+                dataTitle.put("title", ft.getTitle());
+                dataTitle.put("album", ft.getAlbum());
+                dataTitle.put("artist_img", ft.getArtist_img());
+                dataTitle.put("cover_img", ft.getCover_img());
+                dataTitle.put("artist", ft.getArtist());
+                dataTitle.put("genre", ft.getGenre());
+                dataTitle.put("genre_no", ft.getGenre_no());
+                dataTitle.put("file_path", ft.getFile_path());
                 titleArray.add(dataTitle);
             }
 
@@ -64,8 +64,8 @@ public class FindResult implements FindService {
                 dataArtist.put("a_title", fa.getTitle());
                 dataArtist.put("a_album", fa.getAlbum());
                 dataArtist.put("a_artist", fa.getArtist());
-                dataArtist.put("a_artistImg", fa.getArtist_img());
-                dataArtist.put("a_coverImg", fa.getCover_img());
+                dataArtist.put("a_artist_img", fa.getArtist_img());
+                dataArtist.put("a_cover_img", fa.getCover_img());
                 dataArtist.put("a_genre", fa.getGenre());
                 dataArtist.put("a_genre_no", fa.getGenre_no());
                 dataArtist.put("a_file_path", fa.getFile_path());
@@ -79,8 +79,8 @@ public class FindResult implements FindService {
                 dataAlbum.put("b_title", fa.getTitle());
                 dataAlbum.put("b_album", fa.getAlbum());
                 dataAlbum.put("b_artist", fa.getArtist());
-                dataAlbum.put("b_artistImg", fa.getArtist_img());
-                dataAlbum.put("b_coverImg", fa.getCover_img());
+                dataAlbum.put("b_artist_img", fa.getArtist_img());
+                dataAlbum.put("b_cover_img", fa.getCover_img());
                 dataAlbum.put("b_genre", fa.getGenre());
                 dataAlbum.put("b_genre_no", fa.getGenre_no());
                 dataAlbum.put("b_file_path", fa.getFile_path());
@@ -95,8 +95,8 @@ public class FindResult implements FindService {
                 dataLyrics.put("l_title", fl.getTitle());
                 dataLyrics.put("l_album", fl.getAlbum());
                 dataLyrics.put("l_artist", fl.getArtist());
-                dataLyrics.put("l_artistImg", fl.getArtist_img());
-                dataLyrics.put("l_coverImg", fl.getCover_img());
+                dataLyrics.put("l_artist_img", fl.getArtist_img());
+                dataLyrics.put("l_cover_img", fl.getCover_img());
                 dataLyrics.put("l_lyrics",fl.getLyrics());
                 dataLyrics.put("l_genre", fl.getGenre());
                 dataLyrics.put("l_genre_no", fl.getGenre_no());
