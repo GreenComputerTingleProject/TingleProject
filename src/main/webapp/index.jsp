@@ -231,7 +231,7 @@
             color: white;
         }
 
-        #player-title{
+        #player-title {
             width: 300px;
             color: white;
             line-height: 50px;
@@ -245,7 +245,7 @@
             margin-top: 50px;
         }
 
-        .progress:hover{
+        .progress:hover {
             cursor: pointer;
         }
 
@@ -255,16 +255,16 @@
             color: gray;
         }
 
-        #player-volume, #player-volume-mute{
+        #player-volume, #player-volume-mute {
             margin-right: 5px;
         }
 
-        #player-volume-range{
+        #player-volume-range {
             width: 100px;
             margin-top: 38px;
         }
 
-        #control-zone{
+        #control-zone {
             line-height: 50px;
             font-size: 20px;
         }
@@ -319,7 +319,7 @@
             margin: 10px auto 0;
         }
 
-        #submitBtn{
+        #submitBtn {
             margin-top: 10px;
         }
 
@@ -332,7 +332,7 @@
             margin-bottom: 40px;
         }
 
-        .suggestion_table{
+        .suggestion_table {
             width: 100%;
             height: 20vh;
             padding-left: 10px;
@@ -368,7 +368,7 @@
         }
 
 
-        #detailInfo{
+        #detailInfo {
             width: 58%;
             height: 30vh;
             background: #ffffff;
@@ -412,7 +412,7 @@
             background: #1a1a1a;
         }
 
-        .iptxt {
+        #findEnter {
             height: 70%;
             width: 80%;
             font-size: 13px;
@@ -491,7 +491,7 @@
 
             <%-- 추천 --%>
             <div id="main_contents2">
-                <div id ="suggestion_body">
+                <div id="suggestion_body">
 
                 </div>
             </div>
@@ -530,8 +530,7 @@
             <%--검색--%>
             <div class="find_Container" style="display: none">
                 <h1 id="find_h1">검색결과</h1>
-
-                <div id="findTitle_Container">
+                <div id="findTitle_Container" style="display: none">
                     <h1 id="findTitle_h1">곡 <i class="fa-solid fa-angle-right"></i></h1>
                     <table class="findTitle_table table table-hover">
                         <thead class="table-dark" id="findTitleHead">
@@ -552,14 +551,15 @@
                     </table>
                 </div>
 
-                <div id="findArtist_Container">
+                <div id="findArtist_Container" style="display: none">
                     <h1 id="findArtist_h1">가수 <i class="fa-solid fa-angle-right"></i></h1>
                     <div class="findArtist_Container">
                         <ul class="findArtist_List">
+
                         </ul>
                     </div>
                 </div>
-                <div id="findAlbum_Container">
+                <div id="findAlbum_Container" style="display: none">
                     <h1 id="findAlbum_h1">앨범 <i class="fa-solid fa-angle-right"></i></h1>
                     <div class="findAlbum_Container">
                         <ul class="findAlbum_List">
@@ -568,7 +568,7 @@
                     </div>
                 </div>
 
-                <div id="findLyrics_Container">
+                <div id="findLyrics_Container" style="display: none">
                     <h1 id="findLyrics_h1">가사 <i class="fa-solid fa-angle-right"></i></h1>
                     <table class="findLyrics_table table table-hover">
                         <thead class="table-dark" id="findLyricsHead">
@@ -670,7 +670,6 @@
         <button id="unCheck" class="btn btn-primary"><i class="fa-solid fa-x"></i></button>
         <button id="modal_play" class="btn btn-primary"><i class="selectPlay fa-solid fa-play"></i></button>
         <button id="modal_list" class="btn btn-primary"><i class="fa-solid fa-list"></i></button>
-        <%--        <button id="modal_folder" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>--%>
     </div>
     <!--/미니모달-->
 
@@ -721,7 +720,7 @@
         function init(libraryData) {
             s_UserData = JSON.parse('${sessionScope.userData}');
             s_LibraryData = libraryData;
-            s_SuggestionList = JSON.parse('${sessionScope.suggestionList}')
+            s_SuggestionList = JSON.parse('${sessionScope.suggestionList}');
 
             isSessionLoaded = true;
 
@@ -787,7 +786,7 @@
             // 첫곡은 장전시켜둔다.
             audio.src = nowPlayList[0];
         }
-        
+
         function convertTime(time) {
             const minutes = Math.floor(time / 60);
             const seconds = time % 60;
@@ -825,13 +824,13 @@
             if (isSessionLoaded) {
                 audio.pause();
 
-                if(!isShuffle) {
+                if (!isShuffle) {
                     audioIndex++;
 
                     if (audioIndex == nowPlayList.length) {
-                        if(repeatMode == 0 || repeatMode == 2) {
+                        if (repeatMode == 0 || repeatMode == 2) {
                             audioIndex--;
-                        } else if(repeatMode == 1) {
+                        } else if (repeatMode == 1) {
                             audioIndex = 0;
                         }
                     }
@@ -853,14 +852,14 @@
             if (isSessionLoaded) {
                 audio.pause();
 
-                if(!isShuffle) {
+                if (!isShuffle) {
                     audioIndex--;
 
                     if (audioIndex == -1) {
 
-                        if(repeatMode == 0 || repeatMode == 2) {
+                        if (repeatMode == 0 || repeatMode == 2) {
                             audioIndex++;
-                        } else if(repeatMode == 1) {
+                        } else if (repeatMode == 1) {
                             audioIndex = nowPlayList.length - 1;
                         }
                     }
@@ -893,8 +892,23 @@
                 return;
             }
 
-            allEmpty();
-            drawLibraryList();
+            $.ajax({
+                type: 'GET',
+                url: '<c:url value="/music/MusicList_V2"/>',
+                async: false,
+                dataType: 'text',
+                success: function (result) {
+                    s_LibraryData = JSON.parse(result);
+
+                    allEmpty();
+                    drawLibraryList();
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+
+            console.log(s_LibraryData)
         })
 
         $("#myPage").click(function () {
@@ -922,12 +936,9 @@
                 html += '<td>' + s_LibraryData[i].artist + '</td>';
                 html += '<td>' + '<i class="selectPlay fa-solid fa-play"></i>' + '</td>';
                 html += '<td>' + '<i class="selectList fa-solid fa-list"></i>' + '</td>';
-                // html += '<td>' + '<i class="fa-solid fa-folder-plus"></i>' + '</td>';
                 html += '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                     + '<ul class="dropdown-menu">'
-                    + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
-                    + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
-                    + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                    + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
                     + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
                     + '<li><a class="dropRemove dropdown-item" href="#">보관함에서 삭제</a></li>'
                     + '</ul>' + '</td>';
@@ -1028,7 +1039,7 @@
                 html += '<br>' + '구독 회원';
             }
             html += '<div style="float : right">';
-            if(s_UserData.membership == 0 || s_UserData.membership == 1) {
+            if (s_UserData.membership == 0 || s_UserData.membership == 1) {
                 html += '<a href="<c:url value="/pay/PayMembership"/>"/>멤버쉽 가입하기';
             }
             html += '</div>';
@@ -1158,7 +1169,7 @@
             let html = "";
 
             for (const i in nowPlayList) {
-                if(i == audioIndex) {
+                if (i == audioIndex) {
                     html += '<div style="color: red">' + nowPlayList[i] + '</div>';
                 } else {
                     html += '<div>' + nowPlayList[i] + '</div>';
@@ -1169,7 +1180,7 @@
             $("#playList_items").append(html);
 
             for (const i in s_LibraryData) {
-                if(("<c:url value="/mp3/"/>" + s_LibraryData[i].file_path) == nowPlayList[audioIndex]) {
+                if (("<c:url value="/mp3/"/>" + s_LibraryData[i].file_path) == nowPlayList[audioIndex]) {
                     $("#player-img").attr('src', "<c:url value="/img/"/>" + s_LibraryData[i].cover_img);
 
                     let html = s_LibraryData[i].title + '<br>' + s_LibraryData[i].album
@@ -1212,14 +1223,14 @@
         })
 
         $("#player-shuffle").click(function () {
-            if(!isShuffle) {
+            if (!isShuffle) {
                 isShuffle = true;
                 $("#player-shuffle").removeClass("player-control2");
                 $("#player-shuffle").addClass("player-control2-change");
 
                 audio.onended = function () {
 
-                    if(repeatMode != 2) {
+                    if (repeatMode != 2) {
                         audioIndex = Math.floor(Math.random() * nowPlayList.length);
 
                         if (audioIndex >= nowPlayList.length) {
@@ -1229,7 +1240,7 @@
                             audioIndex = 0;
                             audio.src = nowPlayList[0];
 
-                            if(repeatMode == 0) {
+                            if (repeatMode == 0) {
                                 return;
                             }
                         }
@@ -1245,7 +1256,7 @@
 
                 audio.onended = function () {
 
-                    if(repeatMode != 2) {
+                    if (repeatMode != 2) {
                         audioIndex++;
 
                         if (audioIndex >= nowPlayList.length) {
@@ -1255,7 +1266,7 @@
                             audioIndex = 0;
                             audio.src = nowPlayList[0];
 
-                            if(repeatMode == 0) {
+                            if (repeatMode == 0) {
                                 return;
                             }
                         }
@@ -1268,13 +1279,13 @@
         })
 
         $("#player-repeat").click(function () {
-            if(repeatMode == 0) {
+            if (repeatMode == 0) {
                 repeatMode = 1;
                 $("#player-repeat").removeClass("player-control2");
                 $("#player-repeat").addClass("player-control2-change");
 
                 audio.onended = function () {
-                    if(isShuffle){
+                    if (isShuffle) {
                         audioIndex = Math.floor(Math.random() * nowPlayList.length);
                     } else {
                         audioIndex++;
@@ -1288,7 +1299,7 @@
                     play(audioIndex);
                     playListInit();
                 };
-            } else if(repeatMode == 1) {
+            } else if (repeatMode == 1) {
                 repeatMode = 2;
                 $("#player-repeat").removeClass("player-control2-change");
                 $("#player-repeat").addClass("player-control2");
@@ -1303,13 +1314,13 @@
         })
 
         $("#player-repeat-1").click(function () {
-            if(repeatMode == 2) {
+            if (repeatMode == 2) {
                 repeatMode = 0;
                 $("#player-repeat").css("display", "inline-block");
                 $("#player-repeat-1").css("display", "none");
 
                 audio.onended = function () {
-                    if(isShuffle){
+                    if (isShuffle) {
                         audioIndex = Math.floor(Math.random() * nowPlayList.length);
                     } else {
                         audioIndex++;
@@ -1330,16 +1341,13 @@
         })
 
         /*현석 스크립트*/
-
-
-
-        $('#suggestion').click(function (){
+        $('#suggestion').click(function () {
             allEmpty();
             suggestion();
         })
 
-        let suggestion = function (){
-            if(!isSessionLoaded){
+        let suggestion = function () {
+            if (!isSessionLoaded) {
                 $('modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
                 return;
@@ -1353,17 +1361,17 @@
 
             for (const i in s_SuggestionList) {
                 let jArrays = s_SuggestionList[i];
-                html += '<h2>'+jArrays[0].kind+'</h2>';
+                html += '<h2>' + jArrays[0].kind + '</h2>';
                 html += '<table class = suggestion_table>';
                 html += '<tr>';
                 for (const i in jArrays) {
                     data.push(jArrays[i])
                     html += '<td width="20%">' + '<button type ="button" class = "viewDetail" >';
-                    html += '<img src="img/'+jArrays[i].cover_img+'"/></button>';
+                    html += '<img src="img/' + jArrays[i].cover_img + '"/></button>';
                     html += jArrays[i].title;
                     html += '<i class="selectPlay fa-solid fa-play"></i>';
                     html += '<i class="selectList fa-solid fa-list"></i>';
-                    html += '<i class="fa-solid fa-folder-plus"></i>';
+                    html += '<i class="selectAdd fa-solid fa-folder-plus"></i>';
                     html += '</td>';
                 }
                 html += '</tr>';
@@ -1382,17 +1390,17 @@
 
 
             for (let i = 0; i < viewDetail.length; i++) {
-                viewDetail[i].addEventListener('click', function (){
+                viewDetail[i].addEventListener('click', function () {
                     // 오브젝트 배열
                     console.log(data[i])
-                    console.log("버튼눌렸어요 "+i+"번째")
+                    console.log("버튼눌렸어요 " + i + "번째")
                     $("#suggestion_body").empty();
                     $('#suggestion_body').css('display', 'block');
                     let html = '';
 
-                    html += '<div class="suggestion_detail"><img src="img/'+data[i].cover_img+'">';
-                    html += '<div id="detailInfo"><div><h2>'+data[i].title+'<h2></div>'
-                    html += '<div><h4>'+data[i].artist+'</h4></div>';
+                    html += '<div class="suggestion_detail"><img src="img/' + data[i].cover_img + '">';
+                    html += '<div id="detailInfo"><div><h2>' + data[i].title + '<h2></div>'
+                    html += '<div><h4>' + data[i].artist + '</h4></div>';
                     html += '<div><i class="selectPlay fa-solid fa-play"></i>'
                     html += '<i class="selectList fa-solid fa-list" id = "selectList"></i></div></div>'
                     html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
@@ -1434,18 +1442,16 @@
                         })
                     })
 
-
-                    document.getElementById('go_suggestion').addEventListener('click',function (){
+                    document.getElementById('go_suggestion').addEventListener('click', function () {
                         suggestion();
                     })
 
                 })
             }
 
-
         }
 
-        let suggestion_player = function (data,selectPlay,selectList){
+        let suggestion_player = function (data, selectPlay, selectList) {
 
             for (let i = 0; i < selectList.length; i++) {
 
@@ -1487,7 +1493,7 @@
             let html = "";
 
             for (const i in nowPlayList) {
-                if(i == audioIndex) {
+                if (i == audioIndex) {
                     html += '<div style="color: red">' + nowPlayList[i] + '</div>';
                 } else {
                     html += '<div>' + nowPlayList[i] + '</div>';
@@ -1498,7 +1504,7 @@
             $("#playList_items").append(html);
 
             for (const i in data) {
-                if(("<c:url value="/mp3/"/>" + data[i].file_path) == nowPlayList[audioIndex]) {
+                if (("<c:url value="/mp3/"/>" + data[i].file_path) == nowPlayList[audioIndex]) {
                     $("#player-img").attr('src', "<c:url value="/img/"/>" + data[i].cover_img);
 
                     let html = data[i].title + '<br>' + data[i].album;
@@ -1513,7 +1519,7 @@
             let html = "";
 
             for (const i in nowPlayList) {
-                if(i == audioIndex) {
+                if (i == audioIndex) {
                     html += '<div style="color: red">' + nowPlayList[i] + '</div>';
                 } else {
                     html += '<div>' + nowPlayList[i] + '</div>';
@@ -1524,7 +1530,7 @@
             $("#playList_items").append(html);
 
             for (const i in data) {
-                if(("<c:url value="/mp3/"/>" + data.file_path) == nowPlayList[audioIndex]) {
+                if (("<c:url value="/mp3/"/>" + data.file_path) == nowPlayList[audioIndex]) {
                     $("#player-img").attr('src', "<c:url value="/img/"/>" + data.cover_img);
 
                     let html = data.title + '<br>' + data.album;
@@ -1535,26 +1541,35 @@
             }
         }
 
-         function allEmpty() {
-             let dt = document.getElementById("dynamicTable");
-             dt.style.display = "none";
-             $("#myPageDiv").empty();
-             $("#dynamicTbody").empty();
-             $("#suggestion_body").empty();
-             $(".chartContainer").attr("style","display:none");
-             $(".chartTable").attr("style","display:none")
-             $(".chartTbody").empty();
-             $(".find_Container").css("display", "none");
-             $('#btn-group').css('display', 'none');
-             $('#totalCheckbox').prop("checked", false);
-             $('#ChartTotalCheckbox').prop("checked", false);
-         }
+        function allEmpty() {
+            let dt = document.getElementById("dynamicTable");
+            dt.style.display = "none";
+            $("#myPageDiv").empty();
+            $("#dynamicTbody").empty();
+            $("#suggestion_body").empty();
+            $(".chartContainer").attr("style", "display:none");
+            $(".chartTable").attr("style", "display:none")
+            $(".chartTbody").empty();
+            $('#btn-group').css('display', 'none');
+            $('#totalCheckbox').prop("checked", false);
+            $('#ChartTotalCheckbox').prop("checked", false);
+
+            $(".find_Container").css("display", "none");
+            $('#findTitle_Container').css("display", "none");
+            $('#findAlbum_Container').css("display", "none");
+            $('#findArtist_Container').css("display", "none");
+            $('#findLyrics_Container').css("display", "none");
+            $(".findTbody").empty();
+            $(".findArtist_List").empty();
+            $(".findAlbum_List").empty();
+            $(".findLyricsTbody").empty();
+        }
 
         //차트 클릭시
         $('.chart').click(function () {
 
             allEmpty();
-            $('#top100').attr("style", "background: purple")
+            // $('#top100').attr("style", "background: purple");
             $('.chartTable').attr("style", "display:");
             $('.chartContainer').attr("style", "display:");
             $('#chart_h1').html("TOP100");
@@ -1567,9 +1582,10 @@
 
                 success: function (data) {
                     const json = JSON.parse(data);
+                    s_LibraryData = json;
                     $('.find_Container').attr("style", "display:none");
-                    $('.find_title').empty()
-                    $('.find_artist').empty()
+                    $('.find_title').empty();
+                    $('.find_artist').empty();
                     $('.chartTbody').empty();
 
                     let html = "";
@@ -1593,15 +1609,13 @@
                             '<i class="selectList fa-solid fa-list"></i>' +
                             '</td>' +
                             '<td>' +
-                            '<i class="fa-solid fa-folder-plus"></i>' +
+                            '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
                             '</td>' +
                             '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                             + '<ul class="dropdown-menu">'
-                            + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
-                            + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
-                            + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                            + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
                             + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
-                            + '</ul>' + '</td>'+
+                            + '</ul>' + '</td>' +
                             '</tr>');
 
                         $(".chartTbody").append(html);
@@ -1763,7 +1777,7 @@
             // chart 함수
             function success(data) {
                 const json = JSON.parse(data);
-                console.log(json);
+                s_LibraryData = json;
                 $('.chartTbody').empty();
 
                 $.each(json, function (i, item) {
@@ -1784,15 +1798,13 @@
                         '<i class="selectList fa-solid fa-list"></i>' +
                         '</td>' +
                         '<td>' +
-                        '<i class="fa-solid fa-folder-plus"></i>' +
+                        '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
                         '</td>' +
                         '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                         + '<ul class="dropdown-menu">'
-                        + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
-                        + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
-                        + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                        + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
                         + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
-                        + '</ul>' + '</td>'+
+                        + '</ul>' + '</td>' +
                         '</tr>');
                     $(".chartTbody").append(html);
                 })
@@ -1803,9 +1815,9 @@
 
         //버튼 클릭 함수
         function playButtonCLick(json) {
-
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
+            let selectAdd = document.getElementsByClassName("selectAdd");
             let check = document.getElementsByClassName("check");
             let totalCheck = document.getElementById("ChartTotalCheckbox");
             let unCheck = document.getElementById("unCheck");
@@ -1846,6 +1858,20 @@
                     checkBoxJudge(totalCheck, check);
                 })
 
+                selectAdd[i].addEventListener('click', function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '<c:url value="/music/MusicAddLibrary"/>',
+                        data: 'music_id=' + json[i].id,
+                        async: false,
+                        success: function (result) {
+                            getLibrary();
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                })
             }
 
             totalCheck.addEventListener('change', function () {
@@ -1858,140 +1884,17 @@
                 totalCheck.checked = false;
                 totalChange(totalCheck, check);
             })
-
-            function totalChange(totalCheck, check) {
-                for (let i = 0; i < check.length; i++) {
-                    check[i].checked = totalCheck.checked;
-                }
-
-                checkBoxJudge(totalCheck, check);
-            }
-
-            function checkBoxJudge(totalCheck, check) {
-                let isChecked = false;
-                let cnt = 0;
-
-                for (const i in check) {
-                    if (check[i].checked) {
-                        cnt++;
-                        isChecked = true;
-                    }
-                }
-
-                if (cnt == check.length) {
-                    totalCheck.checked = true;
-                } else {
-                    totalCheck.checked = false;
-                }
-
-                if (isChecked) {
-                    $('#btn-group').css('display', 'inline-flex');
-                } else {
-                    totalCheck.checked = false;
-                    $('#btn-group').css('display', 'none');
-                }
-            }
-
-            $('#modal_play').click(function () {
-                let check = document.getElementsByClassName("check");
-                let checkNum = [];
-
-                $('#player-play').css('display', 'block');
-                $('#player-pause').css('display', 'none');
-                audio.pause();
-
-                for (const i in check) {
-                    if (check[i].checked) {
-                        checkNum.push(i);
-                    }
-                }
-
-                nowPlayList = [];
-
-                for (const i in checkNum) {
-                    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
-                }
-
-                for (const i in nowPlayList) {
-                    preloadAudio(nowPlayList[i]);
-                }
-
-                audioIndex = 0;
-
-                playListInit();
-
-                setTimeout(() => {
-                    $('#player-play').css('display', 'none');
-                    $('#player-pause').css('display', 'block');
-                    audio.play();
-                }, 100);
-            })
-
-            $('#modal_list').click(function () {
-                let check = document.getElementsByClassName("check");
-                let checkNum = [];
-
-                for (const i in check) {
-                    if (check[i].checked) {
-                        checkNum.push(i);
-                    }
-                }
-
-                for (const i in checkNum) {
-                    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
-                }
-
-                playListInit();
-            })
-
-            function playListInit() {
-                let html = "";
-
-                for (const i in nowPlayList) {
-                    if (i == audioIndex) {
-                        html += '<div style="color: red">' + nowPlayList[i] + '</div>';
-                    } else {
-                        html += '<div>' + nowPlayList[i] + '</div>';
-                    }
-                }
-
-                $("#playList_items").empty();
-                $("#playList_items").append(html);
-
-                for (const i in json) {
-
-                    if (("<c:url value="/mp3/"/>" + json[i].file_path) == nowPlayList[audioIndex]) {
-                        $("#player-img").attr('src', "<c:url value="/img/"/>" + json[i].cover_img);
-
-                        let html = json[i].title + '<br>' + json[i].album
-                        $("#player-title").empty();
-                        $("#player-title").append(html);
-                    }
-                }
-            }
-
-            $(".progress").click(function (e) {
-                let x = e.pageX - $('.progress').offset().left;
-                $('.progress-bar').css("width", x);
-
-                audio.currentTime = audio.duration * ((x / 3) / 100);
-            });
-
         }
 
         /* find 함수*/
-        $("#findEnter").keydown(function(key) {
-            allEmpty();
-            if( key.keyCode == 13 ){
-                console.log('Enter');
+        $("#findEnter").keydown(function (key) {
+            if (key.keyCode == 13) {
 
                 if ($('.find-input').val() != '') {
+                    console.log('Enter');
+                    allEmpty();
 
-                    $('.chartTable').attr("style", "display:none");
-                    $('.chartContainer').attr("style", "display:none");
-                    $('.chartTbody').empty();
                     $('.find_Container').attr("style", "display:");
-
                     $('#findTitle_Container').attr("style", "display:");
                     $('#findAlbum_Container').attr("style", "display:");
                     $('#findArtist_Container').attr("style", "display:");
@@ -2001,8 +1904,8 @@
                     $('#findArtist_h1').attr("style", "display:");
                     $('#findTitle_h1').attr("style", "display:");
 
-
                     $('#find_h1').html('\'' + $('.find-input').val() + '\'' + " 검색결과");
+
                     $.ajax({
                         url: "<c:url value="/find/FindResult"/>",
                         type: "POST",
@@ -2012,7 +1915,8 @@
                         success: function (data) {
                             console.log($('.find-input').val());
                             const json = JSON.parse(data);
-                            console.log(json);
+                            s_LibraryData = json[0];
+                            console.log(s_LibraryData)
                             if (json[0].length > 0) {
                                 $('#findTitleHead').attr("style", "display:");
                             } else {
@@ -2023,9 +1927,6 @@
                             } else {
                                 $('#findLyricsHead').attr("style", "display:none");
                             }
-
-                            /*  $('#findTitle_Container').attr("style", "display:");
-                              $('#findLyrics_Container').attr("style", "display:");*/
 
                             /* 곡 검색*/
 
@@ -2041,10 +1942,10 @@
                                         '<input class="check" type="checkbox" name="check">' +
                                         '</td>' +
                                         '<td>' +
-                                        '<img class="innerImg" src="img/' + item.t_coverImg + '">' +
+                                        '<img class="innerImg" src="img/' + item.cover_img + '">' +
                                         '</td>' +
-                                        '<td id="title">' + item.t_title + '<br>' + item.t_album + '</td>' +
-                                        '<td id="artist">' + item.t_artist + '</td>' +
+                                        '<td id="title">' + item.title + '<br>' + item.album + '</td>' +
+                                        '<td id="artist">' + item.artist + '</td>' +
                                         '<td>' +
                                         '<i class="selectPlay fa-solid fa-play"></i>' +
                                         '</td>' +
@@ -2052,10 +1953,14 @@
                                         '<i class="selectList fa-solid fa-list"></i>' +
                                         '</td>' +
                                         '<td>' +
-                                        '<i class="fa-solid fa-folder-plus"></i>' +
+                                        '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
                                         '</td>' +
                                         '<td>' +
-                                        '<i class="fa-solid fa-ellipsis-vertical"></i>' +
+                                        '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                        + '<ul class="dropdown-menu">'
+                                        + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
+                                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                                        + '</ul>' +
                                         '</td>' +
                                         '</tr>');
 
@@ -2068,10 +1973,10 @@
                                         '<input class="check" type="checkbox" name="check">' +
                                         '</td>' +
                                         '<td>' +
-                                        '<img class="innerImg" src="img/' + item.t_coverImg + '">' +
+                                        '<img class="innerImg" src="img/' + item.cover_img + '">' +
                                         '</td>' +
-                                        '<td id="title">' + item.t_title + '<br>' + item.t_album + '</td>' +
-                                        '<td id="artist">' + item.t_artist + '</td>' +
+                                        '<td id="title">' + item.title + '<br>' + item.album + '</td>' +
+                                        '<td id="artist">' + item.artist + '</td>' +
                                         '<td>' +
                                         '<i class="selectPlay fa-solid fa-play"></i>' +
                                         '</td>' +
@@ -2079,10 +1984,14 @@
                                         '<i class="selectList fa-solid fa-list"></i>' +
                                         '</td>' +
                                         '<td>' +
-                                        '<i class="fa-solid fa-folder-plus"></i>' +
+                                        '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
                                         '</td>' +
                                         '<td>' +
-                                        '<i class="fa-solid fa-ellipsis-vertical"></i>' +
+                                        '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                        + '<ul class="dropdown-menu">'
+                                        + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
+                                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                                        + '</ul>' +
                                         '</td>' +
                                         '</tr>');
 
@@ -2113,7 +2022,7 @@
                                         ' <div>' +
                                         ' <div>' +
                                         '<a>' +
-                                        '<img class="artist_img" src="img/' + item.a_artistImg + '">' +
+                                        '<img class="artist_img" src="img/' + item.a_artist_img + '">' +
                                         '</a>' +
                                         '</div>' +
                                         '<a class="aa" href="#">' + item.a_artist + '</a>' +
@@ -2127,7 +2036,7 @@
                                         ' <div>' +
                                         ' <div>' +
                                         '<a>' +
-                                        '<img class="artist_img" src="img/' + item.a_artistImg + '">' +
+                                        '<img class="artist_img" src="img/' + item.a_artist_img + '">' +
                                         '</a>' +
                                         '</div>' +
                                         '<a class="aa" href="#">' + item.a_artist + '</a>' +
@@ -2161,7 +2070,7 @@
                                         '<div>' +
                                         '<div>' +
                                         '<a>' +
-                                        '<img class="album_img" src="img/' + item.b_coverImg + '">' +
+                                        '<img class="album_img" src="img/' + item.b_cover_img + '">' +
                                         '</a>' +
                                         '</div>' +
                                         '<div>' +
@@ -2178,7 +2087,7 @@
                                         '<div>' +
                                         '<div>' +
                                         '<a>' +
-                                        '<img class="album_img" src="img/' + item.b_coverImg + '">' +
+                                        '<img class="album_img" src="img/' + item.b_cover_img + '">' +
                                         '</a>' +
                                         '</div>' +
                                         '<div>' +
@@ -2212,7 +2121,7 @@
                                         '<input class="check" type="checkbox" name="check">' +
                                         '</td>' +
                                         '<td>' +
-                                        '<img class="innerImg" src="img/' + item.l_coverImg + '">' +
+                                        '<img class="innerImg" src="img/' + item.l_cover_img + '">' +
                                         '</td>' +
                                         '<td id="title" class="lyricsTd">' + item.l_title + '<br>' + item.l_lyrics + '</td>' +
                                         '<td id="artist">' + item.l_artist + '</td>' +
@@ -2228,7 +2137,7 @@
                                         '<input class="check" type="checkbox" name="check">' +
                                         '</td>' +
                                         '<td>' +
-                                        '<img class="innerImg" src="img/' + item.l_coverImg + '">' +
+                                        '<img class="innerImg" src="img/' + item.l_cover_img + '">' +
                                         '</td>' +
                                         '<td id="title" class="lyricsTd">' + item.l_title + '<br>' + item.l_lyrics + '</td>' +
                                         '<td id="artist">' + item.l_artist + '</td>' +
@@ -2237,7 +2146,8 @@
 
                                     $(".findLyricsTbody").append(html);
 
-                                };
+                                }
+                                ;
 
                                 $('#findLyrics_h1').click(function () {
                                     $('#findLyrics_h1').attr("style", "display:none");
@@ -2250,7 +2160,7 @@
                             });
 
                             $('.find-input').val("");
-                            playButtonCLick(json);
+                            playButtonCLick(json[0]);
                         },
                         error: function (e) {
                             alert("실패" + $('.find-input').val())
@@ -2262,18 +2172,7 @@
                     $('.find-input').focus();
                 }
             }
-
-
         });//요기 onload
-
-
     })
-
-
-
-
-
-
-
 </script>
 </html>
