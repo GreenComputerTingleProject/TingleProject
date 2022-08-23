@@ -1381,7 +1381,6 @@
 
             suggestion_player(data, selectPlay, selectList)
 
-
             for (let i = 0; i < viewDetail.length; i++) {
                 viewDetail[i].addEventListener('click', function () {
                     // 오브젝트 배열
@@ -1508,7 +1507,6 @@
                         playListInit2(data);
                     })
                 })
-
 
             }
         }
@@ -1645,8 +1643,8 @@
                         $(".chartTbody").append(html);
 
                     }) //지우지마셈
-                       // 플레이버튼 클릭
 
+                    // 플레이버튼 클릭
                     playButtonCLick(json);
 
                     //발라드 클릭시
@@ -2170,8 +2168,7 @@
 
                                     $(".findLyricsTbody").append(html);
 
-                                }
-                                ;
+                                };
 
                                 $('#findLyrics_h1').click(function () {
                                     $('#findLyrics_h1').attr("style", "display:none");
