@@ -48,7 +48,7 @@ public class MusicSuggestion implements MusicService{
             jObject.put("file_path", dto.getFile_path());
             jObject.put("cover_img", dto.getCover_img());
             jObject.put("cnt", dto.getCnt());
-            jObject.put("lyrics", dto.getLyrics());
+            jObject.put("lyrics", dto.                                                                                                                                                          getLyrics());
             jObject.put("release_date", dto.getRelease_dateStr());
 
             jArrayFunny.add(jObject);
