@@ -385,12 +385,13 @@ public class AdminDAO {
         return res;
     }
 
-    public int calculate(String sDay, String eDay){
-        int cnt = 0;
+    public ArrayList<PayDTO> calculate(String sDay, String eDay){
+        ArrayList<PayDTO> res = new ArrayList<PayDTO>();
 
         System.out.println("sDay =" + sDay);
         System.out.println("eDay =" + eDay);
-        sql = "select * from user where membership = 2 and membership_start BETWEEN sDay = ? AND eDay = ?";
+        sql = "select * from pay where reg_date BETWEEN sDday = ? AND eDay = ?";
+
         try {
             ptmt = con.prepareStatement(sql);
             ptmt.setString(1, sDay);
@@ -398,13 +399,22 @@ public class AdminDAO {
             rs = ptmt.executeQuery();
 
             while (rs.next()){
-                cnt++;
+                System.out.println(rs.getString("reg_date"));
+                PayDTO dto = new PayDTO();
+
+                dto.setId(rs.getInt("id"));
+                dto.setUser_id(rs.getInt("user_id"));
+                dto.setImp_uid(rs.getString("imp_uid"));
+                dto.setPaid_amount(rs.getInt("paid_amount"));
+                dto.setReg_date(rs.getDate("reg_date"));
+
+                res.add(dto);
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return cnt;
+        return res;
     }
 
     public void close() {

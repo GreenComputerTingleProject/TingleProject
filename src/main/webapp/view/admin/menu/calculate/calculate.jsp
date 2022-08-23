@@ -93,11 +93,11 @@
                 <td><input type="date" name="startday" id="startday"/>
                 <input type="date" name="endday" id="endday"/></td>
             </tr>
-            <c:set var="cal" value="${cal}"/>
-            <c:if test="${cal != null}">
+            <c:set var="period_income" value="${period_income}"/>
+            <c:if test="${period_income != null}">
                 <tr>
                 <td>기간별 수익</td>
-                    <td>${cal}원</td>
+                    <td>${period_income}원</td>
                 </tr>
             </c:if>
 
