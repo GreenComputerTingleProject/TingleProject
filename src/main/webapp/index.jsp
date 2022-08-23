@@ -292,7 +292,7 @@
             padding-left: 5px;
         }
 
-     /*   input[type=text], [type=password] {
+        input[type=text], [type=password] {
             font-size: 16px;
             padding-right: 30px;
             border: 0;
@@ -307,7 +307,7 @@
             vertical-align: middle;
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
-        }*/
+        }
 
         input[type=file] {
             width: 70%;
@@ -486,10 +486,16 @@
     <!-- /사이드바 -->
 
     <!-- 본문 -->
-    <%-- todo--%>
-    <%--정환본문--%>
     <div id="page-content-wrapper">
         <div id="main_contents" class="container-fluid">
+
+            <%-- 추천 --%>
+            <div id="main_contents2">
+                <div id ="suggestion_body">
+
+                </div>
+            </div>
+
             <%--차트--%>
             <div class="chartContainer" style="display: none">
                 <h1 id="chart_h1">TOP100</h1>
@@ -520,7 +526,6 @@
 
                 </tbody>
             </table>
-
 
             <%--검색--%>
             <div class="find_Container" style="display: none">
@@ -643,17 +648,6 @@
     </div>
     <!--/플레이어-->
 
-    <%--현석 본문--%>
-    <div id="page-content-wrapper">
-        <div id="main_contents2" class="container-fluid">
-            <div id ="suggestion_body">
-
-            </div>
-
-
-        </div>
-    </div>
-
     <!--모달1-->
     <div id="modal1" class="modal">
         <div class="modal-dialog">
@@ -727,8 +721,8 @@
         function init(libraryData) {
             s_UserData = JSON.parse('${sessionScope.userData}');
             s_LibraryData = libraryData;
-            <%--console.log(JSON.parse(${sessionScope.suggestionList}));--%>
             s_SuggestionList = JSON.parse('${sessionScope.suggestionList}')
+
             isSessionLoaded = true;
 
             nowPlayList = [];
@@ -910,7 +904,6 @@
                 return;
             }
 
-            console.log(coverImgList);
             allEmpty();
             drawMyPageList();
         })
@@ -1035,7 +1028,9 @@
                 html += '<br>' + '구독 회원';
             }
             html += '<div style="float : right">';
-            html += '<a href="#"/>멤버쉽 가입하기';
+            if(s_UserData.membership == 0 || s_UserData.membership == 1) {
+                html += '<a href="<c:url value="/pay/PayMembership"/>"/>멤버쉽 가입하기';
+            }
             html += '</div>';
             html += '</div>';
             html += '</div>' + '<br>';
@@ -1383,7 +1378,6 @@
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
 
-            console.log("재생버튼 개수" + selectPlay.length);
             suggestion_player(data, selectPlay, selectList)
 
 
@@ -1542,19 +1536,21 @@
         }
 
          function allEmpty() {
-             var dt = document.getElementById("dynamicTable");
+             let dt = document.getElementById("dynamicTable");
              dt.style.display = "none";
              $("#myPageDiv").empty();
              $("#dynamicTbody").empty();
              $("#suggestion_body").empty();
-             $(".find_Container").empty();
-             $(".chartContainer").empty();
+             $(".chartContainer").attr("style","display:none");
              $(".chartTable").attr("style","display:none")
-
+             $(".chartTbody").empty();
+             $(".find_Container").css("display", "none");
+             $('#btn-group').css('display', 'none');
+             $('#totalCheckbox').prop("checked", false);
+             $('#ChartTotalCheckbox').prop("checked", false);
          }
 
         //차트 클릭시
-
         $('.chart').click(function () {
 
             allEmpty();
@@ -1562,7 +1558,6 @@
             $('.chartTable').attr("style", "display:");
             $('.chartContainer').attr("style", "display:");
             $('#chart_h1').html("TOP100");
-
 
             $.ajax({
                 url: "<c:url value="/chart/ChartTop100"/>",
@@ -1572,19 +1567,15 @@
 
                 success: function (data) {
                     const json = JSON.parse(data);
-                    console.log(json);
                     $('.find_Container').attr("style", "display:none");
                     $('.find_title').empty()
                     $('.find_artist').empty()
-
-
                     $('.chartTbody').empty();
-                    let html = "";
 
+                    let html = "";
 
                     //Top100
                     $.each(json, function (i, item) {
-
                         html = $('<tr class="b-wrap">' +
                             '<td scope="row">' +
                             '<input class="check" type="checkbox" name="check">' +
@@ -1611,9 +1602,6 @@
                             + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
                             + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
                             + '</ul>' + '</td>'+
-                            // '<td>' +
-                            // '<i class="fa-solid fa-ellipsis-vertical"></i>' +
-                            // '</td>' +
                             '</tr>');
 
                         $(".chartTbody").append(html);
@@ -1766,13 +1754,10 @@
                         });
 
                     });
-
                 },
                 error: function (e) {
-
                     console.log(e)
                 }
-
             });
 
             // chart 함수
@@ -1782,8 +1767,6 @@
                 $('.chartTbody').empty();
 
                 $.each(json, function (i, item) {
-
-
                     html = $('<tr class="b-wrap">' +
                         '<td scope="row">' +
                         '<input class="check" type="checkbox" name="check">' +
@@ -1810,20 +1793,14 @@
                         + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
                         + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
                         + '</ul>' + '</td>'+
-                        // '<td>' +
-                        // '<i class="fa-solid fa-ellipsis-vertical"></i>' +
-                        // '</td>' +
                         '</tr>');
                     $(".chartTbody").append(html);
                 })
-
                 playButtonCLick(json);
             }
 
+        })
 
-
-
-        })//요기
         //버튼 클릭 함수
         function playButtonCLick(json) {
 
@@ -1832,8 +1809,6 @@
             let check = document.getElementsByClassName("check");
             let totalCheck = document.getElementById("ChartTotalCheckbox");
             let unCheck = document.getElementById("unCheck");
-
-            console.log(totalCheck)
 
             for (let i = 0; i < selectList.length; i++) {
 
@@ -2000,16 +1975,13 @@
                 $('.progress-bar').css("width", x);
 
                 audio.currentTime = audio.duration * ((x / 3) / 100);
-                // console.log((x / 3) / 100);
             });
 
         }
 
-
-
         /* find 함수*/
-
         $("#findEnter").keydown(function(key) {
+            allEmpty();
             if( key.keyCode == 13 ){
                 console.log('Enter');
 
