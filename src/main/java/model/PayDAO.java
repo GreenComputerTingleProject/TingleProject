@@ -48,6 +48,28 @@ public class PayDAO {
         return 0;
     }
 
+    public int pay_total_amount() {
+        int res = 0;
+
+        try {
+            sql = "select paid_amount from pay";
+
+            ptmt = con.prepareStatement(sql);
+            rs =  ptmt.executeQuery();
+
+            while(rs.next()) {
+                res += rs.getInt("paid_amount");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return res;
+    }
+
     public void close() {
         if(rs!=null) try {rs.close();} catch (SQLException e) {}
         if(ptmt!=null) try {ptmt.close();} catch (SQLException e) {}

@@ -16,7 +16,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 public class AdminDAO {
@@ -389,9 +388,7 @@ public class AdminDAO {
     public ArrayList<PayDTO> calculate(String sDay, String eDay){
         ArrayList<PayDTO> res = new ArrayList<PayDTO>();
 
-        System.out.println("sDay =" + sDay);
-        System.out.println("eDay =" + eDay);
-        sql = "select * from pay where reg_date BETWEEN sDday = ? AND eDay = ?";
+        sql = "select * from pay where reg_date BETWEEN ? AND ?";
 
         try {
             ptmt = con.prepareStatement(sql);
@@ -400,14 +397,13 @@ public class AdminDAO {
             rs = ptmt.executeQuery();
 
             while (rs.next()){
-                System.out.println(rs.getString("reg_date"));
                 PayDTO dto = new PayDTO();
 
                 dto.setId(rs.getInt("id"));
                 dto.setUser_id(rs.getInt("user_id"));
                 dto.setImp_uid(rs.getString("imp_uid"));
                 dto.setPaid_amount(rs.getInt("paid_amount"));
-                dto.setReg_date(rs.getDate("reg_date"));
+                dto.setReg_date(rs.getTimestamp("reg_date"));
 
                 res.add(dto);
             }

@@ -703,6 +703,7 @@
         let isShuffle = false;
         let repeatMode = 0;
         let s_SuggestionList;
+
         $.ajax({
             type: 'GET',
             url: '<c:url value="/music/MusicSuggestion"/>',
@@ -926,8 +927,6 @@
                     console.log(e);
                 }
             });
-
-            console.log(s_LibraryData)
         })
 
         $("#myPage").click(function () {
