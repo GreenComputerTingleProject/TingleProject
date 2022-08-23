@@ -144,9 +144,15 @@
             vertical-align: top;
             display: inline-block;
             background: #fff;
-
+            margin-bottom: 10px;
 
         }
+        .clicked{
+            color: #fff;
+            background: purple;
+
+        }
+
 
         h1 {
             margin-bottom: 20px;
@@ -412,7 +418,7 @@
             background: #1a1a1a;
         }
 
-        .iptxt {
+        #findEnter {
             height: 70%;
             width: 80%;
             font-size: 13px;
@@ -686,6 +692,7 @@
 <script>
     $(function () {
 
+
         let s_UserData;
         let s_LibraryData;
         let isSessionLoaded = false;
@@ -698,6 +705,8 @@
         let isShuffle = false;
         let repeatMode = 0;
         let s_SuggestionList;
+
+
 
         if (${userData != null}) {
             getLibrary();
@@ -1554,7 +1563,6 @@
         $('.chart').click(function () {
 
             allEmpty();
-            $('#top100').attr("style", "background: purple")
             $('.chartTable').attr("style", "display:");
             $('.chartContainer').attr("style", "display:");
             $('#chart_h1').html("TOP100");
@@ -1610,9 +1618,10 @@
                        // 플레이버튼 클릭
 
                     playButtonCLick(json);
-
+                    // $('#ballad').toggle("clicked");
                     //발라드 클릭시
                     $('#ballad').click(function () {
+
                         console.log("클릭")
                         $('#chart_h1').html("발라드");
                         $.ajax({
@@ -1909,7 +1918,8 @@
                 nowPlayList = [];
 
                 for (const i in checkNum) {
-                    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
+                    nowPlayList.push("<c:url value="/mp3/"/>" + json[checkNum[i]].file_path);
+                    // console.log(nowPlayList.length);
                 }
 
                 for (const i in nowPlayList) {
@@ -1938,7 +1948,7 @@
                 }
 
                 for (const i in checkNum) {
-                    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
+                    nowPlayList.push("<c:url value="/mp3/"/>" + json[checkNum[i]].file_path);
                 }
 
                 playListInit();
@@ -2268,8 +2278,6 @@
 
 
     })
-
-
 
 
 
