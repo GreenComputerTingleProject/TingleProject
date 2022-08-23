@@ -1385,6 +1385,7 @@
             let viewDetail = document.getElementsByClassName('viewDetail');
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
+            let selectAdd = document.getElementsByClassName("selectAdd");
 
             suggestion_player(data, selectPlay, selectList)
 
@@ -1402,7 +1403,8 @@
                     html += '<div id="detailInfo"><div><h2>' + data[i].title + '<h2></div>'
                     html += '<div><h4>' + data[i].artist + '</h4></div>';
                     html += '<div><i class="selectPlay fa-solid fa-play"></i>'
-                    html += '<i class="selectList fa-solid fa-list" id = "selectList"></i></div></div>'
+                    html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
+                    html += '<i class="detail_selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
                     html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
                     html += '<div id ="suggestion_lylics">'
@@ -1410,6 +1412,7 @@
                     $("#suggestion_body").append(html);
 
                     let selectPlay = document.getElementsByClassName("selectPlay");
+                    let detail_selectAdd = document.getElementsByClassName("detail_selectAdd");
 
                     selectPlay[0].addEventListener('click', function () {
                         $('#player-play').css('display', 'block');
@@ -1442,13 +1445,42 @@
                         })
                     })
 
+                    detail_selectAdd[0].addEventListener('click', function () {
+                        $.ajax({
+                            type: 'GET',
+                            url: '<c:url value="/music/MusicAddLibrary"/>',
+                            data: 'music_id=' + data[i].id,
+                            async: false,
+                            success: function (result) {
+                                getLibrary();
+                            },
+                            error: function (e) {
+                                console.log(e);
+                            }
+                        });
+                    })
+
                     document.getElementById('go_suggestion').addEventListener('click', function () {
                         suggestion();
                     })
 
                 })
-            }
 
+                selectAdd[i].addEventListener('click', function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '<c:url value="/music/MusicAddLibrary"/>',
+                        data: 'music_id=' + data[i].id,
+                        async: false,
+                        success: function (result) {
+                            getLibrary();
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                })
+            }
         }
 
         let suggestion_player = function (data, selectPlay, selectList) {
