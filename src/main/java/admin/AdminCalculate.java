@@ -10,6 +10,6 @@ public class AdminCalculate implements AdminService{
 
         System.out.println("AdminPage execute() 실행");
 
-        request.setAttribute("adminUrl", "menu/calculate.jsp");
+        request.setAttribute("adminUrl", "menu/calculate/calculate.jsp");
     }
 }

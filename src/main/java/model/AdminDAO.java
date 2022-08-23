@@ -6,6 +6,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -378,6 +379,38 @@ public class AdminDAO {
 
                 res.add(dto);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+    public ArrayList<PayDTO> calculate(String sDay, String eDay){
+        ArrayList<PayDTO> res = new ArrayList<PayDTO>();
+
+        System.out.println("sDay =" + sDay);
+        System.out.println("eDay =" + eDay);
+        sql = "select * from pay where reg_date BETWEEN sDday = ? AND eDay = ?";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setString(1, sDay);
+            ptmt.setString(2, eDay);
+            rs = ptmt.executeQuery();
+
+            while (rs.next()){
+                System.out.println(rs.getString("reg_date"));
+                PayDTO dto = new PayDTO();
+
+                dto.setId(rs.getInt("id"));
+                dto.setUser_id(rs.getInt("user_id"));
+                dto.setImp_uid(rs.getString("imp_uid"));
+                dto.setPaid_amount(rs.getInt("paid_amount"));
+                dto.setReg_date(rs.getDate("reg_date"));
+
+                res.add(dto);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
