@@ -152,15 +152,30 @@ public class AdminDAO {
             }
         }
 
-        public void musicDelete(int id){
+        public void musicDelete(HttpServletRequest request, int id){
+            try {
+            sql = "select * from music where id = ?";
+
+            ptmt = con.prepareStatement(sql);
+            ptmt.setInt(1, id);
+            rs = ptmt.executeQuery();
+
+            if(rs.next()){
+                String path = request.getRealPath("/mp3/");
+                Path overlapfile = Paths.get(path + rs.getString("file_path") );
+                Files.delete(overlapfile);
+                path = request.getRealPath("/img/");
+                overlapfile = Paths.get(path + rs.getString("cover_img") );
+                Files.delete(overlapfile);
+            }
 
             sql = "delete from music where id = ?";
 
-            try {
+
                 ptmt = con.prepareStatement(sql);
                 ptmt.setInt(1, id);
                 rs = ptmt.executeQuery();
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -309,17 +324,47 @@ public class AdminDAO {
         return dto;
     }
 
-    public void userDelete(int id){
+    public String userDelete(HttpServletRequest request , int id){
 
-        sql = "delete from user where id = ?";
-
+        String profile_image = "exfire_member.png";
+        String msg;
         try {
+
+        sql = "select * from user where id = ?";
+
+        ptmt = con.prepareStatement(sql);
+        ptmt.setInt(1, id);
+        rs = ptmt.executeQuery();
+
+
+        if(rs.next() && rs.getString("profile_image") !=  profile_image && rs.getString("membership") != "3"){
+            System.out.println("유저이미지는? = " +rs.getString("profile_image"));
+            System.out.println("유저멤버쉽은? = " +rs.getString("membership"));
+           String path = request.getRealPath("/img/");
+           msg = "탈퇴되었습니다";
+           Path overlapfile = Paths.get(path + rs.getString("profile_image") );
+           Files.delete(overlapfile);
+
+            sql = "update user set membership = ?, profile_image = ? where id = ?";
+
+            String membership = "3";
+
+
             ptmt = con.prepareStatement(sql);
-            ptmt.setInt(1, id);
-            rs = ptmt.executeQuery();
-        } catch (SQLException e) {
+            ptmt.setString(1, membership);
+            ptmt.setString(2, profile_image);
+            ptmt.setInt(3, id);
+
+            ptmt.executeUpdate();
+
+        } else {
+          msg = "이미 탈퇴한 회원입니다";
+        }
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return msg;
     }
     public void userModify(UserDTO dto){
         sql = "update user  set login_id = ?, login_pw = ?, name = ?, nickname =?, phone_number =?, email_address = ?, profile_image = ?, join_type = ?,"
