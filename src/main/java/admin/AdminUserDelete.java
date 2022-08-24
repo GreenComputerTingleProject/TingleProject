@@ -10,11 +10,11 @@ public class AdminUserDelete implements AdminService{
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("AdminUserDelete execute실행");
 
-        String msg = "삭제되었습니다";
+
 
         int id = Integer.parseInt(request.getParameter("id"));
 
-        new AdminDAO().userDelete(id);
+        String msg =  new AdminDAO().userDelete(request,id);
 
         request.setAttribute("msg", msg);
         request.setAttribute("adminUrl", "alert.jsp");

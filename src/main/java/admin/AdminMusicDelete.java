@@ -2,6 +2,7 @@ package admin;
 
 import model.AdminDAO;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,10 +15,10 @@ public class AdminMusicDelete implements AdminService{
 
         int id = Integer.parseInt(request.getParameter("id"));
 
-        new AdminDAO().musicDelete(id);
+        new AdminDAO().musicDelete(request, id);
 
         request.setAttribute("msg", msg);
-        request.setAttribute("adminUrl", "menu/music/alert.jsp");
+        request.setAttribute("adminUrl", "alert.jsp");
         request.setAttribute("goUrl", "AdminMusicList");
 
     }

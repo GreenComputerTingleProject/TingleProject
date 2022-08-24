@@ -460,7 +460,7 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
-                <a href="#">Tingle</a>
+                <a class = "suggestion" href="#">Tingle</a>
             </li>
             <c:choose>
                 <c:when test="${userData == null}">
@@ -478,7 +478,7 @@
                     />
                 </fieldset>
             </li>
-            <li><a id="suggestion" href="#">추천</a></li>
+            <li><a class="suggestion btncolor" href="#">추천</a></li>
             <li><a class="chart" id="chart" href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
             <li><a href="#">게시판</a></li>
@@ -1424,7 +1424,11 @@
         })
 
         /**현석 스크립트*/
-        $('#suggestion').click(function () {
+        $('.btncolor').click(function () {
+
+        })
+
+        $('.suggestion').click(function () {
             allEmpty();
             $('#modal_add').css("display","")
             suggestion();
