@@ -701,7 +701,7 @@
         let s_UserData;
         let s_LibraryData;
         let isSessionLoaded = false;
-        let audio;
+        let audio = document.getElementById("audio");;
         let nowPlayList;
         let coverImgList = [];
         let loaded = 0;
@@ -762,7 +762,7 @@
 
             playListInit();
 
-            audio = document.getElementById("audio");
+            // audio = document.getElementById("audio");
 
             for (const i in nowPlayList) {
                 preloadAudio(nowPlayList[i]);
@@ -810,6 +810,30 @@
 
                 $('#currentTime').html(convertTime(Math.floor(audio.currentTime)));
                 $('#duration').html(convertTime(Math.floor(audio.duration)));
+
+                if(!isSessionLoaded){
+                    if(audio.currentTime >= 60) {
+                        audio.pause();
+                        audio.currentTime = 0;
+
+                        $('#player-play').css('display', 'block');
+                        $('#player-pause').css('display', 'none');
+
+                        $('#modal-body1').text('비회원은 1분 미리듣기만 제공됩니다');
+                        $('#modal1').modal('toggle');
+                    }
+                } else if(s_UserData.membership == 1) {
+                    if(audio.currentTime >= 60) {
+                        audio.pause();
+                        audio.currentTime = 0;
+
+                        $('#player-play').css('display', 'block');
+                        $('#player-pause').css('display', 'none');
+
+                        $('#modal-body2').text('일반 회원은 1분 미리듣기만 제공됩니다');
+                        $('#modal2').modal('toggle');
+                    }
+                }
             }
 
             // 첫곡은 장전시켜둔다.
@@ -834,76 +858,68 @@
         }
 
         $('#player-play').click(function () {
-            if (isSessionLoaded) {
-                audio.play();
-                $('#player-play').css('display', 'none');
-                $('#player-pause').css('display', 'block');
-            }
+            audio.play();
+            $('#player-play').css('display', 'none');
+            $('#player-pause').css('display', 'block');
         })
 
         $('#player-pause').click(function () {
-            if (isSessionLoaded) {
-                audio.pause();
-                $('#player-play').css('display', 'block');
-                $('#player-pause').css('display', 'none');
-            }
+            audio.pause();
+            $('#player-play').css('display', 'block');
+            $('#player-pause').css('display', 'none');
         })
 
         $('.fa-forward').click(function () {
-            if (isSessionLoaded) {
-                audio.pause();
+            audio.pause();
 
-                if (!isShuffle) {
-                    audioIndex++;
+            if (!isShuffle) {
+                audioIndex++;
 
-                    if (audioIndex == nowPlayList.length) {
-                        if (repeatMode == 0 || repeatMode == 2) {
-                            audioIndex--;
-                        } else if (repeatMode == 1) {
-                            audioIndex = 0;
-                        }
+                if (audioIndex == nowPlayList.length) {
+                    if (repeatMode == 0 || repeatMode == 2) {
+                        audioIndex--;
+                    } else if (repeatMode == 1) {
+                        audioIndex = 0;
                     }
-                } else {
-                    audioIndex = Math.floor(Math.random() * nowPlayList.length);
                 }
-
-                if ($('#player-play').css('display') == 'none') {
-                    play(audioIndex);
-                } else {
-                    audio.src = nowPlayList[audioIndex];
-                }
-
-                playListInit();
+            } else {
+                audioIndex = Math.floor(Math.random() * nowPlayList.length);
             }
+
+            if ($('#player-play').css('display') == 'none') {
+                play(audioIndex);
+            } else {
+                audio.src = nowPlayList[audioIndex];
+            }
+
+            playListInit();
         })
 
         $('.fa-backward').click(function () {
-            if (isSessionLoaded) {
-                audio.pause();
+            audio.pause();
 
-                if (!isShuffle) {
-                    audioIndex--;
+            if (!isShuffle) {
+                audioIndex--;
 
-                    if (audioIndex == -1) {
+                if (audioIndex == -1) {
 
-                        if (repeatMode == 0 || repeatMode == 2) {
-                            audioIndex++;
-                        } else if (repeatMode == 1) {
-                            audioIndex = nowPlayList.length - 1;
-                        }
+                    if (repeatMode == 0 || repeatMode == 2) {
+                        audioIndex++;
+                    } else if (repeatMode == 1) {
+                        audioIndex = nowPlayList.length - 1;
                     }
-                } else {
-                    audioIndex = Math.floor(Math.random() * nowPlayList.length);
                 }
-
-                if ($('#player-play').css('display') == 'none') {
-                    play(audioIndex);
-                } else {
-                    audio.src = nowPlayList[audioIndex];
-                }
-
-                playListInit();
+            } else {
+                audioIndex = Math.floor(Math.random() * nowPlayList.length);
             }
+
+            if ($('#player-play').css('display') == 'none') {
+                play(audioIndex);
+            } else {
+                audio.src = nowPlayList[audioIndex];
+            }
+
+            playListInit();
         })
 
         $('#player-list').click(function () {
@@ -1059,21 +1075,18 @@
             html += '<div class="card-body">';
             html += '<img src="" id="profile-img">';
             html += s_UserData.nickname + '님';
-            if (s_UserData.membership == 0) {
-                html += '<br>' + '비회원';
-            } else if (s_UserData.membership == 1) {
+            if (s_UserData.membership == 1) {
                 html += '<br>' + '일반 회원';
             } else {
                 html += '<br>' + '구독 회원';
             }
             html += '<div style="float : right">';
-            if (s_UserData.membership == 0 || s_UserData.membership == 1) {
-                html += '<a href="<c:url value="/pay/PayMembership"/>"/>멤버쉽 가입하기';
+            if (s_UserData.membership == 1) {
+                html += '<a href="<c:url value="/pay/PayMembership"/>">멤버쉽 가입하기</a>';
             }
             html += '</div>';
             html += '</div>';
             html += '</div>' + '<br>';
-
             html += '<div class="btn-group">';
             html += '<button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#box2"/>회원 정보 변경'
             html += '</div>';
@@ -1104,8 +1117,6 @@
 
             $('#session_id').val(s_UserData.id);
             $('#profile-img').attr('src', "<c:url value="/img/"></c:url>" + s_UserData.profile_image);
-
-            console.log(s_UserData.profile_image);
         }
 
         function totalChange(totalCheck, check) {
@@ -1197,10 +1208,12 @@
             let html = "";
 
             for (const i in nowPlayList) {
+                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
+
                 if (i == audioIndex) {
-                    html += '<div style="color: red">' + nowPlayList[i] + '</div>';
+                    html += '<div style="color: red">' + songName + '</div>';
                 } else {
-                    html += '<div>' + nowPlayList[i] + '</div>';
+                    html += '<div>' + songName + '</div>';
                 }
             }
 
@@ -1219,12 +1232,10 @@
         }
 
         $(".progress").click(function (e) {
-            if (isSessionLoaded) {
-                let x = e.pageX - $('.progress').offset().left;
-                $('.progress-bar').css("width", x);
+            let x = e.pageX - $('.progress').offset().left;
+            $('.progress-bar').css("width", x);
 
-                audio.currentTime = audio.duration * ((x / 3) / 100);
-            }
+            audio.currentTime = audio.duration * ((x / 3) / 100);
         });
 
         $("#player-volume").click(function () {
@@ -1575,10 +1586,12 @@
             let html = "";
 
             for (const i in nowPlayList) {
+                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
+
                 if (i == audioIndex) {
-                    html += '<div style="color: red">' + nowPlayList[i] + '</div>';
+                    html += '<div style="color: red">' + songName + '</div>';
                 } else {
-                    html += '<div>' + nowPlayList[i] + '</div>';
+                    html += '<div>' + songName + '</div>';
                 }
             }
 
@@ -1601,10 +1614,12 @@
             let html = "";
 
             for (const i in nowPlayList) {
+                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
+
                 if (i == audioIndex) {
-                    html += '<div style="color: red">' + nowPlayList[i] + '</div>';
+                    html += '<div style="color: red">' + songName + '</div>';
                 } else {
-                    html += '<div>' + nowPlayList[i] + '</div>';
+                    html += '<div>' + songName + '</div>';
                 }
             }
 
