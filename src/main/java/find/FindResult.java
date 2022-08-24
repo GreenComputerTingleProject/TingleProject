@@ -52,6 +52,8 @@ public class FindResult implements FindService {
                 dataTitle.put("genre", ft.getGenre());
                 dataTitle.put("genre_no", ft.getGenre_no());
                 dataTitle.put("file_path", ft.getFile_path());
+                dataTitle.put("lyrics", ft.getLyrics());
+
                 titleArray.add(dataTitle);
             }
 
@@ -69,6 +71,7 @@ public class FindResult implements FindService {
                 dataArtist.put("genre", fa.getGenre());
                 dataArtist.put("genre_no", fa.getGenre_no());
                 dataArtist.put("file_path", fa.getFile_path());
+                dataArtist.put("lyrics", fa.getLyrics());
                 artistArray.add(dataArtist);
             }
 
@@ -85,6 +88,7 @@ public class FindResult implements FindService {
                 dataAlbum.put("genre_no", fa.getGenre_no());
                 dataAlbum.put("file_path", fa.getFile_path());
                 dataAlbum.put("release_date", fa.getRelease_dateStr());
+                dataAlbum.put("lyrics", fa.getLyrics());
                 albumArray.add(dataAlbum);
             }
 
