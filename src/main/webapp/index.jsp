@@ -696,7 +696,7 @@
 </div>
 </body>
 <script>
-    $(function () {
+    window.onload = function () {
 
         let s_UserData;
         let s_LibraryData;
@@ -931,14 +931,13 @@
 
                     allEmpty();
                     drawLibraryList();
+                    detailClick(s_LibraryData);
                 },
                 error: function (e) {
                     console.log(e);
                 }
             });
         })
-
-
 
         $("#myPage").click(function () {
             if (!isSessionLoaded) {
@@ -981,7 +980,6 @@
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
             let dropRemove = document.getElementsByClassName("dropRemove");
-
             let check = document.getElementsByClassName("check");
             let totalCheck = document.getElementById("totalCheckbox");
             let unCheck = document.getElementById("unCheck");
@@ -1009,7 +1007,7 @@
                         $('#player-play').css('display', 'none');
                         $('#player-pause').css('display', 'block');
                         audio.play();
-                    }, 100);
+                    }, 300);
                 })
 
                 selectList[i].addEventListener('click', function () {
@@ -1017,6 +1015,7 @@
 
                     playListInit();
                 })
+
 
                 dropRemove[i].addEventListener('click', function () {
                     $.ajax({
@@ -1174,7 +1173,7 @@
                 $('#player-play').css('display', 'none');
                 $('#player-pause').css('display', 'block');
                 audio.play();
-            }, 100);
+            }, 300);
         })
 
         $('#modal_list').click(function () {
@@ -1459,7 +1458,7 @@
                             $('#player-play').css('display', 'none');
                             $('#player-pause').css('display', 'block');
                             audio.play();
-                        }, 100);
+                        }, 300);
                     })
 
                     selectList[0].addEventListener('click', function () {
@@ -1533,7 +1532,7 @@
                         $('#player-play').css('display', 'none');
                         $('#player-pause').css('display', 'block');
                         audio.play();
-                    }, 100);
+                    }, 300);
                 })
             }
 
@@ -1950,7 +1949,7 @@
                             $('#player-play').css('display', 'none');
                             $('#player-pause').css('display', 'block');
                             audio.play();
-                        }, 100);
+                        }, 300);
                     })
 
                     selectList[0].addEventListener('click', function () {
@@ -2020,7 +2019,7 @@
                         $('#player-play').css('display', 'none');
                         $('#player-pause').css('display', 'block');
                         audio.play();
-                    }, 100);
+                    }, 300);
                 })
                 // console.log(selectList[i]);
                 selectList[i].addEventListener('click', function () {
@@ -2353,7 +2352,8 @@
                     $('.find-input').focus();
                 }
             }
-        });//요기 onload
-    })
+        });
+
+    }
 </script>
 </html>
