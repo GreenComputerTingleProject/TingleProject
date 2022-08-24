@@ -38,6 +38,7 @@ public class ChartBallad implements ChartService {
                 data.put("genre", ch.getGenre());
                 data.put("genre_no", ch.getGenre());
                 data.put("file_path", ch.getFile_path());
+                data.put("lyrics", ch.getLyrics());
 
 
                 jsonArray.add(data);

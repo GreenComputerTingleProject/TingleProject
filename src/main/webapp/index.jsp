@@ -691,6 +691,8 @@
         <button id="unCheck" class="btn btn-primary"><i class="fa-solid fa-x"></i></button>
         <button id="modal_play" class="btn btn-primary"><i class="selectPlay fa-solid fa-play"></i></button>
         <button id="modal_list" class="btn btn-primary"><i class="fa-solid fa-list"></i></button>
+        <button id="modal_add" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>
+
     </div>
     <!--/미니모달-->
 </div>
@@ -931,9 +933,11 @@
         })
 
         $('#library').click(function () {
+            $('#modal_add').css("display","none")
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
+
                 return;
             }
 
@@ -956,6 +960,7 @@
         })
 
         $("#myPage").click(function () {
+            $('#modal_add').css("display","")
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
@@ -1152,6 +1157,8 @@
             }
         }
 
+
+
         $('#modal_play').click(function () {
             let check = document.getElementsByClassName("check");
             let checkNum = [];
@@ -1203,6 +1210,43 @@
 
             playListInit();
         })
+        $('#modal_add').click(function () {
+
+            let check = document.getElementsByClassName("check");
+            let checkNum = [];
+            let s_LibraryDatas = [];
+
+
+            for (const i in check) {
+                if (check[i].checked) {
+                    checkNum.push(i);
+                    s_LibraryDatas.push(s_LibraryData[i].id);
+                    console.log(s_LibraryDatas);
+                }
+            }
+
+            console.log("ss"+s_LibraryDatas);
+                $.ajax({
+                    type: 'GET',
+                    url: '<c:url value="/music/MusicAddLibrary"/>',
+                    data: 'music_id=' +s_LibraryDatas,
+                    async: false,
+                    success: function (result) {
+                        getLibrary();
+
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+
+
+        })
+
+
+
+
+
 
         function playListInit() {
             let html = "";
@@ -1386,6 +1430,7 @@
 
         $('.suggestion').click(function () {
             allEmpty();
+            $('#modal_add').css("display","")
             suggestion();
         })
 
@@ -1670,7 +1715,7 @@
             $('.chartTable').attr("style", "display:");
             $('.chartContainer').attr("style", "display:");
             $('#chart_h1').html("TOP100");
-
+            $('#modal_add').css("display","")
             $.ajax({
                 url: "<c:url value="/chart/ChartTop100"/>",
                 type: "GET",
@@ -1727,7 +1772,7 @@
                        // 플레이버튼 클릭
                     playButtonCLick(json);
                     detailClick(json);
-
+                    //modalfunc(s_LibraryData);
                     //발라드 클릭시
                     $('#ballad').click(function () {
                         console.log("클릭")
@@ -1913,6 +1958,7 @@
                 })
                 playButtonCLick(json);
                 detailClick(json);
+                // modalfunc(s_LibraryData);
              }
 
             })
@@ -1936,7 +1982,7 @@
                     html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
                     html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
                     html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
-                    html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                    // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
                     html += '<div id ="suggestion_lylics">'
                     html += json[i].lyrics + '</div>'
@@ -2098,6 +2144,7 @@
                     $('#findArtist_h1').attr("style", "display:");
                     $('#findTitle_h1').attr("style", "display:");
 
+                    $('#modal_add').css("display","")
                     $('#find_h1').html('\'' + $('.find-input').val() + '\'' + " 검색결과");
 
                     $.ajax({
@@ -2360,6 +2407,7 @@
 
                             playButtonCLick(json[0]);
                             detailClick(json[0]);
+                          //  modalfunc();
                         },
                         error: function (e) {
                             alert("실패" + $('.find-input').val())

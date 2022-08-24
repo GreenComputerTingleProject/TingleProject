@@ -34,6 +34,7 @@ public class ChartTop100 implements ChartService {
                 data.put("artist", ch.getArtist());
                 data.put("cover_img", ch.getCover_img());
                 data.put("file_path", ch.getFile_path());
+                data.put("lyrics", ch.getLyrics());
 
 
                 jsonArray.add(data);

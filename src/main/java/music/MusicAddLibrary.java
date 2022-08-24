@@ -16,9 +16,12 @@ public class MusicAddLibrary implements MusicService {
 
         JSONObject userData = (JSONObject) request.getSession().getAttribute("userData");
         Integer user_id = (Integer) userData.get("id");
-        String[] music_idList = request.getParameterValues("music_id");
+        String music_idList = request.getParameter("music_id");
 
-        for (String music_id : music_idList) {
+        String[] mList = music_idList.split(",");
+
+        for (String music_id : mList) {
+//            System.out.println(music_id);
             new MusicDAO().library_add(user_id, Integer.parseInt(music_id));
         }
     }
