@@ -7,11 +7,14 @@ import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MusicSuggestion implements MusicService{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
+
+        try {
         ArrayList<ArrayList<MusicDTO>> suggestionList = new MusicDAO().suggestionList();
 
         JSONArray jArray = new JSONArray();
@@ -56,6 +59,17 @@ public class MusicSuggestion implements MusicService{
 
             jArray.add(jArrayToday);
             jArray.add(jArrayFunny);
-            request.getSession().setAttribute("suggestionList", jArray);
+
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().print(jArray);
+            response.getWriter().flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
     }
 }
