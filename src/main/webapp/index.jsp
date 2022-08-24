@@ -717,13 +717,15 @@
             async: false,
             dataType: 'text',
             success: function (result) {
-                s_SuggestionList = JSON.parse('${sessionScope.suggestionList}');
+                s_SuggestionList = JSON.parse(result);
             },
             error: function (e) {
                 console.log(e);
             }
         });
 
+        /**추천 초기 화면 등장띠*/
+        suggestion();
 
         if (${userData != null}) {
             getLibrary();
@@ -935,6 +937,8 @@
                 }
             });
         })
+
+
 
         $("#myPage").click(function () {
             if (!isSessionLoaded) {
@@ -1371,12 +1375,11 @@
             suggestion();
         })
 
-        let suggestion = function () {
+         function suggestion() {
 
             let html = '';
             let data = new Array();
-            $("#dynamicTbody").empty();
-            $("#suggestion_body").empty();
+            allEmpty();
             $('#suggestion_body').css('display', 'block');
             html += '<div id ="suggestion_album"></div>';
 

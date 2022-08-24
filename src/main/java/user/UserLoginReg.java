@@ -48,7 +48,7 @@ public class UserLoginReg implements UserService {
 
             request.getSession().setAttribute("userData", jObject);
 //            new MusicList_V2().execute(request, response);
-            new MusicSuggestion().execute(request, response);
+//            new MusicSuggestion().execute(request, response);
         }
 
         request.setAttribute("mainUrl", "/view/alert.jsp");
