@@ -59,49 +59,49 @@ public class FindResult implements FindService {
 
             for (MusicDTO fa : findArtist) {
                 JSONObject dataArtist = new JSONObject();
-                dataArtist.put("a_id", fa.getId());
-                dataArtist.put("a_cnt", fa.getCnt());
-                dataArtist.put("a_title", fa.getTitle());
-                dataArtist.put("a_album", fa.getAlbum());
-                dataArtist.put("a_artist", fa.getArtist());
-                dataArtist.put("a_artist_img", fa.getArtist_img());
-                dataArtist.put("a_cover_img", fa.getCover_img());
-                dataArtist.put("a_genre", fa.getGenre());
-                dataArtist.put("a_genre_no", fa.getGenre_no());
-                dataArtist.put("a_file_path", fa.getFile_path());
+                dataArtist.put("id", fa.getId());
+                dataArtist.put("cnt", fa.getCnt());
+                dataArtist.put("title", fa.getTitle());
+                dataArtist.put("album", fa.getAlbum());
+                dataArtist.put("artist", fa.getArtist());
+                dataArtist.put("artist_img", fa.getArtist_img());
+                dataArtist.put("cover_img", fa.getCover_img());
+                dataArtist.put("genre", fa.getGenre());
+                dataArtist.put("genre_no", fa.getGenre_no());
+                dataArtist.put("file_path", fa.getFile_path());
                 artistArray.add(dataArtist);
             }
 
             for (MusicDTO fa : findAlbum) {
                 JSONObject dataAlbum = new JSONObject();
-                dataAlbum.put("b_id", fa.getId());
-                dataAlbum.put("b_cnt", fa.getCnt());
-                dataAlbum.put("b_title", fa.getTitle());
-                dataAlbum.put("b_album", fa.getAlbum());
-                dataAlbum.put("b_artist", fa.getArtist());
-                dataAlbum.put("b_artist_img", fa.getArtist_img());
-                dataAlbum.put("b_cover_img", fa.getCover_img());
-                dataAlbum.put("b_genre", fa.getGenre());
-                dataAlbum.put("b_genre_no", fa.getGenre_no());
-                dataAlbum.put("b_file_path", fa.getFile_path());
-                dataAlbum.put("b_release_date", fa.getRelease_dateStr());
+                dataAlbum.put("id", fa.getId());
+                dataAlbum.put("cnt", fa.getCnt());
+                dataAlbum.put("title", fa.getTitle());
+                dataAlbum.put("album", fa.getAlbum());
+                dataAlbum.put("artist", fa.getArtist());
+                dataAlbum.put("artist_img", fa.getArtist_img());
+                dataAlbum.put("cover_img", fa.getCover_img());
+                dataAlbum.put("genre", fa.getGenre());
+                dataAlbum.put("genre_no", fa.getGenre_no());
+                dataAlbum.put("file_path", fa.getFile_path());
+                dataAlbum.put("release_date", fa.getRelease_dateStr());
                 albumArray.add(dataAlbum);
             }
 
             for (MusicDTO fl : findLyrics) {
                 JSONObject dataLyrics = new JSONObject();
-                dataLyrics.put("l_id", fl.getId());
-                dataLyrics.put("l_cnt", fl.getCnt());
-                dataLyrics.put("l_title", fl.getTitle());
-                dataLyrics.put("l_album", fl.getAlbum());
-                dataLyrics.put("l_artist", fl.getArtist());
-                dataLyrics.put("l_artist_img", fl.getArtist_img());
-                dataLyrics.put("l_cover_img", fl.getCover_img());
-                dataLyrics.put("l_lyrics",fl.getLyrics());
-                dataLyrics.put("l_genre", fl.getGenre());
-                dataLyrics.put("l_genre_no", fl.getGenre_no());
-                dataLyrics.put("l_file_path", fl.getFile_path());
-                dataLyrics.put("l_release_date", fl.getRelease_dateStr());
+                dataLyrics.put("id", fl.getId());
+                dataLyrics.put("cnt", fl.getCnt());
+                dataLyrics.put("title", fl.getTitle());
+                dataLyrics.put("album", fl.getAlbum());
+                dataLyrics.put("artist", fl.getArtist());
+                dataLyrics.put("artist_img", fl.getArtist_img());
+                dataLyrics.put("cover_img", fl.getCover_img());
+                dataLyrics.put("lyrics",fl.getLyrics());
+                dataLyrics.put("genre", fl.getGenre());
+                dataLyrics.put("genre_no", fl.getGenre_no());
+                dataLyrics.put("file_path", fl.getFile_path());
+                dataLyrics.put("release_date", fl.getRelease_dateStr());
 
                 lyricsArray.add(dataLyrics);
             }
