@@ -20,7 +20,8 @@ public class AdminUserModifyReg implements AdminService{
         String msg = "수정되었습니다";
 
 
-        String path = "C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\img\\";
+      //  String path = "C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\img\\";
+            String path = request.getRealPath("/img/");
         int size = 1024 * 1024 * 10;
 
         MultipartRequest mr = null;
@@ -52,7 +53,7 @@ public class AdminUserModifyReg implements AdminService{
         userData.setPersonal_type(mr.getParameter("personal_type"));
 
             if(mr.getFilesystemName("profile_image")!= null && mr.getFilesystemName("profile_image") != mr.getParameter("filecheck")){
-                Path overlapfile = Paths.get("C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\img\\"+mr.getParameter("filecheck"));
+                Path overlapfile = Paths.get(path + mr.getParameter("filecheck"));
                 Files.delete(overlapfile);
             }
 

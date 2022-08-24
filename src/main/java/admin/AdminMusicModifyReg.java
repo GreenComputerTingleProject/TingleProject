@@ -20,7 +20,7 @@ public class AdminMusicModifyReg implements AdminService {
 
         try {
             String msg = "수정되었습니다";
-            String path = "C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\mp3";
+            String path = request.getRealPath("/mp3/");
             AdminDAO dao = new AdminDAO();
             int size = 1024 * 1024 * 10;
 
@@ -61,21 +61,29 @@ public class AdminMusicModifyReg implements AdminService {
             int id = musicData.getId();
 
 
+
+
+
             if(mr.getFilesystemName("file_path")!= null && mr.getFilesystemName("file_path") != mr.getParameter("filecheck1")){
-                Path overlapfile = Paths.get("C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\mp3\\"+mr.getParameter("filecheck1"));
+                System.out.println("음악파일경로 = " + path + mr.getParameter("filecheck1"));
+                Path overlapfile = Paths.get(path + mr.getParameter("filecheck1"));
                 Files.delete(overlapfile);
                 System.out.println("실행1");
             }
 
+
+
             if(mr.getFilesystemName("cover_img")!= null && mr.getFilesystemName("cover_img") != mr.getParameter("filecheck2")){
-                Path overlapfile = Paths.get("C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\img\\"+mr.getParameter("filecheck2"));
+                path = request.getRealPath("/img/");
+                System.out.println("이미지파일경로 = " + path + mr.getParameter("filecheck2"));
+                Path overlapfile = Paths.get(path + mr.getParameter("filecheck2"));
                 Files.delete(overlapfile);
                 System.out.println("실행2");
             }
 
 
         request.setAttribute("msg",msg);
-        request.setAttribute("adminUrl","menu/music/alert.jsp");
+        request.setAttribute("adminUrl","alert.jsp");
         request.setAttribute("goUrl","AdminMusicDetail?id="+id);
 
         } catch (Exception e) {
