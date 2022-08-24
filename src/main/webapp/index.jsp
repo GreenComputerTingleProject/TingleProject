@@ -1454,7 +1454,7 @@
                     html += jArrays[i].title;
                     html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>';
                     html += '<i class="selectList fa-solid fa-list"></i>';
-                    html += '<i class="selectAdd fa-solid fa-folder-plus"></i></div>';
+                    html += '<i class="s_selectAdd fa-solid fa-folder-plus"></i></div>';
                     html += '</td>';
                 }
                 html += '</tr>';
@@ -1468,9 +1468,9 @@
             let viewDetail = document.getElementsByClassName('viewDetail');
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
-            let selectAdd = document.getElementsByClassName("selectAdd");
+            let s_selectAdd = document.getElementsByClassName("s_selectAdd");
 
-            selects(data,selectPlay,selectList,selectAdd);
+            selects(data,selectPlay,selectList,s_selectAdd);
 
 
             // 추천 노래의 이미지를 눌렀을때
@@ -1528,48 +1528,35 @@
                     })
 
                     selectAdd[0].addEventListener('click', function () {
-                        $.ajax({
-                            type: 'GET',
-                            url: '<c:url value="/music/MusicAddLibrary"/>',
-                            data: 'music_id=' + data[i].id,
-                            async: false,
-                            success: function (result) {
-                                getLibrary();
-                                $('#modal-body2').text('보관함에 추가되었습니다');
-                                $('#modal2').modal('toggle');
+                        if(isSessionLoaded) {
+                            $.ajax({
+                                type: 'GET',
+                                url: '<c:url value="/music/MusicAddLibrary"/>',
+                                data: 'music_id=' + data[i].id,
+                                async: false,
+                                success: function (result) {
+                                    getLibrary();
+                                    $('#modal-body2').text('보관함에 추가되었습니다');
+                                    $('#modal2').modal('toggle');
 
-                            },
-                            error: function (e) {
-                                console.log(e);
-                            }
-                        });
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+                        }
                     })
 
 
                     document.getElementById('go_suggestion').addEventListener('click', function () {
-                        suggestion();
+                        // suggestion();
                     })
 
-                })
-
-                selectAdd[i].addEventListener('click', function () {
-                    $.ajax({
-                        type: 'GET',
-                        url: '<c:url value="/music/MusicAddLibrary"/>',
-                        data: 'music_id=' + data[i].id,
-                        async: false,
-                        success: function (result) {
-                            getLibrary();
-                        },
-                        error: function (e) {
-                            console.log(e);
-                        }
-                    });
                 })
             }
         }
 
-        function selects(data, selectPlay, selectList, selectAdd){
+        function selects(data, selectPlay, selectList, s_selectAdd){
             for (let i = 0; i < selectList.length; i++) {
 
                 selectPlay[i].addEventListener('click', function () {
@@ -1604,23 +1591,27 @@
                 })
             }
 
-            for (let i = 0; i < selectAdd.length ; i++) {
-                selectAdd[i].addEventListener('click', function () {
-                    $.ajax({
-                        type: 'GET',
-                        url: '<c:url value="/music/MusicAddLibrary"/>',
-                        data: 'music_id=' + data[i].id,
-                        async: false,
-                        success: function (result) {
-                            getLibrary();
-                            $('#modal-body2').text('보관함에 추가되었습니다');
-                            $('#modal2').modal('toggle');
+            // 여기가 추천에서 add 누른거
+            for (let i = 0; i < s_selectAdd.length ; i++) {
+                s_selectAdd[i].addEventListener('click', function () {
+                    if(isSessionLoaded){
+                        console.log("보내보내내");
+                        $.ajax({
+                            type: 'GET',
+                            url: '<c:url value="/music/MusicAddLibrary"/>',
+                            data: 'music_id=' + data[i].id,
+                            async: false,
+                            success: function (result) {
+                                getLibrary();
+                                $('#modal-body2').text('보관함에 추가되었습니다');
+                                $('#modal2').modal('toggle');
 
-                        },
-                        error: function (e) {
-                            console.log(e);
-                        }
-                    });
+                            },
+                            error: function (e) {
+                                console.log(e);
+                            }
+                        });
+                    }
                 })
             }
         }
