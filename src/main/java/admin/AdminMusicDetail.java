@@ -10,7 +10,7 @@ public class AdminMusicDetail implements AdminService{
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        String id = (String)request.getParameter("id");
+        String id = request.getParameter("id");
 
         MusicDTO musicData = new AdminDAO().musicDetail(id);
 
