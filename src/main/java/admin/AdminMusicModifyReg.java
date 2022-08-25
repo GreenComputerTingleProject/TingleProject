@@ -21,6 +21,8 @@ public class AdminMusicModifyReg implements AdminService {
         try {
             String msg = "수정되었습니다";
             String path = request.getRealPath("/mp3/");
+            String musicFile_check = ".*[.](mp3)";
+            String imgFile_check = ".*[.](jpeg|jpg|bmp|png|gif|pdf)";
             AdminDAO dao = new AdminDAO();
             int size = 1024 * 1024 * 10;
 
@@ -31,60 +33,62 @@ public class AdminMusicModifyReg implements AdminService {
                     "UTF-8",
                     new DefaultFileRenamePolicy());
 
-            System.out.println(mr.getParameter("filecheck1"));
-            System.out.println(mr.getParameter("filecheck2"));
+            boolean check1 = dao.fileExtension_Check(musicFile_check,mr.getFilesystemName("file_path"));
+            boolean check2 = dao.fileExtension_Check(imgFile_check,mr.getFilesystemName("cover_img"));
 
-            MusicDTO musicData = new MusicDTO();
+            if(check1 && check2){
+                MusicDTO musicData = new MusicDTO();
 
-            musicData.setId(Integer.parseInt(mr.getParameter("id")));
-            musicData.setTitle(mr.getParameter("title"));
-            musicData.setArtist(mr.getParameter("artist"));
-            musicData.setAlbum(mr.getParameter("album"));
-            musicData.setGenre(mr.getParameter("genre"));
-            musicData.setMood(mr.getParameter("mood"));
-            if(mr.getFilesystemName("file_path")!= null){
-                musicData.setFile_path(mr.getFilesystemName("file_path"));
+                musicData.setId(Integer.parseInt(mr.getParameter("id")));
+                musicData.setTitle(mr.getParameter("title"));
+                musicData.setArtist(mr.getParameter("artist"));
+                musicData.setAlbum(mr.getParameter("album"));
+                musicData.setGenre(mr.getParameter("genre"));
+                musicData.setMood(mr.getParameter("mood"));
+                if(mr.getFilesystemName("file_path")!= null){
+                    musicData.setFile_path(mr.getFilesystemName("file_path"));
+                } else {
+                    musicData.setFile_path(mr.getParameter("filecheck1"));
+                }
+                if(mr.getFilesystemName("cover_img")!= null){
+                    musicData.setCover_img(mr.getFilesystemName("cover_img"));
+                    dao.findImgFile(request, mr.getFilesystemName("cover_img"));
+                } else {
+                    musicData.setCover_img(mr.getParameter("filecheck2"));
+                }
+                musicData.setLyrics(mr.getParameter("lyrics"));
+
+
+                dao.musicModify(musicData);
+
+                int id = musicData.getId();
+
+                if(mr.getFilesystemName("file_path")!= null && mr.getFilesystemName("file_path") != mr.getParameter("filecheck1")){
+                    System.out.println("음악파일경로 = " + path + mr.getParameter("filecheck1"));
+                    Path overlapfile = Paths.get(path + mr.getParameter("filecheck1"));
+                    Files.delete(overlapfile);
+                    System.out.println("실행1");
+                }
+
+                if(mr.getFilesystemName("cover_img")!= null && mr.getFilesystemName("cover_img") != mr.getParameter("filecheck2")){
+                    path = request.getRealPath("/img/");
+                    System.out.println("이미지파일경로 = " + path + mr.getParameter("filecheck2"));
+                    Path overlapfile = Paths.get(path + mr.getParameter("filecheck2"));
+                    Files.delete(overlapfile);
+                    System.out.println("실행2");
+                }
+
+
+                request.setAttribute("msg",msg);
+                request.setAttribute("adminUrl","alert.jsp");
+                request.setAttribute("goUrl","AdminMusicDetail?id="+id);
             } else {
-                musicData.setFile_path(mr.getParameter("filecheck1"));
-            }
-            if(mr.getFilesystemName("cover_img")!= null){
-                musicData.setCover_img(mr.getFilesystemName("cover_img"));
-                dao.findImgFile(request, mr.getFilesystemName("cover_img"));
-            } else {
-                musicData.setCover_img(mr.getParameter("filecheck2"));
-            }
-            musicData.setLyrics(mr.getParameter("lyrics"));
-
-
-            dao.musicModify(musicData);
-
-            int id = musicData.getId();
-
-
-
-
-
-            if(mr.getFilesystemName("file_path")!= null && mr.getFilesystemName("file_path") != mr.getParameter("filecheck1")){
-                System.out.println("음악파일경로 = " + path + mr.getParameter("filecheck1"));
-                Path overlapfile = Paths.get(path + mr.getParameter("filecheck1"));
-                Files.delete(overlapfile);
-                System.out.println("실행1");
+                msg = "파일형식이 잘못되었습니다";
+                request.setAttribute("msg",msg);
+                request.setAttribute("adminUrl","alert.jsp");
+                request.setAttribute("goUrl","AdminMusicModify?id="+mr.getParameter("id"));
             }
 
-
-
-            if(mr.getFilesystemName("cover_img")!= null && mr.getFilesystemName("cover_img") != mr.getParameter("filecheck2")){
-                path = request.getRealPath("/img/");
-                System.out.println("이미지파일경로 = " + path + mr.getParameter("filecheck2"));
-                Path overlapfile = Paths.get(path + mr.getParameter("filecheck2"));
-                Files.delete(overlapfile);
-                System.out.println("실행2");
-            }
-
-
-        request.setAttribute("msg",msg);
-        request.setAttribute("adminUrl","alert.jsp");
-        request.setAttribute("goUrl","AdminMusicDetail?id="+id);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -155,19 +155,29 @@ public class AdminDAO {
         public void musicDelete(HttpServletRequest request, int id){
             try {
             sql = "select * from music where id = ?";
-
+            String path;
+            Path overlapfile;
             ptmt = con.prepareStatement(sql);
             ptmt.setInt(1, id);
             rs = ptmt.executeQuery();
 
             if(rs.next()){
-                String path = request.getRealPath("/mp3/");
-                Path overlapfile = Paths.get(path + rs.getString("file_path") );
-                Files.delete(overlapfile);
-                path = request.getRealPath("/img/");
-                overlapfile = Paths.get(path + rs.getString("cover_img") );
-                Files.delete(overlapfile);
+                if(rs.getString("file_path") != null){
+                    path = request.getRealPath("/mp3/");
+                    overlapfile = Paths.get(path + rs.getString("file_path") );
+                    Files.delete(overlapfile);
+                }
+                if(rs.getString("cover_img") != null){
+                    path = request.getRealPath("/img/");
+                    overlapfile = Paths.get(path + rs.getString("cover_img") );
+                    Files.delete(overlapfile);
+                }
             }
+
+            sql = "delete from library where music_id = ?";
+                ptmt = con.prepareStatement(sql);
+                ptmt.setInt(1, id);
+                rs = ptmt.executeQuery();
 
             sql = "delete from music where id = ?";
 
@@ -177,6 +187,8 @@ public class AdminDAO {
                 rs = ptmt.executeQuery();
             } catch (Exception e) {
                 throw new RuntimeException(e);
+            } finally {
+                close();
             }
         }
 
@@ -238,10 +250,24 @@ public class AdminDAO {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            finally {
+                close();
+            }
+            return res;
+        }
+
+        public boolean fileExtension_Check(String pattern, String filename){
+            boolean res = true;
+
+            if(filename != null){
+                res = Pattern.matches(pattern,filename);
+            }
+
             return res;
         }
 
         public void findImgFile(HttpServletRequest request, String filename) {
+        if(filename != null){
             String pp = ".*[.](jpeg|jpg|bmp|png|gif|pdf)";
             Path mpath = Paths.get(request.getRealPath("/mp3/") + filename);
             Path ipath = Paths.get(request.getRealPath("/img/") + filename);
@@ -257,6 +283,7 @@ public class AdminDAO {
 
             }
         }
+    }
 
     public ArrayList<UserDTO> userList(){
         ArrayList<UserDTO> res = new  ArrayList<UserDTO>();
@@ -328,6 +355,7 @@ public class AdminDAO {
 
         String profile_image = "exfire_member.png";
         String msg;
+        String membership = "3";
         try {
 
         sql = "select * from user where id = ?";
@@ -337,18 +365,13 @@ public class AdminDAO {
         rs = ptmt.executeQuery();
 
 
-        if(rs.next() && rs.getString("profile_image") !=  profile_image && rs.getString("membership") != "3"){
-            System.out.println("유저이미지는? = " +rs.getString("profile_image"));
-            System.out.println("유저멤버쉽은? = " +rs.getString("membership"));
+        if(rs.next() && !rs.getString("profile_image").equals(profile_image)  && (!rs.getString("membership").equals( "3"))){
            String path = request.getRealPath("/img/");
            msg = "탈퇴되었습니다";
            Path overlapfile = Paths.get(path + rs.getString("profile_image") );
            Files.delete(overlapfile);
 
             sql = "update user set membership = ?, profile_image = ? where id = ?";
-
-            String membership = "3";
-
 
             ptmt = con.prepareStatement(sql);
             ptmt.setString(1, membership);
@@ -363,6 +386,9 @@ public class AdminDAO {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            close();
         }
         return msg;
     }
@@ -426,6 +452,8 @@ public class AdminDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }  finally {
+            close();
         }
         return res;
     }
@@ -455,6 +483,8 @@ public class AdminDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            close();
         }
         return res;
     }
