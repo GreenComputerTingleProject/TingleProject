@@ -458,37 +458,6 @@ public class AdminDAO {
         return res;
     }
 
-    public ArrayList<PayDTO> calculate(String sDay, String eDay){
-        ArrayList<PayDTO> res = new ArrayList<PayDTO>();
-
-        sql = "select * from pay where reg_date BETWEEN ? AND ?";
-
-        try {
-            ptmt = con.prepareStatement(sql);
-            ptmt.setString(1, sDay);
-            ptmt.setString(2, eDay);
-            rs = ptmt.executeQuery();
-
-            while (rs.next()){
-                PayDTO dto = new PayDTO();
-
-                dto.setId(rs.getInt("id"));
-                dto.setUser_id(rs.getInt("user_id"));
-                dto.setImp_uid(rs.getString("imp_uid"));
-                dto.setPaid_amount(rs.getInt("paid_amount"));
-                dto.setReg_date(rs.getTimestamp("reg_date"));
-
-                res.add(dto);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close();
-        }
-        return res;
-    }
-
     public void close() {
         if(rs!=null) try {rs.close();} catch (SQLException e) {}
         if(ptmt!=null) try {ptmt.close();} catch (SQLException e) {}

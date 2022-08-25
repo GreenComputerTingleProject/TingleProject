@@ -6,16 +6,15 @@ import model.PayDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
-public class AdminCalculateReg implements AdminService{
+public class AdminCalculatePeriodReg implements AdminService{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("AdminCalculateReg execute() 실행");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -39,7 +38,7 @@ public class AdminCalculateReg implements AdminService{
                 System.out.println("서비스 sday= " + sDay);
                 System.out.println("서비스 eday= " + eDay);
 
-                ArrayList<PayDTO> dto = new AdminDAO().calculate(sDay, eDay);
+                ArrayList<PayDTO> dto = new PayDAO().calculate(sDay, eDay);
 
                 int period_income = 0;
 
@@ -48,12 +47,15 @@ public class AdminCalculateReg implements AdminService{
                 }
 
                 int total_amount = new PayDAO().pay_total_amount();
+                HashMap<Integer, Integer> monthly_amount = new PayDAO().pay_monthly_amount();
 
                 request.setAttribute("sDay", sDay);
                 request.setAttribute("eDay", eDay);
                 request.setAttribute("total_amount", total_amount);
+                request.setAttribute("monthly_amount", monthly_amount);
                 request.setAttribute("period_income", period_income);
                 request.setAttribute("calculate_pay", dto);
+                request.setAttribute("result", 2);
                 request.setAttribute("adminUrl", "menu/calculate/calculate.jsp");
             }
         } catch (ParseException e) {
