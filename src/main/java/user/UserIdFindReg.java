@@ -4,11 +4,18 @@ import model.UserDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 
 public class UserIdFindReg implements UserService{
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
+
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         String msg = "아이디를 찾을 수 없습니다";
 
