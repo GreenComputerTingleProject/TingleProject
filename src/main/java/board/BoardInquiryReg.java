@@ -16,6 +16,7 @@ public class BoardInquiryReg implements BoardService{
         String kind = request.getParameter("kind");
         String title = request.getParameter("title");
         String content = request.getParameter("content");
+        String checked = request.getParameter("checked");
 
         BoardDTO dto = new BoardDTO();
         dto.setLogin_id(login_id);
@@ -24,6 +25,7 @@ public class BoardInquiryReg implements BoardService{
         dto.setTitle(title);
         dto.setKind(kind);
         dto.setNickname(nickname);
+        dto.setChecked(checked);
 
         new BoardDAO().inquriyInsert(dto);
 

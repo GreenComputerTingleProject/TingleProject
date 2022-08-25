@@ -6,13 +6,29 @@ import java.util.Date;
 public class BoardDTO {
 
     Integer id, mode, user_id;
-    String title, content, kind, nickname, login_id;
+    String title, content, kind, nickname, login_id, checked, answer;
     Date reg_date;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
     public BoardDTO () {
 
+    }
+
+    public String getChecked() {
+        return checked;
+    }
+
+    public void setChecked(String checked) {
+        this.checked = checked;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public String getLogin_id() {

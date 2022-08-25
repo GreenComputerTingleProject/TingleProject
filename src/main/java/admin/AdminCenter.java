@@ -15,7 +15,6 @@ public class AdminCenter implements AdminService{
 
         System.out.println("AdminCenter execute() 실행");
         String noticeKind = request.getParameter("noticeKind");
-        System.out.println(noticeKind);
         int id = 0;
         String msg = "";
 
@@ -52,8 +51,10 @@ public class AdminCenter implements AdminService{
                 request.setAttribute("noticeData", noticeModifyData);
                 request.setAttribute("adminUrl", "menu/center/noticeModifyForm.jsp");
                 break;
-        }
 
+            default:
+                break;
+        }
 
 
 

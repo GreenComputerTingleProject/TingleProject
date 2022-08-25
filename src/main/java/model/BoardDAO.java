@@ -51,6 +51,8 @@ public class BoardDAO {
                 dto.setKind(rs.getString("kind"));
                 dto.setNickname(rs.getString("nickname"));
                 dto.setReg_date(rs.getDate("reg_date"));
+                dto.setChecked(rs.getString("checked"));
+                dto.setAnswer(rs.getString("answer"));
 
                 res.add(dto);
             }
@@ -82,6 +84,8 @@ public class BoardDAO {
                 dto.setKind(rs.getString("kind"));
                 dto.setNickname(rs.getString("nickname"));
                 dto.setReg_date(rs.getDate("reg_date"));
+                dto.setChecked(rs.getString("checked"));
+                dto.setAnswer(rs.getString("answer"));
 
                 res.add(dto);
             }
@@ -95,8 +99,8 @@ public class BoardDAO {
 
     public void inquriyInsert(BoardDTO dto){
         try {
-            sql = "insert into board (login_id, user_id, content, title, reg_date, mode, kind, nickname)"
-                    + "values(?, ?, ?, ?, sysdate(), 3, ?, ?)";
+            sql = "insert into board (login_id, user_id, content, title, reg_date, mode, kind, nickname, checked)"
+                    + "values(?, ?, ?, ?, sysdate(), 3, ?, ?,?)";
 
             ptmt = con.prepareStatement(sql);
 
@@ -106,6 +110,7 @@ public class BoardDAO {
             ptmt.setString(4,dto.title);
             ptmt.setString(5, dto.kind);
             ptmt.setString(6, dto.nickname);
+            ptmt.setString(7, dto.checked);
 
             ptmt.executeUpdate();
 
@@ -135,6 +140,8 @@ public class BoardDAO {
                 dto.setMode(rs.getInt("mode"));
                 dto.setKind(rs.getString("kind"));
                 dto.setNickname(rs.getString("nickname"));
+                dto.setChecked(rs.getString("checked"));
+                dto.setAnswer(rs.getString("answer"));
             }
 
         } catch (SQLException e) {
@@ -194,6 +201,24 @@ public class BoardDAO {
             ptmt.setInt(1, id);
             rs = ptmt.executeQuery();
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            close();
+        }
+    }
+
+    public void inquiryAnswer(BoardDTO dto){
+        sql = "update board  set answer = ?, checked = ? where id = ?";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setString(1, dto.answer);
+            ptmt.setString(2, dto.checked);
+            ptmt.setInt(3, dto.id);
+
+            ptmt.executeUpdate();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             close();

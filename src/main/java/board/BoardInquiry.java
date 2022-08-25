@@ -31,6 +31,8 @@ public class BoardInquiry implements BoardService{
                 data.put("kind", dto.getKind());
                 data.put("nickname", dto.getNickname());
                 data.put("reg_date", dto.getReg_dateStr());
+                data.put("checked", dto.getChecked());
+                data.put("answer", dto.getAnswer());
 
                 jsonArray.add(data);
                 num++;
