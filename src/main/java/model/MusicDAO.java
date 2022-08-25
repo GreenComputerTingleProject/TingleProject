@@ -176,6 +176,9 @@ public class MusicDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        finally {
+            close();
+        }
 
         res.add(todayMusic);
         res.add(funnyMusic);
