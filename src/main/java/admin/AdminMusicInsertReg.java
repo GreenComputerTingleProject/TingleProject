@@ -18,7 +18,7 @@ public class AdminMusicInsertReg implements AdminService{
 
         String msg = "음원등록이 완료되었습니다";
 //        String path = "C:\\Users\\82108\\TingleProject\\src\\main\\webapp\\mp3";
-        String path = request.getRealPath("/mp3");
+        String path = request.getRealPath("/mp3/");
 
         AdminDAO dao = new AdminDAO();
 
