@@ -1698,7 +1698,7 @@
             $(".findLyricsTbody").empty();
         }
 
-        //차트 클릭시
+     /** 차트 클릭시 */
         $('.chart').click(function () {
 
             allEmpty();
@@ -1760,11 +1760,11 @@
 
 
                     }) //지우지마셈
-                       // 플레이버튼 클릭
+
                     playButtonCLick(json);
                     detailClick(json);
-                    //modalfunc(s_LibraryData);
-                    //발라드 클릭시
+
+                    /** 발라드 클릭시 */
                     $('#ballad').click(function () {
                         console.log("클릭")
                         $('#chart_h1').html("발라드");
@@ -1782,7 +1782,7 @@
                         });
                     });
 
-                    //락 클릭시
+                    /** 락 클릭시 */
                     $('#rock').click(function () {
 
                         console.log("클릭")
@@ -1803,7 +1803,7 @@
 
                     });
 
-                    //힙합 클릭시
+                    /** 힙합 클릭시 */
                     $('#hiphop').click(function () {
 
                         console.log("클릭")
@@ -1824,7 +1824,7 @@
 
                     });
 
-                    //댄스 클릭시
+                    /** 댄스 클릭시 */
                     $('#dance').click(function () {
 
                         console.log("클릭")
@@ -1845,7 +1845,7 @@
 
                     });
 
-                    //재즈 클릭시
+                    /** 재즈 클릭시 */
                     $('#jazz').click(function () {
 
                         console.log("클릭")
@@ -1866,7 +1866,7 @@
 
                     });
 
-              /** 클래식 클릭시*/
+                /** 클래식 클릭시*/
                     $('#classic').click(function () {
 
                         console.log("클릭")
@@ -1887,7 +1887,7 @@
 
                     });
 
-                    //팝 클릭시
+                    /** 팝 클릭시 */
                     $('#pop').click(function () {
 
                         console.log("클릭")
@@ -1913,7 +1913,7 @@
                 }
             });
 
-           /**chart 함수*/
+           /** chart success 함수 */
             function success(data) {
                 const json = JSON.parse(data);
                 s_LibraryData = json;
@@ -1949,13 +1949,11 @@
                 })
                 playButtonCLick(json);
                 detailClick(json);
-                // modalfunc(s_LibraryData);
              }
 
             })
         /** 디테일 클릭 */
         function detailClick(json){
-
 
             let dropMusicInfo = document.getElementsByClassName("dropMusicInfo");
 
@@ -1979,8 +1977,6 @@
                     html += json[i].lyrics + '</div>'
                     $("#suggestion_body").append(html);
 
-
-                    /** 요기 다시보기*/
                     let selectPlay = document.getElementsByClassName("selectPlay");
                     let selectList = document.getElementsByClassName("selectList");
                     let selectAdd = document.getElementsByClassName("selectAdd");
@@ -2044,7 +2040,7 @@
         }
 
 
-        //버튼 클릭 함수
+        /** 플레이버튼 클릭시 함수 */
         function playButtonCLick(json) {
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
@@ -2077,7 +2073,7 @@
                         audio.play();
                     }, 300);
                 })
-                // console.log(selectList[i]);
+
                 selectList[i].addEventListener('click', function () {
                     nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
 
@@ -2117,7 +2113,7 @@
             })
         }
 
-        /** find 함수*/
+        /** find엔터 */
         $("#findEnter").keydown(function (key) {
             if (key.keyCode == 13) {
 
@@ -2147,9 +2143,8 @@
                         success: function (data) {
                             console.log($('.find-input').val());
                              const json = JSON.parse(data);
-                            // console.log(json);
                             s_LibraryData = json[0];
-                            console.log(s_LibraryData)
+
                             if (json[0].length > 0) {
                                 $('#findTitleHead').attr("style", "display:");
                             } else {
@@ -2396,9 +2391,10 @@
 
                             $('.find-input').val("");
 
+
                             playButtonCLick(json[0]);
                             detailClick(json[0]);
-                          //  modalfunc();
+
                         },
                         error: function (e) {
                             alert("실패" + $('.find-input').val())
