@@ -72,7 +72,7 @@
                 <td><a href="AdminUserDetail?id=${dto.id}">${dto.id}</a></td>
                 <td>${dto.login_id}</td>
                 <td>${dto.login_pw}</td>
-                <td>${dto.name}</td>n
+                <td>${dto.name}</td>
                 <td>${dto.nickname}</td>
                 <td>${dto.phone_number}</td>
                 <td>${dto.email_address}</td>
