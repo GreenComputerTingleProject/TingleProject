@@ -297,7 +297,7 @@
             padding-right: 30px;
             border: 0;
             border-bottom: 1px solid #ebebeb;
-            width: 50%;
+            width: 70%;
             height: 58px;
             font-size: 15px;
             color: #181818;
@@ -310,12 +310,12 @@
         }
 
         input[type=file] {
-            width: 50%;
+            width: 70%;
             margin: 10px auto 0;
         }
 
         .form-select {
-            width: 50%;
+            width: 70%;
             margin: 10px auto 0;
         }
 
@@ -448,8 +448,7 @@
             /*text-overflow: ellipsis;*/
 
         }
-
-        .select_icon > i {
+        .select_icon> i{
             padding-right: 15px;
         }
 
@@ -461,7 +460,7 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
-                <a class="suggestion" href="#">Tingle</a>
+                <a class = "suggestion" href="#">Tingle</a>
             </li>
             <c:choose>
                 <c:when test="${userData == null}">
@@ -500,10 +499,11 @@
                 </div>
             </div>
 
-            <%-- 상세보기 --%>
-            <div id="detail" style="display:none">
+                <%-- 상세보기 --%>
+                <div id="detail" style="display:none">
 
-            </div>
+                </div>
+
 
 
             <%--차트--%>
@@ -703,7 +703,7 @@
         let s_UserData;
         let s_LibraryData;
         let isSessionLoaded = false;
-        let audio = document.getElementById("audio");
+        let audio = document.getElementById("audio");;
         let nowPlayList;
         let coverImgList = [];
         let loaded = 0;
@@ -751,6 +751,7 @@
         function init(libraryData) {
             s_UserData = JSON.parse('${sessionScope.userData}');
             s_LibraryData = libraryData;
+
 
             isSessionLoaded = true;
 
@@ -812,8 +813,8 @@
                 $('#currentTime').html(convertTime(Math.floor(audio.currentTime)));
                 $('#duration').html(convertTime(Math.floor(audio.duration)));
 
-                if (!isSessionLoaded) {
-                    if (audio.currentTime >= 60) {
+                if(!isSessionLoaded){
+                    if(audio.currentTime >= 60) {
                         audio.pause();
                         audio.currentTime = 0;
 
@@ -823,8 +824,8 @@
                         $('#modal-body1').text('비회원은 1분 미리듣기만 제공됩니다');
                         $('#modal1').modal('toggle');
                     }
-                } else if (s_UserData.membership == 1) {
-                    if (audio.currentTime >= 60) {
+                } else if(s_UserData.membership == 1) {
+                    if(audio.currentTime >= 60) {
                         audio.pause();
                         audio.currentTime = 0;
 
@@ -932,7 +933,7 @@
         })
 
         $('#library').click(function () {
-            $('#modal_add').css("display", "none")
+            $('#modal_add').css("display","none")
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
@@ -948,12 +949,6 @@
                 success: function (result) {
                     s_LibraryData = JSON.parse(result);
 
-                    coverImgList = [];
-
-                    for (const i in s_LibraryData) {
-                        coverImgList[i] = "<c:url value="/img/"/>" + s_LibraryData[i].cover_img;
-                    }
-
                     allEmpty();
                     drawLibraryList();
                     detailClick(s_LibraryData);
@@ -965,26 +960,15 @@
         })
 
         $("#myPage").click(function () {
-            $('#modal_add').css("display", "")
+            $('#modal_add').css("display","")
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
                 return;
             }
 
-            $.ajax({
-                type: 'GET',
-                url: '<c:url value="/pay/PayMyList"/>',
-                async: false,
-                dataType: 'text',
-                success: function (result) {
-                    allEmpty();
-                    drawMyPageList(JSON.parse(result));
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            });
+            allEmpty();
+            drawMyPageList();
         })
 
         function drawLibraryList() {
@@ -994,7 +978,7 @@
             let html = "";
 
             for (const i in s_LibraryData) {
-                html += '<tr class="library_items">';
+                html += '<tr>';
                 html += '<td scope="row">' + '<input class="check" type="checkbox" name="check">' + '</td>';
                 html += '<td>' + '<img class="innerImg" src="" alt="">' + '</td>';
                 html += '<td>' + s_LibraryData[i].title + '<br>' + s_LibraryData[i].album + '</td>';
@@ -1003,8 +987,9 @@
                 html += '<td>' + '<i class="selectList fa-solid fa-list"></i>' + '</td>';
                 html += '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                     + '<ul class="dropdown-menu">'
-                    + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                    + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                    + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                    + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                    + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
                     + '<li><a class="dropRemove dropdown-item" href="#">보관함에서 삭제</a></li>'
                     + '</ul>' + '</td>';
                 html += '</tr>';
@@ -1061,12 +1046,8 @@
                         data: 'music_id=' + s_LibraryData[i].id,
                         async: false,
                         success: function (result) {
-                            // getLibrary();
-                            // drawLibraryList();
-
-                            let library_items = document.getElementsByClassName("library_items");
-                            console.log(library_items)
-                            library_items[i].remove();
+                            getLibrary();
+                            drawLibraryList();
                         },
                         error: function (e) {
                             console.log(e);
@@ -1089,7 +1070,7 @@
             })
         }
 
-        function drawMyPageList(payList) {
+        function drawMyPageList() {
             $('#dynamicTable').css('display', 'none');
             $('#myPageDiv').css('display', 'block');
 
@@ -1112,17 +1093,17 @@
             html += '</div>';
             html += '</div>';
             html += '</div>' + '<br>';
-
-            html += '<h4>정보 변경</h4>';
-            html += '<div id="box2"><div class="card card-body">';
+            html += '<div class="btn-group">';
+            html += '<button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#box2"/>회원 정보 변경'
+            html += '</div>';
+            html += '<div class="collapse" id="box2"><div class="card card-body">';
             html += '<form action="<c:url value="/user/UserInfoUpdate"/>" align=center method="post" enctype="multipart/form-data">';
             html += '<input type="hidden" id="session_id" name="id">';
-            html += '<input type="text" id="nickname" name="nickname" placeholder="닉네임"><br>';
-            html += '<input type="text" id="phone" name="phone" placeholder="전화번호"><br>';
-            html += '<input type="text" id="email" name="email" placeholder="이메일"><br>';
+            html += '<input type="text" id="nickname" name="nickname" placeholder="닉네임">';
+            html += '<input type="text" id="phone" name="phone" placeholder="전화번호">';
+            html += '<input type="text" id="email" name="email" placeholder="이메일">';
             html += '<input class="form-control" type="file" id="image" name="image">';
             html += '<select class="form-select" name="personal_type" aria-label="성향을 선택해 주세요">';
-            html += '<option value="">--음악 성향을 선택해 주세요--</option>';
             html += '<option value="classic">클래식</option>';
             html += '<option value="rock">락</option>';
             html += '<option value="blues">블루스</option>';
@@ -1135,27 +1116,6 @@
             html += '</select>';
             html += '<button type="submit" id="submitBtn" class="btn btn-primary">제출</button>';
             html += '</form>';
-            html += '</div>';
-            html += '</div><br>';
-
-            html += '<h4>결제 내역</h4>';
-            html += '<div id="box3"><div class="card card-body">';
-            html += '<table class="table table-hover">';
-            html += '<thead class="table-dark">';
-            html += '<tr>';
-            html += '<th scope="col">주문번호</th>'
-            html += '<th scope="col">결제일자</th>'
-            html += '<th scope="col">결제금액</th>'
-            html += '</tr>';
-            html += '</thead>';
-            for (const i in payList) {
-                html += '<tr>';
-                html += '<td>'+payList[i].imp_uid+'</td>';
-                html += '<td>'+payList[i].reg_date+'</td>';
-                html += '<td>'+payList[i].paid_amount + '원' +'</td>';
-                html += '</tr>';
-            }
-            html += '</table>';
             html += '</div>';
 
             $("#myPageDiv").empty();
@@ -1197,6 +1157,7 @@
                 $('#btn-group').css('display', 'none');
             }
         }
+
 
 
         $('#modal_play').click(function () {
@@ -1250,7 +1211,6 @@
 
             playListInit();
         })
-
         $('#modal_add').click(function () {
 
             let check = document.getElementsByClassName("check");
@@ -1266,29 +1226,34 @@
                 }
             }
 
-            $.ajax({
-                type: 'GET',
-                url: '<c:url value="/music/MusicAddLibrary"/>',
-                data: 'music_id=' + s_LibraryDatas,
-                async: false,
-                success: function (result) {
-                    $('#modal-body2').text('보관함에 추가되었습니다');
-                    $('#modal2').modal('toggle');
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            });
+            console.log("ss"+s_LibraryDatas);
+                $.ajax({
+                    type: 'GET',
+                    url: '<c:url value="/music/MusicAddLibrary"/>',
+                    data: 'music_id=' +s_LibraryDatas,
+                    async: false,
+                    success: function (result) {
+                        getLibrary();
+
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
 
 
         })
+
+
+
+
 
 
         function playListInit() {
             let html = "";
 
             for (const i in nowPlayList) {
-                let songName = nowPlayList[i].substring(("<c:url value="/mp3/"/>").length).split('.')[0];
+                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
 
                 if (i == audioIndex) {
                     html += '<div style="color: red">' + songName + '</div>';
@@ -1466,11 +1431,11 @@
 
         $('.suggestion').click(function () {
             allEmpty();
-            $('#modal_add').css("display", "")
+            $('#modal_add').css("display","")
             suggestion();
         })
 
-        function suggestion() {
+         function suggestion() {
 
             let html = '';
             let data = new Array();
@@ -1506,7 +1471,7 @@
             let selectList = document.getElementsByClassName("selectList");
             let s_selectAdd = document.getElementsByClassName("s_selectAdd");
 
-            selects(data, selectPlay, selectList, s_selectAdd);
+            selects(data,selectPlay,selectList,s_selectAdd);
 
 
             // 추천 노래의 이미지를 눌렀을때
@@ -1519,15 +1484,18 @@
                     let html = '';
 
                     html += '<div class="suggestion_detail"><img src="img/' + data[i].cover_img + '">';
-                    html += '<div id="detailInfo"><div><h2>' + data[i].title + '<h2></div>'
-                    html += '<div><h4>' + data[i].artist + '</h4></div>';
+                    html += '<div id="detailInfo"><div><h4 class="detail_album">' + data[i].album + '<h4></div>'
+                    html += '<div><h3 class="detail_title">' + data[i].title + '</h3></div>';
+                    html += '<div><h3 class="detail_artist">' + data[i].artist + '</h3></div>';
+                    html += '<div><h2 >' + data[i].genre + '</h2></div>';
+                    html += '<div><h2>' + data[i].release_date + '</h2></div>';
                     html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
                     html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
                     html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
                     html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
                     html += '<div id ="suggestion_lylics">'
-                    html += data[i].lyrics + '</div>'
+                    html +=  data[i].lyrics + '</div>'
                     $("#suggestion_body").append(html);
 
                     let selectPlay = document.getElementsByClassName("selectPlay");
@@ -1564,13 +1532,14 @@
                     })
 
                     selectAdd[0].addEventListener('click', function () {
-                        if (isSessionLoaded) {
+                        if(isSessionLoaded) {
                             $.ajax({
                                 type: 'GET',
                                 url: '<c:url value="/music/MusicAddLibrary"/>',
                                 data: 'music_id=' + data[i].id,
                                 async: false,
                                 success: function (result) {
+                                    getLibrary();
                                     $('#modal-body2').text('보관함에 추가되었습니다');
                                     $('#modal2').modal('toggle');
 
@@ -1591,7 +1560,7 @@
             }
         }
 
-        function selects(data, selectPlay, selectList, s_selectAdd) {
+        function selects(data, selectPlay, selectList, s_selectAdd){
             for (let i = 0; i < selectList.length; i++) {
 
                 selectPlay[i].addEventListener('click', function () {
@@ -1627,9 +1596,9 @@
             }
 
             // 여기가 추천에서 add 누른거
-            for (let i = 0; i < s_selectAdd.length; i++) {
+            for (let i = 0; i < s_selectAdd.length ; i++) {
                 s_selectAdd[i].addEventListener('click', function () {
-                    if (isSessionLoaded) {
+                    if(isSessionLoaded){
                         console.log("보내보내내");
                         $.ajax({
                             type: 'GET',
@@ -1637,6 +1606,7 @@
                             data: 'music_id=' + data[i].id,
                             async: false,
                             success: function (result) {
+                                getLibrary();
                                 $('#modal-body2').text('보관함에 추가되었습니다');
                                 $('#modal2').modal('toggle');
 
@@ -1651,11 +1621,12 @@
         }
 
 
+
         function playListInit2(data) {
             let html = "";
 
             for (const i in nowPlayList) {
-                let songName = nowPlayList[i].substring(("<c:url value="/mp3/"/>").length).split('.')[0];
+                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
 
                 if (i == audioIndex) {
                     html += '<div style="color: red">' + songName + '</div>';
@@ -1683,7 +1654,7 @@
             let html = "";
 
             for (const i in nowPlayList) {
-                let songName = nowPlayList[i].substring(("<c:url value="/mp3/"/>").length).split('.')[0];
+                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
 
                 if (i == audioIndex) {
                     html += '<div style="color: red">' + songName + '</div>';
@@ -1731,7 +1702,7 @@
             $(".findLyricsTbody").empty();
         }
 
-        //차트 클릭시
+     /** 차트 클릭시 */
         $('.chart').click(function () {
 
             allEmpty();
@@ -1739,7 +1710,7 @@
             $('.chartTable').attr("style", "display:");
             $('.chartContainer').attr("style", "display:");
             $('#chart_h1').html("TOP100");
-            $('#modal_add').css("display", "")
+            $('#modal_add').css("display","")
             $.ajax({
                 url: "<c:url value="/chart/ChartTop100"/>",
                 type: "GET",
@@ -1748,6 +1719,7 @@
 
                 success: function (data) {
                     const json = JSON.parse(data);
+                    console.log("----차트 json----")
                     console.log(json);
 
                     s_LibraryData = json;
@@ -1784,8 +1756,9 @@
                             '</td>' +
                             '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                             + '<ul class="dropdown-menu">'
-                            + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                            + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                            + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                            + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                            + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
                             + '</ul>' + '</td>' +
                             '</tr>');
 
@@ -1793,11 +1766,11 @@
 
 
                     }) //지우지마셈
-                       // 플레이버튼 클릭
+
                     playButtonCLick(json);
                     detailClick(json);
-                    //modalfunc(s_LibraryData);
-                    //발라드 클릭시
+
+                    /** 발라드 클릭시 */
                     $('#ballad').click(function () {
                         console.log("클릭")
                         $('#chart_h1').html("발라드");
@@ -1815,7 +1788,7 @@
                         });
                     });
 
-                    //락 클릭시
+                    /** 락 클릭시 */
                     $('#rock').click(function () {
 
                         console.log("클릭")
@@ -1836,7 +1809,7 @@
 
                     });
 
-                    //힙합 클릭시
+                    /** 힙합 클릭시 */
                     $('#hiphop').click(function () {
 
                         console.log("클릭")
@@ -1857,7 +1830,7 @@
 
                     });
 
-                    //댄스 클릭시
+                    /** 댄스 클릭시 */
                     $('#dance').click(function () {
 
                         console.log("클릭")
@@ -1878,7 +1851,7 @@
 
                     });
 
-                    //재즈 클릭시
+                    /** 재즈 클릭시 */
                     $('#jazz').click(function () {
 
                         console.log("클릭")
@@ -1899,7 +1872,7 @@
 
                     });
 
-                    /** 클래식 클릭시*/
+                /** 클래식 클릭시*/
                     $('#classic').click(function () {
 
                         console.log("클릭")
@@ -1920,7 +1893,7 @@
 
                     });
 
-                    //팝 클릭시
+                    /** 팝 클릭시 */
                     $('#pop').click(function () {
 
                         console.log("클릭")
@@ -1946,7 +1919,7 @@
                 }
             });
 
-            /**chart 함수*/
+           /** chart success 함수 */
             function success(data) {
                 const json = JSON.parse(data);
                 s_LibraryData = json;
@@ -1974,50 +1947,64 @@
                         '</td>' +
                         '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                         + '<ul class="dropdown-menu">'
-                        + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                        + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                        + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                        + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
                         + '</ul>' + '</td>' +
                         '</tr>');
                     $(".chartTbody").append(html);
                 })
                 playButtonCLick(json);
                 detailClick(json);
-                // modalfunc(s_LibraryData);
-            }
+             }
 
-        })
-
+            })
         /** 디테일 클릭 */
         function detailClick(json) {
 
-
             let dropMusicInfo = document.getElementsByClassName("dropMusicInfo");
+            let dropAlbumInfo = document.getElementsByClassName("dropAlbumInfo");
+            let dropArtistInfo = document.getElementsByClassName("dropArtistInfo");
+
 
             for (let i = 0; i < dropMusicInfo.length; i++) {
 
-                dropMusicInfo[i].addEventListener('click', function () {
 
+                dropMusicInfo[i].addEventListener('click', function () {
                     allEmpty();
+                    console.log("곡정보 클릭!");
                     $('#chartTbody').css('display', 'block');
                     let html = '';
 
-                    html += '<div class="suggestion_detail"><img src="img/' + json[i].cover_img + '">';
-                    html += '<div id="detailInfo"><div><h2>' + json[i].title + '<h2></div>'
-                    html += '<div><h4>' + json[i].artist + '</h4></div>';
-                    html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
+                    html += '<div class="suggestion_detail">' +
+                        '<img src="img/' + json[i].cover_img + '">';
+                    html += '<div id="detailInfo">' +
+                        '<div>' +
+                        '<h3 class="detail_title ">' + json[i].title + '</h3>' +
+                        '</div>';
+                    html += '<div>' +
+                        '<h4 class="detail_album ">' + json[i].album + '<h4>' +
+                        '</div>'
+                    html += '<div>' +
+                        '<h3 class="detail_artist ">' + json[i].artist + '</h3>' +
+                        '</div>';
+                    html += '<div class="select_icon">' +
+                        '<i class="selectPlay fa-solid fa-play">' +
+                        '</i>'
                     html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
-                    html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
+                    html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div>' +
+                        '</div>';
                     // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
                     html += '<div id ="suggestion_lylics">'
                     html += json[i].lyrics + '</div>'
                     $("#suggestion_body").append(html);
 
-
-                    /** 요기 다시보기*/
                     let selectPlay = document.getElementsByClassName("selectPlay");
                     let selectList = document.getElementsByClassName("selectList");
                     let selectAdd = document.getElementsByClassName("selectAdd");
+
+
 
                     selectPlay[0].addEventListener('click', function () {
                         $('#player-play').css('display', 'block');
@@ -2055,6 +2042,7 @@
                             data: 'music_id=' + json[i].id,
                             async: false,
                             success: function (result) {
+                                getLibrary();
                                 $('#modal-body2').text('보관함에 추가되었습니다');
                                 $('#modal2').modal('toggle');
 
@@ -2065,16 +2053,317 @@
                         });
                     })
 
+                    detailClick(json);
                     // document.getElementById('go_suggestion').addEventListener('click', function () {
                     //     suggestion();
                     // })
-                });
-            }
 
+
+                });
+
+
+                dropArtistInfo[i].addEventListener('click', function () {
+                    allEmpty();
+                    $('#chartTbody').css('display', 'block');
+                    console.log("----아티스트 정보클릭----");
+                    console.log("i : " + i);
+                    console.log(json);
+                    $.ajax({
+                        url: "<c:url value="/find/FindResult"/>",
+                        type: "POST",
+                        dataType: 'text',
+                        data: 'find-input=' + json[i].artist,
+                        async: false,
+                        success: function (data) {
+                            let json = JSON.parse(data);
+                            console.log("--아티스트 정보 받음--")
+                            console.log(json)
+                            let html = '';
+                            let htmlb = '';
+
+                            $.each(json[1], function (i, item) {
+                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
+                                    '<div id="detailInfo"><div><h4 class="detail_artist ">' + item.artist + '<h4></div>' +
+                                    '<div><h2>' + item.genre + '</h2></div>' +
+                                    // '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>' +
+                                    // '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
+                                    // '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>' +
+                                    // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                    '</div></div>' +
+                                    '<div id ="suggestion_lylics">' +
+                                    '<table class="findTitle_table table table-hover">' +
+                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    '<tr><th scope="col" width="5%"><input type="checkbox"></th>' +
+                                    '<th scope="col" width="5%">곡/앨범</th>' +
+                                    '<th scope="col" width="20%"></th>' +
+                                    '<th scope="col" width="15%">아티스트</th>' +
+                                    '<th scope="col" width="5%">듣기</th>' +
+                                    ' <th scope="col" width="5%">재생목록</th>' +
+                                    ' <th scope="col" width="5%">내 리스트</th>' +
+                                    ' <th scope="col" width="5%">더보기</th></tr></thead>' +
+                                    '<tbody class="findTbody">' +
+                                    '</tbody></table>' +
+                                    '</div>';
+
+                                html += '<tr class="b-wrap">'
+                                html += '<td scope="row">'
+                                html += '<input class="check" type="checkbox" name="check">'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<img class="innerImg" src="img/' + item.cover_img + '">'
+                                html += '</td>'
+                                html += '<td id="title">' + item.title + '<br>' + item.album + '</td>'
+                                html += '<td id="artist">' + item.artist + '</td>'
+                                html += '<td>'
+                                html += '<i class="selectPlay fa-solid fa-play"></i>'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<i class="selectList fa-solid fa-list"></i>'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<i class="selectAdd fa-solid fa-folder-plus"></i>'
+                                html += '</td>' + '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                    + '<ul class="dropdown-menu">'
+                                    + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                    + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                    + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                    + '</ul>' + '</td>' +
+                                    '</tr>'
+
+                            })
+
+                            $("#suggestion_body").append(htmlb);
+                            $(".findTbody").append(html);
+
+
+                            let selectPlay = document.getElementsByClassName("selectPlay");
+                            let selectList = document.getElementsByClassName("selectList");
+                            let selectAdd = document.getElementsByClassName("selectAdd");
+
+                            detailClick(json[1]);
+
+                            $.each(json[1], function (i, item) {
+
+                                selectPlay[i].addEventListener('click', function () {
+                                    $('#player-play').css('display', 'block');
+                                    $('#player-pause').css('display', 'none');
+                                    audio.pause();
+
+                                    nowPlayList = [];
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    for (const i in nowPlayList) {
+                                        preloadAudio(nowPlayList[i]);
+                                    }
+
+                                    audioIndex = 0;
+
+                                    playListInit3(item);
+
+                                    setTimeout(() => {
+                                        $('#player-play').css('display', 'none');
+                                        $('#player-pause').css('display', 'block');
+                                        audio.play();
+                                    }, 300);
+                                })
+
+                                selectList[i].addEventListener('click', function () {
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    playListInit3(item);
+                                })
+
+                                selectAdd[i].addEventListener('click', function () {
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '<c:url value="/music/MusicAddLibrary"/>',
+                                        data: 'music_id=' + json[i].id,
+                                        async: false,
+                                        success: function (result) {
+                                            getLibrary();
+                                            $('#modal-body2').text('보관함에 추가되었습니다');
+                                            $('#modal2').modal('toggle');
+
+                                        },
+                                        error: function (e) {
+                                            console.log(e);
+                                        }
+                                    });
+                                })
+                                // document.getElementById('go_suggestion').addEventListener('click', function () {
+                                //     suggestion();
+                                // })
+
+                            })
+
+
+                        },
+                        error: function (e) {
+
+                            console.log(e)
+                        }
+
+                    });
+
+                });
+
+                dropAlbumInfo[i].addEventListener('click', function () {
+                    allEmpty();
+                    $('#chartTbody').css('display', 'block');
+
+                    console.log("----앨범 정보클릭----");
+                    console.log("i : " + i);
+                    console.log(json);
+                    $.ajax({
+                        url: "<c:url value="/find/FindResult"/>",
+                        type: "POST",
+                        dataType: 'text',
+                        data: 'find-input=' + json[i].album,
+                        async: false,
+                        success: function (data) {
+                            let json = JSON.parse(data);
+                            console.log("--앨범 정보 받음--")
+                            console.log(json)
+                            let html = '';
+                            let htmlb = '';
+
+
+                            $.each(json[2], function (i, item) {
+
+                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
+                                    '<div id="detailInfo"><div><h4 class="detail_album ">' + item.album + '<h4></div>' +
+                                    '<div><h3 class="detail_artist ">' + item.artist + '</h3></div>' +
+                                    '<div><h2>' + item.genre + '</h2></div>' +
+                                    '<div><h2>' + item.release_date + '</h2></div>' +
+                                    '<div class="select_icon">' +
+                                    '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
+                                    '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>' +
+                                    // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                    '</div>' +
+                                    '<div id ="suggestion_lylics">' +
+                                    '<table class="findTitle_table table table-hover">' +
+                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    '<tr><th scope="col" width="5%"><input type="checkbox"></th>' +
+                                    '<th scope="col" width="5%">곡/앨범</th>' +
+                                    '<th scope="col" width="20%"></th>' +
+                                    '<th scope="col" width="15%">아티스트</th>' +
+                                    '<th scope="col" width="5%">듣기</th>' +
+                                    ' <th scope="col" width="5%">재생목록</th>' +
+                                    ' <th scope="col" width="5%">내 리스트</th>' +
+                                    ' <th scope="col" width="5%">더보기</th></tr></thead>' +
+                                    '<tbody class="findTbody">' +
+                                    '</tbody></table>' +
+                                    '</div>';
+                                html += '<tr class="b-wrap">'
+                                html += '<td scope="row">'
+                                html += '<input class="check" type="checkbox" name="check">'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<img class="innerImg" src="img/' + item.cover_img + '">'
+                                html += '</td>'
+                                html += '<td id="title">' + item.title + '<br>' + item.album + '</td>'
+                                html += '<td id="artist">' + item.artist + '</td>'
+                                html += '<td>'
+                                html += '<i class="selectPlay fa-solid fa-play"></i>'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<i class="selectList fa-solid fa-list"></i>'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<i class="selectAdd fa-solid fa-folder-plus"></i>'
+                                html += '</td>' + '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                    + '<ul class="dropdown-menu">'
+                                    + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                    + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                    + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                    + '</ul>' + '</td>' +
+                                    '</tr>'
+                            })
+
+                            $("#suggestion_body").append(htmlb);
+                            $(".findTbody").append(html);
+
+                            detailClick(json[2]);
+
+                            let selectPlay = document.getElementsByClassName("selectPlay");
+                            let selectList = document.getElementsByClassName("selectList");
+                            let selectAdd = document.getElementsByClassName("selectAdd");
+
+                            $.each(json[2], function (i, item) {
+
+
+                                selectPlay[i].addEventListener('click', function () {
+                                    $('#player-play').css('display', 'block');
+                                    $('#player-pause').css('display', 'none');
+                                    audio.pause();
+
+                                    nowPlayList = [];
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    for (const i in nowPlayList) {
+                                        preloadAudio(nowPlayList[i]);
+                                    }
+
+                                    audioIndex = 0;
+
+                                    playListInit3(item);
+
+                                    setTimeout(() => {
+                                        $('#player-play').css('display', 'none');
+                                        $('#player-pause').css('display', 'block');
+                                        audio.play();
+                                    }, 300);
+                                })
+
+                                selectList[i].addEventListener('click', function () {
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    playListInit3(item);
+                                })
+
+
+
+                                selectAdd[i].addEventListener('click', function () {
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '<c:url value="/music/MusicAddLibrary"/>',
+                                        data: 'music_id=' + json[i].id,
+                                        async: false,
+                                        success: function (result) {
+                                            getLibrary();
+                                            $('#modal-body2').text('보관함에 추가되었습니다');
+                                            $('#modal2').modal('toggle');
+
+                                        },
+                                        error: function (e) {
+                                            console.log(e);
+                                        }
+                                    });
+                                })
+
+
+                                // document.getElementById('go_suggestion').addEventListener('click', function () {
+                                //     suggestion();
+                                // })
+
+                            })
+
+
+                        },
+                        error: function (e) {
+
+                            console.log(e)
+                        }
+
+                    });
+
+
+                });
+
+            }
         }
 
-
-        //버튼 클릭 함수
+        /** 플레이버튼 클릭시 함수 */
         function playButtonCLick(json) {
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
@@ -2107,7 +2396,7 @@
                         audio.play();
                     }, 300);
                 })
-                // console.log(selectList[i]);
+
                 selectList[i].addEventListener('click', function () {
                     nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
 
@@ -2126,8 +2415,7 @@
                         data: 'music_id=' + json[i].id,
                         async: false,
                         success: function (result) {
-                            $('#modal-body2').text('보관함에 추가되었습니다');
-                            $('#modal2').modal('toggle');
+                            getLibrary();
                         },
                         error: function (e) {
                             console.log(e);
@@ -2148,7 +2436,7 @@
             })
         }
 
-        /** find 함수*/
+        /** find엔터 */
         $("#findEnter").keydown(function (key) {
             if (key.keyCode == 13) {
 
@@ -2166,7 +2454,7 @@
                     $('#findArtist_h1').attr("style", "display:");
                     $('#findTitle_h1').attr("style", "display:");
 
-                    $('#modal_add').css("display", "")
+                    $('#modal_add').css("display","")
                     $('#find_h1').html('\'' + $('.find-input').val() + '\'' + " 검색결과");
 
                     $.ajax({
@@ -2177,10 +2465,9 @@
                         async: false,
                         success: function (data) {
                             console.log($('.find-input').val());
-                            const json = JSON.parse(data);
-                            // console.log(json);
+                             const json = JSON.parse(data);
                             s_LibraryData = json[0];
-                            console.log(s_LibraryData)
+
                             if (json[0].length > 0) {
                                 $('#findTitleHead').attr("style", "display:");
                             } else {
@@ -2219,13 +2506,12 @@
                                         '<td>' +
                                         '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
                                         '</td>' +
-                                        '<td>' +
-                                        '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                        '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                                         + '<ul class="dropdown-menu">'
-                                        + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
-                                        + '</ul>' +
-                                        '</td>' +
+                                        + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                        + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                        + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                        + '</ul>' + '</td>' +
                                         '</tr>');
 
                                     $(".findTbody").append(html);
@@ -2254,7 +2540,6 @@
                                         '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                                         + '<ul class="dropdown-menu">'
                                         + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
                                         + '</ul>' +
                                         '</td>' +
                                         '</tr>');
@@ -2427,9 +2712,10 @@
 
                             $('.find-input').val("");
 
+
                             playButtonCLick(json[0]);
                             detailClick(json[0]);
-                            //  modalfunc();
+
                         },
                         error: function (e) {
                             alert("실패" + $('.find-input').val())
