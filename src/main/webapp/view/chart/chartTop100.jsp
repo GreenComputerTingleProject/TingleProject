@@ -308,7 +308,90 @@
 <%--    playListInit();--%>
 <%--    })--%>
 
+    function detailClick(json) {
 
+
+    let dropMusicInfo = document.getElementsByClassName("dropMusicInfo");
+
+    for (let i = 0; i < dropMusicInfo.length; i++) {
+
+    dropMusicInfo[i].addEventListener('click', function () {
+
+    allEmpty();
+    $('#chartTbody').css('display', 'block');
+    let html = '';
+
+    html += '<div class="suggestion_detail"><img src="img/' + json[i].cover_img + '">';
+    html += '<div id="detailInfo"><div><h2>' + json[i].title + '<h2></div>'
+        html += '<div><h4>' + json[i].artist + '</h4></div>';
+        html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
+            html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
+            html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
+    // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+    html += '</div>'
+    html += '<div id ="suggestion_lylics">'
+    html += json[i].lyrics + '</div>'
+    $("#suggestion_body").append(html);
+
+
+    /** 요기 다시보기*/
+    let selectPlay = document.getElementsByClassName("selectPlay");
+    let selectList = document.getElementsByClassName("selectList");
+    let selectAdd = document.getElementsByClassName("selectAdd");
+
+    selectPlay[0].addEventListener('click', function () {
+    $('#player-play').css('display', 'block');
+    $('#player-pause').css('display', 'none');
+    audio.pause();
+
+    nowPlayList = [];
+    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
+
+    for (const i in nowPlayList) {
+    preloadAudio(nowPlayList[i]);
+    }
+
+    audioIndex = 0;
+
+    playListInit3(json[i]);
+
+    setTimeout(() => {
+    $('#player-play').css('display', 'none');
+    $('#player-pause').css('display', 'block');
+    audio.play();
+    }, 300);
+    })
+
+    selectList[0].addEventListener('click', function () {
+    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
+
+    playListInit3(json[i]);
+    })
+
+    selectAdd[0].addEventListener('click', function () {
+    $.ajax({
+    type: 'GET',
+    url: '<c:url value="/music/MusicAddLibrary"/>',
+    data: 'music_id=' + json[i].id,
+    async: false,
+    success: function (result) {
+    $('#modal-body2').text('보관함에 추가되었습니다');
+    $('#modal2').modal('toggle');
+
+    },
+    error: function (e) {
+    console.log(e);
+    }
+    });
+    })
+
+    // document.getElementById('go_suggestion').addEventListener('click', function () {
+    //     suggestion();
+    // })
+    });
+    }
+
+    }
 </footer>
 </body>
 </html>
