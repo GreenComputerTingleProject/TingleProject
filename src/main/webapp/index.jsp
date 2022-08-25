@@ -987,9 +987,7 @@
                 html += '<td>' + '<i class="selectList fa-solid fa-list"></i>' + '</td>';
                 html += '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                     + '<ul class="dropdown-menu">'
-                    + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
-                    + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
-                    + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                    + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
                     + '<li><a class="dropRemove dropdown-item" href="#">보관함에서 삭제</a></li>'
                     + '</ul>' + '</td>';
                 html += '</tr>';
