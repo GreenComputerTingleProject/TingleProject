@@ -126,7 +126,7 @@
                             <c:forEach items="${daily_amount.value}" var="value" varStatus="j">
                                 <td scope="row">
                                     <ul>
-                                        <li>유저번호 : ${value.user_id}</li>
+                                        <li>유저번호 : <a href="AdminUserDetail?id=${value.user_id}">${value.user_id}</a></li>
                                         <li>주문번호 : ${value.imp_uid}</li>
                                         <li>결제금액 : ${value.paid_amount}원</li>
                                         <li>결제일자 : ${value.reg_date}</li>
@@ -168,7 +168,7 @@
                         <tr>
                             <td colspan="2">
                                 <ul>
-                                    <li>유저번호 : ${calculate_pay.user_id}</li>
+                                    <li>유저번호 : <a href="AdminUserDetail?id=${calculate_pay.user_id}">${calculate_pay.user_id}</a></li>
                                     <li>주문번호 : ${calculate_pay.imp_uid}</li>
                                     <li>결제금액 : ${calculate_pay.paid_amount}원</li>
                                     <li>결제일자 : ${calculate_pay.reg_date}</li>
