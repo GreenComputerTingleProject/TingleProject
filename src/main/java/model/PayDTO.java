@@ -60,7 +60,7 @@ public class PayDTO {
         return reg_date;
     }
 
-    public String getRelease_dateStr() {
+    public String getReg_dateStr() {
         return sdf.format(reg_date);
     }
 
