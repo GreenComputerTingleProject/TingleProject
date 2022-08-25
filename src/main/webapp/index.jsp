@@ -394,6 +394,35 @@
             height: 30vh;
         }
 
+        #boardContainer {
+            width: 100%;
+            height: 10vh;
+            background: #0dcaf0;
+            margin-bottom: 10px;
+        }
+
+        .board_body{
+            width: 100%;
+            height: 90vh;
+            background: #20c997;
+        }
+
+        .board_index {
+            width: 100%;
+            height: 5vh;
+            background: #6f42c1;
+        }
+
+        .notice_index {
+            cursor : pointer;
+            background: #f0f0f0;
+        }
+
+        .notice_index:hover {
+            background: #f0f0f0;
+        }
+        /*게시판 스타일*/
+
         fieldset {
             display: flex;
             align-items: center;
@@ -481,7 +510,7 @@
             <li><a class="suggestion btncolor" href="#">추천</a></li>
             <li><a class="chart" id="chart" href="#">차트</a></li>
             <li><a id="library" href="#">보관함</a></li>
-            <li><a href="#">게시판</a></li>
+            <li><a id="board" href="#">고객센터</a></li>
             <li><a id="myPage" href="#">마이페이지</a></li>
             <li><a href="admin/AdminLogin">관리자</a></li>
         </ul>
@@ -499,7 +528,22 @@
                 </div>
             </div>
 
+                <%--게시판--%>
+                <div id ="boardContainer" style="display: none">
+                <div><h1>팅글고객센터 입니다</h1></div>
+                <div>
+                    <input type="button" value="공지사항" id="notice_btn">
+                    <input type="button" value="자주받는 질문" id="FAQ_btn">
+                    <input type="button" value="1:1문의" id="inquiry_btn">
+                </div>
+                </div>
+
+                <div class="board_body">
+
+                </div>
+
                 <%-- 상세보기 --%>
+
                 <div id="detail" style="display:none">
 
                 </div>
@@ -712,6 +756,7 @@
         let isShuffle = false;
         let repeatMode = 0;
         let s_SuggestionList;
+        let board_data;
 
         $.ajax({
             type: 'GET',
@@ -948,6 +993,12 @@
                 dataType: 'text',
                 success: function (result) {
                     s_LibraryData = JSON.parse(result);
+
+                    coverImgList = [];
+
+                    for (const i in s_LibraryData) {
+                        coverImgList[i] = "<c:url value="/img/"/>" + s_LibraryData[i].cover_img;
+                    }
 
                     allEmpty();
                     drawLibraryList();
@@ -1211,6 +1262,7 @@
 
             playListInit();
         })
+
         $('#modal_add').click(function () {
 
             let check = document.getElementsByClassName("check");
@@ -1684,6 +1736,7 @@
             $("#myPageDiv").empty();
             $("#dynamicTbody").empty();
             $("#suggestion_body").empty();
+            $(".board_body").css("display", "none");
             $(".chartContainer").attr("style", "display:none");
             $(".chartTable").attr("style", "display:none")
             $(".chartTbody").empty();
@@ -1696,13 +1749,311 @@
             $('#findAlbum_Container').css("display", "none");
             $('#findArtist_Container').css("display", "none");
             $('#findLyrics_Container').css("display", "none");
+            $("#boardContainer").attr("style", "display:none");
             $(".findTbody").empty();
             $(".findArtist_List").empty();
             $(".findAlbum_List").empty();
             $(".findLyricsTbody").empty();
         }
+        // 게시판 클릭시 - 현석
+        document.getElementById("notice_btn").addEventListener('click', function (){
+            board_notice();
+        })
 
-     /** 차트 클릭시 */
+        document.getElementById("FAQ_btn").addEventListener('click', function (){
+            board_FAQ();
+        })
+
+        document.getElementById("inquiry_btn").addEventListener('click', function (){
+            board_inquriry();
+        })
+
+        $('#board').click(function () {
+            board_notice();
+            $('#modal_add').css("display", "")
+
+        })
+
+        // 공지사항 클릭
+        function board_notice(){
+
+            $.ajax({
+                type: 'GET',
+                url: '<c:url value="/board/BoardNotice"/>',
+                async: false,
+                dataType: 'text',
+                success: function (results) {
+                    board_data = JSON.parse(results);
+                    console.log(board_data);
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+
+            let html = '';
+
+            allEmpty();
+            $('#boardContainer').css('display', 'block');
+            $('.board_body').css('display', '');
+            html += '게시판 바디입니다';
+            html += '<div class="board_index"><table width="100%"><tr>';
+            html += '<td width="25%">번호</td>';
+            html += '<td>분류</td>';
+            html += '<td>제목</td>';
+            html += '<td>날짜</td>';
+            html += '</tr></table></div>';
+            for (const i in board_data) {
+                html += '<div class="notice_index" ><table width="100%"><tr class="noticeDetail">';
+                html += '<td width="25%">' + board_data[i].id + '</td>';
+                html += '<td>'+ board_data[i].kind +'</td>';
+                html += '<td>'+ board_data[i].title +'</td>';
+                html += '<td>'+ board_data[i].reg_date +'</td>';
+                html += '</tr></table></div>';
+            }
+            $('.board_body').empty();
+            $('.board_body').append(html);
+
+            let noticeDetail = document.getElementsByClassName('noticeDetail');
+
+            for (let i = 0; i < noticeDetail.length ; i++) {
+
+                noticeDetail[i].onclick = function (){
+                    notice_Detail(board_data[i]);
+                }
+            }
+
+
+        }
+
+        function notice_Detail(data){
+            allEmpty();
+            $('#boardContainer').css('display', 'block');
+            $('.board_body').css('display', '');
+
+            let html = '';
+
+            html += '<div id="noticeForm">';
+            html += '<div id="noticeheader"><h2>'+"공지사항"+'<h2><input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
+            html += '<div>';
+            html += '<div>'+data.title+'</div>';
+            html += '<div>'+data.nickname+'</div>';
+            html += '<div>'+data.reg_date+'</div>';
+            html += '</div>';
+            html += '<div>'+data.content+'</div>';
+            html += '</div>';
+            $('.board_body').empty();
+            $('.board_body').append(html);
+
+            document.getElementById('indexbtn').addEventListener('click', function (){
+                board_notice();
+                console.log("공지사항으로 돌아가")
+            })
+        }
+
+        // FAQ 클릭
+        function board_FAQ(){
+
+            $.ajax({
+                type: 'GET',
+                url: '<c:url value="/board/BoardFAQ"/>',
+                async: false,
+                dataType: 'text',
+                success: function (results) {
+                    board_data = JSON.parse(results);
+                    console.log(board_data);
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+
+            let html = '';
+            allEmpty();
+            $('#boardContainer').css('display', 'block');
+            $('.board_body').css('display', '');
+            html += '자주받는 질문입니다(멍청이들의모임)';
+            html += '<div class="board_index"><table width="100%"><tr>';
+            html += '<td width="33%">번호</td>';
+            html += '<td>분류</td>';
+            html += '<td>제목</td>';
+            html += '</tr></table></div>';
+            for (const i in board_data) {
+                html += '<div class="notice_index" ><table width="100%"><tr class="FAQDetail">';
+                html += '<td width="25%">' + board_data[i].id + '</td>';
+                html += '<td>'+ board_data[i].kind +'</td>';
+                html += '<td>'+ board_data[i].title +'</td>';
+                html += '</tr></table></div>';
+            }
+            $('.board_body').empty();
+            $(".board_body").append(html);
+
+            let FAQDetail = document.getElementsByClassName('FAQDetail');
+
+            for (let i = 0; i < FAQDetail.length ; i++) {
+
+                FAQDetail[i].onclick = function (){
+                    FAQ_Detail(board_data[i]);
+                }
+            }
+        }
+
+        function FAQ_Detail(data){
+            allEmpty();
+            $('#boardContainer').css('display', 'block');
+            $('.board_body').css('display', '');
+
+            let html = '';
+
+            html += '<div id="noticeForm">';
+            html += '<div id="noticeheader"><h2>'+"FAQ"+'<h2><input type="button" id="FAQbtn" value="목록으로 돌아가기"></div>';
+            html += '<div>';
+            html += '<div>['+data.kind+']</div>';
+            html += '<div>'+data.title+'</div>';
+            html += '</div>';
+            html += '<div>'+data.content+'</div>';
+            html += '</div>';
+            $('.board_body').empty();
+            $('.board_body').append(html);
+
+            document.getElementById('FAQbtn').addEventListener('click', function (){
+                board_FAQ();
+            })
+        }
+
+        // inquriry 클릭
+        function board_inquriry(){
+
+            $.ajax({
+                type: 'GET',
+                url: '<c:url value="/board/BoardInquiry"/>',
+                data: 'user_id=' + s_UserData.id,
+                async: false,
+                dataType: 'text',
+                success: function (results) {
+                    board_data = JSON.parse(results);
+                    console.log(board_data);
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+
+            let html = '';
+            allEmpty();
+            $('#boardContainer').css('display', 'block');
+            $('.board_body').css('display', '');
+
+            html += '1:1문의입니다';
+            html += '<div><input type="button" value="문의 내역" id ="inquriryHistory">';
+            html += '<input type="button" value="문의하기" id="doInquriry"></div>';
+            html += '<div class="board_index"><table width="100%"><tr>';
+            html += '<td width="20%">번호</td>';
+            html += '<td>분류</td>';
+            html += '<td>제목</td>';
+            html += '<td>날짜</td>';
+            html += '<td>답변여부</td>';
+            html += '</tr></table></div>';
+            for (const i in board_data) {
+                html += '<div class="notice_index" ><table width="100%"><tr class="inquriryDetail">';
+                html += '<td width="20%">' + board_data[i].id + '</td>';
+                html += '<td>'+ board_data[i].kind +'</td>';
+                html += '<td>'+ board_data[i].title +'</td>';
+                html += '<td>'+ board_data[i].reg_date +'</td>';
+                html += '<td>'+ board_data[i].checked +'</td>';
+                html += '</tr></table></div>';
+            }
+            $('.board_body').empty();
+            $(".board_body").append(html);
+
+            document.getElementById("doInquriry").addEventListener('click', function () {
+                do_inquriry();
+            })
+
+            let inquriryDetail = document.getElementsByClassName('inquriryDetail');
+
+            for (let i = 0; i < inquriryDetail.length ; i++) {
+
+                inquriryDetail[i].onclick = function (){
+                    inquriry_Detail(board_data[i]);
+                }
+            }
+        }
+        function inquriry_Detail(data){
+            allEmpty()
+            $('#boardContainer').css('display', 'block');
+            $('.board_body').css('display', '');
+
+            let html = '';
+
+            html += '<div id="noticeForm">';
+            html += '<div id="noticeheader"><h2>'+"문의내역"+'<h2><input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
+            html += '<div>';
+            html += '<div>['+data.kind+']</div>';
+            html += '<div>'+data.title+'</div>';
+            html += '</div>';
+            html += '<div>'+data.content+'</div>';
+            if(data.checked == "답변완료"){
+                html += '<div>'+data.answer+'</div>';
+            }
+            html += '</div>';
+            $('.board_body').empty();
+            $('.board_body').append(html);
+
+            document.getElementById('indexbtn').addEventListener('click', function (){
+                board_inquriry();
+            })
+        }
+
+        function do_inquriry(){
+            document.getElementById("doInquriry").addEventListener('click', function (){
+                allEmpty();
+                $('#boardContainer').css('display', 'block');
+                $('.board_body').css('display', '');
+
+                let html = '';
+
+                html += '<div>1:1문의 글쓰기<input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
+                html += '<div>'+s_UserData.nickname+'</div>';
+                html += '<div>분류<input type="text" id = "inquriryKind"></div>';
+                html += '<div>제목<input type="text" id = "inquriryTitle"></div>';
+                html += '<div>상세내용<input type="text" id="inquriryContent"></div>';
+                html += '<div><input type="button" value="작성하기" id="dobtn"></div>';
+                html += '<div><input type="hidden" value="미확인" id="inquriryChecked">';
+                $('.board_body').empty();
+                $('.board_body').append(html);
+
+                document.getElementById('indexbtn').addEventListener('click', function (){
+                    board_inquriry();
+                })
+
+                document.getElementById("dobtn").addEventListener('click', function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '<c:url value="/board/BoardInquiryReg"/>',
+                        data: {"user_id" : s_UserData.id,
+                            "nickname" : s_UserData.nickname,
+                            "login_id" : s_UserData.login_id,
+                            "kind" : $('#inquriryKind').val(),
+                            "title" : $('#inquriryTitle').val(),
+                            "content" : $('#inquriryContent').val(),
+                            "checked" : $('#inquriryChecked').val()
+                        },
+                        async: false,
+                        dataType: 'text',
+                        success: function (results) {
+                            alert("작성완료");
+                            board_inquriry();
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                })
+            })
+        }
+
+        //차트 클릭시
         $('.chart').click(function () {
 
             allEmpty();
@@ -1710,7 +2061,7 @@
             $('.chartTable').attr("style", "display:");
             $('.chartContainer').attr("style", "display:");
             $('#chart_h1').html("TOP100");
-            $('#modal_add').css("display","")
+            $('#modal_add').css("display", "")
             $.ajax({
                 url: "<c:url value="/chart/ChartTop100"/>",
                 type: "GET",
@@ -2540,6 +2891,7 @@
                                         '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                                         + '<ul class="dropdown-menu">'
                                         + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
+                                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
                                         + '</ul>' +
                                         '</td>' +
                                         '</tr>');
