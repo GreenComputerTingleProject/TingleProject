@@ -16,6 +16,7 @@ import java.util.HashMap;
 public class AdminController extends HttpServlet {
 
     HashMap<String, String> nonService = new HashMap<String, String>();
+
     public AdminController() {
         nonService.put("AdminMusicInsert", "menu/music/musicInsertForm.jsp");
     }
