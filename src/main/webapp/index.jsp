@@ -988,7 +988,6 @@
                 html += '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                     + '<ul class="dropdown-menu">'
                     + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                    + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
                     + '<li><a class="dropRemove dropdown-item" href="#">보관함에서 삭제</a></li>'
                     + '</ul>' + '</td>';
                 html += '</tr>';
@@ -1483,8 +1482,11 @@
                     let html = '';
 
                     html += '<div class="suggestion_detail"><img src="img/' + data[i].cover_img + '">';
-                    html += '<div id="detailInfo"><div><h2>' + data[i].title + '<h2></div>'
-                    html += '<div><h4>' + data[i].artist + '</h4></div>';
+                    html += '<div id="detailInfo"><div><h4 class="detail_album">' + data[i].album + '<h4></div>'
+                    html += '<div><h3 class="detail_title">' + data[i].title + '</h3></div>';
+                    html += '<div><h3 class="detail_artist">' + data[i].artist + '</h3></div>';
+                    html += '<div><h2 >' + data[i].genre + '</h2></div>';
+                    html += '<div><h2>' + data[i].release_date + '</h2></div>';
                     html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
                     html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
                     html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
@@ -1715,6 +1717,7 @@
 
                 success: function (data) {
                     const json = JSON.parse(data);
+                    console.log("----차트 json----")
                     console.log(json);
 
                     s_LibraryData = json;
@@ -1751,8 +1754,9 @@
                             '</td>' +
                             '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                             + '<ul class="dropdown-menu">'
-                            + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                            + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                            + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                            + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                            + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
                             + '</ul>' + '</td>' +
                             '</tr>');
 
@@ -1941,8 +1945,9 @@
                         '</td>' +
                         '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                         + '<ul class="dropdown-menu">'
-                        + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
+                        + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                        + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                        + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
                         + '</ul>' + '</td>' +
                         '</tr>');
                     $(".chartTbody").append(html);
@@ -1953,24 +1958,40 @@
 
             })
         /** 디테일 클릭 */
-        function detailClick(json){
+        function detailClick(json) {
 
             let dropMusicInfo = document.getElementsByClassName("dropMusicInfo");
+            let dropAlbumInfo = document.getElementsByClassName("dropAlbumInfo");
+            let dropArtistInfo = document.getElementsByClassName("dropArtistInfo");
+
 
             for (let i = 0; i < dropMusicInfo.length; i++) {
 
-                dropMusicInfo[i].addEventListener('click', function () {
 
+                dropMusicInfo[i].addEventListener('click', function () {
                     allEmpty();
+                    console.log("곡정보 클릭!");
                     $('#chartTbody').css('display', 'block');
                     let html = '';
 
-                    html += '<div class="suggestion_detail"><img src="img/' + json[i].cover_img + '">';
-                    html += '<div id="detailInfo"><div><h2>' + json[i].title + '<h2></div>'
-                    html += '<div><h4>' + json[i].artist + '</h4></div>';
-                    html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
+                    html += '<div class="suggestion_detail">' +
+                        '<img src="img/' + json[i].cover_img + '">';
+                    html += '<div id="detailInfo">' +
+                        '<div>' +
+                        '<h3 class="detail_title ">' + json[i].title + '</h3>' +
+                        '</div>';
+                    html += '<div>' +
+                        '<h4 class="detail_album ">' + json[i].album + '<h4>' +
+                        '</div>'
+                    html += '<div>' +
+                        '<h3 class="detail_artist ">' + json[i].artist + '</h3>' +
+                        '</div>';
+                    html += '<div class="select_icon">' +
+                        '<i class="selectPlay fa-solid fa-play">' +
+                        '</i>'
                     html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
-                    html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
+                    html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div>' +
+                        '</div>';
                     // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
                     html += '<div id ="suggestion_lylics">'
@@ -1980,6 +2001,8 @@
                     let selectPlay = document.getElementsByClassName("selectPlay");
                     let selectList = document.getElementsByClassName("selectList");
                     let selectAdd = document.getElementsByClassName("selectAdd");
+
+
 
                     selectPlay[0].addEventListener('click', function () {
                         $('#player-play').css('display', 'block');
@@ -2028,17 +2051,315 @@
                         });
                     })
 
-
+                    detailClick(json);
                     // document.getElementById('go_suggestion').addEventListener('click', function () {
                     //     suggestion();
                     // })
 
 
                 });
+
+
+                dropArtistInfo[i].addEventListener('click', function () {
+                    allEmpty();
+                    $('#chartTbody').css('display', 'block');
+                    console.log("----아티스트 정보클릭----");
+                    console.log("i : " + i);
+                    console.log(json);
+                    $.ajax({
+                        url: "<c:url value="/find/FindResult"/>",
+                        type: "POST",
+                        dataType: 'text',
+                        data: 'find-input=' + json[i].artist,
+                        async: false,
+                        success: function (data) {
+                            let json = JSON.parse(data);
+                            console.log("--아티스트 정보 받음--")
+                            console.log(json)
+                            let html = '';
+                            let htmlb = '';
+
+                            $.each(json[1], function (i, item) {
+                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
+                                    '<div id="detailInfo"><div><h4 class="detail_artist ">' + item.artist + '<h4></div>' +
+                                    '<div><h2>' + item.genre + '</h2></div>' +
+                                    // '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>' +
+                                    // '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
+                                    // '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>' +
+                                    // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                    '</div></div>' +
+                                    '<div id ="suggestion_lylics">' +
+                                    '<table class="findTitle_table table table-hover">' +
+                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    '<tr><th scope="col" width="5%"><input type="checkbox"></th>' +
+                                    '<th scope="col" width="5%">곡/앨범</th>' +
+                                    '<th scope="col" width="20%"></th>' +
+                                    '<th scope="col" width="15%">아티스트</th>' +
+                                    '<th scope="col" width="5%">듣기</th>' +
+                                    ' <th scope="col" width="5%">재생목록</th>' +
+                                    ' <th scope="col" width="5%">내 리스트</th>' +
+                                    ' <th scope="col" width="5%">더보기</th></tr></thead>' +
+                                    '<tbody class="findTbody">' +
+                                    '</tbody></table>' +
+                                    '</div>';
+
+                                html += '<tr class="b-wrap">'
+                                html += '<td scope="row">'
+                                html += '<input class="check" type="checkbox" name="check">'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<img class="innerImg" src="img/' + item.cover_img + '">'
+                                html += '</td>'
+                                html += '<td id="title">' + item.title + '<br>' + item.album + '</td>'
+                                html += '<td id="artist">' + item.artist + '</td>'
+                                html += '<td>'
+                                html += '<i class="selectPlay fa-solid fa-play"></i>'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<i class="selectList fa-solid fa-list"></i>'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<i class="selectAdd fa-solid fa-folder-plus"></i>'
+                                html += '</td>' + '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                    + '<ul class="dropdown-menu">'
+                                    + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                    + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                    + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                    + '</ul>' + '</td>' +
+                                    '</tr>'
+
+                            })
+
+                            $("#suggestion_body").append(htmlb);
+                            $(".findTbody").append(html);
+
+
+                            let selectPlay = document.getElementsByClassName("selectPlay");
+                            let selectList = document.getElementsByClassName("selectList");
+                            let selectAdd = document.getElementsByClassName("selectAdd");
+
+                            detailClick(json[1]);
+
+                            $.each(json[1], function (i, item) {
+
+                                selectPlay[i].addEventListener('click', function () {
+                                    $('#player-play').css('display', 'block');
+                                    $('#player-pause').css('display', 'none');
+                                    audio.pause();
+
+                                    nowPlayList = [];
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    for (const i in nowPlayList) {
+                                        preloadAudio(nowPlayList[i]);
+                                    }
+
+                                    audioIndex = 0;
+
+                                    playListInit3(item);
+
+                                    setTimeout(() => {
+                                        $('#player-play').css('display', 'none');
+                                        $('#player-pause').css('display', 'block');
+                                        audio.play();
+                                    }, 300);
+                                })
+
+                                selectList[i].addEventListener('click', function () {
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    playListInit3(item);
+                                })
+
+                                selectAdd[i].addEventListener('click', function () {
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '<c:url value="/music/MusicAddLibrary"/>',
+                                        data: 'music_id=' + json[i].id,
+                                        async: false,
+                                        success: function (result) {
+                                            getLibrary();
+                                            $('#modal-body2').text('보관함에 추가되었습니다');
+                                            $('#modal2').modal('toggle');
+
+                                        },
+                                        error: function (e) {
+                                            console.log(e);
+                                        }
+                                    });
+                                })
+                                // document.getElementById('go_suggestion').addEventListener('click', function () {
+                                //     suggestion();
+                                // })
+
+                            })
+
+
+                        },
+                        error: function (e) {
+
+                            console.log(e)
+                        }
+
+                    });
+
+                });
+
+                dropAlbumInfo[i].addEventListener('click', function () {
+                    allEmpty();
+                    $('#chartTbody').css('display', 'block');
+
+                    console.log("----앨범 정보클릭----");
+                    console.log("i : " + i);
+                    console.log(json);
+                    $.ajax({
+                        url: "<c:url value="/find/FindResult"/>",
+                        type: "POST",
+                        dataType: 'text',
+                        data: 'find-input=' + json[i].album,
+                        async: false,
+                        success: function (data) {
+                            let json = JSON.parse(data);
+                            console.log("--앨범 정보 받음--")
+                            console.log(json)
+                            let html = '';
+                            let htmlb = '';
+
+
+                            $.each(json[2], function (i, item) {
+
+                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
+                                    '<div id="detailInfo"><div><h4 class="detail_album ">' + item.album + '<h4></div>' +
+                                    '<div><h3 class="detail_artist ">' + item.artist + '</h3></div>' +
+                                    '<div><h2>' + item.genre + '</h2></div>' +
+                                    '<div><h2>' + item.release_date + '</h2></div>' +
+                                    '<div class="select_icon">' +
+                                    '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
+                                    '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>' +
+                                    // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                    '</div>' +
+                                    '<div id ="suggestion_lylics">' +
+                                    '<table class="findTitle_table table table-hover">' +
+                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    '<tr><th scope="col" width="5%"><input type="checkbox"></th>' +
+                                    '<th scope="col" width="5%">곡/앨범</th>' +
+                                    '<th scope="col" width="20%"></th>' +
+                                    '<th scope="col" width="15%">아티스트</th>' +
+                                    '<th scope="col" width="5%">듣기</th>' +
+                                    ' <th scope="col" width="5%">재생목록</th>' +
+                                    ' <th scope="col" width="5%">내 리스트</th>' +
+                                    ' <th scope="col" width="5%">더보기</th></tr></thead>' +
+                                    '<tbody class="findTbody">' +
+                                    '</tbody></table>' +
+                                    '</div>';
+                                html += '<tr class="b-wrap">'
+                                html += '<td scope="row">'
+                                html += '<input class="check" type="checkbox" name="check">'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<img class="innerImg" src="img/' + item.cover_img + '">'
+                                html += '</td>'
+                                html += '<td id="title">' + item.title + '<br>' + item.album + '</td>'
+                                html += '<td id="artist">' + item.artist + '</td>'
+                                html += '<td>'
+                                html += '<i class="selectPlay fa-solid fa-play"></i>'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<i class="selectList fa-solid fa-list"></i>'
+                                html += '</td>'
+                                html += '<td>'
+                                html += '<i class="selectAdd fa-solid fa-folder-plus"></i>'
+                                html += '</td>' + '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                    + '<ul class="dropdown-menu">'
+                                    + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                    + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                    + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                    + '</ul>' + '</td>' +
+                                    '</tr>'
+                            })
+
+                            $("#suggestion_body").append(htmlb);
+                            $(".findTbody").append(html);
+
+                            detailClick(json[2]);
+
+                            let selectPlay = document.getElementsByClassName("selectPlay");
+                            let selectList = document.getElementsByClassName("selectList");
+                            let selectAdd = document.getElementsByClassName("selectAdd");
+
+                            $.each(json[2], function (i, item) {
+
+
+                                selectPlay[i].addEventListener('click', function () {
+                                    $('#player-play').css('display', 'block');
+                                    $('#player-pause').css('display', 'none');
+                                    audio.pause();
+
+                                    nowPlayList = [];
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    for (const i in nowPlayList) {
+                                        preloadAudio(nowPlayList[i]);
+                                    }
+
+                                    audioIndex = 0;
+
+                                    playListInit3(item);
+
+                                    setTimeout(() => {
+                                        $('#player-play').css('display', 'none');
+                                        $('#player-pause').css('display', 'block');
+                                        audio.play();
+                                    }, 300);
+                                })
+
+                                selectList[i].addEventListener('click', function () {
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    playListInit3(item);
+                                })
+
+
+
+                                selectAdd[i].addEventListener('click', function () {
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '<c:url value="/music/MusicAddLibrary"/>',
+                                        data: 'music_id=' + json[i].id,
+                                        async: false,
+                                        success: function (result) {
+                                            getLibrary();
+                                            $('#modal-body2').text('보관함에 추가되었습니다');
+                                            $('#modal2').modal('toggle');
+
+                                        },
+                                        error: function (e) {
+                                            console.log(e);
+                                        }
+                                    });
+                                })
+
+
+                                // document.getElementById('go_suggestion').addEventListener('click', function () {
+                                //     suggestion();
+                                // })
+
+                            })
+
+
+                        },
+                        error: function (e) {
+
+                            console.log(e)
+                        }
+
+                    });
+
+
+                });
+
             }
-
         }
-
 
         /** 플레이버튼 클릭시 함수 */
         function playButtonCLick(json) {
@@ -2183,13 +2504,12 @@
                                         '<td>' +
                                         '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
                                         '</td>' +
-                                        '<td>' +
-                                        '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                        '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                                         + '<ul class="dropdown-menu">'
-                                        + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
-                                        + '</ul>' +
-                                        '</td>' +
+                                        + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                        + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                        + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                        + '</ul>' + '</td>' +
                                         '</tr>');
 
                                     $(".findTbody").append(html);
@@ -2218,7 +2538,6 @@
                                         '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
                                         + '<ul class="dropdown-menu">'
                                         + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
                                         + '</ul>' +
                                         '</td>' +
                                         '</tr>');

@@ -56,6 +56,7 @@ public class MusicDAO {
                 music.setArtist(rs.getString("artist"));
                 music.setAlbum(rs.getString("album"));
                 music.setGenre(rs.getString("genre"));
+                music.setGenre_no(rs.getInt("genre_no"));
                 music.setMood(rs.getString("mood"));
                 music.setFile_path(rs.getString("file_path"));
                 music.setCover_img(rs.getString("cover_img"));
@@ -136,6 +137,7 @@ public class MusicDAO {
                 music.setArtist(rs.getString("artist"));
                 music.setAlbum(rs.getString("album"));
                 music.setGenre(rs.getString("genre"));
+                music.setGenre_no(rs.getInt("genre_no"));
                 music.setMood(rs.getString("mood"));
                 music.setFile_path(rs.getString("file_path"));
                 music.setCover_img(rs.getString("cover_img"));
@@ -160,6 +162,7 @@ public class MusicDAO {
                 music.setArtist(rs.getString("artist"));
                 music.setAlbum(rs.getString("album"));
                 music.setGenre(rs.getString("genre"));
+                music.setGenre_no(rs.getInt("genre_no"));
                 music.setMood(rs.getString("mood"));
                 music.setFile_path(rs.getString("file_path"));
                 music.setCover_img(rs.getString("cover_img"));
@@ -195,7 +198,11 @@ public class MusicDAO {
                 dto.setTitle(rs.getString("title"));
                 dto.setArtist(rs.getString("artist"));
                 dto.setAlbum(rs.getString("album"));
+                dto.setGenre(rs.getString("genre"));
+                dto.setGenre_no(rs.getInt("genre_no"));
+                dto.setRelease_date(rs.getTimestamp("release_date"));
                 dto.setCover_img(rs.getString("cover_img"));
+                dto.setArtist_img(rs.getString("artist_img"));
                 dto.setFile_path(rs.getString("file_path"));
                 dto.setLyrics(rs.getString("lyrics"));
                 res.add(dto);
@@ -229,9 +236,11 @@ public class MusicDAO {
                 dto.setTitle(rs.getString("title"));
                 dto.setArtist(rs.getString("artist"));
                 dto.setCover_img(rs.getString("cover_img"));
+                dto.setArtist_img(rs.getString("artist_img"));
                 dto.setAlbum(rs.getString("album"));
                 dto.setGenre(rs.getString("genre"));
                 dto.setGenre_no(rs.getInt("genre_no"));
+                dto.setRelease_date(rs.getTimestamp("release_date"));
                 dto.setFile_path(rs.getString("file_path"));
                 dto.setLyrics(rs.getString("lyrics"));
                 res.add(dto);
@@ -265,12 +274,14 @@ public class MusicDAO {
                 dto.setId(rs.getInt("id"));
                 dto.setCnt(rs.getInt("cnt"));
                 dto.setTitle(rs.getString("title"));
+                dto.setAlbum(rs.getString("album"));
+                dto.setArtist_img(rs.getString("artist_img"));
                 dto.setCover_img(rs.getString("cover_img"));
                 dto.setArtist(rs.getString("artist"));
-                dto.setAlbum(rs.getString("album"));
                 dto.setGenre(rs.getString("genre"));
                 dto.setGenre_no(rs.getInt("genre_no"));
                 dto.setFile_path(rs.getString("file_path"));
+                dto.setRelease_date(rs.getTimestamp("release_date"));
                 dto.setLyrics(rs.getString("lyrics"));
                 res.add(dto);
             }
@@ -300,12 +311,14 @@ public class MusicDAO {
                 dto.setId(rs.getInt("id"));
                 dto.setCnt(rs.getInt("cnt"));
                 dto.setTitle(rs.getString("title"));
-                dto.setArtist(rs.getString("artist"));
-                dto.setArtist_img(rs.getString("artist_img"));
                 dto.setAlbum(rs.getString("album"));
+                dto.setArtist_img(rs.getString("artist_img"));
+                dto.setCover_img(rs.getString("cover_img"));
+                dto.setArtist(rs.getString("artist"));
                 dto.setGenre(rs.getString("genre"));
                 dto.setGenre_no(rs.getInt("genre_no"));
                 dto.setFile_path(rs.getString("file_path"));
+                dto.setRelease_date(rs.getTimestamp("release_date"));
                 dto.setLyrics(rs.getString("lyrics"));
                 res.add(dto);
             }
@@ -336,14 +349,14 @@ public class MusicDAO {
                 dto.setId(rs.getInt("id"));
                 dto.setCnt(rs.getInt("cnt"));
                 dto.setTitle(rs.getString("title"));
-                dto.setArtist(rs.getString("artist"));
+                dto.setAlbum(rs.getString("album"));
                 dto.setArtist_img(rs.getString("artist_img"));
                 dto.setCover_img(rs.getString("cover_img"));
-                dto.setAlbum(rs.getString("album"));
+                dto.setArtist(rs.getString("artist"));
                 dto.setGenre(rs.getString("genre"));
                 dto.setGenre_no(rs.getInt("genre_no"));
-                dto.setRelease_date(rs.getTimestamp("release_date"));
                 dto.setFile_path(rs.getString("file_path"));
+                dto.setRelease_date(rs.getTimestamp("release_date"));
                 dto.setLyrics(rs.getString("lyrics"));
                 res.add(dto);
             }
@@ -374,15 +387,14 @@ public class MusicDAO {
                 dto.setCnt(rs.getInt("cnt"));
                 dto.setTitle(rs.getString("title"));
                 dto.setAlbum(rs.getString("album"));
-                dto.setArtist(rs.getString("artist"));
                 dto.setArtist_img(rs.getString("artist_img"));
                 dto.setCover_img(rs.getString("cover_img"));
-                dto.setLyrics(rs.getString("lyrics"));
+                dto.setArtist(rs.getString("artist"));
                 dto.setGenre(rs.getString("genre"));
                 dto.setGenre_no(rs.getInt("genre_no"));
                 dto.setFile_path(rs.getString("file_path"));
                 dto.setRelease_date(rs.getTimestamp("release_date"));
-
+                dto.setLyrics(rs.getString("lyrics"));
                 res.add(dto);
             }
 

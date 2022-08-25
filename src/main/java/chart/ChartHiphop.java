@@ -35,11 +35,12 @@ public class ChartHiphop implements ChartService {
                 data.put("album", ch.getAlbum());
                 data.put("artist", ch.getArtist());
                 data.put("cover_img", ch.getCover_img());
-                data.put("genre", ch.getGenre());
-                data.put("genre_no", ch.getGenre());
                 data.put("file_path", ch.getFile_path());
                 data.put("lyrics", ch.getLyrics());
-
+                data.put("artist_img", ch.getArtist_img());
+                data.put("genre", ch.getGenre());
+                data.put("genre_no", ch.getGenre_no());
+                data.put("release_date", ch.getRelease_dateStr());
                 jsonArray.add(data);
                 System.out.println(data);
             }
