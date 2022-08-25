@@ -704,7 +704,6 @@
         let s_LibraryData;
         let isSessionLoaded = false;
         let audio = document.getElementById("audio");
-        ;
         let nowPlayList;
         let coverImgList = [];
         let loaded = 0;
