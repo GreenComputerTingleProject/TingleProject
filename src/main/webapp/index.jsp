@@ -1018,8 +1018,19 @@
                 return;
             }
 
-            allEmpty();
-            drawMyPageList();
+            $.ajax({
+                type: 'GET',
+                url: '<c:url value="/pay/PayMyList"/>',
+                async: false,
+                dataType: 'text',
+                success: function (result) {
+                    allEmpty();
+                    drawMyPageList(JSON.parse(result));
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
         })
 
         function drawLibraryList() {
@@ -1121,7 +1132,7 @@
             })
         }
 
-        function drawMyPageList() {
+        function drawMyPageList(payList) {
             $('#dynamicTable').css('display', 'none');
             $('#myPageDiv').css('display', 'block');
 
@@ -1144,17 +1155,17 @@
             html += '</div>';
             html += '</div>';
             html += '</div>' + '<br>';
-            html += '<div class="btn-group">';
-            html += '<button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#box2"/>회원 정보 변경'
-            html += '</div>';
-            html += '<div class="collapse" id="box2"><div class="card card-body">';
+
+            html += '<h4>정보 변경</h4>';
+            html += '<div id="box2"><div class="card card-body">';
             html += '<form action="<c:url value="/user/UserInfoUpdate"/>" align=center method="post" enctype="multipart/form-data">';
             html += '<input type="hidden" id="session_id" name="id">';
-            html += '<input type="text" id="nickname" name="nickname" placeholder="닉네임">';
-            html += '<input type="text" id="phone" name="phone" placeholder="전화번호">';
-            html += '<input type="text" id="email" name="email" placeholder="이메일">';
+            html += '<input type="text" id="nickname" name="nickname" placeholder="닉네임"><br>';
+            html += '<input type="text" id="phone" name="phone" placeholder="전화번호"><br>';
+            html += '<input type="text" id="email" name="email" placeholder="이메일"><br>';
             html += '<input class="form-control" type="file" id="image" name="image">';
             html += '<select class="form-select" name="personal_type" aria-label="성향을 선택해 주세요">';
+            html += '<option value="">--음악 성향을 선택해 주세요--</option>';
             html += '<option value="classic">클래식</option>';
             html += '<option value="rock">락</option>';
             html += '<option value="blues">블루스</option>';
@@ -1167,6 +1178,27 @@
             html += '</select>';
             html += '<button type="submit" id="submitBtn" class="btn btn-primary">제출</button>';
             html += '</form>';
+            html += '</div>';
+            html += '</div><br>';
+
+            html += '<h4>결제 내역</h4>';
+            html += '<div id="box3"><div class="card card-body">';
+            html += '<table class="table table-hover">';
+            html += '<thead class="table-dark">';
+            html += '<tr>';
+            html += '<th scope="col">주문번호</th>'
+            html += '<th scope="col">결제일자</th>'
+            html += '<th scope="col">결제금액</th>'
+            html += '</tr>';
+            html += '</thead>';
+            for (const i in payList) {
+                html += '<tr>';
+                html += '<td>'+payList[i].imp_uid+'</td>';
+                html += '<td>'+payList[i].reg_date+'</td>';
+                html += '<td>'+payList[i].paid_amount + '원' +'</td>';
+                html += '</tr>';
+            }
+            html += '</table>';
             html += '</div>';
 
             $("#myPageDiv").empty();
