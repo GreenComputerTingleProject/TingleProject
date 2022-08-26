@@ -43,6 +43,14 @@
         display: flex;
     }
 
+    #dAdjust_revenue {
+        width: 80%;
+        margin: auto;
+        background: #f0f0f0;
+        border: 1px #1a1e21 solid;
+        display: none;
+    }
+
     #daily_revenue {
         width: 80%;
         margin: auto;
@@ -92,8 +100,9 @@
         </table>
     </div>
     <div id="btnArea">
-        <button id="monthly">월별 정산</button>
-        <button id="daily">일간 정산</button>
+        <button id="monthly">월간 정산</button>
+        <button id="dAdjust">일간 정산</button>
+        <button id="daily">일별 내역</button>
         <button id="period">기간별 내역</button>
     </div>
     <div id="monthly_revenue">
@@ -109,6 +118,30 @@
                 </tr>
             </c:forEach>
         </table>
+    </div>
+    <div id="dAdjust_revenue">
+        <form action="AdminCalculateDAdjustReg" method="get">
+            <table border="">
+                <tr>
+                    <td>조회월</td>
+                    <td>
+                        <input type="month" name="month" id="dAdjustInput"/>
+                    </td>
+                </tr>
+                <c:forEach items="${daily_adjust}" var="daily_adjust" varStatus="i">
+                    <tr>
+                        <td>${daily_adjust.key}</td>
+                        <td>${daily_adjust.value}원</td>
+                    </tr>
+                </c:forEach>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="검색">
+                        <input type="button" value="초기화" id="dAdjust_init">
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
     <div id="daily_revenue">
         <form action="AdminCalculateDailyReg" method="get">
@@ -192,12 +225,19 @@
 
         if(${result == 1}) {
             $('#monthly_revenue').css('display', 'none');
+            $('#dAdjust_revenue').css('display', 'none');
             $('#daily_revenue').css('display', 'flex');
             $('#period_revenue').css('display', 'none');
         } else if(${result == 2}){
             $('#monthly_revenue').css('display', 'none');
+            $('#dAdjust_revenue').css('display', 'none');
             $('#daily_revenue').css('display', 'none');
             $('#period_revenue').css('display', 'flex');
+        } else if(${result == 3}){
+            $('#monthly_revenue').css('display', 'none');
+            $('#dAdjust_revenue').css('display', 'flex');
+            $('#daily_revenue').css('display', 'none');
+            $('#period_revenue').css('display', 'none');
         }
 
         $('#period_init').click(function () {
@@ -209,20 +249,34 @@
             $('#month').val(null);
         })
 
+        $('#dAdjust_init').click(function () {
+            $('#dAdjustInput').val(null);
+        })
+
         $('#monthly').click(function () {
             $('#monthly_revenue').css('display', 'flex');
+            $('#dAdjust_revenue').css('display', 'none');
+            $('#daily_revenue').css('display', 'none');
+            $('#period_revenue').css('display', 'none');
+        })
+
+        $('#dAdjust').click(function () {
+            $('#monthly_revenue').css('display', 'none');
+            $('#dAdjust_revenue').css('display', 'flex');
             $('#daily_revenue').css('display', 'none');
             $('#period_revenue').css('display', 'none');
         })
 
         $('#daily').click(function () {
             $('#monthly_revenue').css('display', 'none');
+            $('#dAdjust_revenue').css('display', 'none');
             $('#daily_revenue').css('display', 'flex');
             $('#period_revenue').css('display', 'none');
         })
 
         $('#period').click(function () {
             $('#monthly_revenue').css('display', 'none');
+            $('#dAdjust_revenue').css('display', 'none');
             $('#daily_revenue').css('display', 'none');
             $('#period_revenue').css('display', 'flex');
         })
