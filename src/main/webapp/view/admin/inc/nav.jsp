@@ -37,5 +37,6 @@
     <div><a href = "AdminPage">관리자페이지</a></div>
     <div> <a href = "AdminMusicList">등록/삭제</a></div>
     <div> <a href = "AdminUserList">회원관리</a></div>
+    <div> <a href = "AdminCenter?noticeKind=noticeList">고객센터</a></div>
     <div> <a href = "AdminCalculate">정산</a></div>
 </div>
