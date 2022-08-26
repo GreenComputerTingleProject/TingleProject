@@ -1980,13 +1980,13 @@
                         '<img src="img/' + json[i].cover_img + '">';
                     html += '<div id="detailInfo">' +
                         '<div>' +
-                        '<h3 class="detail_title ">' + json[i].title + '</h3>' +
+                        '<a href="#" class="detail_title dropMusicInfo">' + json[i].title + '</a>' +
                         '</div>';
                     html += '<div>' +
-                        '<h4 class="detail_album ">' + json[i].album + '<h4>' +
+                        '<a href="#" class="detail_album dropAlbumInfo">' + json[i].album + '</a>' +
                         '</div>'
                     html += '<div>' +
-                        '<h3 class="detail_artist ">' + json[i].artist + '</h3>' +
+                        '<a href="#" class="detail_artist dropArtistInfo">' + json[i].artist + '</a>' +
                         '</div>';
                     html += '<div class="select_icon">' +
                         '<i class="selectPlay fa-solid fa-play">' +
@@ -2083,7 +2083,7 @@
 
                             $.each(json[1], function (i, item) {
                                 htmlb = '<div class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
-                                    '<div id="detailInfo"><div><h4 class="detail_artist ">' + item.artist + '<h4></div>' +
+                                    '<div id="detailInfo"><div><h4 class="detail_artist ">' + item.artist + '</h4></div>' +
                                     '<div><h2>' + item.genre + '</h2></div>' +
                                     // '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>' +
                                     // '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
@@ -2207,6 +2207,8 @@
 
                 });
 
+
+
                 dropAlbumInfo[i].addEventListener('click', function () {
                     allEmpty();
                     $('#chartTbody').css('display', 'block');
@@ -2229,10 +2231,10 @@
 
 
                             $.each(json[2], function (i, item) {
-
+                                console.log("들어가서 i : " + i);
                                 htmlb = '<div class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
-                                    '<div id="detailInfo"><div><h4 class="detail_album ">' + item.album + '<h4></div>' +
-                                    '<div><h3 class="detail_artist ">' + item.artist + '</h3></div>' +
+                                    '<div id="detailInfo"><div><a class="detail_album dropAlbumInfo">' + item.album + '</a></div>' +
+                                    '<div><a class="detail_artist dropArtistInfo">' + item.artist + '</a></div>' +
                                     '<div><h2>' + item.genre + '</h2></div>' +
                                     '<div><h2>' + item.release_date + '</h2></div>' +
                                     '<div class="select_icon">' +
@@ -2283,7 +2285,7 @@
                             $("#suggestion_body").append(htmlb);
                             $(".findTbody").append(html);
 
-                            detailClick(json[2]);
+
 
                             let selectPlay = document.getElementsByClassName("selectPlay");
                             let selectList = document.getElementsByClassName("selectList");
@@ -2340,7 +2342,7 @@
                                         }
                                     });
                                 })
-
+                                detailClick(json[2]);
 
                                 // document.getElementById('go_suggestion').addEventListener('click', function () {
                                 //     suggestion();
