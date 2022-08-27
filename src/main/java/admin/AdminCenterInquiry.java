@@ -48,6 +48,16 @@ public class AdminCenterInquiry implements AdminService{
                 request.setAttribute("adminUrl", "alert.jsp");
                 request.setAttribute("goUrl", "AdminCenterInquiry?inquiryKind=inquiryList");
                 break;
+
+            case "inquiryDelete" :
+                msg = "삭제되었습니다";
+                id = Integer.parseInt(request.getParameter("id"));
+                new BoardDAO().noticeDelete(id);
+
+                request.setAttribute("msg", msg);
+                request.setAttribute("adminUrl", "alert.jsp");
+                request.setAttribute("goUrl", "AdminCenterInquiry?inquiryKind=inquiryList");
+                break;
             default:
                 break;
 
