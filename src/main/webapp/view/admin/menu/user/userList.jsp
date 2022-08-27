@@ -1,12 +1,6 @@
-<%@ page import="java.lang.reflect.Array" %>
+<%--<%@ page import="java.lang.reflect.Array" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.MusicDTO" %><%--
-  Created by IntelliJ IDEA.
-  User: 82108
-  Date: 2022-08-13
-  Time: 오전 1:41
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="model.MusicDTO" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -72,7 +66,7 @@
                 <td><a href="AdminUserDetail?id=${dto.id}">${dto.id}</a></td>
                 <td>${dto.login_id}</td>
                 <td>${dto.login_pw}</td>
-                <td>${dto.name}</td>
+                <td>${dto.name}</td>n
                 <td>${dto.nickname}</td>
                 <td>${dto.phone_number}</td>
                 <td>${dto.email_address}</td>
@@ -85,5 +79,80 @@
         </c:forEach>
     </table>
 
-</div>
+</div>--%>
 
+<%@ page import="java.lang.reflect.Array" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.MusicDTO" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<style>
+    #adminUrl { width: 100%; float: left; align-items: center;}
+    th,td { text-align: center; justify-content: center; }
+    tr { border-bottom: 1px solid #dddddd; }
+</style>
+<script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
+<script>
+    var uSerch = document.getElementById("uSerch")
+    $(function () {
+        $("#uSerch").click(function (){
+            if ($('#uname').val() != '') {
+                var uname = $('#uname').val();
+                location.href="AdminUnameSerch?uname="+uname;
+            } else {
+                alert("검색어를 입력해주세요")
+            }
+        })
+    })
+</script>
+
+<div id = adminUrl>
+    <form style=" background: white;">
+        <table style="border-collapse: collapse; width: 100%;">
+            <h2 class="nav navbar-text justify-content-center">User Page</h2>
+            <hr>
+            <thead style="align-items: center; text-align: center;">
+            <tr>
+                <th colspan="11">
+                    <input type="text" id = "uname">
+                    <input type="button" value="검색" id="uSerch"/>
+                </th>
+            </tr>
+            <tr>
+                <th>아이디</th>
+                <th>로그인아이디</th>
+                <th>로그인패스워드</th>
+                <th>이름</th>
+                <th>닉네임</th>
+                <th>전화번호</th>
+                <th>이메일</th>
+                <th>프로필사진</th>
+                <th>계정종류</th>
+                <th>날짜</th>
+                <th>멤버쉽</th>
+                <th>성향</th>
+            </tr>
+            </thead>
+            <c:forEach items="${userData }" var="dto" >
+                <tbody>
+                <tr>
+                    <td><a href="AdminUserDetail?id=${dto.id}">${dto.id}</a></td>
+                    <td>${dto.login_id}</td>
+                    <td>${dto.login_pw}</td>
+                    <td>${dto.name}</td>
+                    <td>${dto.nickname}</td>
+                    <td>${dto.phone_number}</td>
+                    <td>${dto.email_address}</td>
+                    <td>${dto.profile_image}</td>
+                    <td>${dto.join_type}</td>
+                    <td>${dto.join_date }</td>
+                    <td>${dto.membership }</td>
+                    <td>${dto.personal_type }</td>
+                </tr>
+                </tbody>
+            </c:forEach>
+        </table>
+    </form>
+</div>
