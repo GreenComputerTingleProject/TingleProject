@@ -538,7 +538,7 @@
                 </div>
                 </div>
 
-                <div class="board_body">
+                <div class="board_body" style="display: none">
 
                 </div>
 
@@ -1858,6 +1858,12 @@
         })
 
         document.getElementById("inquiry_btn").addEventListener('click', function (){
+            if (!isSessionLoaded) {
+                $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
+                $('#modal1').modal('toggle');
+
+                return;
+            }
             board_inquriry();
         })
 
