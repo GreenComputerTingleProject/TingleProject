@@ -78,32 +78,36 @@
     <form action="<c:url value="/user/UserSignupReg"/>" method="post">
         <div class="form-id">
             <input type="text" id="login_id" name="login_id" tabindex="0" placeholder="아이디">
-            <button type="button" id="id-close" class="btn-close"></button>
+            <button type="button" class="btn-close" onclick="btnClose('login_id')"></button>
             <button type="button" id="idCheck" class="btn btn-primary">중복 확인</button>
             <br>
             <span id="checkResult"></span>
         </div>
         <div class="form-pw">
             <input type="password" id="login_pw" name="login_pw" placeholder="비밀번호">
+            <button type="button" class="btn-close" onclick="btnClose('login_pw')"></button>
         </div>
         <div class="form-pwCheck">
             <input type="password" id="pwCheck" placeholder="비밀번호 확인">
+            <button type="button" class="btn-close" onclick="btnClose('pwCheck')"></button>
         </div>
         <div class="form-name">
             <input type="text" id="name" name="name" placeholder="이름">
+            <button type="button" class="btn-close" onclick="btnClose('name')"></button>
         </div>
         <div class="form-nickName">
             <input type="text" id="nickName" name="nickName" placeholder="닉네임">
+            <button type="button" class="btn-close" onclick="btnClose('nickName')"></button>
         </div>
         <div class="form-tel">
             <input type="text" id="tel" name="tel" placeholder="휴대폰 번호 (-제외)">
-            <button type="button" id="tel-close" class="btn-close"></button>
+            <button type="button" class="btn-close" onclick="btnClose('tel')"></button>
             <button type="button" id="phoneCheck" class="btn btn-primary">인증 받기</button>
             <br>
             <span id="phoneResult"></span>
             <div id="certi" style="display: none">
                 <input type="text" id="certification" placeholder="인증 번호">
-                <button type="button" id="certification-close" class="btn-close"></button>
+                <button type="button" class="btn-close" onclick="btnClose('certification')"></button>
                 <button type="button" id="certificationBtn" class="btn btn-primary">인증 확인</button>
                 <br>
                 <span id="phoneResult2"></span>
@@ -136,33 +140,22 @@
     let pwCheck = false;
     let phoneCheck = false;
 
+    function btnClose(element) {
+        $('#'+element).val('');
+    }
+
     $(function () {
-        $('#id-close').click(function () {
-            $('#login_id').val("");
-            $('#login_id').attr("readonly", false);
-        })
-
-        $('#tel-close').click(function () {
-            $('#tel').val("");
-            $('#tel').attr("readonly", false);
-        })
-
-        $('#certification-close').click(function () {
-            $('#certification').val("");
-        })
-
         // 아이디 중복검사
         $('#idCheck').click(function () {
 
-            if ($('#login_id').val() != '') {
+            if ($('#login_id').val().trim() != '') {
                 $.ajax({
                     type: 'GET',
                     url: '<c:url value="/user/UserSignupIdCheck"/>',
-                    data: 'login_id=' + $('#login_id').val(),
+                    data: 'login_id=' + $('#login_id').val().trim(),
                     async: false,
                     dataType: 'json',
                     success: function (result) {
-                        console.log(result)
                         $('#login_id').attr("readonly", true);
 
                         if (result.check == true) {
@@ -188,7 +181,7 @@
         // 폰 번호 인증받기 // 현재 SmsSend_v2가 작동 안됨 PASS로 작업할것
         // SMSSend_V3 이용한다... ("인증번호" 라는 텍스트를 사용하면 안되더라)
         $('#phoneCheck').click(function () {
-            if ($('#tel').val() != '') {
+            if ($('#tel').val().trim() != '') {
                 // console.log("인증완료");
                 // phoneCheck = true;
                 $.ajax({
@@ -200,6 +193,7 @@
                     success: function (result) {
                         console.log(result.checknum);
 
+                        $('#login_id').attr("readonly", true);
                         $('#tel').attr("readonly", true);
                         $('#phoneResult').text("인증번호가 전송되었습니다.");
                         $('#phoneResult').css("color", "green");
@@ -232,9 +226,9 @@
 
         // form submit 했을때 유효성검사
         $('form').submit(function () {
-            if ($('#login_pw').val() != '' && $('#pwCheck').val() != '') {
+            if ($('#login_pw').val().trim() != '' && $('#pwCheck').val().trim() != '') {
 
-                if ($('#login_pw').val() == $('#pwCheck').val()) {
+                if ($('#login_pw').val().trim() == $('#pwCheck').val().trim()) {
                     pwCheck = true;
                 } else {
                     $('.modal-body').text('패스워드가 일치하지 않습니다.');

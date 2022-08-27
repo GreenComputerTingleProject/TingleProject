@@ -32,7 +32,7 @@
             padding-right: 30px;
             border: 0;
             border-bottom: 1px solid #ebebeb;
-            width: 100%;
+            width: 70%;
             height: 58px;
             font-size: 15px;
             color: #181818;
@@ -78,11 +78,24 @@
     <form action="<c:url value="/user/UserPwResetReg"/>" method="post">
         <div class="form-id">
             <input type="text" id="login_id" name="login_id" placeholder="아이디">
+            <button type="button" class="btn-close" onclick="btnClose('login_id')"></button>
         </div>
-        <div class="form-pw">
+        <div class="form-tel">
+            <input type="text" id="tel" name="tel" placeholder="휴대폰 번호 (-제외)">
+            <button type="button" class="btn-close" onclick="btnClose('tel')"></button>
+            <button type="button" id="phoneCheck" class="btn btn-primary">인증 받기</button>
+            <br>
+            <span id="phoneResult"></span>
+            <div id="certi" style="display: none">
+                <input type="text" id="certification" placeholder="인증 번호">
+                <button type="button" class="btn-close" onclick="btnClose('certification')"></button>
+                <button type="button" id="certificationBtn" class="btn btn-primary">인증 확인</button>
+                <br>
+                <span id="phoneResult2"></span>
+            </div>
+        </div>
+        <div class="form-pw" style="display: none">
             <input type="password" id="login_pw" name="login_pw" placeholder="새로운 비밀번호">
-        </div>
-        <div class="form-pwCheck">
             <input type="password" id="pwCheck" placeholder="비밀번호 확인">
         </div>
         <div>
@@ -107,33 +120,82 @@
 </div>
 </body>
 <script !src="">
-    $('form').submit(function () {
-        let pwCheck = false;
+    let pwCheck = false;
+    let phoneCheck = false;
 
-        if($('#login_id').val() == '') {
-            $('.modal-body').text('아이디를 입력 해 주세요.');
-            $('#modal1').modal('toggle');
-            return false;
-        }
+    function btnClose(element) {
+        $('#'+element).val('');
+    }
 
-        if ($('#login_pw').val() != '' && $('#pwCheck').val() != '') {
+    $(function () {
+        $('#phoneCheck').click(function () {
+            if ($('#tel').val().trim() != '') {
+                // console.log("인증완료");
+                // phoneCheck = true;
+                $.ajax({
+                    type: 'GET',
+                    url: '<c:url value="/user/UserPhoneCertification"/>',
+                    data: 'phone_number=' + $('#tel').val(),
+                    async: false,
+                    dataType: 'json',
+                    success: function (result) {
+                        console.log(result.checknum);
 
-            if ($('#login_pw').val() == $('#pwCheck').val()) {
-                pwCheck = true;
+                        $('#login_id').attr("readonly", true);
+                        $('#tel').attr("readonly", true);
+                        $('#phoneResult').text("인증번호가 전송되었습니다.");
+                        $('#phoneResult').css("color", "green");
+                        $('#certi').css("display", "block");
+
+                        $('#certificationBtn').click(function () {
+                            if($('#certification').val().trim() == result.checknum){
+                                $('#phoneResult2').text("인증이 완료되었습니다.");
+                                $('#phoneResult2').css("color", "green");
+
+                                phoneCheck = true;
+
+                                $('.form-pw').css("display", "block");
+                            } else {
+                                $('#phoneResult2').text("인증 번호를 다시 입력해주세요.");
+                                $('#phoneResult2').css("color", "red");
+                            }
+                        })
+                    },
+                    error: function (e) {
+                        console.log(e);
+                        $('#phoneResult').text("인증번호가 전송에 실패하였습니다.");
+                        $('#phoneResult').css("color", "red");
+                    }
+                });
+
             } else {
-                $('.modal-body').text('패스워드가 일치하지 않습니다.');
+                $('.modal-body').text('휴대폰 번호를 입력해 주세요');
+                $('#modal1').modal('toggle');
+            }
+        });
+
+        $('form').submit(function () {
+            if ($('#login_pw').val() != '' && $('#pwCheck').val() != '') {
+
+                if ($('#login_pw').val() == $('#pwCheck').val()) {
+                    pwCheck = true;
+                } else {
+                    $('.modal-body').text('패스워드가 일치하지 않습니다.');
+                    $('#modal1').modal('toggle');
+                    return false;
+                }
+            } else {
+                $('.modal-body').text('비밀번호를 입력 해 주세요');
                 $('#modal1').modal('toggle');
                 return false;
             }
-        } else {
-            $('.modal-body').text('비밀번호를 입력 해 주세요');
-            $('#modal1').modal('toggle');
-            return false;
-        }
 
-        if(!pwCheck) {
-            return false;
-        }
+            if(!(pwCheck && phoneCheck)) {
+                $('.modal-body').text('양식을 모두 작성하여 주세요');
+                $('#modal1').modal('toggle');
+                return false;
+            }
+        })
     })
 </script>
 </html>
