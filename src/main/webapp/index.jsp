@@ -1966,10 +1966,6 @@
             $('.board_body').empty();
             $(".board_body").append(html);
 
-            document.getElementById("doInquriry").addEventListener('click', function () {
-                do_inquriry();
-            })
-
             let inquriryDetail = document.getElementsByClassName('inquriryDetail');
 
             for (let i = 0; i < inquriryDetail.length ; i++) {
@@ -1978,6 +1974,10 @@
                     inquriry_Detail(board_data[i]);
                 }
             }
+
+            document.getElementById("doInquriry").addEventListener('click', function () {
+                do_inquriry();
+            })
         }
         function inquriry_Detail(data){
             allEmpty()
