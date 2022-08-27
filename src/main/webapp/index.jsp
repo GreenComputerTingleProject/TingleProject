@@ -904,7 +904,10 @@
             audio.play();
         }
 
+
+
         $('#player-play').click(function () {
+
             audio.play();
             $('#player-play').css('display', 'none');
             $('#player-pause').css('display', 'block');
@@ -2342,6 +2345,10 @@
              }
 
             })
+
+
+
+
         /** 디테일 클릭 */
         function detailClick(json) {
 
@@ -2747,6 +2754,22 @@
 
             }
         }
+        /** 플레이버튼 클릭시 카운트 */
+        function playCount(json){
+            $.ajax({
+                type: 'POST',
+                url: '<c:url value="/chart/PlayCount"/>',
+                async: false,
+                dataType: 'text',
+                data:"id="+ json,
+                success: function () {
+                    console.log("카운트성공");
+                },
+                error: function (){
+
+                }
+            })
+        }
 
         /** 플레이버튼 클릭시 함수 */
         function playButtonCLick(json) {
@@ -2760,6 +2783,8 @@
             for (let i = 0; i < selectList.length; i++) {
 
                 selectPlay[i].addEventListener('click', function () {
+                    playCount(json[i].id);
+
                     $('#player-play').css('display', 'block');
                     $('#player-pause').css('display', 'none');
                     audio.pause();
@@ -2820,6 +2845,7 @@
                 totalChange(totalCheck, check);
             })
         }
+
 
         /** find엔터 */
         $("#findEnter").keydown(function (key) {

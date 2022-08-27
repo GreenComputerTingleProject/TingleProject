@@ -1,7 +1,5 @@
 package model;
 
-import org.json.simple.JSONObject;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -408,9 +406,20 @@ public class MusicDAO {
         }
         return res;
     }
+    public void addCnt(int id) {
+        sql = "update music set cnt = cnt + 1 where id = ?";
 
+        try {
 
+            ptmt = con.prepareStatement(sql);
+            ptmt.setInt(1, id);
+            ptmt.executeUpdate();
 
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
     public void close() {
         if(rs!=null) try {rs.close();} catch (SQLException e) {}
         if(ptmt!=null) try {ptmt.close();} catch (SQLException e) {}
