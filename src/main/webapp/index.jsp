@@ -538,7 +538,7 @@
                 </div>
                 </div>
 
-                <div class="board_body">
+                <div class="board_body" style="display: none">
 
                 </div>
 
@@ -1858,6 +1858,12 @@
         })
 
         document.getElementById("inquiry_btn").addEventListener('click', function (){
+            if (!isSessionLoaded) {
+                $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
+                $('#modal1').modal('toggle');
+
+                return;
+            }
             board_inquriry();
         })
 
@@ -2059,10 +2065,6 @@
             $('.board_body').empty();
             $(".board_body").append(html);
 
-            document.getElementById("doInquriry").addEventListener('click', function () {
-                do_inquriry();
-            })
-
             let inquriryDetail = document.getElementsByClassName('inquriryDetail');
 
             for (let i = 0; i < inquriryDetail.length ; i++) {
@@ -2071,6 +2073,10 @@
                     inquriry_Detail(board_data[i]);
                 }
             }
+
+            document.getElementById("doInquriry").addEventListener('click', function () {
+                do_inquriry();
+            })
         }
         function inquriry_Detail(data){
             allEmpty()

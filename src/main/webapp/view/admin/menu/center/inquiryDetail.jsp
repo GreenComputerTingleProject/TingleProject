@@ -69,7 +69,7 @@
     <td colspan="2" align="right">
       <input type="submit" value="답변하기">
       <a href = "AdminCenterInquiry?id=${inquiryData.id}&inquiryKind=inquiryDelete">삭제</a>
-      <a href = "AdminCenterInquiry?noticeKind=noticeList">목록으로</a>
+      <a href = "AdminCenterInquiry?inquiryKind=inquiryList">목록으로</a>
     </td>
   </tr>
 
