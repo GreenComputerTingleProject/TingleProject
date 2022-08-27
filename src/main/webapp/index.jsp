@@ -483,7 +483,7 @@
 
     </style>
 </head>
-<body>
+<body onload="main()">
 <div id="page-wrapper">
     <!-- 사이드바 -->
     <div id="sidebar-wrapper">
@@ -742,10 +742,11 @@
 </div>
 </body>
 <script>
-    window.onload = function () {
+    function main() { // body.onload()
 
         let s_UserData;
         let s_LibraryData;
+        let libraryData;
         let isSessionLoaded = false;
         let audio = document.getElementById("audio");;
         let nowPlayList;
@@ -776,6 +777,7 @@
 
         if (${userData != null}) {
             getLibrary();
+            init();
         }
 
         function getLibrary() {
@@ -785,7 +787,8 @@
                 async: false,
                 dataType: 'text',
                 success: function (result) {
-                    init(JSON.parse(result));
+                    libraryData = JSON.parse(result);
+                    s_LibraryData = libraryData;
                 },
                 error: function (e) {
                     console.log(e);
@@ -793,10 +796,8 @@
             });
         }
 
-        function init(libraryData) {
+        function init() {
             s_UserData = JSON.parse('${sessionScope.userData}');
-            s_LibraryData = libraryData;
-
 
             isSessionLoaded = true;
 
@@ -986,28 +987,17 @@
                 return;
             }
 
-            $.ajax({
-                type: 'GET',
-                url: '<c:url value="/music/MusicList_V2"/>',
-                async: false,
-                dataType: 'text',
-                success: function (result) {
-                    s_LibraryData = JSON.parse(result);
+            getLibrary();
 
-                    coverImgList = [];
+            coverImgList = [];
 
-                    for (const i in s_LibraryData) {
-                        coverImgList[i] = "<c:url value="/img/"/>" + s_LibraryData[i].cover_img;
-                    }
+            for (const i in s_LibraryData) {
+                coverImgList[i] = "<c:url value="/img/"/>" + s_LibraryData[i].cover_img;
+            }
 
-                    allEmpty();
-                    drawLibraryList();
-                    detailClick(s_LibraryData);
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            });
+            allEmpty();
+            drawLibraryList();
+            detailClick(s_LibraryData);
         })
 
         $("#myPage").click(function () {
@@ -1018,8 +1008,19 @@
                 return;
             }
 
-            allEmpty();
-            drawMyPageList();
+            $.ajax({
+                type: 'GET',
+                url: '<c:url value="/pay/PayMyList"/>',
+                async: false,
+                dataType: 'text',
+                success: function (result) {
+                    allEmpty();
+                    drawMyPageList(JSON.parse(result));
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
         })
 
         function drawLibraryList() {
@@ -1083,10 +1084,17 @@
                     }, 300);
                 })
 
+                // library 목록에서 단일 '리스트에 넣기' 이벤트
                 selectList[i].addEventListener('click', function () {
-                    nowPlayList.push("<c:url value="/mp3/"/>" + s_LibraryData[i].file_path);
-
-                    playListInit();
+                    if (nowPlayList.includes("<c:url value="/mp3/"/>" + s_LibraryData[i].file_path)) {
+                        $('#modal-body2').text((s_LibraryData[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                        $('#modal2').modal('toggle');
+                    } else {
+                        nowPlayList.push("<c:url value="/mp3/"/>" + s_LibraryData[i].file_path);
+                        $('#modal-body2').text((s_LibraryData[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                        $('#modal2').modal('toggle');
+                        playListInit();
+                    }
                 })
 
 
@@ -1098,6 +1106,13 @@
                         async: false,
                         success: function (result) {
                             getLibrary();
+
+                            coverImgList = [];
+
+                            for (const i in s_LibraryData) {
+                                coverImgList[i] = "<c:url value="/img/"/>" + s_LibraryData[i].cover_img;
+                            }
+
                             drawLibraryList();
                         },
                         error: function (e) {
@@ -1121,7 +1136,7 @@
             })
         }
 
-        function drawMyPageList() {
+        function drawMyPageList(payList) {
             $('#dynamicTable').css('display', 'none');
             $('#myPageDiv').css('display', 'block');
 
@@ -1144,17 +1159,17 @@
             html += '</div>';
             html += '</div>';
             html += '</div>' + '<br>';
-            html += '<div class="btn-group">';
-            html += '<button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#box2"/>회원 정보 변경'
-            html += '</div>';
-            html += '<div class="collapse" id="box2"><div class="card card-body">';
+
+            html += '<h4>정보 변경</h4>';
+            html += '<div id="box2"><div class="card card-body">';
             html += '<form action="<c:url value="/user/UserInfoUpdate"/>" align=center method="post" enctype="multipart/form-data">';
             html += '<input type="hidden" id="session_id" name="id">';
-            html += '<input type="text" id="nickname" name="nickname" placeholder="닉네임">';
-            html += '<input type="text" id="phone" name="phone" placeholder="전화번호">';
-            html += '<input type="text" id="email" name="email" placeholder="이메일">';
+            html += '<input type="text" id="nickname" name="nickname" placeholder="닉네임"><br>';
+            html += '<input type="text" id="phone" name="phone" placeholder="전화번호"><br>';
+            html += '<input type="text" id="email" name="email" placeholder="이메일"><br>';
             html += '<input class="form-control" type="file" id="image" name="image">';
             html += '<select class="form-select" name="personal_type" aria-label="성향을 선택해 주세요">';
+            html += '<option value="">--음악 성향을 선택해 주세요--</option>';
             html += '<option value="classic">클래식</option>';
             html += '<option value="rock">락</option>';
             html += '<option value="blues">블루스</option>';
@@ -1167,6 +1182,27 @@
             html += '</select>';
             html += '<button type="submit" id="submitBtn" class="btn btn-primary">제출</button>';
             html += '</form>';
+            html += '</div>';
+            html += '</div><br>';
+
+            html += '<h4>결제 내역</h4>';
+            html += '<div id="box3"><div class="card card-body">';
+            html += '<table class="table table-hover">';
+            html += '<thead class="table-dark">';
+            html += '<tr>';
+            html += '<th scope="col">주문번호</th>'
+            html += '<th scope="col">결제일자</th>'
+            html += '<th scope="col">결제금액</th>'
+            html += '</tr>';
+            html += '</thead>';
+            for (const i in payList) {
+                html += '<tr>';
+                html += '<td>'+payList[i].imp_uid+'</td>';
+                html += '<td>'+payList[i].reg_date+'</td>';
+                html += '<td>'+payList[i].paid_amount + '원' +'</td>';
+                html += '</tr>';
+            }
+            html += '</table>';
             html += '</div>';
 
             $("#myPageDiv").empty();
@@ -1209,8 +1245,6 @@
             }
         }
 
-
-
         $('#modal_play').click(function () {
             let check = document.getElementsByClassName("check");
             let checkNum = [];
@@ -1249,6 +1283,9 @@
         $('#modal_list').click(function () {
             let check = document.getElementsByClassName("check");
             let checkNum = [];
+            let isDuplicate = false;
+            let duplicateText = "";
+            let pushText = "";
 
             for (const i in check) {
                 if (check[i].checked) {
@@ -1257,49 +1294,81 @@
             }
 
             for (const i in checkNum) {
-                nowPlayList.push("<c:url value="/mp3/"/>" + s_LibraryData[checkNum[i]].file_path);
+                if (nowPlayList.includes("<c:url value="/mp3/"/>" + s_LibraryData[checkNum[i]].file_path)) {
+                    isDuplicate = true;
+                    duplicateText += (s_LibraryData[checkNum[i]].file_path).split('.')[0] + " ";
+                } else {
+                    nowPlayList.push("<c:url value="/mp3/"/>" + s_LibraryData[checkNum[i]].file_path);
+                    pushText += (s_LibraryData[checkNum[i]].file_path).split('.')[0] + " ";
+                }
+            }
+
+            if(isDuplicate) {
+                if(pushText == "") {
+                    $('#modal-body2').html(duplicateText + '은(는) 이미 목록에 있는 음악입니다.');
+                    $('#modal2').modal('toggle');
+                } else {
+                    $('#modal-body2').html(duplicateText + '은(는) 이미 목록에 있는 음악입니다.' + "<br>" + pushText + "이(가) 재생목록에 추가되었습니다.");
+                    $('#modal2').modal('toggle');
+                }
+            } else {
+                $('#modal-body2').text(pushText + "이(가) 재생목록에 추가되었습니다.");
+                $('#modal2').modal('toggle');
             }
 
             playListInit();
         })
 
         $('#modal_add').click(function () {
-
             let check = document.getElementsByClassName("check");
             let checkNum = [];
+            let isDuplicate = false;
             let s_LibraryDatas = [];
-
+            let addList = "";
+            let duplicateList = "";
 
             for (const i in check) {
                 if (check[i].checked) {
                     checkNum.push(i);
-                    s_LibraryDatas.push(s_LibraryData[i].id);
-                    console.log(s_LibraryDatas);
                 }
             }
 
-            console.log("ss"+s_LibraryDatas);
-                $.ajax({
-                    type: 'GET',
-                    url: '<c:url value="/music/MusicAddLibrary"/>',
-                    data: 'music_id=' +s_LibraryDatas,
-                    async: false,
-                    success: function (result) {
-                        getLibrary();
+            for (const i in checkNum) {
+                if(JSON.stringify(libraryData).includes(s_LibraryData[checkNum[i]].file_path)) {
+                    isDuplicate = true;
+                    duplicateList += (s_LibraryData[checkNum[i]].file_path).split('.')[0] + " ";
+                } else {
+                    s_LibraryDatas.push(s_LibraryData[checkNum[i]].id);
+                    addList += (s_LibraryData[checkNum[i]].file_path).split('.')[0] + " ";
+                }
+            }
 
-                    },
-                    error: function (e) {
-                        console.log(e);
+            $.ajax({
+                type: 'GET',
+                url: '<c:url value="/music/MusicAddLibrary"/>',
+                data: 'music_id=' +s_LibraryDatas,
+                async: false,
+                success: function (result) {
+                    if(isDuplicate) {
+                        if(addList == "") {
+                            $('#modal-body2').html(duplicateList + '은(는) 이미 보관함에 있는 음악입니다.');
+                            $('#modal2').modal('toggle');
+                        } else {
+                            $('#modal-body2').html(duplicateList + '은(는) 이미 보관함에 있는 음악입니다.' + "<br>" + addList + "이(가) 보관함에 추가되었습니다.");
+                            $('#modal2').modal('toggle');
+                        }
+                    } else {
+                        $('#modal-body2').text(addList + "이(가) 보관함에 추가되었습니다.");
+                        $('#modal2').modal('toggle');
                     }
-                });
 
-
+                    getLibrary();
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
         })
-
-
-
-
-
 
         function playListInit() {
             let html = "";
@@ -1354,6 +1423,7 @@
         $("#player-volume-range").change(function () {
             $("#player-volume").css("display", "block");
             $("#player-volume-mute").css("display", "none");
+
             nowVolume = ($("#player-volume-range").val()) / 100;
             audio.volume = nowVolume;
         })
@@ -1477,10 +1547,6 @@
         })
 
         /**현석 스크립트*/
-        $('.btncolor').click(function () {
-
-        })
-
         $('.suggestion').click(function () {
             allEmpty();
             $('#modal_add').css("display","")
@@ -1578,28 +1644,42 @@
                     })
 
                     selectList[0].addEventListener('click', function () {
-                        nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
-
-                        playListInit3(data[i]);
+                        if (nowPlayList.includes("<c:url value="/mp3/"/>" + data[i].file_path)) {
+                            $('#modal-body2').text((data[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                            $('#modal2').modal('toggle');
+                        } else {
+                            nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
+                            $('#modal-body2').text((data[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                            $('#modal2').modal('toggle');
+                            playListInit3(data[i]);
+                        }
                     })
 
                     selectAdd[0].addEventListener('click', function () {
                         if(isSessionLoaded) {
-                            $.ajax({
-                                type: 'GET',
-                                url: '<c:url value="/music/MusicAddLibrary"/>',
-                                data: 'music_id=' + data[i].id,
-                                async: false,
-                                success: function (result) {
-                                    getLibrary();
-                                    $('#modal-body2').text('보관함에 추가되었습니다');
-                                    $('#modal2').modal('toggle');
 
-                                },
-                                error: function (e) {
-                                    console.log(e);
-                                }
-                            });
+                            if(JSON.stringify(libraryData).includes(data[i].file_path)) {
+                                $('#modal-body2').text((data[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                $('#modal2').modal('toggle');
+                            } else {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '<c:url value="/music/MusicAddLibrary"/>',
+                                    data: 'music_id=' + data[i].id,
+                                    async: false,
+                                    success: function (result) {
+                                        getLibrary();
+                                        $('#modal-body2').text((data[i].file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                        $('#modal2').modal('toggle');
+                                    },
+                                    error: function (e) {
+                                        console.log(e);
+                                    }
+                                });
+                            }
+                        } else {
+                            $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                            $('#modal1').modal('toggle');
                         }
                     })
 
@@ -1641,32 +1721,45 @@
 
             for (let i = 0; i < selectList.length; i++) {
                 selectList[i].addEventListener('click', function () {
-                    nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
-
-                    playListInit2(data);
+                    if (nowPlayList.includes("<c:url value="/mp3/"/>" + data[i].file_path)) {
+                        $('#modal-body2').text((data[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                        $('#modal2').modal('toggle');
+                    } else {
+                        nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
+                        $('#modal-body2').text((data[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                        $('#modal2').modal('toggle');
+                        playListInit2(data);
+                    }
                 })
             }
 
             // 여기가 추천에서 add 누른거
             for (let i = 0; i < s_selectAdd.length ; i++) {
                 s_selectAdd[i].addEventListener('click', function () {
-                    if(isSessionLoaded){
-                        console.log("보내보내내");
-                        $.ajax({
-                            type: 'GET',
-                            url: '<c:url value="/music/MusicAddLibrary"/>',
-                            data: 'music_id=' + data[i].id,
-                            async: false,
-                            success: function (result) {
-                                getLibrary();
-                                $('#modal-body2').text('보관함에 추가되었습니다');
-                                $('#modal2').modal('toggle');
+                    if(isSessionLoaded) {
 
-                            },
-                            error: function (e) {
-                                console.log(e);
-                            }
-                        });
+                        if(JSON.stringify(libraryData).includes(data[i].file_path)) {
+                            $('#modal-body2').text((data[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                            $('#modal2').modal('toggle');
+                        } else {
+                            $.ajax({
+                                type: 'GET',
+                                url: '<c:url value="/music/MusicAddLibrary"/>',
+                                data: 'music_id=' + data[i].id,
+                                async: false,
+                                success: function (result) {
+                                    getLibrary();
+                                    $('#modal-body2').text((data[i].file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                    $('#modal2').modal('toggle');
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+                        }
+                    } else {
+                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                        $('#modal1').modal('toggle');
                     }
                 })
             }
@@ -2320,7 +2413,6 @@
 
             for (let i = 0; i < dropMusicInfo.length; i++) {
 
-
                 dropMusicInfo[i].addEventListener('click', function () {
                     allEmpty();
                     console.log("곡정보 클릭!");
@@ -2381,35 +2473,46 @@
                     })
 
                     selectList[0].addEventListener('click', function () {
-                        nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
-
-                        playListInit3(json[i]);
+                        if (nowPlayList.includes("<c:url value="/mp3/"/>" + json[i].file_path)) {
+                            $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                            $('#modal2').modal('toggle');
+                        } else {
+                            nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
+                            $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                            $('#modal2').modal('toggle');
+                            playListInit3(json[i]);
+                        }
                     })
 
                     selectAdd[0].addEventListener('click', function () {
-                        $.ajax({
-                            type: 'GET',
-                            url: '<c:url value="/music/MusicAddLibrary"/>',
-                            data: 'music_id=' + json[i].id,
-                            async: false,
-                            success: function (result) {
-                                getLibrary();
-                                $('#modal-body2').text('보관함에 추가되었습니다');
-                                $('#modal2').modal('toggle');
+                        if(isSessionLoaded) {
 
-                            },
-                            error: function (e) {
-                                console.log(e);
+                            if(JSON.stringify(libraryData).includes(json[i].file_path)) {
+                                $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                $('#modal2').modal('toggle');
+                            } else {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '<c:url value="/music/MusicAddLibrary"/>',
+                                    data: 'music_id=' + json[i].id,
+                                    async: false,
+                                    success: function (result) {
+                                        getLibrary();
+                                        $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                        $('#modal2').modal('toggle');
+                                    },
+                                    error: function (e) {
+                                        console.log(e);
+                                    }
+                                });
                             }
-                        });
+                        } else {
+                            $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                            $('#modal1').modal('toggle');
+                        }
                     })
 
                     detailClick(json);
-                    // document.getElementById('go_suggestion').addEventListener('click', function () {
-                    //     suggestion();
-                    // })
-
-
                 });
 
 
@@ -2486,7 +2589,6 @@
                             $("#suggestion_body").append(htmlb);
                             $(".findTbody").append(html);
 
-
                             let selectPlay = document.getElementsByClassName("selectPlay");
                             let selectList = document.getElementsByClassName("selectList");
                             let selectAdd = document.getElementsByClassName("selectAdd");
@@ -2519,43 +2621,50 @@
                                 })
 
                                 selectList[i].addEventListener('click', function () {
-                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
-
-                                    playListInit3(item);
+                                    if (nowPlayList.includes("<c:url value="/mp3/"/>" + item.file_path)) {
+                                        $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                                        $('#modal2').modal('toggle');
+                                    } else {
+                                        nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+                                        $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                                        $('#modal2').modal('toggle');
+                                        playListInit3(item);
+                                    }
                                 })
 
                                 selectAdd[i].addEventListener('click', function () {
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: '<c:url value="/music/MusicAddLibrary"/>',
-                                        data: 'music_id=' + json[i].id,
-                                        async: false,
-                                        success: function (result) {
-                                            getLibrary();
-                                            $('#modal-body2').text('보관함에 추가되었습니다');
+                                    if(isSessionLoaded) {
+
+                                        if(JSON.stringify(libraryData).includes(item.file_path)) {
+                                            $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
                                             $('#modal2').modal('toggle');
-
-                                        },
-                                        error: function (e) {
-                                            console.log(e);
+                                        } else {
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: '<c:url value="/music/MusicAddLibrary"/>',
+                                                data: 'music_id=' + item.id,
+                                                async: false,
+                                                success: function (result) {
+                                                    getLibrary();
+                                                    $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                                    $('#modal2').modal('toggle');
+                                                },
+                                                error: function (e) {
+                                                    console.log(e);
+                                                }
+                                            });
                                         }
-                                    });
+                                    } else {
+                                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                                        $('#modal1').modal('toggle');
+                                    }
                                 })
-                                // document.getElementById('go_suggestion').addEventListener('click', function () {
-                                //     suggestion();
-                                // })
-
                             })
-
-
                         },
                         error: function (e) {
-
                             console.log(e)
                         }
-
                     });
-
                 });
 
                 dropAlbumInfo[i].addEventListener('click', function () {
@@ -2577,7 +2686,6 @@
                             console.log(json)
                             let html = '';
                             let htmlb = '';
-
 
                             $.each(json[2], function (i, item) {
 
@@ -2642,7 +2750,6 @@
 
                             $.each(json[2], function (i, item) {
 
-
                                 selectPlay[i].addEventListener('click', function () {
                                     $('#player-play').css('display', 'block');
                                     $('#player-pause').css('display', 'none');
@@ -2667,50 +2774,52 @@
                                 })
 
                                 selectList[i].addEventListener('click', function () {
-                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
-
-                                    playListInit3(item);
+                                    if (nowPlayList.includes("<c:url value="/mp3/"/>" + item.file_path)) {
+                                        $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                                        $('#modal2').modal('toggle');
+                                    } else {
+                                        nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+                                        $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                                        $('#modal2').modal('toggle');
+                                        playListInit3(item);
+                                    }
                                 })
-
-
 
                                 selectAdd[i].addEventListener('click', function () {
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: '<c:url value="/music/MusicAddLibrary"/>',
-                                        data: 'music_id=' + json[i].id,
-                                        async: false,
-                                        success: function (result) {
-                                            getLibrary();
-                                            $('#modal-body2').text('보관함에 추가되었습니다');
+                                    if(isSessionLoaded) {
+
+                                        if(JSON.stringify(libraryData).includes(item.file_path)) {
+                                            $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
                                             $('#modal2').modal('toggle');
-
-                                        },
-                                        error: function (e) {
-                                            console.log(e);
+                                        } else {
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: '<c:url value="/music/MusicAddLibrary"/>',
+                                                data: 'music_id=' + item.id,
+                                                async: false,
+                                                success: function (result) {
+                                                    getLibrary();
+                                                    $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                                    $('#modal2').modal('toggle');
+                                                },
+                                                error: function (e) {
+                                                    console.log(e);
+                                                }
+                                            });
                                         }
-                                    });
+                                    } else {
+                                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                                        $('#modal1').modal('toggle');
+                                    }
                                 })
-
-
-                                // document.getElementById('go_suggestion').addEventListener('click', function () {
-                                //     suggestion();
-                                // })
-
                             })
-
-
                         },
                         error: function (e) {
 
                             console.log(e)
                         }
-
                     });
-
-
                 });
-
             }
         }
 
@@ -2749,9 +2858,15 @@
                 })
 
                 selectList[i].addEventListener('click', function () {
-                    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
-
-                    playListInit();
+                    if (nowPlayList.includes("<c:url value="/mp3/"/>" + json[i].file_path)) {
+                        $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                        $('#modal2').modal('toggle');
+                    } else {
+                        nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
+                        $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                        $('#modal2').modal('toggle');
+                        playListInit();
+                    }
                 })
 
                 check[i].addEventListener('change', function () {
@@ -2760,18 +2875,31 @@
                 })
 
                 selectAdd[i].addEventListener('click', function () {
-                    $.ajax({
-                        type: 'GET',
-                        url: '<c:url value="/music/MusicAddLibrary"/>',
-                        data: 'music_id=' + json[i].id,
-                        async: false,
-                        success: function (result) {
-                            getLibrary();
-                        },
-                        error: function (e) {
-                            console.log(e);
+                    if(isSessionLoaded) {
+
+                        if(JSON.stringify(libraryData).includes(json[i].file_path)) {
+                            $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                            $('#modal2').modal('toggle');
+                        } else {
+                            $.ajax({
+                                type: 'GET',
+                                url: '<c:url value="/music/MusicAddLibrary"/>',
+                                data: 'music_id=' + json[i].id,
+                                async: false,
+                                success: function (result) {
+                                    getLibrary();
+                                    $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                    $('#modal2').modal('toggle');
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
                         }
-                    });
+                    } else {
+                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                        $('#modal1').modal('toggle');
+                    }
                 })
             }
 
