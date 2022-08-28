@@ -44,13 +44,19 @@
             box-sizing: border-box;
         }
 
-        .btn-complete {
+        .btn-info {
             margin-top: 25px;
             margin-bottom: 25px;
             width: 100%;
             height: 50px;
             background: darkorchid;
             border: 1px solid #fff;
+            color: white;
+        }
+
+        .btn-info:hover{
+            background: #6f42c1;
+            color: white;
         }
 
         .logo {
@@ -83,7 +89,7 @@
     <form action="<c:url value="/user/UserLoginReg"/>" method="post">
         <input type="text" id="login_id" name="login_id" tabindex="0" placeholder="아이디" value="${login_id}">
         <input type="password" id="login_pw" name="login_pw" placeholder="비밀번호">
-        <input type="submit" class="btn-complete" value="로그인"/>
+        <input type="submit" class="btn btn-info" value="로그인"/>
         <a href="<c:url value="/"/>" class="btn btn-success">홈으로</a>
         <a href="<c:url value="/user/UserSignUp"/>" class="btn btn-success">회원 가입</a>
         <a href="<c:url value="/user/UserPwReset"/>" class="btn btn-primary">비밀번호 재설정</a>

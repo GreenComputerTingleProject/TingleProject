@@ -1155,6 +1155,8 @@
             html += '<div style="float : right">';
             if (s_UserData.membership == 1) {
                 html += '<a href="<c:url value="/pay/PayMembership"/>">멤버쉽 가입하기</a>';
+            } else {
+                html += '<a href="<c:url value="/pay/PayMembershipCancel"/>">멤버쉽 해지하기</a>';
             }
             html += '</div>';
             html += '</div>';
