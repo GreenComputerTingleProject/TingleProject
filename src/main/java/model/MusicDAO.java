@@ -298,7 +298,7 @@ public class MusicDAO {
     public ArrayList<MusicDTO> findArtist(String artist) {
         ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
         System.out.println("데이터베이스 조회 키워드 = :" + artist );
-        sql = "SELECT * FROM music WHERE artist LIKE concat('%', ? , '%')";
+        sql = "SELECT * FROM music WHERE artist LIKE concat('%', ? , '%') group by artist HAVING COUNT(*)";
 
         try {
             ptmt = con.prepareStatement(sql);
