@@ -23,6 +23,18 @@
             <td><input type = "text" name ="album"></td>
         </tr>
         <tr>
+
+            '<option value="">--음악 성향을 선택해 주세요--</option>';
+            html += '<option value="classic">클래식</option>';
+            html += '<option value="rock">락</option>';
+            html += '<option value="blues">블루스</option>';
+            html += '<option value="ballad">발라드</option>';
+            html += '<option value="rnb">R&B</option>';
+            html += '<option value="pop">팝</option>';
+            html += '<option value="hiphop">힙합</option>';
+            html += '<option value="metal">메탈</option>';
+            html += '<option value="jazz">재즈</option>';
+
             <td>장르</td>
             <td><input type = "text" name ="genre"></td>
         </tr>

@@ -49,8 +49,8 @@
 <div id = adminUrl>
   <h2>공지사항 페이지입니다</h2>
   <div>
-    <input type="button" value="공지사항" id="noticeBtn">
-    <input type="button" value="FAQ" id="FAQBtn">
+    <a href="AdminCenter?noticeKind=noticeList">공지사항</a>
+    <a href="AdminCenterFAQ?FAQKind=FAQList">FAQ</a>
     <a href="AdminCenterInquiry?inquiryKind=inquiryList">1:1문의</a>
   </div>
 
