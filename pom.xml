@@ -53,6 +53,69 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>cos</groupId>
+            <artifactId>cos</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/cos.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>javaSDK</groupId>
+            <artifactId>javaSDK</artifactId>
+            <version>2.2</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/javaSDK-2.2.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/json-simple-1.1.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>jsp-api</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/jsp-api.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/jstl.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>mariadb</groupId>
+            <artifactId>mariadb</artifactId>
+            <version>2.7.3</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/mariadb-java-client-2.7.3.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>standard</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/standard.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>tika-core</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>1.8</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/tika-core-1.8.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>tika-parsers</groupId>
+            <artifactId>tika-parsers</artifactId>
+            <version>1.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/tika-parsers-1.4.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
