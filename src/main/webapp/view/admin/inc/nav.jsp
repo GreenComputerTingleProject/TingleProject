@@ -45,7 +45,7 @@
 
 <style>
     * { margin: 0; padding: 0; }
-    a:visited { background: darkorchid; color: black;}
+    a:visited { background: darkorchid; color: honeydew;}
     .uu{ width: 100%; /*height:50px;*/ float: left; flex-direction: row; text-align: center; }
     body { background: #f0f0f0;  }
     a { width:100%;  height: 50px;  text-decoration: none; text-align: center; }
@@ -61,5 +61,6 @@
     <a class="list-group-item list-group-item-action" href="AdminCenter?noticeKind=noticeList" ><h6>고객센터</h6></a></li>
     <a class="list-group-item list-group-item-action" href="AdminCalculate"><h6>정산</h6></a></li>
 </div>
+<br><br>
 
 

@@ -91,7 +91,8 @@
 <style>
     #adminUrl { width: 100%; float: left; align-items: center;}
     th,td { text-align: center; justify-content: center; }
-    tr { border-bottom: 1px solid #dddddd; }
+    /*tr { border-bottom: 1px solid #dddddd; }*/
+    td {border-bottom: 1px solid #dddddd; }
 </style>
 <script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
 <script>
@@ -110,17 +111,19 @@
 
 <div id = adminUrl>
     <form style=" background: white;">
+        <br>
         <table style="border-collapse: collapse; width: 100%;">
-            <h2 class="nav navbar-text justify-content-center">User Page</h2>
-            <hr>
-            <thead style="align-items: center; text-align: center;">
-            <tr>
-                <th colspan="11">
-                    <input type="text" id = "uname">
-                    <input type="button" value="검색" id="uSerch"/>
-                </th>
-            </tr>
-            <tr>
+            <h1 class="nav navbar-text justify-content-center"><b>User Page</b></h1>
+            <br>
+            <thead style="/*align-items: center*/; text-align: center;">
+            <div class="input-group" style="width: 50%; margin: auto;">
+                <input type="text" id="uname" class="form-control" placeholder="Search..">
+                <div class="input-group-append">
+                    <button id="uSerch" class="btn btn-dark" type="button" style="color: honeydew;">검색</button>
+                </div>
+            </div>
+            <br>
+            <tr style="background: mediumslateblue; color: honeydew;">
                 <th>아이디</th>
                 <th>로그인아이디</th>
                 <th>로그인패스워드</th>

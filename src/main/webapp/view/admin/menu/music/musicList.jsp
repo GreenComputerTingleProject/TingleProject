@@ -91,7 +91,8 @@
 <style>
     #adminUrl { width: 100%; float: left; align-items: center;}
     th,td {  text-align: center; justify-content: center; }
-    tr {border-bottom: 1px solid #dddddd; }
+    /*tr {border-bottom: 1px solid #dddddd; }*/
+    td {border-bottom: 1px solid #dddddd; }
 </style>
 <script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
 <script>
@@ -109,29 +110,31 @@
 </script>
 <div id=adminUrl>
     <form style=" background: white;">
+        <br>
         <table style="border-collapse: collapse; width: 100%;" >
-            <h2 class="nav navbar-text justify-content-center">Music Page</h2>
-            <hr>
+            <h1 class="nav navbar-text justify-content-center"><b>Music Page</b></h1>
+            <br>
             <thead style="align-items: center; text-align: center;">
-            <tr>
-                <th colspan="11">
-                    <input type="text" id = "mname">
-                    <input type="button" value="검색" id="mSerch"/>
-                </th>
-            </tr>
-            <tr>
-                <th>아이디</th>
-                <th>제목</th>
-                <th>가수</th>
-                <th>앨범</th>
-                <th>장르</th>
-                <th>분위기</th>
-                <th>파일</th>
-                <th>이미지</th>
-                <th>날짜</th>
-                <th>스트리밍횟수</th>
-                <th>가사</th>
-            </tr>
+                <div class="input-group" style="width: 50%; margin: auto;">
+                    <input type="text" id="mname" class="form-control" placeholder="Search..">
+                    <div class="input-group-append">
+                        <button id="mSerch" class="btn btn-dark" type="button" style="color: honeydew;">검색</button>
+                    </div>
+                </div>
+                <br>
+                <tr style="background: mediumslateblue; color: honeydew;">
+                    <th>아이디</th>
+                    <th>제목</th>
+                    <th>가수</th>
+                    <th>앨범</th>
+                    <th>장르</th>
+                    <th>분위기</th>
+                    <th>파일</th>
+                    <th>이미지</th>
+                    <th>날짜</th>
+                    <th>스트리밍횟수</th>
+                    <th>가사</th>
+                </tr>
             </thead>
             <c:forEach items="${musicData }" var="dto" >
                 <tbody>
@@ -151,14 +154,14 @@
                 </tbody>
             </c:forEach>
             <tfoot>
-            <tr>
-                <th colspan="11"></th>
-            </tr>
-            <tr>
-                <th colspan="11">
-                   <a class="btn btn-outline-primary float-end col-md" href="AdminMusicInsert">음원등록</a>
-                </th>
-            </tr>
+                <tr>
+                    <th colspan="11"></th>
+                </tr>
+                <tr>
+                    <th colspan="11">
+                        <a class="btn btn col-md-4" style="background:mediumpurple; color:honeydew;" href="AdminMusicInsert"><h5 style="line-height: inherit;">음원등록</h5></a>
+                    </th>
+                </tr>
             </tfoot>
         </table>
     </form>
