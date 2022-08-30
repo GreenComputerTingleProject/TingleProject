@@ -22,7 +22,7 @@
             <p class="card-text"><i class="fa-solid fa-check"></i>1분 미리듣기 모드 제거</p>
             <p class="card-text"><i class="fa-solid fa-check"></i>게시판 이용 가능</p>
             <p class="card-text"><i class="fa-solid fa-check"></i>자작곡 업로드 가능</p>
-            <p class="card-text" style="color: deeppink; font-size: 1.5em">5,900원</p>
+            <p class="card-text" style="color: deeppink; font-size: 1.5em">월 5,900원</p>
             <button class="btn btn-primary" onclick="requestPay()">혜택 받기</button>
         </div>
         <a href="<c:url value="/"/>">돌아가기</a>
@@ -36,13 +36,16 @@
         const IMP = window.IMP; // 생략 가능
         IMP.init("imp40704735"); // Example: imp00000000
 
+        let cuid = 'tingle_' + new Date().getTime();
+
         // IMP.request_pay(param, callback) 결제창 호출
         IMP.request_pay({ // param
-            pg: "html5_inicis",
+            pg: "kakaopay",
             pay_method: "card",
             merchant_uid: 'merchant_' + new Date().getTime(),
-            name: "Tingle 일반결제",
+            name: "Tingle 정기결제",
             amount: 100,
+            customer_uid : cuid, // 필수 입력.
             buyer_email: s_UserData.email_address,
             buyer_name: s_UserData.name,
             buyer_tel: s_UserData.phone_number,
@@ -57,7 +60,7 @@
                 msg += '결제 금액 : ' + rsp.paid_amount;
                 msg += '카드 승인번호 : ' + rsp.apply_num;
 
-                location.href = "PayMembershipReg?imp_uid="+rsp.imp_uid+"&paid_amount="+rsp.paid_amount+"&msg="+msg;
+                location.href = "PayMembershipReg_V2?imp_uid="+rsp.imp_uid+"&paid_amount="+rsp.paid_amount+"&customer_uid="+cuid+"&msg="+msg+"&merchant_uid="+rsp.merchant_uid;
             } else {
                 msg = '결제에 실패하였습니다.\n';
                 msg += '에러내용 : ' + rsp.error_msg;

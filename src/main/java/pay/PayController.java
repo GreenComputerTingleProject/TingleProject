@@ -16,7 +16,8 @@ public class PayController extends HttpServlet {
     HashMap <String, String> nonService = new HashMap<String, String>();
 
     public PayController() {
-        nonService.put("PayMembership","/view/pay/membership.jsp");
+        nonService.put("PayMembership","/view/pay/membership_V2.jsp");
+        nonService.put("PayMembershipCancel","/view/pay/membership_cancel.jsp");
     }
 
     @Override

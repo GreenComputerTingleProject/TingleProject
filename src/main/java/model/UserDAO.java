@@ -232,6 +232,25 @@ public class UserDAO {
         return 0;
     }
 
+    public int downgrade_membership(int user_id) {
+        try {
+            sql = "update user set membership = membership - 1 where id = ?";
+
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setInt(1, user_id);
+
+            return ptmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return 0;
+    }
+
     public void close() {
         if(rs!=null) try {rs.close();} catch (SQLException e) {}
         if(ptmt!=null) try {ptmt.close();} catch (SQLException e) {}

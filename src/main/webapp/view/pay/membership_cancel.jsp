@@ -16,14 +16,14 @@
 <div align="center" style="height: 100%; display: flex; align-items: center; justify-content: center;">
     <div class="card" style="width: 28rem; margin-bottom: 200px">
         <div class="card-body">
-            <h5 class="card-title" style="font-size: 2em; font-weight: bold">멤버쉽 가입</h5>
+            <h5 class="card-title" style="font-size: 2em; font-weight: bold">멤버쉽 해지</h5>
             <br>
             <p class="card-text"><i class="fa-solid fa-check"></i>모든 곡 무제한 재생 가능</p>
             <p class="card-text"><i class="fa-solid fa-check"></i>1분 미리듣기 모드 제거</p>
             <p class="card-text"><i class="fa-solid fa-check"></i>게시판 이용 가능</p>
             <p class="card-text"><i class="fa-solid fa-check"></i>자작곡 업로드 가능</p>
-            <p class="card-text" style="color: deeppink; font-size: 1.5em">5,900원</p>
-            <button class="btn btn-primary" onclick="requestPay()">혜택 받기</button>
+            <p class="card-text" style="color: deeppink; font-size: 1.5em">위의 혜택들을 포기하시겠습니까?</p>
+            <button class="btn btn-primary" onclick="requestCancel()">혜택 포기</button>
         </div>
         <a href="<c:url value="/"/>">돌아가기</a>
     </div>
@@ -32,41 +32,8 @@
 <script !src="">
     s_UserData = JSON.parse('${sessionScope.userData}');
 
-    function requestPay() {
-        const IMP = window.IMP; // 생략 가능
-        IMP.init("imp40704735"); // Example: imp00000000
-
-        // IMP.request_pay(param, callback) 결제창 호출
-        IMP.request_pay({ // param
-            pg: "html5_inicis",
-            pay_method: "card",
-            merchant_uid: 'merchant_' + new Date().getTime(),
-            name: "Tingle 일반결제",
-            amount: 100,
-            buyer_email: s_UserData.email_address,
-            buyer_name: s_UserData.name,
-            buyer_tel: s_UserData.phone_number,
-            buyer_addr: "서울특별시 강남구 신사동",
-            buyer_postcode: "01181"
-        }, function (rsp) { // callback
-            console.log(rsp);
-            let msg = '결제가 완료되었습니다.';
-            if (rsp.success) {
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-
-                location.href = "PayMembershipReg?imp_uid="+rsp.imp_uid+"&paid_amount="+rsp.paid_amount+"&msg="+msg;
-            } else {
-                msg = '결제에 실패하였습니다.\n';
-                msg += '에러내용 : ' + rsp.error_msg;
-
-                alert(msg);
-
-                location.href = "<c:url value="/"/>";
-            }
-        });
+    function requestCancel() {
+        location.href = "PayMembershipCancelReg";
     }
 </script>
 </html>
