@@ -38,7 +38,7 @@
   form { background-color: white;}
 </style>
 <form action="AdminFAQInsertReg" method="get">
-  <br><br><br>
+  <br>
   <h1 class="nav navbar-text" style="display:block; text-align: center;"><b style="font-family: 'Play fair ';">F&Q 등록하기</b></h1>
   <br>
   <div class="input-group">

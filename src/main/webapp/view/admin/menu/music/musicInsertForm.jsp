@@ -65,7 +65,7 @@
     form { background-color: white;}
 </style>
 <form action="AdminMusicInsertReg" method="post" enctype="multipart/form-data">
-    <br><br><br>
+    <br>
     <h1 class="nav navbar-text" style="display:block; text-align: center;"><b style="font-family: 'Play fair ';">음원등록</b></h1>
     <br>
         <div class="input-group">
@@ -86,7 +86,7 @@
             </div>
             <input type="text" class="form-control" name ="album">
         </div>
-        <select class="form-select" style="width: 100%; margin: auto; border-color: blue;">
+        <select class="form-select" style="width: 100%; margin: auto; font-size: 22px; border-color: blue;">
             <option selected>-- 음악 성향을 선택해 주세요 --</option>
             <option value="1">클래식</option>
             <option value="2">락</option>

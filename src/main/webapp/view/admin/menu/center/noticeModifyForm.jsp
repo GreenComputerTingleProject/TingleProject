@@ -36,7 +36,7 @@
 
 <form action="AdminNoticeModifyReg" method="get">
   <input type ="hidden" name ="id" value="${noticeData.id}">
-  <br><br><br>
+  <br>
   <h1 class="nav navbar-text" style="display:block; text-align: center;"><b style="font-family: 'Play fair ';">공지사항 수정하기</b></h1>
   <br>
   <div class="input-group">

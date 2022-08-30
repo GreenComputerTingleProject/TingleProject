@@ -83,7 +83,7 @@
   a:hover {background-color: white;}
 </style>
 <form action="AdminCenterInquiry" method="get">
-  <br><br><br>
+  <br>
   <h1 class="nav navbar-text" style="display:block; text-align: center;"><b style="font-family: 'Play fair ';">1:1문의 상세보기</b></h1>
   <br>
   <div class="input-group">

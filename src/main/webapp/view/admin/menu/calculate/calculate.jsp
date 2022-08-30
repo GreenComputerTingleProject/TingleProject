@@ -1,6 +1,6 @@
-<%--
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
 <script src="<c:url value="/jquery/"/>jquery-ui.min.js"></script>
@@ -276,8 +276,8 @@
             $('#period_revenue').css('display', 'flex');
         })
     })
-</script>
---%>
+</script>--%>
+
 
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -287,18 +287,18 @@
 
 
 <style>
-    .aa .bb .cc .dd { width: 100%; /*float: left; align-items: center;*/}
+    .aa .bb .cc .dd { width: 100%; }
     th,td {  text-align: center; justify-content: center; }
-    td {border-bottom: 1px solid #dddddd; } /*완료*/
-    h5:hover { color: orchid;} /*완료*/
+    td {border-bottom: 1px solid #dddddd; }
+    h5:hover { color: orchid;}
     .input-group-prepend { width: 25%; }
     .input-group { width: 100%; margin: auto;}
     .input-group-text { justify-content: center; background:white ; color: black;}
-    #daily_revenue {  display: none; } /*완료*/
-    #dAdjust_revenue { display: none; } /*완료*/
-    #period_revenue {  display: none; } /*완료*/
-    tr:hover { background-color: ghostwhite;} /*완료*/
-    li {list-style: none;}  /*완료*/
+    #daily_revenue {  display: none; }
+    #dAdjust_revenue { display: none; }
+    #period_revenue {  display: none; }
+    tr:hover { background-color: ghostwhite;}
+    li {list-style: none;}
 </style>
 <script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
 <script>
@@ -336,8 +336,8 @@
             <button id="period" class="btn" style="width: 10%; background: indigo; color: honeydew; "><h5 style="line-height: inherit;">기간별 내역</h5></button>
         </div>
     <br>
-    <div id="monthly_revenue" class="aa">
-    <form style=" background: white;">
+    <div id="monthly_revenue" class="aa" style="display:flex;">
+    <form style=" background: white; width: 100%;">
         <table style="border-collapse: collapse; width: 100%;" >
             <thead style="align-items: center; text-align: center;">
             <tr style="background: mediumslateblue; color: honeydew;">
@@ -356,7 +356,7 @@
         </table>
     </form>
 </div>
-  <%-- 월간정산 끝--%>
+  <%--월간정산 끝--%>
 
 
 <%--일간정산 시작--%>
@@ -380,11 +380,11 @@
             </c:forEach>
         <div class="btn-group" style="display: flex; margin:auto; width: 20%;">
             <button type="submit" class="btn form-control" style="width: 5%; background: deepskyblue; color: honeydew; "><h5 style="line-height: inherit;">검색</h5></button>
-            <button id="dAdjust_init" class="btn form-control"  style="width: 5%; background: deepskyblue; color: honeydew; "><h5 style="line-height: inherit;">초기화</h5></button>
+            <button type="button" id="dAdjust_init" class="btn form-control"  style="width: 5%; background: deepskyblue; color: honeydew; "><h5 style="line-height: inherit;">초기화</h5></button>
         </div>
     </form>
 </div>
-   <%--일간정산 끝--%>
+  <%--일간정산 끝--%>
 
 <%--일별내역 시작--%>
 <div id="daily_revenue" class="cc">
@@ -402,7 +402,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" style="background-color: mediumslateblue; color:honeydew; height: 100%;">${daily_amount.key}일</span>
                             </div>
-                            <span class="input-group-text justify-content-center" style="width: 75%;">
+                            <span class="input-group-text justify-content-center" style="width: 75%; font-size: 17px;">
                                 <ul>
                                     <li>유저번호 : <a href="AdminUserDetail?id=${value.user_id}">${value.user_id}</a></li>
                                     <li>주문번호 : ${value.imp_uid}</li>
@@ -416,12 +416,12 @@
 </c:if>
     <div class="btn-group" style="display: flex; margin:auto; width: 20%;">
         <button type="submit" class="btn form-control" style="width: 5%; background: deepskyblue; color: honeydew; "><h5 style="line-height: inherit;">검색</h5></button>
-        <button id="daily_init" class="btn form-control"  style="width: 5%; background: deepskyblue; color: honeydew; "><h5 style="line-height: inherit;">초기화</h5></button>
+        <button type="button" id="daily_init" class="btn form-control"  style="width: 5%; background: deepskyblue; color: honeydew; "><h5 style="line-height: inherit;">초기화</h5></button>
     </div>
     </form>
 </div>
 
-    <%--일별내역 끝--%>
+   <%--일별내역 끝--%>
 
 <%--기간별 내역 시작--%>
 <div id="period_revenue" class="dd">
@@ -452,7 +452,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="background-color: mediumslateblue; color:honeydew; height: 100%;">${daily_amount.key}일</span>
                         </div>
-                        <span class="input-group-text justify-content-center" style="width: 75%;">
+                        <span class="input-group-text justify-content-center" style="width: 75%; font-size: 17px;">
                             <ul>
                                 <li>유저번호 : <a href="AdminUserDetail?id=${calculate_pay.user_id}">${calculate_pay.user_id}</a></li>
                                 <li>주문번호 : ${calculate_pay.imp_uid}</li>
@@ -466,7 +466,7 @@
 
         <div class="btn-group" style="display: flex; margin:auto; width: 20%;">
             <button type="submit" class="btn form-control" style="width: 5%; background: deepskyblue; color: honeydew; "><h5 style="line-height: inherit;">검색</h5></button>
-            <button id="period_init" class="btn form-control"  style="width: 5%; background: deepskyblue; color: honeydew; "><h5 style="line-height: inherit;">초기화</h5></button>
+            <button type="button" id="period_init" class="btn form-control"  style="width: 5%; background: deepskyblue; color: honeydew; "><h5 style="line-height: inherit;">초기화</h5></button>
         </div>
     </form>
 </div>
@@ -534,5 +534,6 @@
         })
     })
 </script>
+
 
 

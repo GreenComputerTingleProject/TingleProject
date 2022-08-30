@@ -88,7 +88,7 @@
     form { background-color: white;}
 </style>
 <form>
-    <br><br><br>
+    <br>
     <h1 class="nav navbar-text" style="display:block; text-align: center;"><b style="font-family: 'Play fair ';">음원상세보기</b></h1>
     <br>
     <div class="input-group">

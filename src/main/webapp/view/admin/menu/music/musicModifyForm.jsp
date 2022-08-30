@@ -69,7 +69,7 @@
 <form action="AdminMusicModifyReg" method="post" enctype="multipart/form-data">
     <input type = "hidden" value="${musicData.file_path}" name = "filecheck1">
     <input type = "hidden" value="${musicData.cover_img}" name = "filecheck2">
-    <br><br><br>
+    <br>
     <h1 class="nav navbar-text" style="display:block; text-align: center;"><b style="font-family: 'Play fair ';">음원수정하기</b></h1>
     <br>
     <div class="input-group">
