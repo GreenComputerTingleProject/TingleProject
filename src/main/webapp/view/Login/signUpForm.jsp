@@ -168,9 +168,9 @@
 
             if ($('#login_id').val().trim() != '') {
 
-                let idCheck = /^[a-zA-Z][0-9a-zA-Z]{4,14}$/;
+                let idPattern = /^[a-zA-Z][0-9a-zA-Z]{4,14}$/;
 
-                if (!idCheck.test($('#login_id').val().trim())) {
+                if (!idPattern.test($('#login_id').val().trim())) {
                     $('#checkResult').text("아이디는 영문이나 숫자로 이루어진 5~15자 이내여야 합니다.");
                     $('#checkResult').css("color", "red");
                     return;
@@ -260,8 +260,6 @@
         $('form').submit(function () {
             if ($('#login_pw').val().trim() != '' && $('#pwCheck').val().trim() != '') {
 
-
-
                 if ($('#login_pw').val().trim() == $('#pwCheck').val().trim()) {
                     pwCheck = true;
                 } else {
@@ -274,6 +272,10 @@
                 $('#modal1').modal('toggle');
                 return false;
             }
+
+            console.log("idCheck:" + idCheck);
+            console.log("pwCheck:" + pwCheck);
+            console.log("phoneCheck:" + phoneCheck);
 
             if (!(idCheck && pwCheck && phoneCheck)) {
                 $('.modal-body').text('양식을 모두 작성하여 주세요');
