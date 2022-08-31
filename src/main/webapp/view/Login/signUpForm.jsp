@@ -44,13 +44,19 @@
             box-sizing: border-box;
         }
 
-        .btn-complete {
+        .btn-info {
             margin-top: 25px;
             margin-bottom: 25px;
             width: 100%;
             height: 50px;
             background: darkorchid;
             border: 1px solid #fff;
+            color: white;
+        }
+
+        .btn-info:hover{
+            background: #6f42c1;
+            color: white;
         }
 
         .logo {
@@ -78,39 +84,43 @@
     <form action="<c:url value="/user/UserSignupReg"/>" method="post">
         <div class="form-id">
             <input type="text" id="login_id" name="login_id" tabindex="0" placeholder="아이디">
-            <button type="button" id="id-close" class="btn-close"></button>
+            <button type="button" class="btn-close" onclick="btnClose('login_id')"></button>
             <button type="button" id="idCheck" class="btn btn-primary">중복 확인</button>
             <br>
             <span id="checkResult"></span>
         </div>
         <div class="form-pw">
             <input type="password" id="login_pw" name="login_pw" placeholder="비밀번호">
+            <button type="button" class="btn-close" onclick="btnClose('login_pw')"></button>
         </div>
         <div class="form-pwCheck">
             <input type="password" id="pwCheck" placeholder="비밀번호 확인">
+            <button type="button" class="btn-close" onclick="btnClose('pwCheck')"></button>
         </div>
         <div class="form-name">
             <input type="text" id="name" name="name" placeholder="이름">
+            <button type="button" class="btn-close" onclick="btnClose('name')"></button>
         </div>
         <div class="form-nickName">
             <input type="text" id="nickName" name="nickName" placeholder="닉네임">
+            <button type="button" class="btn-close" onclick="btnClose('nickName')"></button>
         </div>
         <div class="form-tel">
             <input type="text" id="tel" name="tel" placeholder="휴대폰 번호 (-제외)">
-            <button type="button" id="tel-close" class="btn-close"></button>
+            <button type="button" class="btn-close" onclick="btnClose('tel')"></button>
             <button type="button" id="phoneCheck" class="btn btn-primary">인증 받기</button>
             <br>
             <span id="phoneResult"></span>
             <div id="certi" style="display: none">
                 <input type="text" id="certification" placeholder="인증 번호">
-                <button type="button" id="certification-close" class="btn-close"></button>
+                <button type="button" class="btn-close" onclick="btnClose('certification')"></button>
                 <button type="button" id="certificationBtn" class="btn btn-primary">인증 확인</button>
                 <br>
                 <span id="phoneResult2"></span>
             </div>
         </div>
         <div>
-            <input type="submit" class="btn-complete" value="가입완료"/>
+            <input type="submit" class="btn btn-info" value="가입완료"/>
         </div>
         <a href="<c:url value="/user/UserLogIn"/>" class="btn btn-success">돌아가기</a>
     </form>
@@ -136,33 +146,43 @@
     let pwCheck = false;
     let phoneCheck = false;
 
-    $(function () {
-        $('#id-close').click(function () {
-            $('#login_id').val("");
+    function btnClose(element) {
+        $('#'+element).val('');
+
+        if(element == 'login_id') {
             $('#login_id').attr("readonly", false);
-        })
+            $('#checkResult').text("");
+            idCheck = false;
+        }
 
-        $('#tel-close').click(function () {
-            $('#tel').val("");
+        if(element == 'tel') {
             $('#tel').attr("readonly", false);
-        })
+            $('#phoneResult').text("");
+            phoneCheck = false;
+        }
+    }
 
-        $('#certification-close').click(function () {
-            $('#certification').val("");
-        })
-
+    $(function () {
         // 아이디 중복검사
         $('#idCheck').click(function () {
 
-            if ($('#login_id').val() != '') {
+            if ($('#login_id').val().trim() != '') {
+
+                let idPattern = /^[a-zA-Z][0-9a-zA-Z]{4,14}$/;
+
+                if (!idPattern.test($('#login_id').val().trim())) {
+                    $('#checkResult').text("아이디는 영문이나 숫자로 이루어진 5~15자 이내여야 합니다.");
+                    $('#checkResult').css("color", "red");
+                    return;
+                }
+
                 $.ajax({
                     type: 'GET',
                     url: '<c:url value="/user/UserSignupIdCheck"/>',
-                    data: 'login_id=' + $('#login_id').val(),
+                    data: 'login_id=' + $('#login_id').val().trim(),
                     async: false,
                     dataType: 'json',
                     success: function (result) {
-                        console.log(result)
                         $('#login_id').attr("readonly", true);
 
                         if (result.check == true) {
@@ -188,9 +208,15 @@
         // 폰 번호 인증받기 // 현재 SmsSend_v2가 작동 안됨 PASS로 작업할것
         // SMSSend_V3 이용한다... ("인증번호" 라는 텍스트를 사용하면 안되더라)
         $('#phoneCheck').click(function () {
-            if ($('#tel').val() != '') {
-                // console.log("인증완료");
-                // phoneCheck = true;
+            if ($('#tel').val().trim() != '') {
+                let telCheck = /^[0-9]+$/;
+
+                if (!telCheck.test($('#tel').val().trim())) {
+                    $('#phoneResult').text("전화번호를 다시 입력하여 주세요.");
+                    $('#phoneResult').css("color", "red");
+                    return;
+                }
+
                 $.ajax({
                     type: 'GET',
                     url: '<c:url value="/user/UserPhoneCertification"/>',
@@ -232,9 +258,9 @@
 
         // form submit 했을때 유효성검사
         $('form').submit(function () {
-            if ($('#login_pw').val() != '' && $('#pwCheck').val() != '') {
+            if ($('#login_pw').val().trim() != '' && $('#pwCheck').val().trim() != '') {
 
-                if ($('#login_pw').val() == $('#pwCheck').val()) {
+                if ($('#login_pw').val().trim() == $('#pwCheck').val().trim()) {
                     pwCheck = true;
                 } else {
                     $('.modal-body').text('패스워드가 일치하지 않습니다.');
@@ -246,6 +272,10 @@
                 $('#modal1').modal('toggle');
                 return false;
             }
+
+            console.log("idCheck:" + idCheck);
+            console.log("pwCheck:" + pwCheck);
+            console.log("phoneCheck:" + phoneCheck);
 
             if (!(idCheck && pwCheck && phoneCheck)) {
                 $('.modal-body').text('양식을 모두 작성하여 주세요');
