@@ -61,7 +61,7 @@ public class MusicDTO {
         this.sdf = sdf;
     }
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 (E) HH:mm:ss");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 
     public MusicDTO() {
 
