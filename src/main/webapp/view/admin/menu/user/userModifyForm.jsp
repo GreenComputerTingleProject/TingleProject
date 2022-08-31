@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <form action="AdminUserModifyReg" method="post" enctype="multipart/form-data">
 <Table border="">
@@ -52,7 +53,31 @@
     </tr>
     <tr>
         <td>멤버쉽</td>
-        <td><input type = "text" name ="membership" value="${userData.membership}"></td>
+
+        <td>
+        <select name="membership">
+            <option value="${userData.membership}">현재 회원 상태 :
+                <c:set var="membership" value="${userData.membership}"/>
+                <c:choose>
+                <c:when test="${membership == 1}">
+        일반회원
+        </c:when>
+        <c:when test="${membership == 2}">
+            구독회원
+        </c:when>
+        <c:when test="${membership == 3}">
+            탈퇴회원
+        </c:when>
+        <c:otherwise>
+            조회불가능
+        </c:otherwise>
+        </c:choose>
+            </option>
+            <option value= 1>일반회원</option>
+            <option value= 2>구독회원</option>
+            <option value= 3>탈퇴회원</option>
+        </select>
+        </td>
     </tr>
     <tr>
         <td>취향</td>
@@ -61,7 +86,7 @@
     <tr>
         <td colspan="2" align="right">
             <input type="submit" value="수정하기">
-            <a href="AdminUserDetail?id=${userData.id}">뒤로</a>
+            <a href="AdminUserDetail?id=${userData.id}&nowPage=${nowPage}&serchName=${serchName}">뒤로</a>
         </td>
     </tr>
 

@@ -11,6 +11,8 @@
 <Table border="">
     <input type = "hidden" value="${musicData.file_path}" name = "filecheck1">
     <input type = "hidden" value="${musicData.cover_img}" name = "filecheck2">
+    <input type="hidden" name="nowPage" value="${nowPage }"/>
+    <input type="hidden" name="serchName" value="${serchName }"/>
     <tr>
         <td>id</td>
         <td><input type ="text" name = "id" value="${musicData.id}"></td>
@@ -21,7 +23,11 @@
     </tr>
     <tr>
         <td>가수</td>
-        <td><input type = "text" name ="arist" value="${musicData.artist}"></td>
+        <td><input type = "text" name ="artist" value="${musicData.artist}"></td>
+    </tr>
+    <tr>
+        <td>가수번호</td>
+        <td><input type = "text" name ="artist_no" value="${musicData.artist_no}"></td>
     </tr>
     <tr>
         <td>앨범</td>
@@ -29,11 +35,16 @@
     </tr>
     <tr>
         <td>장르</td>
-        <td><input type = "text" name ="genre" value="${musicData.genre}"></td>
-    </tr>
-    <tr>
-        <td>분위기</td>
-        <td><input type = "text" name ="mood" value="${musicData.mood}"></td>
+        <td><select name="genre" aria-label="성향을 선택해 주세요">
+            <option value="">--음악 성향을 선택해 주세요--</option>
+            <option value="발라드">발라드</option>
+            <option value="락">락</option>
+            <option value="힙합">힙합</option>
+            <option value="댄스">댄스</option>
+            <option value="재즈">재즈</option>
+            <option value="클래식">클래식</option>
+            <option value="팝">팝</option>
+        </select>
     </tr>
     <tr>
         <td>음악파일</td>
@@ -58,7 +69,7 @@
     <tr>
         <td colspan="2" align="right">
             <input type="submit" value="수정하기">
-            <a href="AdminMusicDetail?id=${musicData.id}">뒤로</a>
+            <a href="AdminMusicDetail?id=${musicData.id}&nowPage=${nowPage}&serchName=${serchName}">뒤로</a>
         </td>
     </tr>
 

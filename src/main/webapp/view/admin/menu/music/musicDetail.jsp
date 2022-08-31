@@ -30,16 +30,16 @@
         <td>${musicData.artist}</td>
     </tr>
     <tr>
+        <td>가수번호</td>
+        <td>${musicData.artist_no}</td>
+    </tr>
+    <tr>
         <td>앨범</td>
         <td>${musicData.album}</td>
     </tr>
     <tr>
         <td>장르</td>
         <td>${musicData.genre}</td>
-    </tr>
-    <tr>
-        <td>분위기</td>
-        <td>${musicData.mood}</td>
     </tr>
     <tr>
         <td>음악파일</td>
@@ -73,9 +73,16 @@
     </tr>
     <tr>
         <td colspan="2" align="right">
-            <a href = "AdminMusicModify?id=${musicData.id}">수정</a>
-            <a href = "AdminMusicDelete?id=${musicData.id}">삭제</a>
-            <a href = "AdminMusicList">목록으로</a>
+            <a href = "AdminMusicModify?id=${musicData.id}&nowPage=${nowPage}&serchName=${serchName}">수정</a>
+            <a href = "AdminMusicDelete?id=${musicData.id}&nowPage=${nowPage}">삭제</a>
+            <c:choose>
+                <c:when test="${serchName != ''}">
+                    <a href = "AdminMnameSerch?serchName=${serchName}&nowPage=${nowPage}">검색목록으로</a>
+                </c:when>
+                <c:otherwise>
+                    <a href = "AdminMusicList?nowPage=${nowPage}">목록으로</a>
+                </c:otherwise>
+            </c:choose>
         </td>
     </tr>
 

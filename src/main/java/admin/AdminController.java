@@ -16,6 +16,7 @@ import java.util.HashMap;
 public class AdminController extends HttpServlet {
 
     HashMap<String, String> nonService = new HashMap<String, String>();
+    String serchName;
 
     public AdminController() {
         nonService.put("AdminMusicInsert", "menu/music/musicInsertForm.jsp");
@@ -23,6 +24,22 @@ public class AdminController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int nowPage = 1;
+        String serchName = "";
+
+
+        if(request.getParameter("nowPage")!=null) {
+            System.out.println("나우페이지는 :"+request.getParameter("nowPage"));
+            nowPage = Integer.parseInt(request.getParameter("nowPage"));
+        }
+
+        if(request.getParameter("serchName") != ("")){
+            serchName = request.getParameter("serchName");
+        }
+
+        request.setAttribute("nowPage", nowPage);
+        request.setAttribute("serchName", serchName);
 
         String service = request.getRequestURI().substring((request.getContextPath() + "/admin/").length());
 

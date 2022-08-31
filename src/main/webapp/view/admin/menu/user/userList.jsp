@@ -98,9 +98,9 @@
     var uSerch = document.getElementById("uSerch")
     $(function () {
         $("#uSerch").click(function (){
-            if ($('#uname').val() != '') {
-                var uname = $('#uname').val();
-                location.href="AdminUnameSerch?uname="+uname;
+            if ($('#serchName').val() != '') {
+                var serchName = $('#serchName').val();
+                location.href="AdminUnameSerch?serchName="+serchName;
             } else {
                 alert("검색어를 입력해주세요")
             }
@@ -116,7 +116,7 @@
             <thead style="align-items: center; text-align: center;">
             <tr>
                 <th colspan="11">
-                    <input type="text" id = "uname">
+                    <input type="text" id = "serchName">
                     <input type="button" value="검색" id="uSerch"/>
                 </th>
             </tr>
@@ -129,7 +129,6 @@
                 <th>전화번호</th>
                 <th>이메일</th>
                 <th>프로필사진</th>
-                <th>계정종류</th>
                 <th>날짜</th>
                 <th>멤버쉽</th>
                 <th>성향</th>
@@ -138,7 +137,7 @@
             <c:forEach items="${userData }" var="dto" >
                 <tbody>
                 <tr>
-                    <td><a href="AdminUserDetail?id=${dto.id}">${dto.id}</a></td>
+                    <td><a href="AdminUserDetail?id=${dto.id}&nowPage=${nowPage}&serchName=${serchName}">${dto.id}</a></td>
                     <td>${dto.login_id}</td>
                     <td>${dto.login_pw}</td>
                     <td>${dto.name}</td>
@@ -146,13 +145,55 @@
                     <td>${dto.phone_number}</td>
                     <td>${dto.email_address}</td>
                     <td>${dto.profile_image}</td>
-                    <td>${dto.join_type}</td>
                     <td>${dto.join_date }</td>
-                    <td>${dto.membership }</td>
+                    <c:set var="membership" value="${dto.membership}"/>
+                    <c:choose>
+                        <c:when test="${membership == 1}">
+                            <td>일반회원</td>
+                        </c:when>
+                        <c:when test="${membership == 2}">
+                            <td>구독회원</td>
+                        </c:when>
+                        <c:when test="${membership == 3}">
+                            <td>탈퇴회원</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>조회불가능</td>
+                        </c:otherwise>
+                    </c:choose>
                     <td>${dto.personal_type }</td>
                 </tr>
                 </tbody>
             </c:forEach>
+
+            <tr>
+                <td colspan="10" align="center">
+                    <c:if test="${firstPage>1 }">
+                        <a href="?nowPage=${firstPage-1 }">이전</a>
+                    </c:if>
+                    <c:forEach begin="${firstPage }" end="${endPage }" var="i">
+                        <c:choose>
+                            <c:when test="${i==nowPage }">
+                                [${i }]
+                            </c:when>
+                            <c:otherwise>
+                                <c:choose>
+                                    <c:when test="${serchName != null}">
+                                        <a href="AdminUnameSerch?serchName=${serchName}&nowPage=${i }">${i }</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="?nowPage=${i }&serchName=${serchName}">${i }</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${endPage<totalPage }">
+                        <a href="?nowPage=${endPage+1 }">다음</a>
+                    </c:if>
+                </td>
+            </tr>
+
         </table>
     </form>
 </div>

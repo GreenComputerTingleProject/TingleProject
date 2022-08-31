@@ -30,7 +30,7 @@
     <td>${FAQData.title}</td>
   </tr>
   <tr>
-    <td>작성자</td>
+    <td>분류</td>
     <td>${FAQData.kind}</td>
   </tr>
   <tr>

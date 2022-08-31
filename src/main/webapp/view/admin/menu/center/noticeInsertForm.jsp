@@ -16,7 +16,12 @@
     </tr>
     <tr>
       <td>분류</td>
-      <td><input type = "text" name ="kind"></td>
+      <td><select name="kind">
+        <option value="">--분류를 선택해 주세요--</option>
+        <option value="공지사항">공지사항</option>
+        <option value="업데이트">업데이트</option>
+      </select>
+      </td>
     </tr>
     <tr>
       <td>내용</td>

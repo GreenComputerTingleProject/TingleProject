@@ -12,7 +12,13 @@
   <Table border="">
     <tr>
       <td>분류</td>
-      <td><input type = "text" name ="kind"></td>
+      <td>
+        <select name="kind">
+        <option value="사이트이용">사이트이용</option>
+        <option value="결제관련">결제관련</option>
+        <option value="스트리밍">스트리밍</option>
+      </select>
+      </td>
     </tr>
     <tr>
       <td>제목</td>

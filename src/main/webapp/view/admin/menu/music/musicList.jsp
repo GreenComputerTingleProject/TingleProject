@@ -98,9 +98,9 @@
     var mSerch = document.getElementById("mSerch")
     $(function () {
         $("#mSerch").click(function (){
-            if ($('#mname').val() != '') {
-                var mname = $('#mname').val();
-                location.href="AdminMnameSerch?mname="+mname;
+            if ($('#serchName').val() != '') {
+                var serchName = $('#serchName').val();
+                location.href="AdminMnameSerch?serchName="+serchName;
             } else {
                 alert("검색어를 입력해주세요")
             }
@@ -115,7 +115,7 @@
             <thead style="align-items: center; text-align: center;">
             <tr>
                 <th colspan="11">
-                    <input type="text" id = "mname">
+                    <input type="text" id = "serchName">
                     <input type="button" value="검색" id="mSerch"/>
                 </th>
             </tr>
@@ -123,39 +123,63 @@
                 <th>아이디</th>
                 <th>제목</th>
                 <th>가수</th>
+                <th>가수번호</th>
                 <th>앨범</th>
                 <th>장르</th>
-                <th>분위기</th>
                 <th>파일</th>
                 <th>이미지</th>
                 <th>날짜</th>
                 <th>스트리밍횟수</th>
-                <th>가사</th>
             </tr>
             </thead>
             <c:forEach items="${musicData }" var="dto" >
                 <tbody>
                 <tr>
-                    <td><a href=AdminMusicDetail?id=${dto.id }">${dto.id }</a></td>
+                    <td><a href="AdminMusicDetail?id=${dto.id }&nowPage=${nowPage}&serchName=${serchName}">${dto.id }</a></td>
                     <td>${dto.title}</td>
                     <td>${dto.artist}</td>
+                    <td>${dto.artist_no}</td>
                     <td>${dto.album}</td>
                     <td>${dto.genre}</td>
-                    <td>${dto.mood}</td>
                     <td>${dto.file_path}</td>
                     <td>${dto.cover_img}</td>
                     <td>${dto.release_date}</td>
                     <td>${dto.cnt}</td>
-                    <td>${dto.lyrics }</td>
                 </tr>
                 </tbody>
             </c:forEach>
             <tfoot>
             <tr>
-                <th colspan="11"></th>
+                <td colspan="10" align="center">
+                    <c:if test="${firstPage>1 }">
+                        <a href="?nowPage=${firstPage-1 }">이전</a>
+                    </c:if>
+                    <c:forEach begin="${firstPage }" end="${endPage }" var="i">
+                        <c:choose>
+                            <c:when test="${i==nowPage }">
+                                [${i }]
+                            </c:when>
+                            <c:otherwise>
+                                <c:choose>
+                                    <c:when test="${serchName != null}">
+                                        <a href="AdminMnameSerch?serchName=${serchName}&nowPage=${i }">${i }</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="?nowPage=${i }">${i }</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:otherwise>
+                        </c:choose>
+
+
+                    </c:forEach>
+                    <c:if test="${endPage<totalPage }">
+                        <a href="?nowPage=${endPage+1 }">다음</a>
+                    </c:if>
+                </td>
             </tr>
             <tr>
-                <th colspan="11">
+                <th colspan="10">
                    <a class="btn btn-outline-primary float-end col-md" href="AdminMusicInsert">음원등록</a>
                 </th>
             </tr>

@@ -15,7 +15,12 @@
     </tr>
     <tr>
       <td>분류</td>
-      <td><input type = "text" name ="kind" value="${noticeData.kind}"></td>
+      <td><select name="kind">
+        <option value=${noticeData.kind}>현재 분류 : ${noticeData.kind}</option>
+        <option value="공지사항">공지사항</option>
+        <option value="업데이트">업데이트</option>
+      </select>
+      </td>
     </tr>
     <tr>
       <td>내용</td>

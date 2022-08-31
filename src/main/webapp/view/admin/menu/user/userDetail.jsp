@@ -59,16 +59,26 @@
         </c:choose></td>
     </tr>
     <tr>
-        <td>계정종류</td>
-        <td>${userData.join_type}</td>
-    </tr>
-    <tr>
         <td>가입일</td>
         <td>${userData.join_date}</td>
     </tr>
     <tr>
         <td>멤버쉽</td>
-        <td>${userData.membership}</td>
+        <c:set var="membership" value="${userData.membership}"/>
+        <c:choose>
+            <c:when test="${membership == 1}">
+                <td>일반회원</td>
+            </c:when>
+            <c:when test="${membership == 2}">
+                <td>구독회원</td>
+            </c:when>
+            <c:when test="${membership == 3}">
+                <td>탈퇴회원</td>
+            </c:when>
+        <c:otherwise>
+            <td>조회불가능</td>
+        </c:otherwise>
+        </c:choose>
     </tr>
     <tr>
         <td>성향</td>
@@ -76,9 +86,16 @@
     </tr>
     <tr>
         <td colspan="2" align="right">
-            <a href = "AdminUserModify?id=${userData.id}">수정</a>
-            <a href = "AdminUserDelete?id=${userData.id}">삭제</a>
-            <a href = "AdminUserList">목록으로</a>
+            <a href = "AdminUserModify?id=${userData.id}&nowPage=${nowPage}&serchName=${serchName}">수정</a>
+            <a href = "AdminUserDelete?id=${userData.id}&nowPage=${nowPage}">삭제</a>
+            <c:choose>
+                <c:when test="${serchName != null}">
+                    <a href = "AdminUnameSerch?serchName=${serchName}&nowPage=${nowPage}">검색목록으로</a>
+                </c:when>
+                <c:otherwise>
+                    <a href = "AdminUserList?nowPage=${nowPage}">목록으로</a>
+                </c:otherwise>
+            </c:choose>
         </td>
     </tr>
 

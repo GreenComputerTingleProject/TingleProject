@@ -55,8 +55,7 @@
      <button class="btn btn-primary" onclick="">관리자추가</button>
  </form>--%>
 <div class="list-group uu">
-    <a class="list-group-item list-group-item-action" href="AdminPage"><h6>관리자페이지</h6></a></li>
-    <a class="list-group-item list-group-item-action" href="AdminMusicList"><h6>등록/삭제</h6></a></li>
+    <a class="list-group-item list-group-item-action" href="AdminMusicList"><h6>음원관리</h6></a></li>
     <a class="list-group-item list-group-item-action" href="AdminUserList"><h6>회원관리</h6></a></li>
     <a class="list-group-item list-group-item-action" href="AdminCenter?noticeKind=noticeList" ><h6>고객센터</h6></a></li>
     <a class="list-group-item list-group-item-action" href="AdminCalculate"><h6>정산</h6></a></li>

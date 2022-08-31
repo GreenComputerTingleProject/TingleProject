@@ -748,7 +748,7 @@
         let s_LibraryData;
         let libraryData;
         let isSessionLoaded = false;
-        let audio = document.getElementById("audio");;
+        let audio = document.getElementById("audio");
         let nowPlayList;
         let coverImgList = [];
         let loaded = 0;
@@ -773,7 +773,7 @@
         });
 
         /**추천 초기 화면 등장띠*/
-        suggestion();
+        suggestion(s_SuggestionList);
 
         if (${userData != null}) {
             getLibrary();
@@ -1550,27 +1550,27 @@
         $('.suggestion').click(function () {
             allEmpty();
             $('#modal_add').css("display","")
-            suggestion();
+            suggestion(s_SuggestionList);
         })
 
-         function suggestion() {
-
+         function suggestion(jArrays) {
+            
             let html = '';
             let data = new Array();
             allEmpty();
             $('#suggestion_body').css('display', 'block');
             html += '<div id ="suggestion_album"></div>';
 
-            for (const i in s_SuggestionList) {
-                let jArrays = s_SuggestionList[i];
-                html += '<h2>' + jArrays[0].kind + '</h2>';
+            for (const i in jArrays) {
+                let jArray = jArrays[i];
+                html += '<h2>' + jArray[0].kind + '</h2>';
                 html += '<table class = suggestion_table>';
                 html += '<tr>';
-                for (const i in jArrays) {
-                    data.push(jArrays[i])
+                for (const i in jArray) {
+                    data.push(jArray[i])
                     html += '<td width="20%">' + '<button type ="button" class = "viewDetail" >';
-                    html += '<img src="img/' + jArrays[i].cover_img + '"/></button>';
-                    html += jArrays[i].title;
+                    html += '<img src="img/' + jArray[i].cover_img + '"/></button>';
+                    html += jArray[i].title;
                     html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>';
                     html += '<i class="selectList fa-solid fa-list"></i>';
                     html += '<i class="s_selectAdd fa-solid fa-folder-plus"></i></div>';
@@ -1848,6 +1848,8 @@
             $(".findAlbum_List").empty();
             $(".findLyricsTbody").empty();
         }
+
+
         // 게시판 클릭시 - 현석
         document.getElementById("notice_btn").addEventListener('click', function (){
             board_notice();
@@ -2114,7 +2116,12 @@
 
                 html += '<div>1:1문의 글쓰기<input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
                 html += '<div>'+s_UserData.nickname+'</div>';
-                html += '<div>분류<input type="text" id = "inquriryKind"></div>';
+                html += '<div><select class="form-select" id="inquriryKind" aria-label="분류를 선택해 주세요">';
+                html += '<option value="">--분류를 선택해 주세요--</option>';
+                html += '<option value="사이트이용">사이트이용</option>';
+                html += '<option value="결제관련">결제관련</option>';
+                html += '<option value="스트리밍">스트리밍</option>';
+                html += '</select></div>';
                 html += '<div>제목<input type="text" id = "inquriryTitle"></div>';
                 html += '<div>상세내용<input type="text" id="inquriryContent"></div>';
                 html += '<div><input type="button" value="작성하기" id="dobtn"></div>';
@@ -2127,27 +2134,34 @@
                 })
 
                 document.getElementById("dobtn").addEventListener('click', function () {
-                    $.ajax({
-                        type: 'GET',
-                        url: '<c:url value="/board/BoardInquiryReg"/>',
-                        data: {"user_id" : s_UserData.id,
-                            "nickname" : s_UserData.nickname,
-                            "login_id" : s_UserData.login_id,
-                            "kind" : $('#inquriryKind').val(),
-                            "title" : $('#inquriryTitle').val(),
-                            "content" : $('#inquriryContent').val(),
-                            "checked" : $('#inquriryChecked').val()
-                        },
-                        async: false,
-                        dataType: 'text',
-                        success: function (results) {
-                            alert("작성완료");
-                            board_inquriry();
-                        },
-                        error: function (e) {
-                            console.log(e);
-                        }
-                    });
+
+                    if( $('#inquriryKind').val()== ""
+                        || $('#inquriryTitle').val()== ""
+                        || $('#inquriryContent').val()== "" ){
+                        alert("형식이 잘못되었습니다");
+                    } else {
+                        $.ajax({
+                            type: 'GET',
+                            url: '<c:url value="/board/BoardInquiryReg"/>',
+                            data: {"user_id" : s_UserData.id,
+                                "nickname" : s_UserData.nickname,
+                                "login_id" : s_UserData.login_id,
+                                "kind" : $('#inquriryKind').val(),
+                                "title" : $('#inquriryTitle').val(),
+                                "content" : $('#inquriryContent').val(),
+                                "checked" : $('#inquriryChecked').val()
+                            },
+                            async: false,
+                            dataType: 'text',
+                            success: function (results) {
+                                alert("작성완료");
+                                board_inquriry();
+                            },
+                            error: function (e) {
+                                console.log(e);
+                            }
+                        });
+                    }
                 })
             })
         }
