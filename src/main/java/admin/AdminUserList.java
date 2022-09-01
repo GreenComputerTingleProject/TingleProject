@@ -11,9 +11,34 @@ import java.util.ArrayList;
 public class AdminUserList implements AdminService{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("AdminUserList execute() 실행");
-        ArrayList<UserDTO> userData = new AdminDAO().userList();
 
+        int nowPage = (int)request.getAttribute("nowPage");
+        System.out.println(nowPage);
+        int limit = 5, pageLimit = 4;
+
+        int first = (nowPage-1)*limit;
+        String db = "user";
+        int total = new AdminDAO().total(db);
+        int totalPage = total/limit;
+
+        if(total%limit!=0) {
+            totalPage++;
+        }
+
+        int firstPage = (nowPage-1)/pageLimit * pageLimit + 1;
+        int endPage = firstPage + pageLimit -1;
+
+        if(endPage > totalPage) {
+            endPage = totalPage;
+        }
+
+        System.out.println("AdminUserList execute() 실행");
+        ArrayList<UserDTO> userData = new AdminDAO().userList(first, limit);
+
+        request.setAttribute("first", first);
+        request.setAttribute("firstPage", firstPage);
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("totalPage", totalPage);
 
         request.setAttribute("userData", userData);
         request.setAttribute("adminUrl", "menu/user/userList.jsp");

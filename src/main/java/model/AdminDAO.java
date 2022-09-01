@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -63,12 +64,15 @@ public class AdminDAO {
             return res;
         }
 
-        public ArrayList<MusicDTO> musicList(){
+        public ArrayList<MusicDTO> musicList(int first, int limit){
             ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
-            sql = "select * from music order by id desc";
+            sql = "select * from music order by id desc limit ?,?";
+
 
             try {
                 ptmt = con.prepareStatement(sql);
+                ptmt.setInt(1, first);
+                ptmt.setInt(2, limit);
                 rs = ptmt.executeQuery();
 
                 while (rs.next()){
@@ -77,9 +81,9 @@ public class AdminDAO {
                     dto.setId(rs.getInt("id"));
                     dto.setTitle(rs.getString("title"));
                     dto.setArtist(rs.getString("artist"));
+                    dto.setArtist_no(rs.getInt("artist_no"));
                     dto.setAlbum(rs.getString("album"));
                     dto.setGenre(rs.getString("genre"));
-                    dto.setMood(rs.getString("mood"));
                     dto.setFile_path(rs.getString("file_path"));
                     dto.setCover_img(rs.getString("cover_img"));
                     dto.setRelease_date(rs.getDate("release_date"));
@@ -96,6 +100,69 @@ public class AdminDAO {
             return res;
         }
 
+    public int total(String db){
+
+        sql = "select count(*) from "+db;
+
+        try {
+            ptmt = con.prepareStatement(sql);
+//            ptmt.setString(1, db);
+            rs = ptmt.executeQuery();
+
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }finally {
+            close();
+        }
+
+        return 0;
+    }
+
+    public int serchMTotal(String mname){
+
+        sql = "select count(*) from music where title LIKE concat('%', ? , '%')";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setString(1, mname);
+            rs = ptmt.executeQuery();
+
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }finally {
+            close();
+        }
+
+        return 0;
+    }
+
+    public int serchUTotal(String uname){
+
+        sql = "select count(*) from user where name LIKE concat('%', ? , '%')";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+            ptmt.setString(1, uname);
+            rs = ptmt.executeQuery();
+
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }finally {
+            close();
+        }
+
+        return 0;
+    }
+
         public MusicDTO musicDetail(String id){
             MusicDTO dto = new MusicDTO();
             sql = "select * from music where id = ?";
@@ -109,9 +176,9 @@ public class AdminDAO {
                     dto.setId(rs.getInt("id"));
                     dto.setTitle(rs.getString("title"));
                     dto.setArtist(rs.getString("artist"));
+                    dto.setArtist_no(rs.getInt("artist_no"));
                     dto.setAlbum(rs.getString("album"));
                     dto.setGenre(rs.getString("genre"));
-                    dto.setMood(rs.getString("mood"));
                     dto.setFile_path(rs.getString("file_path"));
                     dto.setCover_img(rs.getString("cover_img"));
                     dto.setRelease_date(rs.getDate("release_date"));
@@ -129,19 +196,22 @@ public class AdminDAO {
 
         public void musicInsert(MusicDTO dto){
             try {
-            sql = "insert into music (title, artist, album, genre, mood, file_path, cover_img, cnt, lyrics, release_date)"
-                    + "values(?, ?, ?, ?, ?, ?, ?, 0, ?, sysdate())";
+
+            sql = "insert into music (title, artist, artist_no, album, genre, genre_no, file_path, cover_img, cnt, lyrics, release_date)"
+                    + "values(?, ?, ?,?, ?, ?, ?, ?, 0, ?, ?)";
 
                 ptmt = con.prepareStatement(sql);
 
                 ptmt.setString(1,dto.title);
                 ptmt.setString(2,dto.artist);
-                ptmt.setString(3,dto.album);
-                ptmt.setString(4,dto.genre);
-                ptmt.setString(5,dto.mood);
-                ptmt.setString(6,dto.file_path);
-                ptmt.setString(7,dto.cover_img);
-                ptmt.setString(8,dto.lyrics);
+                ptmt.setInt(3,dto.artist_no);
+                ptmt.setString(4,dto.album);
+                ptmt.setString(5,dto.genre);
+                ptmt.setInt(6,dto.genre_no);
+                ptmt.setString(7,dto.file_path);
+                ptmt.setString(8,dto.cover_img);
+                ptmt.setString(9,dto.lyrics);
+                ptmt.setDate(10, Date.valueOf(dto.release_date2));
 
                 ptmt.executeUpdate();
 
@@ -151,6 +221,35 @@ public class AdminDAO {
                 close();
             }
         }
+
+
+    public int serch_artist(String artist){
+        int artist_Num = 0;
+        try {
+
+            sql = "select * from music where artist LIKE ?";
+            ptmt = con.prepareStatement(sql);
+            ptmt.setString(1, artist);
+            rs = ptmt.executeQuery();
+
+            if(rs.next()){
+                artist_Num = rs.getInt("artist_no");
+                return artist_Num;
+            }
+
+            sql = "SELECT MAX(artist_no)+1 AS max_no FROM music";
+            ptmt = con.prepareStatement(sql);
+            rs = ptmt.executeQuery();
+            if(rs.next()){
+                artist_Num = rs.getInt("max_no");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close();
+        }
+        return artist_Num;
+    }
 
         public void musicDelete(HttpServletRequest request, int id){
             try {
@@ -193,7 +292,7 @@ public class AdminDAO {
         }
 
         public void musicModify(MusicDTO dto){
-            sql = "update music  set title = ?, artist = ?, album = ?, genre =?, mood =?, file_path = ?, cover_img = ?, lyrics = ? where id = ?";
+            sql = "update music  set title = ?, artist = ?, album = ?, genre =?, genre_no = ?, file_path = ?, cover_img = ?, lyrics = ? where id = ?";
 
             try {
                 ptmt = con.prepareStatement(sql);
@@ -202,7 +301,7 @@ public class AdminDAO {
                 ptmt.setString(2, dto.artist);
                 ptmt.setString(3, dto.album);
                 ptmt.setString(4, dto.genre);
-                ptmt.setString(5, dto.mood);
+                ptmt.setInt(5, dto.genre_no);
                 ptmt.setString(6, dto.file_path);
                 ptmt.setString(7, dto.cover_img);
                 ptmt.setString(8, dto.lyrics);
@@ -217,14 +316,16 @@ public class AdminDAO {
         }
 
 
-        public ArrayList<MusicDTO> mNameSerch(String mname){
+        public ArrayList<MusicDTO> mNameSerch(String mname, int frist, int limit){
             ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
             System.out.println("데이터베이스 조회 키워드 = :" + mname);
-            sql = "SELECT * FROM music WHERE title LIKE  concat('%', ? , '%')";
+            sql = "SELECT * FROM music WHERE title LIKE concat('%', ? , '%') limit ?, ?";
 
             try {
                 ptmt = con.prepareStatement(sql);
                 ptmt.setString(1, mname);
+                ptmt.setInt(2, frist);
+                ptmt.setInt(3, limit);
                 rs = ptmt.executeQuery();
 
                 System.out.println(sql);
@@ -236,7 +337,6 @@ public class AdminDAO {
                     dto.setArtist(rs.getString("artist"));
                     dto.setAlbum(rs.getString("album"));
                     dto.setGenre(rs.getString("genre"));
-                    dto.setMood(rs.getString("mood"));
                     dto.setFile_path(rs.getString("file_path"));
                     dto.setCover_img(rs.getString("cover_img"));
                     dto.setRelease_date(rs.getDate("release_date"));
@@ -285,12 +385,14 @@ public class AdminDAO {
         }
     }
 
-    public ArrayList<UserDTO> userList(){
+    public ArrayList<UserDTO> userList(int first, int limit){
         ArrayList<UserDTO> res = new  ArrayList<UserDTO>();
-        sql = "select * from user order by id desc";
+        sql = "select * from user order by id desc limit ?,?";
 
         try {
             ptmt = con.prepareStatement(sql);
+            ptmt.setInt(1, first);
+            ptmt.setInt(2, limit);
             rs = ptmt.executeQuery();
 
             while (rs.next()){
@@ -393,7 +495,7 @@ public class AdminDAO {
         return msg;
     }
     public void userModify(UserDTO dto){
-        sql = "update user  set login_id = ?, login_pw = ?, name = ?, nickname =?, phone_number =?, email_address = ?, profile_image = ?, join_type = ?,"
+        sql = "update user  set login_id = ?, login_pw = ?, name = ?, nickname =?, phone_number =?, email_address = ?, profile_image = ?, "
                + "membership = ?, personal_type = ? where id = ?";
 
         try {
@@ -406,10 +508,9 @@ public class AdminDAO {
             ptmt.setString(5, dto.phone_number);
             ptmt.setString(6, dto.email_address);
             ptmt.setString(7, dto.profile_image);
-            ptmt.setInt(8, dto.join_type);
-            ptmt.setInt(9, dto.membership);
-            ptmt.setString(10, dto.personal_type);
-            ptmt.setInt(11, dto.id);
+            ptmt.setInt(8, dto.membership);
+            ptmt.setString(9, dto.personal_type);
+            ptmt.setInt(10, dto.id);
 
             ptmt.executeUpdate();
         } catch (SQLException e) {
@@ -419,14 +520,16 @@ public class AdminDAO {
         }
     }
 
-    public ArrayList<UserDTO> uNameSerch(String uname){
+    public ArrayList<UserDTO> uNameSerch(String uname, int frist, int limit){
         ArrayList<UserDTO> res = new ArrayList<UserDTO>();
         System.out.println("데이터베이스 조회 키워드 = :" + uname);
-        sql = "SELECT * FROM user WHERE name LIKE concat('%', ? , '%')";
+        sql = "SELECT * FROM user WHERE name LIKE concat('%', ? , '%') limit ?,?";
 
         try {
             ptmt = con.prepareStatement(sql);
             ptmt.setString(1, uname);
+            ptmt.setInt(2,frist);
+            ptmt.setInt(3,limit);
             rs = ptmt.executeQuery();
 
             System.out.println(sql);

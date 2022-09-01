@@ -325,8 +325,9 @@
 
         /** 현석 스타일*/
 
+
         #suggestion_album {
-            width: 100%;
+            width: 1600px;
             height: 300px;
             background: #1a1e21;
             margin-bottom: 40px;
@@ -338,7 +339,19 @@
             padding-left: 10px;
             border-collapse: separate;
             border-spacing: 10px;
-            margin-bottom: 100px;
+            margin-bottom: 50px;
+        }
+
+        .suggestion_title {
+         margin-left: 5px;
+            margin-top: 5px;
+            width: 240px;
+            height: 25px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
         }
 
         .suggestion_detail {
@@ -375,51 +388,75 @@
         }
 
         #indexbtn {
-            width: 18%;
-            height: 30vh;
+            width: 50px;
+            height: 50px;
             background: #ffffff;
         }
 
-        td {
-            background: #0dcaf0;
+        .suggestion_box {
+            background: #ffffff;
+            width: 240px;
+            height: 240px;
+
+            margin: 0px;
+            padding: 0px;
         }
 
-        td > button {
-            width: 100%;
-            height: 30vh;
+        .suggestion_box > .viewDetail {
+            width: 240px;
+            height: 240px;
+            border: none;
         }
 
-        td > button > img {
-            width: 100%;
-            height: 30vh;
+        .viewDetail > img {
+            width: 240px;
+            height: 240px;
+
         }
 
         #boardContainer {
-            width: 100%;
-            height: 10vh;
-            background: #0dcaf0;
+            width: 1590px;
+            height: 100px;
             margin-bottom: 10px;
         }
 
         .board_body{
-            width: 100%;
-            height: 90vh;
-            background: #20c997;
+            width: 1590px;
+            height: 800px;
+
         }
 
         .board_index {
-            width: 100%;
-            height: 5vh;
-            background: #6f42c1;
+            width: 1590px;
+            height: 40px;
+            background: #636464;
+            text-align: center;
+            line-height: 40px;
+
         }
 
         .notice_index {
             cursor : pointer;
             background: #f0f0f0;
+            text-align: center;
+            border-bottom: 1px #636464 solid;
+            height: 40px;
+            line-height: 40px;
+
         }
 
-        .notice_index:hover {
-            background: #f0f0f0;
+        .notice_detail_index {
+            margin-top: 20px;
+            border-top: 8px #1a1e21 solid;
+            border-bottom: 3px #1a1e21 solid;
+            text-align: center;
+            height: 80px;
+            line-height: 70px;
+            font-size: 20px;
+        }
+
+        #noticeForm{
+            margin-top: 50px;
         }
         /*게시판 스타일*/
 
@@ -536,6 +573,7 @@
                     <input type="button" value="자주받는 질문" id="FAQ_btn">
                     <input type="button" value="1:1문의" id="inquiry_btn">
                 </div>
+
                 </div>
 
                 <div class="board_body" style="display: none">
@@ -773,7 +811,7 @@
         });
 
         /**추천 초기 화면 등장띠*/
-        suggestion();
+        suggestion(s_SuggestionList);
 
         if (${userData != null}) {
             getLibrary();
@@ -1552,28 +1590,28 @@
         $('.suggestion').click(function () {
             allEmpty();
             $('#modal_add').css("display","")
-            suggestion();
+            suggestion(s_SuggestionList);
         })
 
-         function suggestion() {
-
+         function suggestion(jArrays) {
+            
             let html = '';
             let data = new Array();
             allEmpty();
             $('#suggestion_body').css('display', 'block');
             html += '<div id ="suggestion_album"></div>';
 
-            for (const i in s_SuggestionList) {
-                let jArrays = s_SuggestionList[i];
-                html += '<h2>' + jArrays[0].kind + '</h2>';
+            for (const i in jArrays) {
+                let jArray = jArrays[i];
+                html += '<h2>' + jArray[0].kind + '</h2>';
                 html += '<table class = suggestion_table>';
                 html += '<tr>';
-                for (const i in jArrays) {
-                    data.push(jArrays[i])
-                    html += '<td width="20%">' + '<button type ="button" class = "viewDetail" >';
-                    html += '<img src="img/' + jArrays[i].cover_img + '"/></button>';
-                    html += jArrays[i].title;
-                    html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>';
+                for (const i in jArray) {
+                    data.push(jArray[i])
+                    html += '<td class="suggestion_box">' + '<button type ="button" class = "viewDetail" >';
+                    html += '<img src="img/' + jArray[i].cover_img + '"/></button>';
+                    html += '<div class="suggestion_title">'+jArray[i].title+'</div>';
+                    html += '<div class="select_icon" style="margin-left: 5px; height= 30px;"><i class="selectPlay fa-solid fa-play"></i>';
                     html += '<i class="selectList fa-solid fa-list"></i>';
                     html += '<i class="s_selectAdd fa-solid fa-folder-plus"></i></div>';
                     html += '</td>';
@@ -1850,6 +1888,8 @@
             $(".findAlbum_List").empty();
             $(".findLyricsTbody").empty();
         }
+
+
         // 게시판 클릭시 - 현석
         document.getElementById("notice_btn").addEventListener('click', function (){
             board_notice();
@@ -1897,19 +1937,18 @@
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
-            html += '게시판 바디입니다';
-            html += '<div class="board_index"><table width="100%"><tr>';
-            html += '<td width="25%">번호</td>';
-            html += '<td>분류</td>';
-            html += '<td>제목</td>';
-            html += '<td>날짜</td>';
+            html += '<div class="board_index"><table><tr>';
+            html += '<td width=100px;>번호</td>';
+            html += '<td width=300px>분류</td>';
+            html += '<td width=800px>제목</td>';
+            html += '<td width=400px>날짜</td>';
             html += '</tr></table></div>';
             for (const i in board_data) {
-                html += '<div class="notice_index" ><table width="100%"><tr class="noticeDetail">';
-                html += '<td width="25%">' + board_data[i].id + '</td>';
-                html += '<td>'+ board_data[i].kind +'</td>';
-                html += '<td>'+ board_data[i].title +'</td>';
-                html += '<td>'+ board_data[i].reg_date +'</td>';
+                html += '<div class="notice_index" ><table><tr class="noticeDetail">';
+                html += '<td width=100px>' + board_data[i].id + '</td>';
+                html += '<td width=300px>'+ board_data[i].kind +'</td>';
+                html += '<td width=800px>'+ board_data[i].title +'</td>';
+                html += '<td width=400px>'+ board_data[i].reg_date +'</td>';
                 html += '</tr></table></div>';
             }
             $('.board_body').empty();
@@ -1935,16 +1974,21 @@
             let html = '';
 
             html += '<div id="noticeForm">';
-            html += '<div id="noticeheader"><h2>'+"공지사항"+'<h2><input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
-            html += '<div>';
-            html += '<div>'+data.title+'</div>';
-            html += '<div>'+data.nickname+'</div>';
-            html += '<div>'+data.reg_date+'</div>';
+            html += '<h2>'+data.kind+'</h2>';
+            html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
+            html += '<td width=100px>' + data.id + '</td>';
+            html += '<td width=300px>'+ data.title +'</td>';
+            html += '<td width=100px>'+ data.nickname +'</td>';
+            html += '<td width=300px>'+ data.reg_date +'</td>';
+            html += '</tr></table></div>';
+
+            html += '<tr><td ><textarea style="margin-top: 50px; width: 1500px; height: 500px; overflow: hidden; resize: none" disabled>'+data.content+'</textarea></td></tr>';
             html += '</div>';
-            html += '<div>'+data.content+'</div>';
-            html += '</div>';
+
             $('.board_body').empty();
             $('.board_body').append(html);
+
+
 
             document.getElementById('indexbtn').addEventListener('click', function (){
                 board_notice();
@@ -1973,7 +2017,6 @@
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
-            html += '자주받는 질문입니다(멍청이들의모임)';
             html += '<div class="board_index"><table width="100%"><tr>';
             html += '<td width="33%">번호</td>';
             html += '<td>분류</td>';
@@ -2045,7 +2088,6 @@
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
 
-            html += '1:1문의입니다';
             html += '<div><input type="button" value="문의 내역" id ="inquriryHistory">';
             html += '<input type="button" value="문의하기" id="doInquriry"></div>';
             html += '<div class="board_index"><table width="100%"><tr>';
@@ -2088,7 +2130,7 @@
             let html = '';
 
             html += '<div id="noticeForm">';
-            html += '<div id="noticeheader"><h2>'+"문의내역"+'<h2><input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
+            html += '<div id="noticeheader"><h2>'+"문의내역"+'<input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
             html += '<div>';
             html += '<div>['+data.kind+']</div>';
             html += '<div>'+data.title+'</div>';
@@ -2097,12 +2139,31 @@
             if(data.checked == "답변완료"){
                 html += '<div>'+data.answer+'</div>';
             }
+            html += '<div><button type="button" id="delete_btn" >삭제</div>';
             html += '</div>';
             $('.board_body').empty();
             $('.board_body').append(html);
 
             document.getElementById('indexbtn').addEventListener('click', function (){
                 board_inquriry();
+            })
+
+            document.getElementById('delete_btn').addEventListener('click', function (){
+                console.log("데이타 아이디는?"+data.realid);
+                $.ajax({
+                    type: 'GET',
+                    url: '<c:url value="/admin/AdminCenterInquiry?inquiryKind=inquiryDelete"/>',
+                    data: "id=" + data.realid,
+                    async: false,
+                    dataType: 'text',
+                    success: function (results) {
+                        alert("삭제완료");
+                        board_inquriry();
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
             })
         }
 
@@ -2116,7 +2177,12 @@
 
                 html += '<div>1:1문의 글쓰기<input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
                 html += '<div>'+s_UserData.nickname+'</div>';
-                html += '<div>분류<input type="text" id = "inquriryKind"></div>';
+                html += '<div><select class="form-select" id="inquriryKind" aria-label="분류를 선택해 주세요">';
+                html += '<option value="">--분류를 선택해 주세요--</option>';
+                html += '<option value="사이트이용">사이트이용</option>';
+                html += '<option value="결제관련">결제관련</option>';
+                html += '<option value="스트리밍">스트리밍</option>';
+                html += '</select></div>';
                 html += '<div>제목<input type="text" id = "inquriryTitle"></div>';
                 html += '<div>상세내용<input type="text" id="inquriryContent"></div>';
                 html += '<div><input type="button" value="작성하기" id="dobtn"></div>';
@@ -2129,27 +2195,34 @@
                 })
 
                 document.getElementById("dobtn").addEventListener('click', function () {
-                    $.ajax({
-                        type: 'GET',
-                        url: '<c:url value="/board/BoardInquiryReg"/>',
-                        data: {"user_id" : s_UserData.id,
-                            "nickname" : s_UserData.nickname,
-                            "login_id" : s_UserData.login_id,
-                            "kind" : $('#inquriryKind').val(),
-                            "title" : $('#inquriryTitle').val(),
-                            "content" : $('#inquriryContent').val(),
-                            "checked" : $('#inquriryChecked').val()
-                        },
-                        async: false,
-                        dataType: 'text',
-                        success: function (results) {
-                            alert("작성완료");
-                            board_inquriry();
-                        },
-                        error: function (e) {
-                            console.log(e);
-                        }
-                    });
+
+                    if( $('#inquriryKind').val()== ""
+                        || $('#inquriryTitle').val()== ""
+                        || $('#inquriryContent').val()== "" ){
+                        alert("형식이 잘못되었습니다");
+                    } else {
+                        $.ajax({
+                            type: 'GET',
+                            url: '<c:url value="/board/BoardInquiryReg"/>',
+                            data: {"user_id" : s_UserData.id,
+                                "nickname" : s_UserData.nickname,
+                                "login_id" : s_UserData.login_id,
+                                "kind" : $('#inquriryKind').val(),
+                                "title" : $('#inquriryTitle').val(),
+                                "content" : $('#inquriryContent').val(),
+                                "checked" : $('#inquriryChecked').val()
+                            },
+                            async: false,
+                            dataType: 'text',
+                            success: function (results) {
+                                alert("작성완료");
+                                board_inquriry();
+                            },
+                            error: function (e) {
+                                console.log(e);
+                            }
+                        });
+                    }
                 })
             })
         }

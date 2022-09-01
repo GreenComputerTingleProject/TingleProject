@@ -37,6 +37,10 @@ public class AdminUserModifyReg implements AdminService{
                     "UTF-8",
                     new DefaultFileRenamePolicy());
 
+
+
+            int nowPage = Integer.parseInt(mr.getParameter("nowPage"));
+            String serchName = mr.getParameter("serchName");
             boolean check = dao.fileExtension_Check(imgFile_check,mr.getFilesystemName("profile_image"));
 
             if(check){
@@ -51,14 +55,16 @@ public class AdminUserModifyReg implements AdminService{
                 userData.setEmail_address(mr.getParameter("email.address"));
                 if(mr.getFilesystemName("profile_image")!= null){
                     userData.setProfile_image(mr.getFilesystemName("profile_image"));
-                } else {
+                } else if (mr.getFilesystemName("profile_image")==null && mr.getParameter("filecheck").equals("")){
+                    userData.setProfile_image(null);
+                }  else {
                     userData.setProfile_image(mr.getParameter("filecheck"));
                 }
-                userData.setJoin_type(Integer.parseInt(mr.getParameter("join_type")));
                 userData.setMembership(Integer.parseInt(mr.getParameter("membership")));
                 userData.setPersonal_type(mr.getParameter("personal_type"));
 
                 if(mr.getFilesystemName("profile_image")!= null
+                        && !mr.getParameter("filecheck").equals("")
                         && mr.getFilesystemName("profile_image") != mr.getParameter("filecheck")
                         && !mr.getParameter("filecheck").equals("exfire_member.png")){
                     Path overlapfile = Paths.get(path + mr.getParameter("filecheck"));
@@ -71,12 +77,12 @@ public class AdminUserModifyReg implements AdminService{
 
                 request.setAttribute("msg", msg);
                 request.setAttribute("adminUrl", "alert.jsp");
-                request.setAttribute("goUrl", "AdminUserDetail?id="+id);
+                request.setAttribute("goUrl", "AdminUserDetail?id="+id+"&nowPage="+nowPage+"&serchName="+serchName);
             } else {
                 msg = "파일형식이 잘못되었습니다";
                 request.setAttribute("msg", msg);
                 request.setAttribute("adminUrl", "alert.jsp");
-                request.setAttribute("goUrl", "AdminUserDetail?id="+ mr.getParameter("id"));
+                request.setAttribute("goUrl", "AdminUserDetail?id="+ mr.getParameter("id")+"&nowPage="+nowPage+"&serchName="+serchName);
             }
 
 

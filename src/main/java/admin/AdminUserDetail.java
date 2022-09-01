@@ -13,6 +13,7 @@ public class AdminUserDetail implements AdminService{
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         String id = (String)request.getParameter("id");
 
+
         UserDTO userData = new AdminDAO().userDetail(id);
 
         request.setAttribute("userData", userData);

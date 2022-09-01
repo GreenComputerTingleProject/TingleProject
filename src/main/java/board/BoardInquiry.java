@@ -26,6 +26,7 @@ public class BoardInquiry implements BoardService{
             for (BoardDTO dto: inquriy_data) {
                 JSONObject data = new JSONObject();
                 data.put("id", num);
+                data.put("realid", dto.getId());
                 data.put("content", dto.getContent());
                 data.put("title", dto.getTitle());
                 data.put("kind", dto.getKind());

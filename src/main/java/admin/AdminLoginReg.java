@@ -11,7 +11,7 @@ public class AdminLoginReg implements AdminService{
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         String msg = "로그인 성공";
-        String adminUrl = "menu/page.jsp";
+        String adminUrl = "AdminMusicList";
         boolean logincheck = true;
 
         String login_id = request.getParameter("login_id");
@@ -34,8 +34,9 @@ public class AdminLoginReg implements AdminService{
 
         System.out.println(dto2);
         request.setAttribute("msg", msg);
-        request.setAttribute("adminUrl", adminUrl);
-        request.setAttribute("admindto" , dto2);
+        request.setAttribute("adminUrl", "alert.jsp");
+        request.setAttribute("goUrl",adminUrl);
+       // request.setAttribute("admindto" , dto2);
 
 
 

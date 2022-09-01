@@ -29,7 +29,6 @@ public class MusicList_V2 implements MusicService {
                 jObject.put("artist", music.getArtist());
                 jObject.put("album", music.getAlbum());
                 jObject.put("genre", music.getGenre());
-                jObject.put("mood", music.getMood());
                 jObject.put("file_path", music.getFile_path());
                 jObject.put("cover_img", music.getCover_img());
                 jObject.put("cnt", music.getCnt());

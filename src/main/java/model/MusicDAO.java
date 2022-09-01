@@ -57,7 +57,6 @@ public class MusicDAO {
                 music.setAlbum(rs.getString("album"));
                 music.setGenre(rs.getString("genre"));
                 music.setGenre_no(rs.getInt("genre_no"));
-                music.setMood(rs.getString("mood"));
                 music.setFile_path(rs.getString("file_path"));
                 music.setCover_img(rs.getString("cover_img"));
                 music.setCnt(rs.getInt("cnt"));
@@ -121,7 +120,7 @@ public class MusicDAO {
     public ArrayList<ArrayList<MusicDTO>> suggestionList(){
         ArrayList<ArrayList<MusicDTO>> res = new ArrayList<ArrayList<MusicDTO>>();
         ArrayList<MusicDTO> todayMusic = new ArrayList<MusicDTO>();
-        ArrayList<MusicDTO> funnyMusic = new ArrayList<MusicDTO>();
+        String [] kinds = new String[]{"발라드", "락", "힙합", "댄스", "재즈", "클래식", "팝"};
 
         try {
             // 투데이 데이터 추출
@@ -138,7 +137,6 @@ public class MusicDAO {
                 music.setAlbum(rs.getString("album"));
                 music.setGenre(rs.getString("genre"));
                 music.setGenre_no(rs.getInt("genre_no"));
-                music.setMood(rs.getString("mood"));
                 music.setFile_path(rs.getString("file_path"));
                 music.setCover_img(rs.getString("cover_img"));
                 music.setCnt(rs.getInt("cnt"));
@@ -147,11 +145,17 @@ public class MusicDAO {
 
                 todayMusic.add(music);
             }
+            res.add(todayMusic);
 
-            // funny 데이터 추출
-            sql = "select * from music where mood = ? order by rand() limit 5 ";
+
+
+            // 장르별 데이터 추출
+            for (int i = 0; i < kinds.length; i++) {
+                ArrayList<MusicDTO> MusicKinds = new ArrayList<MusicDTO>();
+
+            sql = "select * from music where genre = ? order by rand() limit 5 ";
             ptmt = con.prepareStatement(sql);
-            ptmt.setString(1,"funny");
+            ptmt.setString(1, kinds[i]);
             rs = ptmt.executeQuery();
 
             while (rs.next()){
@@ -163,14 +167,15 @@ public class MusicDAO {
                 music.setAlbum(rs.getString("album"));
                 music.setGenre(rs.getString("genre"));
                 music.setGenre_no(rs.getInt("genre_no"));
-                music.setMood(rs.getString("mood"));
                 music.setFile_path(rs.getString("file_path"));
                 music.setCover_img(rs.getString("cover_img"));
                 music.setCnt(rs.getInt("cnt"));
                 music.setLyrics(rs.getString("lyrics"));
                 music.setRelease_date(rs.getTimestamp("release_date"));
 
-                funnyMusic.add(music);
+                MusicKinds.add(music);
+            }
+            res.add(MusicKinds);
             }
 
         } catch (SQLException e) {
@@ -179,9 +184,6 @@ public class MusicDAO {
         finally {
             close();
         }
-
-        res.add(todayMusic);
-        res.add(funnyMusic);
         return res;
     }
 
