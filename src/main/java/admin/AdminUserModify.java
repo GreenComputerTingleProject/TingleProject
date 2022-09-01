@@ -12,10 +12,12 @@ public class AdminUserModify implements AdminService{
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("AdminUserModify execute() 실행");
         String id = request.getParameter("id");
+        String serchName = request.getParameter("serchName");
         UserDTO userData = new AdminDAO().userDetail(id);
 
         System.out.println(userData);
 
+        request.setAttribute("serchName", serchName);
         request.setAttribute("userData", userData);
         request.setAttribute("adminUrl", "menu/user/userModifyForm.jsp");
     }

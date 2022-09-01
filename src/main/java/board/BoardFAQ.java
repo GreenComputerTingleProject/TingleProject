@@ -26,6 +26,7 @@ public class BoardFAQ implements BoardService{
                 data.put("content", dto.getContent());
                 data.put("title", dto.getTitle());
                 data.put("kind", dto.getKind());
+                data.put("nickname", dto.getNickname());
 
                 jsonArray.add(data);
                 num++;

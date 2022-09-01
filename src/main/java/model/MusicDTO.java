@@ -4,29 +4,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MusicDTO {
-    Integer id, cnt, genre_no ,artist_no;
-    String title, artist, album, genre, mood, file_path, cover_img, lyrics, artist_img;
+    Integer id, cnt, genre_no, artist_no;
+    String title, artist, album, genre, file_path, cover_img, lyrics, artist_img, release_date2,mood;
     Date release_date;
 
-    @Override
-    public String toString() {
-        return "MusicDTO{" +
-                "id=" + id +
-                ", cnt=" + cnt +
-                ", genre_no=" + genre_no +
-                ", artist_no=" + artist_no +
-                ", title='" + title + '\'' +
-                ", artist='" + artist + '\'' +
-                ", album='" + album + '\'' +
-                ", genre='" + genre + '\'' +
-                ", mood='" + mood + '\'' +
-                ", file_path='" + file_path + '\'' +
-                ", cover_img='" + cover_img + '\'' +
-                ", lyrics='" + lyrics + '\'' +
-                ", artist_img='" + artist_img + '\'' +
-                ", release_date=" + release_date +
-                ", sdf=" + sdf +
-                '}';
+    public String getRelease_date2() {
+        return release_date2;
+    }
+
+    public void setRelease_date2(String release_date2) {
+        this.release_date2 = release_date2;
     }
 
     public Integer getArtist_no() {
@@ -41,9 +28,7 @@ public class MusicDTO {
         return genre_no;
     }
 
-    public void setGenre_no(Integer genre_no) {
-        this.genre_no = genre_no;
-    }
+    public void setGenre_no(Integer genre_no) {this.genre_no = genre_no;}
 
     public String getArtist_img() {
         return artist_img;
@@ -173,4 +158,23 @@ public class MusicDTO {
         this.release_date = release_date;
     }
 
+    @Override
+    public String toString() {
+        return "MusicDTO{" +
+                "id=" + id +
+                ", cnt=" + cnt +
+                ", genre_no=" + genre_no +
+                ", artist_no=" + artist_no +
+                ", title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                ", album='" + album + '\'' +
+                ", genre='" + genre + '\'' +
+                ", file_path='" + file_path + '\'' +
+                ", cover_img='" + cover_img + '\'' +
+                ", lyrics='" + lyrics + '\'' +
+                ", artist_img='" + artist_img + '\'' +
+                ", release_date=" + release_date +
+                ", sdf=" + sdf +
+                '}';
+    }
 }
