@@ -428,20 +428,26 @@
 
         .board_index {
             width: 1580px;
-            height: 40px;
-            background: #636464;
+            height: 80px;
+            background: #ffffff;
             text-align: center;
-            line-height: 40px;
+            line-height: 70px;
+            border-top: 8px #1a1e21 solid;
+            border-bottom: 3px #1a1e21 solid;
+            font-size: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
 
         }
 
         .notice_index {
             cursor : pointer;
-            background: #f0f0f0;
+            background: #ffffff;
             text-align: center;
             border-bottom: 1px #636464 solid;
-            height: 40px;
-            line-height: 40px;
+            height: 70px;
+            line-height: 60px;
+            font-size: 20px;
 
         }
 
@@ -2190,8 +2196,7 @@
 
                 html += '<div id="noticeForm">';
                 html += '<div><h2>1:1문의</h2><button type="button" id="indexbtn">목록으로</button></div>';
-                html += '<div><select class="form-select" id="inquriryKind" aria-label="분류를 선택해 주세요">';
-                html += '<option value="">--분류를 선택해 주세요--</option>';
+                html += '<div>분류<select class="form-select" id="inquriryKind" aria-label="분류를 선택해 주세요">';
                 html += '<option value="사이트이용">사이트이용</option>';
                 html += '<option value="결제관련">결제관련</option>';
                 html += '<option value="스트리밍">스트리밍</option>';
