@@ -179,12 +179,25 @@
 
         }
         .aa {
+            width: 155px;
             display: block;
             margin-top: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            color: #000;
+
         }
         .bb {
+            width: 155px;
             display: block;
-
+            color: #000;
+            opacity: 0.7;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
         }
 
         .b-wrap {
@@ -437,7 +450,6 @@
         }
 
         .suggestion_title {
-         margin-left: 5px;
             margin-top: 5px;
             width: 240px;
             height: 25px;
@@ -446,6 +458,10 @@
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
+        }
+
+        #suggestion_artist{
+            opacity: 0.7;
         }
 
         .suggestion_detail {
@@ -477,11 +493,12 @@
             margin-left: 35px;
         }
        #detail_artistImg > img{
-           width: 240px;
-           height: 240px;
            margin-right: 50px;
            margin-left: 35px;
            border-radius: 50%;
+           width: 240px;
+           height: 240px;
+           object-fit: cover;
        }
         #detail_artistImg > #detailInfo{
             padding-top: 40px;
@@ -689,6 +706,9 @@
             opacity: 0.8;
          }
 
+        #detailInfo >div > a{
+            font-size: 1.2em;
+        }
         #detailInfo >div:first-child >a{
             color: #000;
             padding-top: 24px;
@@ -698,8 +718,8 @@
         #detailInfo >div >p{
             font-size: 1.3em;
 
-
         }
+
         #detailInfo>div{
             padding-bottom: 12px;
         }
@@ -783,7 +803,7 @@
                 <span class="material-symbols-outlined">leaderboard</span>차트</a></li>
             <li  class="btncolor"><a id="library" href="#">
                 <span class="material-symbols-outlined">storage</span>보관함</a></li>
-            <li  class="btncolor"><a id="board " href="#">
+            <li  class="btncolor"><a id="board" href="#">
                 <span class="material-symbols-outlined">help_center</span>고객센터</a></li>
             <li  class="btncolor"><a id="myPage" href="#">
                 <span class="material-symbols-outlined">how_to_reg</span>마이페이지</a></li>
@@ -1866,6 +1886,7 @@
                     html += '<td class="suggestion_box">' + '<button type ="button" class = "viewDetail" >';
                     html += '<img src="img/' + jArray[i].cover_img + '"/></button>';
                     html += '<div class="suggestion_title">'+jArray[i].title+'</div>';
+                    html += '<div id="suggestion_artist" class="suggestion_title">'+jArray[i].artist+'</div>';
                     html += '<div class="select_icon" style="margin-left: 5px; height= 30px;"><i class="selectPlay fa-solid fa-play"></i>';
                     html += '<i class="selectList fa-solid fa-list"></i>';
                     html += '<i class="s_selectAdd fa-solid fa-folder-plus"></i></div>';
@@ -1905,7 +1926,6 @@
                     html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
                     html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
                     html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
-                    html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
                     html += '<div class="lyricsD">가사</div>'
                     html += '<div id ="suggestion_lylics">'
@@ -1915,7 +1935,10 @@
                     let selectPlay = document.getElementsByClassName("selectPlay");
                     let selectList = document.getElementsByClassName("selectList");
                     let selectAdd = document.getElementsByClassName("selectAdd");
-
+                        detailClick(data);
+                        detailTitle(data);
+                        detailArtist(data);
+                        detailAlbum(data);
                     selectPlay[0].addEventListener('click', function () {
                         $('#player-play').css('display', 'block');
                         $('#player-pause').css('display', 'none');
@@ -1980,9 +2003,6 @@
                     })
 
 
-                    document.getElementById('go_suggestion').addEventListener('click', function () {
-                        // suggestion();
-                    })
 
                 })
             }
@@ -2166,6 +2186,7 @@
         })
 
         $('#board').click(function () {
+            console.log("sssss");
             board_notice();
             $('#modal_add').css("display", "")
 
@@ -3035,7 +3056,7 @@
                             $.each(json[1], function (i, item) {
                                 htmlb = '<div id="detail_artistImg" class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
                                     '<div id="detailInfo"><div><a class="detail_artist ">' + item.artist + '</a></div>' +
-                                    '<div><p>장르 ' + item.genre + '</p></div>' +
+                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
                                     '</div></div>' +
                                     '<div class="lyricsD">곡</div>'+
                                     '<div id ="suggestion_lylics">' +
@@ -3186,7 +3207,7 @@
                             $.each(json[1], function (i, item) {
                                 htmlb = '<div id="detail_artistImg" class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
                                     '<div id="detailInfo"><div><a class="detail_artist ">' + item.artist + '</a></div>' +
-                                    '<div><p>장르 ' + item.genre + '</p></div>' +
+                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
                                     // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div></div>' +
                                     '<div class="lyricsD">곡</div>'+
@@ -3338,7 +3359,7 @@
                             $.each(json[1], function (i, item) {
                                 htmlb = '<div id="detail_artistImg" class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
                                     '<div id="detailInfo"><div><a class="detail_artist ">' + item.artist + '</a></div>' +
-                                    '<div><p>장르 ' + item.genre + '</p></div>' +
+                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
                                     // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div></div>' +
                                     '<div class="lyricsD">곡</div>'+
@@ -3498,8 +3519,8 @@
                                 htmlb = '<div id="detail_albumImg" class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
                                     '<div id="detailInfo"><div><a class="detail_album">+' + item.album + '</a></div>' +
                                     '<div><a class="detail_artist">' + item.artist + '</a></div>' +
-                                    '<div><p>장르 ' + item.genre + '</p></div>' +
-                                    '<div><p>발매일 ' + item.release_date + '</p></div>' +
+                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
+                                    '<div><p>발매일 - ' + item.release_date + '</p></div>' +
                                     '</div>' +
                                     // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div>' +
@@ -3658,8 +3679,8 @@
                                 htmlb = '<div id="detail_albumImg" class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
                                     '<div id="detailInfo"><div><a class="detail_album">' + item.album + '</a></div>' +
                                     '<div><a class="detail_artist">' + item.artist + '</a></div>' +
-                                    '<div><p>장르 ' + item.genre + '</p></div>' +
-                                    '<div><p>발매일 ' + item.release_date + '</p></div>' +
+                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
+                                    '<div><p>발매일 - ' + item.release_date + '</p></div>' +
                                     '</div>' +
                                     // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div>' +
@@ -3930,7 +3951,7 @@
                             $.each(json[1], function (i, item) {
                                 htmlb = '<div id="detail_artistImg" class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
                                     '<div id="detailInfo"><div><a class="detail_artist">' + item.artist + '</a></div>' +
-                                    '<div><p>장르 ' + item.genre + '</p></div>' +
+                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
                                     // '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>' +
                                     // '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
                                     // '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>' +
@@ -4095,8 +4116,8 @@
                                 htmlb = '<div id="detail_albumImg" class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
                                     '<div id="detailInfo"><div><a class="detail_album ">' + item.album + '</a></div>' +
                                     '<div><a class="detail_artist ">' + item.artist + '</a></div>' +
-                                    '<div><p>장르 ' + item.genre + '</p></div>' +
-                                    '<div><p>발매일 ' + item.release_date + '</p></div>' +
+                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
+                                    '<div><p>발매일 - ' + item.release_date + '</p></div>' +
                                     '</div>' +
                                     '</div>' +
                                     '<div class="lyricsD">수록곡</div>'+
