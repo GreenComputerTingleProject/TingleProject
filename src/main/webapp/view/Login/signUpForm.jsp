@@ -44,7 +44,7 @@
             box-sizing: border-box;
         }
 
-        .btn-complete {
+        .btn-info {
             margin-top: 25px;
             margin-bottom: 25px;
             width: 100%;
@@ -52,6 +52,12 @@
             background:  #9147ff;
             color: white;
             border: 1px solid #fff;
+            color: white;
+        }
+
+        .btn-info:hover{
+            background: #6f42c1;
+            color: white;
         }
         #headLogo {
             font-family: 'Carter One', cursive;
@@ -122,7 +128,7 @@
             </div>
         </div>
         <div>
-            <input type="submit" class="btn-complete" value="가입완료"/>
+            <input type="submit" class="btn btn-info" value="가입완료"/>
         </div>
         <a href="<c:url value="/user/UserLogIn"/>" class="btn btn-secondary">돌아가기</a>
     </form>
@@ -150,6 +156,18 @@
 
     function btnClose(element) {
         $('#'+element).val('');
+
+        if(element == 'login_id') {
+            $('#login_id').attr("readonly", false);
+            $('#checkResult').text("");
+            idCheck = false;
+        }
+
+        if(element == 'tel') {
+            $('#tel').attr("readonly", false);
+            $('#phoneResult').text("");
+            phoneCheck = false;
+        }
     }
 
     $(function () {
@@ -157,6 +175,15 @@
         $('#idCheck').click(function () {
 
             if ($('#login_id').val().trim() != '') {
+
+                let idPattern = /^[a-zA-Z][0-9a-zA-Z]{4,14}$/;
+
+                if (!idPattern.test($('#login_id').val().trim())) {
+                    $('#checkResult').text("아이디는 영문이나 숫자로 이루어진 5~15자 이내여야 합니다.");
+                    $('#checkResult').css("color", "red");
+                    return;
+                }
+
                 $.ajax({
                     type: 'GET',
                     url: '<c:url value="/user/UserSignupIdCheck"/>',
@@ -190,8 +217,14 @@
         // SMSSend_V3 이용한다... ("인증번호" 라는 텍스트를 사용하면 안되더라)
         $('#phoneCheck').click(function () {
             if ($('#tel').val().trim() != '') {
-                // console.log("인증완료");
-                // phoneCheck = true;
+                let telCheck = /^[0-9]+$/;
+
+                if (!telCheck.test($('#tel').val().trim())) {
+                    $('#phoneResult').text("전화번호를 다시 입력하여 주세요.");
+                    $('#phoneResult').css("color", "red");
+                    return;
+                }
+
                 $.ajax({
                     type: 'GET',
                     url: '<c:url value="/user/UserPhoneCertification"/>',
@@ -201,7 +234,6 @@
                     success: function (result) {
                         console.log(result.checknum);
 
-                        $('#login_id').attr("readonly", true);
                         $('#tel').attr("readonly", true);
                         $('#phoneResult').text("인증번호가 전송되었습니다.");
                         $('#phoneResult').css("color", "green");
@@ -248,6 +280,10 @@
                 $('#modal1').modal('toggle');
                 return false;
             }
+
+            console.log("idCheck:" + idCheck);
+            console.log("pwCheck:" + pwCheck);
+            console.log("phoneCheck:" + phoneCheck);
 
             if (!(idCheck && pwCheck && phoneCheck)) {
                 $('.modal-body').text('양식을 모두 작성하여 주세요');

@@ -45,7 +45,7 @@
             box-sizing: border-box;
         }
 
-        .btn-complete {
+        .btn-info {
             margin-top: 25px;
             margin-bottom: 25px;
             width: 100%;
@@ -53,6 +53,12 @@
             background:  #9147ff;
             color: white;
             border: 1px solid #fff;
+            color: white;
+        }
+
+        .btn-info:hover{
+            background: #6f42c1;
+            color: white;
         }
 
         #headLogo {
@@ -106,7 +112,7 @@
             </div>
         </div>
         <div>
-            <input type="submit" class="btn-complete" value="아이디 찾기"/>
+            <input type="submit" class="btn btn-info" value="아이디 찾기"/>
         </div>
         <a href="<c:url value="/user/UserLogIn"/>" class="btn btn-secondary">돌아가기</a>
     </form>
@@ -132,13 +138,26 @@
 
     function btnClose(element) {
         $('#'+element).val('');
+
+        if(element == 'tel') {
+            $('#tel').attr("readonly", false);
+            $('#phoneResult').text("");
+            phoneCheck = false;
+        }
     }
 
     $(function () {
         $('#phoneCheck').click(function () {
             if ($('#tel').val() != '') {
-                // console.log("인증완료");
-                // phoneCheck = true;
+
+                let telCheck = /^[0-9]+$/;
+
+                if (!telCheck.test($('#tel').val().trim())) {
+                    $('#phoneResult').text("전화번호를 다시 입력하여 주세요.");
+                    $('#phoneResult').css("color", "red");
+                    return;
+                }
+
                 $.ajax({
                     type: 'GET',
                     url: '<c:url value="/user/UserPhoneCertification"/>',

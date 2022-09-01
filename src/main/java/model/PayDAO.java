@@ -31,13 +31,14 @@ public class PayDAO {
     public int pay_add(PayDTO dto) {
 
         try {
-            sql = "insert into pay ( user_id, imp_uid, paid_amount, reg_date ) values( ?, ?, ?, sysdate() )";
+            sql = "insert into pay ( user_id, imp_uid, customer_uid, paid_amount, reg_date ) values( ?, ?, ?, ?, sysdate() )";
 
             ptmt = con.prepareStatement(sql);
 
             ptmt.setInt(1, dto.getUser_id());
             ptmt.setString(2, dto.getImp_uid());
-            ptmt.setInt(3, dto.getPaid_amount());
+            ptmt.setString(3, dto.getCustomer_uid());
+            ptmt.setInt(4, dto.getPaid_amount());
 
             return ptmt.executeUpdate();
 

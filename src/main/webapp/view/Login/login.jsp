@@ -49,6 +49,12 @@
             color: white;
             background:  #9147ff;
             border: 1px solid #fff;
+
+        }
+
+        .btn-info:hover{
+            background: #6f42c1;
+            color: white;
         }
 
         #headLogo {
@@ -62,7 +68,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-
         }
 
         .btn-light {
