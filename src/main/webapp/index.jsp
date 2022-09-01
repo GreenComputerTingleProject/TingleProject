@@ -326,11 +326,15 @@
         /** 현석 스타일*/
 
 
-        #suggestion_album {
+        #carouselExampleInterval {
             width: 100%;
             height: 300px;
-            background: #1a1e21;
+            /*background: #1a1e21;*/
             margin-bottom: 40px;
+        }
+
+        .carouselImg {
+            height: 300px;
         }
 
         .suggestion_table {
@@ -343,7 +347,7 @@
         }
 
         .suggestion_title {
-         margin-left: 5px;
+            margin-left: 5px;
             margin-top: 5px;
             width: 240px;
             height: 25px;
@@ -420,7 +424,7 @@
             margin-bottom: 10px;
         }
 
-        .board_body{
+        .board_body {
             width: 1580px;
             height: 800px;
 
@@ -441,7 +445,7 @@
         }
 
         .notice_index {
-            cursor : pointer;
+            cursor: pointer;
             background: #ffffff;
             text-align: center;
             border-bottom: 1px #636464 solid;
@@ -461,9 +465,10 @@
             font-size: 20px;
         }
 
-        #noticeForm{
+        #noticeForm {
             margin-top: 50px;
         }
+
         /*게시판 스타일*/
 
         fieldset {
@@ -520,7 +525,8 @@
             /*text-overflow: ellipsis;*/
 
         }
-        .select_icon> i{
+
+        .select_icon > i {
             padding-right: 15px;
         }
 
@@ -532,7 +538,7 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
-                <a class = "suggestion" href="#">Tingle</a>
+                <a class="suggestion" href="#">Tingle</a>
             </li>
             <c:choose>
                 <c:when test="${userData == null}">
@@ -571,8 +577,8 @@
                 </div>
             </div>
 
-                <%--게시판--%>
-                <div id ="boardContainer" style="display: none">
+            <%--게시판--%>
+            <div id="boardContainer" style="display: none">
                 <div><h1>팅글고객센터 입니다</h1></div>
                 <div>
                     <input type="button" value="공지사항" id="notice_btn">
@@ -580,18 +586,17 @@
                     <input type="button" value="1:1문의" id="inquiry_btn">
                 </div>
 
-                </div>
+            </div>
 
-                <div class="board_body" style="display: none">
+            <div class="board_body" style="display: none">
 
-                </div>
+            </div>
 
-                <%-- 상세보기 --%>
+            <%-- 상세보기 --%>
 
-                <div id="detail" style="display:none">
+            <div id="detail" style="display:none">
 
-                </div>
-
+            </div>
 
 
             <%--차트--%>
@@ -903,8 +908,8 @@
                 $('#currentTime').html(convertTime(Math.floor(audio.currentTime)));
                 $('#duration').html(convertTime(Math.floor(audio.duration)));
 
-                if(!isSessionLoaded){
-                    if(audio.currentTime >= 60) {
+                if (!isSessionLoaded) {
+                    if (audio.currentTime >= 60) {
                         audio.pause();
                         audio.currentTime = 0;
 
@@ -914,8 +919,8 @@
                         $('#modal-body1').text('비회원은 1분 미리듣기만 제공됩니다');
                         $('#modal1').modal('toggle');
                     }
-                } else if(s_UserData.membership == 1) {
-                    if(audio.currentTime >= 60) {
+                } else if (s_UserData.membership == 1) {
+                    if (audio.currentTime >= 60) {
                         audio.pause();
                         audio.currentTime = 0;
 
@@ -1023,7 +1028,7 @@
         })
 
         $('#library').click(function () {
-            $('#modal_add').css("display","none")
+            $('#modal_add').css("display", "none")
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
@@ -1045,7 +1050,7 @@
         })
 
         $("#myPage").click(function () {
-            $('#modal_add').css("display","")
+            $('#modal_add').css("display", "")
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
@@ -1243,9 +1248,9 @@
             html += '</thead>';
             for (const i in payList) {
                 html += '<tr>';
-                html += '<td>'+payList[i].imp_uid+'</td>';
-                html += '<td>'+payList[i].reg_date+'</td>';
-                html += '<td>'+payList[i].paid_amount + '원' +'</td>';
+                html += '<td>' + payList[i].imp_uid + '</td>';
+                html += '<td>' + payList[i].reg_date + '</td>';
+                html += '<td>' + payList[i].paid_amount + '원' + '</td>';
                 html += '</tr>';
             }
             html += '</table>';
@@ -1349,8 +1354,8 @@
                 }
             }
 
-            if(isDuplicate) {
-                if(pushText == "") {
+            if (isDuplicate) {
+                if (pushText == "") {
                     $('#modal-body2').html(duplicateText + '은(는) 이미 목록에 있는 음악입니다.');
                     $('#modal2').modal('toggle');
                 } else {
@@ -1380,7 +1385,7 @@
             }
 
             for (const i in checkNum) {
-                if(JSON.stringify(libraryData).includes(s_LibraryData[checkNum[i]].file_path)) {
+                if (JSON.stringify(libraryData).includes(s_LibraryData[checkNum[i]].file_path)) {
                     isDuplicate = true;
                     duplicateList += (s_LibraryData[checkNum[i]].file_path).split('.')[0] + " ";
                 } else {
@@ -1392,11 +1397,11 @@
             $.ajax({
                 type: 'GET',
                 url: '<c:url value="/music/MusicAddLibrary"/>',
-                data: 'music_id=' +s_LibraryDatas,
+                data: 'music_id=' + s_LibraryDatas,
                 async: false,
                 success: function (result) {
-                    if(isDuplicate) {
-                        if(addList == "") {
+                    if (isDuplicate) {
+                        if (addList == "") {
                             $('#modal-body2').html(duplicateList + '은(는) 이미 보관함에 있는 음악입니다.');
                             $('#modal2').modal('toggle');
                         } else {
@@ -1420,7 +1425,7 @@
             let html = "";
 
             for (const i in nowPlayList) {
-                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
+                let songName = nowPlayList[i].substring(("<c:url value="/mp3/"/>").length).split('.')[0];
 
                 if (i == audioIndex) {
                     html += '<div style="color: red">' + songName + '</div>';
@@ -1595,17 +1600,31 @@
         /**현석 스크립트*/
         $('.suggestion').click(function () {
             allEmpty();
-            $('#modal_add').css("display","")
+            $('#modal_add').css("display", "")
             suggestion(s_SuggestionList);
         })
 
-         function suggestion(jArrays) {
-            
+        function suggestion(jArrays) {
+
             let html = '';
             let data = new Array();
             allEmpty();
             $('#suggestion_body').css('display', 'block');
-            html += '<div id ="suggestion_album"></div>';
+            // html += '<div id ="suggestion_album"></div>';
+            html += '<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">';
+            html += '<div class="carousel-inner">';
+            html += '<div class="carousel-item active" data-bs-interval="10000">';
+            html += '<img class="d-block w-100 carouselImg"></div>';
+            html += '<div class="carousel-item" data-bs-interval="10000">';
+            html += '<img class="d-block w-100 carouselImg"></div>';
+            html += '<div class="carousel-item" data-bs-interval="10000">';
+            html += '<img class="d-block w-100 carouselImg"></div></div>';
+            html += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">';
+            html += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+            html += '<span class="visually-hidden">Previous</span></button>';
+            html += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">';
+            html += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+            html += '<span class="visually-hidden">Next</span></button></div>';
 
             for (const i in jArrays) {
                 let jArray = jArrays[i];
@@ -1616,7 +1635,7 @@
                     data.push(jArray[i])
                     html += '<td class="suggestion_box">' + '<button type ="button" class = "viewDetail" >';
                     html += '<img src="img/' + jArray[i].cover_img + '"/></button>';
-                    html += '<div class="suggestion_title">'+jArray[i].title+'</div>';
+                    html += '<div class="suggestion_title">' + jArray[i].title + '</div>';
                     html += '<div class="select_icon" style="margin-left: 5px; height= 30px;"><i class="selectPlay fa-solid fa-play"></i>';
                     html += '<i class="selectList fa-solid fa-list"></i>';
                     html += '<i class="s_selectAdd fa-solid fa-folder-plus"></i></div>';
@@ -1630,12 +1649,17 @@
             $("#suggestion_body").append(html);
 
             // 배열
+            let carouselImg = document.getElementsByClassName('carouselImg');
             let viewDetail = document.getElementsByClassName('viewDetail');
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
             let s_selectAdd = document.getElementsByClassName("s_selectAdd");
 
-            selects(data,selectPlay,selectList,s_selectAdd);
+            carouselImg[0].src = "img/bannerimg1.jpg";
+            carouselImg[1].src = "img/bannerimg2.png";
+            carouselImg[2].src = "img/bannerimg3.jpeg";
+
+            selects(data, selectPlay, selectList, s_selectAdd);
 
 
             // 추천 노래의 이미지를 눌렀을때
@@ -1659,7 +1683,7 @@
                     html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
                     html += '<div id ="suggestion_lylics">'
-                    html +=  data[i].lyrics + '</div>'
+                    html += data[i].lyrics + '</div>'
                     $("#suggestion_body").append(html);
 
                     let selectPlay = document.getElementsByClassName("selectPlay");
@@ -1702,9 +1726,9 @@
                     })
 
                     selectAdd[0].addEventListener('click', function () {
-                        if(isSessionLoaded) {
+                        if (isSessionLoaded) {
 
-                            if(JSON.stringify(libraryData).includes(data[i].file_path)) {
+                            if (JSON.stringify(libraryData).includes(data[i].file_path)) {
                                 $('#modal-body2').text((data[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
                                 $('#modal2').modal('toggle');
                             } else {
@@ -1738,7 +1762,7 @@
             }
         }
 
-        function selects(data, selectPlay, selectList, s_selectAdd){
+        function selects(data, selectPlay, selectList, s_selectAdd) {
             for (let i = 0; i < selectList.length; i++) {
 
                 selectPlay[i].addEventListener('click', function () {
@@ -1780,11 +1804,11 @@
             }
 
             // 여기가 추천에서 add 누른거
-            for (let i = 0; i < s_selectAdd.length ; i++) {
+            for (let i = 0; i < s_selectAdd.length; i++) {
                 s_selectAdd[i].addEventListener('click', function () {
-                    if(isSessionLoaded) {
+                    if (isSessionLoaded) {
 
-                        if(JSON.stringify(libraryData).includes(data[i].file_path)) {
+                        if (JSON.stringify(libraryData).includes(data[i].file_path)) {
                             $('#modal-body2').text((data[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
                             $('#modal2').modal('toggle');
                         } else {
@@ -1812,12 +1836,11 @@
         }
 
 
-
         function playListInit2(data) {
             let html = "";
 
             for (const i in nowPlayList) {
-                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
+                let songName = nowPlayList[i].substring(("<c:url value="/mp3/"/>").length).split('.')[0];
 
                 if (i == audioIndex) {
                     html += '<div style="color: red">' + songName + '</div>';
@@ -1845,7 +1868,7 @@
             let html = "";
 
             for (const i in nowPlayList) {
-                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
+                let songName = nowPlayList[i].substring(("<c:url value="/mp3/"/>").length).split('.')[0];
 
                 if (i == audioIndex) {
                     html += '<div style="color: red">' + songName + '</div>';
@@ -1897,15 +1920,15 @@
 
 
         // 게시판 클릭시 - 현석
-        document.getElementById("notice_btn").addEventListener('click', function (){
+        document.getElementById("notice_btn").addEventListener('click', function () {
             board_notice();
         })
 
-        document.getElementById("FAQ_btn").addEventListener('click', function (){
+        document.getElementById("FAQ_btn").addEventListener('click', function () {
             board_FAQ();
         })
 
-        document.getElementById("inquiry_btn").addEventListener('click', function (){
+        document.getElementById("inquiry_btn").addEventListener('click', function () {
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
@@ -1922,7 +1945,7 @@
         })
 
         // 공지사항 클릭
-        function board_notice(){
+        function board_notice() {
 
             $.ajax({
                 type: 'GET',
@@ -1952,9 +1975,9 @@
             for (const i in board_data) {
                 html += '<div class="notice_index" ><table><tr class="noticeDetail">';
                 html += '<td width=100px>' + board_data[i].id + '</td>';
-                html += '<td width=300px>'+ board_data[i].kind +'</td>';
-                html += '<td width=800px>'+ board_data[i].title +'</td>';
-                html += '<td width=400px>'+ board_data[i].reg_date +'</td>';
+                html += '<td width=300px>' + board_data[i].kind + '</td>';
+                html += '<td width=800px>' + board_data[i].title + '</td>';
+                html += '<td width=400px>' + board_data[i].reg_date + '</td>';
                 html += '</tr></table></div>';
             }
             $('.board_body').empty();
@@ -1962,9 +1985,9 @@
 
             let noticeDetail = document.getElementsByClassName('noticeDetail');
 
-            for (let i = 0; i < noticeDetail.length ; i++) {
+            for (let i = 0; i < noticeDetail.length; i++) {
 
-                noticeDetail[i].onclick = function (){
+                noticeDetail[i].onclick = function () {
                     notice_Detail(board_data[i]);
                 }
             }
@@ -1972,7 +1995,7 @@
 
         }
 
-        function notice_Detail(data){
+        function notice_Detail(data) {
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
@@ -1980,30 +2003,29 @@
             let html = '';
 
             html += '<div id="noticeForm">';
-            html += '<h2>'+data.kind+'</h2>';
+            html += '<h2>' + data.kind + '</h2>';
             html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
             html += '<td width=100px>' + data.id + '</td>';
-            html += '<td width=300px>'+ data.title +'</td>';
-            html += '<td width=100px>'+ data.nickname +'</td>';
-            html += '<td width=300px>'+ data.reg_date +'</td>';
+            html += '<td width=300px>' + data.title + '</td>';
+            html += '<td width=100px>' + data.nickname + '</td>';
+            html += '<td width=300px>' + data.reg_date + '</td>';
             html += '</tr></table></div>';
 
-            html += '<tr><td ><textarea style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>'+data.content+'</textarea></td></tr>';
+            html += '<tr><td ><textarea style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
             html += '</div>';
 
             $('.board_body').empty();
             $('.board_body').append(html);
 
 
-
-            document.getElementById('indexbtn').addEventListener('click', function (){
+            document.getElementById('indexbtn').addEventListener('click', function () {
                 board_notice();
                 console.log("공지사항으로 돌아가")
             })
         }
 
         // FAQ 클릭
-        function board_FAQ(){
+        function board_FAQ() {
 
             $.ajax({
                 type: 'GET',
@@ -2032,9 +2054,9 @@
             for (const i in board_data) {
                 html += '<div class="notice_index" ><table><tr class="FAQDetail">';
                 html += '<td width=100px>' + board_data[i].id + '</td>';
-                html += '<td width=300px>'+ board_data[i].kind +'</td>';
-                html += '<td width=800px>'+ board_data[i].title +'</td>';
-                html += '<td width=400px>'+ board_data[i].nickname +'</td>';
+                html += '<td width=300px>' + board_data[i].kind + '</td>';
+                html += '<td width=800px>' + board_data[i].title + '</td>';
+                html += '<td width=400px>' + board_data[i].nickname + '</td>';
                 html += '</tr></table></div>';
             }
             $('.board_body').empty();
@@ -2042,15 +2064,15 @@
 
             let FAQDetail = document.getElementsByClassName('FAQDetail');
 
-            for (let i = 0; i < FAQDetail.length ; i++) {
+            for (let i = 0; i < FAQDetail.length; i++) {
 
-                FAQDetail[i].onclick = function (){
+                FAQDetail[i].onclick = function () {
                     FAQ_Detail(board_data[i]);
                 }
             }
         }
 
-        function FAQ_Detail(data){
+        function FAQ_Detail(data) {
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
@@ -2058,26 +2080,26 @@
             let html = '';
 
             html += '<div id="noticeForm">';
-            html += '<h2>'+data.kind+'</h2>';
+            html += '<h2>' + data.kind + '</h2>';
             html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
             html += '<td width=100px>' + data.id + '</td>';
-            html += '<td width=300px>'+ data.title +'</td>';
-            html += '<td width=100px>'+ data.nickname +'</td>';
+            html += '<td width=300px>' + data.title + '</td>';
+            html += '<td width=100px>' + data.nickname + '</td>';
             html += '</tr></table></div>';
 
-            html += '<tr><td ><textarea style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>'+data.content+'</textarea></td></tr>';
+            html += '<tr><td ><textarea style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
             html += '</div>';
 
             $('.board_body').empty();
             $('.board_body').append(html);
 
-            document.getElementById('FAQbtn').addEventListener('click', function (){
+            document.getElementById('FAQbtn').addEventListener('click', function () {
                 board_FAQ();
             })
         }
 
         // inquriry 클릭
-        function board_inquriry(){
+        function board_inquriry() {
 
             $.ajax({
                 type: 'GET',
@@ -2111,11 +2133,11 @@
             for (const i in board_data) {
                 html += '<div class="notice_index" ><table><tr class="inquriryDetail">';
                 html += '<td width=100px>' + board_data[i].id + '</td>';
-                html += '<td width=300px>'+ board_data[i].kind +'</td>';
-                html += '<td width=650px>'+ board_data[i].title +'</td>';
-                html += '<td width=150px>'+ board_data[i].nickname +'</td>';
-                html += '<td width=200px>'+ board_data[i].reg_date +'</td>';
-                html += '<td width=100px>'+ board_data[i].checked +'</td>';
+                html += '<td width=300px>' + board_data[i].kind + '</td>';
+                html += '<td width=650px>' + board_data[i].title + '</td>';
+                html += '<td width=150px>' + board_data[i].nickname + '</td>';
+                html += '<td width=200px>' + board_data[i].reg_date + '</td>';
+                html += '<td width=100px>' + board_data[i].checked + '</td>';
                 html += '</tr></table></div>';
             }
             $('.board_body').empty();
@@ -2123,9 +2145,9 @@
 
             let inquriryDetail = document.getElementsByClassName('inquriryDetail');
 
-            for (let i = 0; i < inquriryDetail.length ; i++) {
+            for (let i = 0; i < inquriryDetail.length; i++) {
 
-                inquriryDetail[i].onclick = function (){
+                inquriryDetail[i].onclick = function () {
                     inquriry_Detail(board_data[i]);
                 }
             }
@@ -2134,7 +2156,8 @@
                 do_inquriry();
             })
         }
-        function inquriry_Detail(data){
+
+        function inquriry_Detail(data) {
             allEmpty()
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
@@ -2143,32 +2166,32 @@
 
 
             html += '<div id="noticeForm">';
-            html += '<h2>문의내역</h2>'+'<button type="button" id="delete_btn" >삭제<button type="button" id="indexbtn">목록으로</button>';
+            html += '<h2>문의내역</h2>' + '<button type="button" id="delete_btn" >삭제<button type="button" id="indexbtn">목록으로</button>';
             html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
-            html += '<td width=300px>'+ data.kind +'</td>';
-            html += '<td width=300px>'+ data.title +'</td>';
-            html += '<td width=300px>'+ data.nickname +'</td>';
-            html += '<td width=300px>'+ data.reg_date +'</td>';
-            html += '<td width=300px>'+ data.checked +'</td>';
+            html += '<td width=300px>' + data.kind + '</td>';
+            html += '<td width=300px>' + data.title + '</td>';
+            html += '<td width=300px>' + data.nickname + '</td>';
+            html += '<td width=300px>' + data.reg_date + '</td>';
+            html += '<td width=300px>' + data.checked + '</td>';
             html += '</tr></table></div>';
             html += '<br><h2>문의내용</h2>';
-            html += '<tr><td ><textarea style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>'+data.content+'</textarea></td></tr>';
+            html += '<tr><td ><textarea style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
 
-            if(data.checked == "답변완료"){
+            if (data.checked == "답변완료") {
                 html += '<br>'
                 html += '<h2>답변</h2>';
-                html += '<tr><td ><textarea style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>'+data.answer+'</textarea></td></tr>';
+                html += '<tr><td ><textarea style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>' + data.answer + '</textarea></td></tr>';
             }
             html += '</div>';
             $('.board_body').empty();
             $('.board_body').append(html);
 
-            document.getElementById('indexbtn').addEventListener('click', function (){
+            document.getElementById('indexbtn').addEventListener('click', function () {
                 board_inquriry();
             })
 
-            document.getElementById('delete_btn').addEventListener('click', function (){
-                console.log("데이타 아이디는?"+data.realid);
+            document.getElementById('delete_btn').addEventListener('click', function () {
+                console.log("데이타 아이디는?" + data.realid);
                 $.ajax({
                     type: 'GET',
                     url: '<c:url value="/admin/AdminCenterInquiry?inquiryKind=inquiryDelete"/>',
@@ -2186,8 +2209,8 @@
             })
         }
 
-        function do_inquriry(){
-            document.getElementById("doInquriry").addEventListener('click', function (){
+        function do_inquriry() {
+            document.getElementById("doInquriry").addEventListener('click', function () {
                 allEmpty();
                 $('#boardContainer').css('display', 'block');
                 $('.board_body').css('display', '');
@@ -2209,27 +2232,28 @@
                 $('.board_body').empty();
                 $('.board_body').append(html);
 
-                document.getElementById('indexbtn').addEventListener('click', function (){
+                document.getElementById('indexbtn').addEventListener('click', function () {
                     board_inquriry();
                 })
 
                 document.getElementById("dobtn").addEventListener('click', function () {
 
-                    if( $('#inquriryKind').val()== ""
-                        || $('#inquriryTitle').val()== ""
-                        || $('#inquriryContent').val()== "" ){
+                    if ($('#inquriryKind').val() == ""
+                        || $('#inquriryTitle').val() == ""
+                        || $('#inquriryContent').val() == "") {
                         alert("형식이 잘못되었습니다");
                     } else {
                         $.ajax({
                             type: 'GET',
                             url: '<c:url value="/board/BoardInquiryReg"/>',
-                            data: {"user_id" : s_UserData.id,
-                                "nickname" : s_UserData.nickname,
-                                "login_id" : s_UserData.login_id,
-                                "kind" : $('#inquriryKind').val(),
-                                "title" : $('#inquriryTitle').val(),
-                                "content" : $('#inquriryContent').val(),
-                                "checked" : $('#inquriryChecked').val()
+                            data: {
+                                "user_id": s_UserData.id,
+                                "nickname": s_UserData.nickname,
+                                "login_id": s_UserData.login_id,
+                                "kind": $('#inquriryKind').val(),
+                                "title": $('#inquriryTitle').val(),
+                                "content": $('#inquriryContent').val(),
+                                "checked": $('#inquriryChecked').val()
                             },
                             async: false,
                             dataType: 'text',
@@ -2416,7 +2440,7 @@
 
                     });
 
-                /** 클래식 클릭시*/
+                    /** 클래식 클릭시*/
                     $('#classic').click(function () {
 
                         console.log("클릭")
@@ -2463,7 +2487,7 @@
                 }
             });
 
-           /** chart success 함수 */
+            /** chart success 함수 */
             function success(data) {
                 const json = JSON.parse(data);
                 s_LibraryData = json;
@@ -2500,9 +2524,10 @@
                 })
                 playButtonCLick(json);
                 detailClick(json);
-             }
+            }
 
-            })
+        })
+
         /** 디테일 클릭 */
         function detailClick(json) {
 
@@ -2548,7 +2573,6 @@
                     let selectAdd = document.getElementsByClassName("selectAdd");
 
 
-
                     selectPlay[0].addEventListener('click', function () {
                         $('#player-play').css('display', 'block');
                         $('#player-pause').css('display', 'none');
@@ -2585,9 +2609,9 @@
                     })
 
                     selectAdd[0].addEventListener('click', function () {
-                        if(isSessionLoaded) {
+                        if (isSessionLoaded) {
 
-                            if(JSON.stringify(libraryData).includes(json[i].file_path)) {
+                            if (JSON.stringify(libraryData).includes(json[i].file_path)) {
                                 $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
                                 $('#modal2').modal('toggle');
                             } else {
@@ -2733,9 +2757,9 @@
                                 })
 
                                 selectAdd[i].addEventListener('click', function () {
-                                    if(isSessionLoaded) {
+                                    if (isSessionLoaded) {
 
-                                        if(JSON.stringify(libraryData).includes(item.file_path)) {
+                                        if (JSON.stringify(libraryData).includes(item.file_path)) {
                                             $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
                                             $('#modal2').modal('toggle');
                                         } else {
@@ -2886,9 +2910,9 @@
                                 })
 
                                 selectAdd[i].addEventListener('click', function () {
-                                    if(isSessionLoaded) {
+                                    if (isSessionLoaded) {
 
-                                        if(JSON.stringify(libraryData).includes(item.file_path)) {
+                                        if (JSON.stringify(libraryData).includes(item.file_path)) {
                                             $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
                                             $('#modal2').modal('toggle');
                                         } else {
@@ -2975,9 +2999,9 @@
                 })
 
                 selectAdd[i].addEventListener('click', function () {
-                    if(isSessionLoaded) {
+                    if (isSessionLoaded) {
 
-                        if(JSON.stringify(libraryData).includes(json[i].file_path)) {
+                        if (JSON.stringify(libraryData).includes(json[i].file_path)) {
                             $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
                             $('#modal2').modal('toggle');
                         } else {
@@ -3033,7 +3057,7 @@
                     $('#findArtist_h1').attr("style", "display:");
                     $('#findTitle_h1').attr("style", "display:");
 
-                    $('#modal_add').css("display","")
+                    $('#modal_add').css("display", "")
                     $('#find_h1').html('\'' + $('.find-input').val() + '\'' + " 검색결과");
 
                     $.ajax({
@@ -3044,7 +3068,7 @@
                         async: false,
                         success: function (data) {
                             console.log($('.find-input').val());
-                             const json = JSON.parse(data);
+                            const json = JSON.parse(data);
                             s_LibraryData = json[0];
 
                             if (json[0].length > 0) {
