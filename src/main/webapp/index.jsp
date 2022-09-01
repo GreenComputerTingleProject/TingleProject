@@ -46,7 +46,7 @@
             font-weight: 300;
         }
         #menuAll{
-            font-size: 1.2em;
+            font-size: 1.2rem;
         }
 
 
@@ -84,27 +84,24 @@
 
         .sidebar-nav li {
             margin: 5px;
-            text-indent: 1.5em;
+            text-indent: 1.5rem;
             line-height: 2em;
         }
 
         .sidebar-nav li a {
             display: block;
             text-decoration: none;
-            /*color: #999;*/
-            color: #fff;
-            opacity: 0.9;
-
+            color: #cccccc;
         }
 
         .sidebar-nav li a:hover {
-             opacity: 0.6;
+            color: #fff;
+
         }
 
         .sidebar-nav > .sidebar-brand {
-            font-size: 1.5em;
-            line-height: 3em;
-
+            font-size: 1.7rem;
+            line-height: 2.5em;
 
         }
         #logo {
@@ -478,13 +475,17 @@
         }
 
         #detail_albumImg > #detailInfo{
-            padding-top: 32px;
+            padding-top: 46px;
         }
         #detail_albumImg > #detailInfo> div> p{
             margin: 0;
         }
         #detail_albumImg > #detailInfo> div:nth-of-type(3){
             padding-top: 30px;
+        }
+        #detail_albumImg > #detailInfo> div:nth-of-type(4) {
+            padding: 0;
+
         }
 
         #detailInfo {
@@ -546,6 +547,7 @@
             margin-bottom: 42px;
         }
         .findResult_h1{
+            cursor: pointer;
             margin-top: 70px;
             margin-bottom: 28px;
         }
@@ -645,6 +647,7 @@
          }
 
         #detailInfo >div:first-child >a{
+            color: #000;
             padding-top: 24px;
             font-size: 2.0em;
             text-decoration: none;
