@@ -14,12 +14,20 @@
           integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Noto+Sans+KR:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Noto+Sans+KR:wght@100;300;400;500&display=swap');
+
         * {
             margin: 0;
             padding: 0;
-            /*font-family: 'Noto Sans KR', sans-serif;*/
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        a{
+            text-decoration: none;
+        }
+        th{
+            font-weight: normal;
         }
 
         #page-wrapper {
@@ -31,10 +39,16 @@
             width: 250px;
             height: 100%;
             margin-left: -250px;
-            background: -webkit-gradient(linear,left bottom,left top,from(transparent),color-stop(15%,#000),to(#000));
+            background: -webkit-gradient(linear,left bottom,left top,from(transparent),color-stop(14%,#000),to(#000));
             overflow-x: hidden;
             overflow-y: auto;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 300;
         }
+        #menuAll{
+            font-size: 1.2em;
+        }
+
 
         #page-content-wrapper {
             width: 100%;
@@ -71,18 +85,20 @@
         .sidebar-nav li {
             margin: 5px;
             text-indent: 1.5em;
-            line-height: 2.8em;
+            line-height: 2em;
         }
 
         .sidebar-nav li a {
             display: block;
             text-decoration: none;
-            color: #999;
+            /*color: #999;*/
+            color: #fff;
+            opacity: 0.9;
+
         }
 
         .sidebar-nav li a:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.2);
+             opacity: 0.6;
         }
 
         .sidebar-nav > .sidebar-brand {
@@ -91,13 +107,27 @@
 
 
         }
-        .logo{
+        #logo {
+            text-indent: 26px;
             font-family: 'Carter One', cursive;
-            color: #fff;
+            color: #9147ff;
+            /*color: #7717ad;*/
+            /*   color: #6e31df;*/
+            /*    color: #fff;*/
+
         }
+        .login {
+            padding: 10px 0px 10px 0px;
+            border-bottom: 1px solid #333;
+            border-top: 1px solid #333;
+            opacity: 0.7;
+
+        }
+
 
         td {
             vertical-align: middle;
+
         }
 
         .artist_img {
@@ -122,6 +152,15 @@
         }
 
 
+        .findAlbum_List {
+            list-style: none;
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            padding-inline-start: 40px;
+        }
         .findArtist_List {
             list-style: none;
             display: block;
@@ -134,47 +173,71 @@
 
         .findArtist_li {
             display: inline-block;
-            margin-right: 20px;
-            text-align: -webkit-match-parent;
+            margin-right: 30px;
+            text-align: center;
+        }
+        .findAlbum_li {
+            display: inline-block;
+            margin-right: 30px;
+
+        }
+        .aa {
+            display: block;
+            margin-top: 15px;
+        }
+        .bb {
+            display: block;
+
         }
 
         .b-wrap {
-            border-top: 0;
+
             height: 80px;
-            border-bottom: 1px solid gray;
+
+            /*height: 117px;*/
+            /*overflow: hidden;*/
+            /*white-space: nowrap;*/
+            /*text-overflow: ellipsis;*/
+        }
+
+        #chart_h1{
+            margin-top: 38px;
+            margin-bottom: 30px;
+            font-weight: 500;
         }
 
         .genreBtn {
             height: 32px;
             padding: 0 15px;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 32px;
             text-align: center;
             border-radius: 16px;
-            border: 1px solid purple;
+            border: 0;
             vertical-align: top;
             display: inline-block;
             background: #fff;
+            margin-bottom: 30px;
 
 
         }
         .genreBtn:active{
-            background: black;
+            background: #9147ff;
             color: white;
         }
         .clicked{
-            background: black;
+            background: #9147ff;
             color: white;
+        }
+        .btnClicked{
+            background: #9147ff;
         }
 
         h1 {
             margin-bottom: 20px;
         }
 
-        .aa {
-            display: block;
 
-        }
 
         /** 하단 플레이어 스타일 */
 
@@ -190,6 +253,12 @@
         #player-play, #player-pause {
             margin: 25px;
             font-size: 50px;
+
+            /*color: #9147ff;*/
+            color: #9147ff;
+          /*  color: #6e31df;*/
+
+
         }
 
         .fa-backward, .fa-forward, #player-volume, #player-volume-mute, #player-list {
@@ -218,9 +287,6 @@
 
         }
 
-        td {
-            vertical-align: middle;
-        }
 
         #playList {
             width: 500px;
@@ -267,6 +333,7 @@
             width: 300px;
             height: 5px;
             margin-top: 50px;
+            --bs-progress-bar-bg: #9147ff;
         }
 
         .progress:hover {
@@ -286,6 +353,12 @@
         #player-volume-range {
             width: 100px;
             margin-top: 38px;
+
+        }
+
+        .form-range::-webkit-slider-thumb {
+            background: #9147ff;
+
         }
 
         #control-zone {
@@ -368,29 +441,51 @@
         .suggestion_detail {
             width: 100%;
             height: 300px;
-            background: #ffffff;
             padding: 10px;
-            border: 1px #1a1e21 solid;
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: space-between;
+            justify-content:flex-start;
             margin-bottom: 10px;
         }
 
         #suggestion_lylics {
             width: 100%;
-            height: 600px;
-            background: #ffffff;
-            border: 1px #1a1e21 solid;
-            padding: 10px;
+            padding: 35px;
+
+        }
+        #sug_lylics{
+            white-space: pre-wrap;
+            width: 40%;
+            padding: 35px;
         }
 
         .suggestion_detail > img {
-            width: 20%;
-            height: 30vh;
+            width: 240px;
+            height: 240px;
+            margin-right: 50px;
+            margin-left: 35px;
+        }
+       #detail_artistImg > img{
+           width: 240px;
+           height: 240px;
+           margin-right: 50px;
+           margin-left: 35px;
+           border-radius: 50%;
+       }
+        #detail_artistImg > #detailInfo{
+            padding-top: 40px;
         }
 
+        #detail_albumImg > #detailInfo{
+            padding-top: 32px;
+        }
+        #detail_albumImg > #detailInfo> div> p{
+            margin: 0;
+        }
+        #detail_albumImg > #detailInfo> div:nth-of-type(3){
+            padding-top: 30px;
+        }
 
         #detailInfo {
             width: 58%;
@@ -446,6 +541,14 @@
             background: #f0f0f0;
         }
         /*게시판 스타일*/
+        #find_h1{
+            margin-top: 38px;
+            margin-bottom: 42px;
+        }
+        .findResult_h1{
+            margin-top: 70px;
+            margin-bottom: 28px;
+        }
 
         fieldset {
             display: flex;
@@ -458,11 +561,13 @@
         .find_fieldset {
             width: 200px;
             height: 40px;
-            border: 1px solid #d2d2d2;
+            border: 1.2px solid #fff;
             border-radius: 10px;
             vertical-align: middle;
             padding-right: 20px;
             background: #1a1a1a;
+            margin: 20px;
+
         }
 
         #findEnter {
@@ -500,21 +605,31 @@
             -webkit-box-orient: vertical;
 
         }
-        .b-wrap {
-
-            /*height: 117px;*/
-            /*overflow: hidden;*/
-            /*white-space: nowrap;*/
-            /*text-overflow: ellipsis;*/
+        .lyricsD{
+            width: 70px;
+            height: 30px;
+            padding: 8px;
+            line-height: 15px;
+            margin-left: 30px;
+            color: white;
+            background: #9147ff;
+            text-align: center;
+            border-radius: 20px;
 
         }
+        .select_icon{
+            margin-top: 90px;
+        }
+
         .select_icon> i{
-            padding-right: 15px;
+            padding-right: 18px;
+            font-size: 24px;
+            opacity: 0.8;
         }
 
          .material-symbols-outlined {
 
-              vertical-align: middle;
+             vertical-align: middle;
              padding-bottom: 5px;
              padding-right: 10px;
              text-indent: 0px;
@@ -526,9 +641,66 @@
 
          }
          .more{
+            opacity: 0.8;
+         }
+
+        #detailInfo >div:first-child >a{
+            padding-top: 24px;
+            font-size: 2.0em;
+            text-decoration: none;
+        }
+        #detailInfo >div >p{
+            font-size: 1.3em;
+
+
+        }
+        #detailInfo>div{
+            padding-bottom: 12px;
+        }
+
+
+         .detail_title {
+             color: #666;
+             padding: 12px 0px 5px;
+             -webkit-font-smoothing: antialiased;
+             font-weight: 400;
+             font-size: 18px;
+             cursor: pointer;
+
 
          }
 
+        .detail_album {
+            margin-bottom: 0;
+            padding-top: 10px;
+            font-size: 14px;
+            color: #969696;
+            -webkit-font-smoothing: antialiased;
+            cursor: pointer;
+        }
+        .detail_artist {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .detail_artist:hover{
+            text-decoration: underline;
+        }
+        .detail_album:hover{
+            text-decoration: underline;
+        }
+        .detail_title:hover{
+            text-decoration: underline;
+        }
+        #rank{
+            font-size: 15px;
+            color: #333;
+            font-weight: 700;
+            -webkit-font-smoothing: antialiased;
+        }
 
     </style>
 </head>
@@ -538,18 +710,20 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
-                <a class = "suggestion logo" href="#">Tingle</a>
+                <a id="logo" class = "suggestion" href="#">Tingle</a>
             </li>
+
             <c:choose>
                 <c:when test="${userData == null}">
-                    <li><a href="<c:url value="/user/UserLogIn"/>">
+                    <li class="login"><a href="<c:url value="/user/UserLogIn"/>">
                         <span class="material-symbols-outlined">account_circle</span>로그인</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="<c:url value="/user/UserLogOut"/>">로그아웃</a></li>
+                    <li class="login"><a href="<c:url value="/user/UserLogOut"/>">
+                        <span class="material-symbols-outlined">account_circle</span>로그아웃</a></li>
                 </c:otherwise>
             </c:choose>
-
+            <div id="menuAll">
             <li>
                 <fieldset class="find_fieldset">
                     <i id="ficon" class="fa-solid fa-magnifying-glass "></i>
@@ -557,17 +731,17 @@
                     />
                 </fieldset>
             </li>
-            <li><a class="suggestion btncolor" href="#">
+            <li class="btncolor" ><a class="suggestion" href="#">
                 <span class="material-symbols-outlined">recommend</span>추천</a></li>
-            <li><a class="chart" id="chart" href="#">
+            <li  class="btncolor"><a class="chart" id="chart" href="#">
                 <span class="material-symbols-outlined">leaderboard</span>차트</a></li>
-            <li><a id="library" href="#">
+            <li  class="btncolor"><a id="library" href="#">
                 <span class="material-symbols-outlined">storage</span>보관함</a></li>
-            <li><a id="board" href="#">
+            <li  class="btncolor"><a id="board " href="#">
                 <span class="material-symbols-outlined">help_center</span>고객센터</a></li>
-            <li><a id="myPage" href="#">
+            <li  class="btncolor"><a id="myPage" href="#">
                 <span class="material-symbols-outlined">how_to_reg</span>마이페이지</a></li>
-            <li><a href="admin/AdminLogin">관리자</a></li>
+            </div>
         </ul>
     </div>
     <!-- /사이드바 -->
@@ -608,7 +782,7 @@
             <%--차트--%>
             <div class="chartContainer" style="display: none">
                 <h1 id="chart_h1">TOP100</h1>
-                <button id="top100" class="chart genreBtn" type="button">top100</button>
+                <button id="top100" class="chart genreBtn clicked" type="button">TOP100</button>
                 <button id="ballad" class="genreBtn" type="button">발라드</button>
                 <button id="rock" class="genreBtn" type="button">락</button>
                 <button id="hiphop" class="genreBtn" type="button">힙합</button>
@@ -640,9 +814,9 @@
             <div class="find_Container" style="display: none">
                 <h1 id="find_h1">검색결과</h1>
                 <div id="findTitle_Container" style="display: none">
-                    <h2 id="findTitle_h1">곡<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
+                    <h2 class="findResult_h1" id="findTitle_h1">곡<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <table class="findTitle_table table table-hover">
-                        <thead class="table-dark" id="findTitleHead">
+                        <thead class="table-secondary" id="findTitleHead">
                         <tr>
                             <th scope="col" width="5%"></th>
                             <th scope="col" width="5%">곡/앨범</th>
@@ -661,7 +835,7 @@
                 </div>
 
                 <div id="findArtist_Container" style="display: none">
-                    <h2 id="findArtist_h1">가수<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
+                    <h2 class="findResult_h1" id="findArtist_h1">가수<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <div class="findArtist_Container">
                         <ul class="findArtist_List">
 
@@ -669,7 +843,7 @@
                     </div>
                 </div>
                 <div id="findAlbum_Container" style="display: none">
-                    <h2 id="findAlbum_h1">앨범<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
+                    <h2 class="findResult_h1" id="findAlbum_h1">앨범<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <div class="findAlbum_Container">
                         <ul class="findAlbum_List">
 
@@ -678,9 +852,9 @@
                 </div>
 
                 <div id="findLyrics_Container" style="display: none">
-                    <h2 id="findLyrics_h1">가사<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
+                    <h2 class="findResult_h1" id="findLyrics_h1">가사<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <table class="findLyrics_table table table-hover">
-                        <thead class="table-dark" id="findLyricsHead">
+                        <thead class="table-secondary" id="findLyricsHead">
                         <tr>
                             <th scope="col" width="5%"></th>
                             <th scope="col" width="5%">곡/가사</th>
@@ -1677,13 +1851,14 @@
                     html += '<div id="detailInfo"><div><h4 class="detail_album">' + data[i].album + '<h4></div>'
                     html += '<div><h3 class="detail_title">' + data[i].title + '</h3></div>';
                     html += '<div><h3 class="detail_artist">' + data[i].artist + '</h3></div>';
-                    html += '<div><h2 >' + data[i].genre + '</h2></div>';
-                    html += '<div><h2>' + data[i].release_date + '</h2></div>';
+                    html += '<div><p >' + data[i].genre + '</p></div>';
+                    html += '<div><p>' + data[i].release_date + '</p></div>';
                     html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
                     html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
                     html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
                     html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
+                    html += '<div class="lyricsD">가사</div>'
                     html += '<div id ="suggestion_lylics">'
                     html +=  data[i].lyrics + '</div>'
                     $("#suggestion_body").append(html);
@@ -2224,7 +2399,33 @@
             })
         }
 
-/** 차트 장르 버튼 클릭시 */
+ // /** 메뉴 버튼 클릭시 */
+ //        var btncolor = document.getElementsByClassName("btncolor");
+ //
+ //        function handleCClick(event) {
+ //            console.log(event.target);
+ //
+ //            console.log(event.target.classList);
+ //
+ //            if (event.target.classList[1] === "btnClicked") {
+ //                event.target.classList.remove("btnClicked");
+ //            } else {
+ //                for (var i = 0; i < btncolor.length; i++) {
+ //                    btncolor[i].classList.remove("btnClicked");
+ //                }
+ //
+ //                event.target.classList.add("btnClicked");
+ //            }
+ //        }
+ //
+ //        function btnCInit() {
+ //            for (var i = 0; i < btncolor.length; i++) {
+ //                btncolor[i].addEventListener("click",handleCClick);
+ //            }
+ //        }
+ //
+ //        btnCInit();
+        /** 차트 장르 버튼 클릭시 */
         var genreBtn = document.getElementsByClassName("genreBtn");
 
         function handleClick(event) {
@@ -2249,12 +2450,11 @@
             }
         }
 
-        btnInit();
 
     /**차트 클릭시*/
         $('.chart').click(function () {
-
             allEmpty();
+            btnInit();
             // $('#top100').attr("style", "background: purple");
             $('.chartTable').attr("style", "display:");
             $('.chartContainer').attr("style", "display:");
@@ -2293,7 +2493,7 @@
                             '<img class="innerImg" src="img/' + item.cover_img + '">' +
                             '</td>' +
                             '<td id="title">' +
-                            '<span class="detail_title">'+item.title+'</span>'  + '<br>'+ '<span  class="detail_album">' + item.album +'</span>'+
+                            '<strong class="detail_title">'+item.title+'</strong>'  + '<br>'+ '<p class="detail_album">' + item.album +'</p>'+
                             '</td>' +
                             '<td id="artist" class="detail_artist">' + item.artist + '</td>' +
                             '<td>' +
@@ -2551,7 +2751,8 @@
                         '</div>';
                     // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
-                    html += '<div id ="suggestion_lylics">'
+                    html += '<div class="lyricsD">가사</div>'
+                    html += '<div id ="sug_lylics">'
                     html += json[i].lyrics + '</div>'
                     $("#suggestion_body").append(html);
                     let selectPlay = document.getElementsByClassName("selectPlay");
@@ -2646,7 +2847,8 @@
                         '</div>';
                     // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
-                    html += '<div id ="suggestion_lylics">'
+                    html += '<div class="lyricsD">가사</div>'
+                    html += '<div id ="sug_lylics">'
                     html += json[i].lyrics + '</div>'
                     $("#suggestion_body").append(html);
                     let selectPlay = document.getElementsByClassName("selectPlay");
@@ -2734,14 +2936,14 @@
                             let htmlb = '';
 
                             $.each(json[1], function (i, item) {
-                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
-                                    '<div id="detailInfo"><div><h4 class="detail_artist ">' + item.artist + '</h4></div>' +
-                                    '<div><h2>' + item.genre + '</h2></div>' +
-                                    // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                htmlb = '<div id="detail_artistImg" class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
+                                    '<div id="detailInfo"><div><a class="detail_artist ">' + item.artist + '</a></div>' +
+                                    '<div><p>장르 ' + item.genre + '</p></div>' +
                                     '</div></div>' +
+                                    '<div class="lyricsD">곡</div>'+
                                     '<div id ="suggestion_lylics">' +
                                     '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    ' <thead class="table-secondary" id="findTitleHead">' +
                                     '<tr><th scope="col" width="5%"></th>' +
                                     '<th scope="col" width="5%">곡/앨범</th>' +
                                     '<th scope="col" width="20%"></th>' +
@@ -2885,14 +3087,15 @@
                             let htmlb = '';
 
                             $.each(json[1], function (i, item) {
-                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
-                                    '<div id="detailInfo"><div><h4 class="detail_artist ">' + item.artist + '</h4></div>' +
-                                    '<div><h2>' + item.genre + '</h2></div>' +
+                                htmlb = '<div id="detail_artistImg" class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
+                                    '<div id="detailInfo"><div><a class="detail_artist ">' + item.artist + '</a></div>' +
+                                    '<div><p>장르 ' + item.genre + '</p></div>' +
                                     // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div></div>' +
+                                    '<div class="lyricsD">곡</div>'+
                                     '<div id ="suggestion_lylics">' +
                                     '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    ' <thead class="table-secondary" id="findTitleHead">' +
                                     '<tr><th scope="col" width="5%"></th>' +
                                     '<th scope="col" width="5%">곡/앨범</th>' +
                                     '<th scope="col" width="20%"></th>' +
@@ -3036,14 +3239,15 @@
                             let htmlb = '';
 
                             $.each(json[1], function (i, item) {
-                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
-                                    '<div id="detailInfo"><div><h4 class="detail_artist ">' + item.artist + '</h4></div>' +
-                                    '<div><h2>' + item.genre + '</h2></div>' +
+                                htmlb = '<div id="detail_artistImg" class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
+                                    '<div id="detailInfo"><div><a class="detail_artist ">' + item.artist + '</a></div>' +
+                                    '<div><p>장르 ' + item.genre + '</p></div>' +
                                     // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div></div>' +
+                                    '<div class="lyricsD">곡</div>'+
                                     '<div id ="suggestion_lylics">' +
                                     '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    ' <thead class="table-secondary" id="findTitleHead">' +
                                     '<tr><th scope="col" width="5%"></th>' +
                                     '<th scope="col" width="5%">곡/앨범</th>' +
                                     '<th scope="col" width="20%"></th>' +
@@ -3194,17 +3398,18 @@
 
                             $.each(json, function (i, item) {
                                 console.log("들어가서 i : " + i);
-                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
-                                    '<div id="detailInfo"><div><a class="detail_album">' + item.album + '</a></div>' +
+                                htmlb = '<div id="detail_albumImg" class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
+                                    '<div id="detailInfo"><div><a class="detail_album">+' + item.album + '</a></div>' +
                                     '<div><a class="detail_artist">' + item.artist + '</a></div>' +
-                                    '<div><h2>' + item.genre + '</h2></div>' +
-                                    '<div><h2>' + item.release_date + '</h2></div>' +
+                                    '<div><p>장르 ' + item.genre + '</p></div>' +
+                                    '<div><p>발매일 ' + item.release_date + '</p></div>' +
                                     '</div>' +
                                     // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div>' +
+                                    '<div class="lyricsD">수록곡</div>'+
                                     '<div id ="suggestion_lylics">' +
                                     '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    ' <thead class="table-secondary" id="findTitleHead">' +
                                     '<tr><th scope="col" width="5%"></th>' +
                                     '<th scope="col" width="5%">곡/앨범</th>' +
                                     '<th scope="col" width="20%"></th>' +
@@ -3353,17 +3558,18 @@
 
                             $.each(json, function (i, item) {
                                 console.log("들어가서 i : " + i);
-                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
+                                htmlb = '<div id="detail_albumImg" class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
                                     '<div id="detailInfo"><div><a class="detail_album">' + item.album + '</a></div>' +
                                     '<div><a class="detail_artist">' + item.artist + '</a></div>' +
-                                    '<div><h2>' + item.genre + '</h2></div>' +
-                                    '<div><h2>' + item.release_date + '</h2></div>' +
+                                    '<div><p>장르 ' + item.genre + '</p></div>' +
+                                    '<div><p>발매일 ' + item.release_date + '</p></div>' +
                                     '</div>' +
                                     // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div>' +
+                                    '<div class="lyricsD">수록곡</div>'+
                                     '<div id ="suggestion_lylics">' +
                                     '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    ' <thead class="table-secondary" id="findTitleHead">' +
                                     '<tr><th scope="col" width="5%"></th>' +
                                     '<th scope="col" width="5%">곡/앨범</th>' +
                                     '<th scope="col" width="20%"></th>' +
@@ -3513,7 +3719,8 @@
                         '</div>';
                     // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                     html += '</div>'
-                    html += '<div id ="suggestion_lylics">'
+                    html += '<div class="lyricsD">가사</div>'
+                    html += '<div id ="sug_lylics">'
                     html += json[i].lyrics + '</div>'
                     $("#suggestion_body").append(html);
 
@@ -3624,17 +3831,18 @@
                             let htmlb = '';
 
                             $.each(json[1], function (i, item) {
-                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
-                                    '<div id="detailInfo"><div><h4 class="detail_artist">' + item.artist + '</h4></div>' +
-                                    '<div><h2>' + item.genre + '</h2></div>' +
+                                htmlb = '<div id="detail_artistImg" class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
+                                    '<div id="detailInfo"><div><a class="detail_artist">' + item.artist + '</a></div>' +
+                                    '<div><p>장르 ' + item.genre + '</p></div>' +
                                     // '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>' +
                                     // '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
                                     // '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>' +
                                     // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div></div>' +
+                                    '<div class="lyricsD">곡</div>'+
                                     '<div id ="suggestion_lylics">' +
                                     '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    ' <thead class="table-secondary" id="findTitleHead">' +
                                     '<tr><th scope="col" width="5%"></th>' +
                                     '<th scope="col" width="5%">곡/앨범</th>' +
                                     '<th scope="col" width="20%"></th>' +
@@ -3787,20 +3995,17 @@
 
                             $.each(json[2], function (i, item) {
                                 console.log("들어가서 i : " + i);
-                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
+                                htmlb = '<div id="detail_albumImg" class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
                                     '<div id="detailInfo"><div><a class="detail_album ">' + item.album + '</a></div>' +
                                     '<div><a class="detail_artist ">' + item.artist + '</a></div>' +
-                                    '<div><h2>' + item.genre + '</h2></div>' +
-                                    '<div><h2>' + item.release_date + '</h2></div>' +
-                                   /* '<div class="select_icon">' +
-                                    '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
-                                    '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div>' +*/
+                                    '<div><p>장르 ' + item.genre + '</p></div>' +
+                                    '<div><p>발매일 ' + item.release_date + '</p></div>' +
                                     '</div>' +
-                                    // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
                                     '</div>' +
+                                    '<div class="lyricsD">수록곡</div>'+
                                     '<div id ="suggestion_lylics">' +
                                     '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-dark" id="findTitleHead">' +
+                                    ' <thead class="table-secondary" id="findTitleHead">' +
                                     '<tr><th scope="col" width="5%"></th>' +
                                     '<th scope="col" width="5%">곡/앨범</th>' +
                                     '<th scope="col" width="20%"></th>' +
@@ -4246,7 +4451,7 @@
                             $.each(json[2], function (i, item) {
                                 if (i < 5) {
                                     html = $(
-                                        '<li class="findArtist_li">' +
+                                        '<li class="findAlbum_li">' +
                                         '<div>' +
                                         '<div>' +
                                         '<a>' +
@@ -4255,7 +4460,7 @@
                                         '</div>' +
                                         '<div>' +
                                         '<a class="aa detail_bb" href="#">' + item.album + '</a>' +
-                                        '<a class="aa detail_br" href="#">' + item.artist + '</a>' +
+                                        '<a class="bb detail_br" href="#">' + item.artist + '</a>' +
                                         '</div>' +
                                         '</div>' +
                                         '</li>');
@@ -4272,7 +4477,7 @@
                                         '</div>' +
                                         '<div>' +
                                         '<a class="aa detail_bb" href="#">' + item.album + '</a>' +
-                                        '<a class="aa detail_br" href="#">' + item.artist + '</a>' +
+                                        '<a class="bb detail_br" href="#">' + item.artist + '</a>' +
                                         '</div>' +
                                         '</div>' +
                                         '</li>');
