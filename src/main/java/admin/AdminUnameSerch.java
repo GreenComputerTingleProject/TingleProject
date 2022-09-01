@@ -42,7 +42,6 @@ public class AdminUnameSerch implements AdminService{
         request.setAttribute("firstPage", firstPage);
         request.setAttribute("endPage", endPage);
         request.setAttribute("totalPage", totalPage);
-        request.setAttribute("serchName", serchName);
 
         request.setAttribute("userData", userData);
         request.setAttribute("adminUrl", "menu/user/userList.jsp");

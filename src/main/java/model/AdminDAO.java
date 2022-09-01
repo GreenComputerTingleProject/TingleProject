@@ -495,7 +495,7 @@ public class AdminDAO {
         return msg;
     }
     public void userModify(UserDTO dto){
-        sql = "update user  set login_id = ?, login_pw = ?, name = ?, nickname =?, phone_number =?, email_address = ?, profile_image = ?, join_type = ?,"
+        sql = "update user  set login_id = ?, login_pw = ?, name = ?, nickname =?, phone_number =?, email_address = ?, profile_image = ?, "
                + "membership = ?, personal_type = ? where id = ?";
 
         try {
@@ -508,10 +508,9 @@ public class AdminDAO {
             ptmt.setString(5, dto.phone_number);
             ptmt.setString(6, dto.email_address);
             ptmt.setString(7, dto.profile_image);
-            ptmt.setInt(8, dto.join_type);
-            ptmt.setInt(9, dto.membership);
-            ptmt.setString(10, dto.personal_type);
-            ptmt.setInt(11, dto.id);
+            ptmt.setInt(8, dto.membership);
+            ptmt.setString(9, dto.personal_type);
+            ptmt.setInt(10, dto.id);
 
             ptmt.executeUpdate();
         } catch (SQLException e) {

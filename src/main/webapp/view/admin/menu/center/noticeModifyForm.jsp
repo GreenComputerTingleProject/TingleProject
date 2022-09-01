@@ -1,10 +1,4 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: 82108
-  Date: 2022-08-25
-  Time: 오후 8:00
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <form action="AdminNoticeModifyReg" method="get" >
   <Table border="">
@@ -15,12 +9,7 @@
     </tr>
     <tr>
       <td>분류</td>
-      <td><select name="kind">
-        <option value=${noticeData.kind}>현재 분류 : ${noticeData.kind}</option>
-        <option value="공지사항">공지사항</option>
-        <option value="업데이트">업데이트</option>
-      </select>
-      </td>
+      <td><input type = "text" name ="kind" value="${noticeData.kind}"></td>
     </tr>
     <tr>
       <td>내용</td>
@@ -33,3 +22,48 @@
         <a href="AdminCenter?id=${noticeData.id}&noticeKind=noticeDetail">목록으로</a>
       </td>
     </tr>
+  </Table>
+</form>--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<style>
+  option {text-align: center;}
+  .input-group-prepend { width: 25%; }
+  .input-group { width: 100%; margin: auto;}
+  .input-group-text { justify-content: center; background: mediumslateblue; color: honeydew;}
+  form { background-color: white;}
+</style>
+
+<form action="AdminNoticeModifyReg" method="get">
+  <input type ="hidden" name ="id" value="${noticeData.id}">
+  <br>
+  <h1 class="nav navbar-text" style="display:block; text-align: center;"><b style="font-family: 'Play fair ';">공지사항 수정하기</b></h1>
+  <br>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">제목</span>
+    </div>
+    <input type="text" class="form-control" name ="title" value="${noticeData.title}">
+  </div>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">분류</span>
+    </div>
+    <select name="kind" class="form-control">
+      <option value="${noticeData.title}">현재 선택 분류 : ${noticeData.title}</option>
+      <option value="공지사항">공지사항</option>
+      <option value="업데이트">업데이트</option>
+    </select>
+  </div>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">내용</span>
+    </div>
+    <input type="text" class="form-control" name="content" value="${noticeData.content}">
+  </div>
+  <div class="input-group">
+    <input type="submit" value="등록하기" class="form-control btn col-lg-4" style="background:mediumpurple; color:honeydew; font-size: 20px;">
+    <a class="btn btn-dark col-md-4" href="AdminCenter?id=${noticeData.id}&noticeKind=noticeDetail" style="background-color: rebeccapurple; "><h5 style="line-height: inherit; font-size: 20px;">뒤로</h5></a>
+  </div>
+</form>
+

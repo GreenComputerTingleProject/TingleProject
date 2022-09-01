@@ -61,11 +61,11 @@ public class AdminMusicModifyReg implements AdminService {
             }
 
             int nowPage = Integer.parseInt(mr.getParameter("nowPage"));
+            String serchName = mr.getParameter("serchName");
             boolean check1 = dao.fileExtension_Check(musicFile_check,mr.getFilesystemName("file_path"));
             boolean check2 = dao.fileExtension_Check(imgFile_check,mr.getFilesystemName("cover_img"));
-            String serchName = mr.getParameter("serchName");
-            System.out.println("serchName = "+serchName);
-            System.out.println("nowpage = "+nowPage);
+
+
 
             if(check1 && check2){
                 MusicDTO musicData = new MusicDTO();
@@ -77,17 +77,20 @@ public class AdminMusicModifyReg implements AdminService {
                 musicData.setAlbum(mr.getParameter("album"));
                 musicData.setGenre(mr.getParameter("genre"));
                 musicData.setGenre_no(genreNo);
+
                 if(mr.getFilesystemName("file_path")!= null){
                     musicData.setFile_path(mr.getFilesystemName("file_path"));
-                } else if(mr.getFilesystemName("file_path")==null) {
+
+                } else if(mr.getFilesystemName("file_path")==null && mr.getParameter("filecheck1").equals("")) {
                         musicData.setFile_path(null);
                 } else {
-                    musicData.setFile_path(mr.getParameter("filecheck1"));
+                    musicData.setFile_path(mr.getParameter("filecheck1") );
                 }
+
                 if(mr.getFilesystemName("cover_img")!= null) {
                     musicData.setCover_img(mr.getFilesystemName("cover_img"));
                     dao.findImgFile(request, mr.getFilesystemName("cover_img"));
-                } else if(mr.getFilesystemName("cover_img")==null){
+                } else if(mr.getFilesystemName("cover_img")==null && mr.getParameter("filecheck2").equals("")){
                     musicData.setCover_img(null);
                 } else {
                     musicData.setCover_img(mr.getParameter("filecheck2"));
@@ -99,14 +102,18 @@ public class AdminMusicModifyReg implements AdminService {
 
                 int id = musicData.getId();
 
-                if(mr.getFilesystemName("file_path")!= null && mr.getFilesystemName("file_path") != mr.getParameter("filecheck1")){
+                if(mr.getFilesystemName("file_path")!= null
+                        && !mr.getParameter("filecheck1").equals("")
+                        && mr.getFilesystemName("file_path") != mr.getParameter("filecheck1")){
                     System.out.println("음악파일경로 = " + path + mr.getParameter("filecheck1"));
                     Path overlapfile = Paths.get(path + mr.getParameter("filecheck1"));
                     Files.delete(overlapfile);
                     System.out.println("실행1");
                 }
 
-                if(mr.getFilesystemName("cover_img")!= null && mr.getFilesystemName("cover_img") != mr.getParameter("filecheck2")){
+                if(mr.getFilesystemName("cover_img")!= null
+                        && !mr.getParameter("filecheck2").equals("")
+                        && mr.getFilesystemName("cover_img") != mr.getParameter("filecheck2")){
                     path = request.getRealPath("/img/");
                     System.out.println("이미지파일경로 = " + path + mr.getParameter("filecheck2"));
                     Path overlapfile = Paths.get(path + mr.getParameter("filecheck2"));
