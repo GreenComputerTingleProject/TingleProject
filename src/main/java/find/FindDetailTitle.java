@@ -10,56 +10,29 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class FindDetail implements FindService {
+public class FindDetailTitle implements FindService {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-
+        String title = request.getParameter("title");
         String artist = request.getParameter("artist");
         String album = request.getParameter("album");
+        System.out.println(title+"받아온 데이타: "+album+"받아온 데이타: "+artist);
 
 
-        ArrayList<MusicDTO> findArtist = new MusicDAO().findDetail(artist,album);
 
-    //    ArrayList<MusicDTO> findTitle = new MusicDAO().findTitle(title);
+        ArrayList<MusicDTO> findArtist = new MusicDAO().findDetailTitle(title,artist,album);
 
-     //   ArrayList<MusicDTO> findAlbum = new MusicDAO().findAlbum(album);
-        ///ArrayList<MusicDTO> findLyrics = new MusicDAO().findLyrics(findInput);
-
-      //  System.out.println("chartFind  타이틀 실행이얏  "+findTitle);
         System.out.println("chartFind 아티스트 실행이얏 "+findArtist);
-     //   System.out.println("chartFind 앨범 실행이얏 "+findAlbum);
+
 
 
         //전체 어레이
         JSONArray jsonArray = new JSONArray();
 
-        //결과별 어레이
-      //  JSONArray titleArray = new JSONArray();
-      //  JSONArray artistArray = new JSONArray();
-     //   JSONArray albumArray = new JSONArray();
 
 
-//
+
       try {
-//
-//            for (MusicDTO ft : findTitle) {
-//                JSONObject dataTitle = new JSONObject();
-//                dataTitle.put("id", ft.getId());
-//                dataTitle.put("cnt", ft.getCnt());
-//                dataTitle.put("title", ft.getTitle());
-//                dataTitle.put("album", ft.getAlbum());
-//                dataTitle.put("artist_img", ft.getArtist_img());
-//                dataTitle.put("cover_img", ft.getCover_img());
-//                dataTitle.put("artist", ft.getArtist());
-//                dataTitle.put("genre", ft.getGenre());
-//                dataTitle.put("genre_no", ft.getGenre_no());
-//                dataTitle.put("file_path", ft.getFile_path());
-//                dataTitle.put("release_date", ft.getRelease_dateStr());
-//                dataTitle.put("lyrics", ft.getLyrics());
-//
-//                titleArray.add(dataTitle);
-//            }
-
 
 
             for (MusicDTO fa : findArtist) {

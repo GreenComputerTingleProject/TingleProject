@@ -259,6 +259,47 @@ public class MusicDAO {
 
         return res;
     }
+    public ArrayList<MusicDTO> findDetailTitle(String title,String artist,String album) {
+        ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
+
+        System.out.println("데이터베이스 조회 키워드 = :" + title);
+        System.out.println("데이터베이스 조회 키워드 = :" + artist);
+        System.out.println("데이터베이스 조회 키워드 = :" + album);
+        sql = "SELECT * FROM music WHERE title = ? and artist = ?  and album = ?";
+
+        try {
+            ptmt = con.prepareStatement(sql);
+
+            ptmt.setString(1, title);
+            ptmt.setString(2, artist);
+            ptmt.setString(3, album);
+
+            rs = ptmt.executeQuery();
+            System.out.println("rs"+rs);
+            while(rs.next()){
+                MusicDTO dto = new MusicDTO();
+                dto.setId(rs.getInt("id"));
+                dto.setCnt(rs.getInt("cnt"));
+                dto.setTitle(rs.getString("title"));
+                dto.setAlbum(rs.getString("album"));
+                dto.setArtist_img(rs.getString("artist_img"));
+                dto.setCover_img(rs.getString("cover_img"));
+                dto.setArtist(rs.getString("artist"));
+                dto.setGenre(rs.getString("genre"));
+                dto.setGenre_no(rs.getInt("genre_no"));
+                dto.setFile_path(rs.getString("file_path"));
+                dto.setRelease_date(rs.getDate("release_date"));
+                dto.setLyrics(rs.getString("lyrics"));
+                res.add(dto);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            close();
+        }
+        return res;
+    }
 
     public ArrayList<MusicDTO> findDetail(String artist,String album) {
         ArrayList<MusicDTO> res = new ArrayList<MusicDTO>();
