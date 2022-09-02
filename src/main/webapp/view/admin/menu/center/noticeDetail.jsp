@@ -94,10 +94,8 @@
     <span class="input-group-text justify-content-start" style="width: 75%;">${noticeData.reg_date}</span>
   </div>
   <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text" style="background-color: mediumslateblue; color:honeydew;">내용</span>
-    </div>
-    <span class="input-group-text justify-content-start" style="width: 75%;">${noticeData.content}</span>
+    <span class="input-group-text" style="background-color: mediumslateblue; color:honeydew; width: 25%">내용</span>
+    <textarea class="form-control justify-content-start" style="width: 75%; height: 30vh;" disabled>${noticeData.content}</textarea>
   </div>
   <div class="input-group">
     <a class="btn btn-dark col-md-4" href="AdminCenter?id=${noticeData.id}&noticeKind=noticeModify" style="background-color: mediumpurple; border-color: mediumpurple;"><h5 style="line-height: inherit; font-size: 20px;">수정</h5></a>

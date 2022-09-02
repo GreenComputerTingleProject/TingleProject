@@ -124,7 +124,6 @@
 
         td {
             vertical-align: middle;
-
         }
 
         .artist_img {
@@ -432,12 +431,24 @@
 
         /** 현석 스타일*/
 
+        img { width: 100px; height: 100px; }
+        option {text-align: center;}
+        .input-group-prepend { width: 25%; }
+        .input-group { width: 100%; margin: auto;}
+        .input-group-text { justify-content: center; background:white ; color: black;}
+        form { background-color: white;}
+        a:hover {background-color: white;}
 
-        #suggestion_album {
+
+        #carouselExampleInterval {
             width: 100%;
             height: 300px;
-            background: #1a1e21;
+            /*background: #1a1e21;*/
             margin-bottom: 40px;
+        }
+
+        .carouselImg {
+            height: 300px;
         }
 
         .suggestion_table {
@@ -563,33 +574,34 @@
         }
 
         #boardContainer {
-            width: 1580px;
-            height: 100px;
+            width: 100%;
+            height: 130px;
             margin-bottom: 10px;
         }
 
-        .board_body{
-            width: 1580px;
+        .board_body {
+
+            width: 100%;
             height: 800px;
 
         }
 
         .board_index {
-            width: 1580px;
-            height: 80px;
+            width: 100%;
+            height: 50px;
             background: #ffffff;
             text-align: center;
-            line-height: 70px;
+            line-height: 40px;
             border-top: 8px #1a1e21 solid;
             border-bottom: 3px #1a1e21 solid;
-            font-size: 20px;
+            font-size: 15px;
             margin-top: 5px;
             margin-bottom: 5px;
 
         }
 
         .notice_index {
-            cursor : pointer;
+            cursor: pointer;
             background: #ffffff;
             text-align: center;
             border-bottom: 1px #636464 solid;
@@ -609,9 +621,21 @@
             font-size: 20px;
         }
 
-        #noticeForm{
+        #noticeForm {
             margin-top: 50px;
         }
+
+        .board_head_btn{
+            width: 120px;
+            padding: 0;
+            margin-right: 5px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 5px;
+            transition: all 0.2s ;
+        }
+
         /*게시판 스타일*/
         #find_h1{
             margin-top: 38px;
@@ -690,6 +714,7 @@
             border-radius: 20px;
 
         }
+
         .select_icon{
             margin-top: 80px;
         }
@@ -834,27 +859,26 @@
                 </div>
             </div>
 
-                <%--게시판--%>
-                <div id ="boardContainer" style="display: none">
-                <div><h1>팅글고객센터 입니다</h1></div>
+            <%--게시판--%>
+            <div id="boardContainer" style="display: none">
+                <div><h1>고객센터</h1></div>
                 <div>
-                    <input type="button" value="공지사항" id="notice_btn">
-                    <input type="button" value="자주받는 질문" id="FAQ_btn">
-                    <input type="button" value="1:1문의" id="inquiry_btn">
+                    <button class="board_head_btn" type="button"  id="notice_btn">공지사항</button>
+                        <button class="board_head_btn" type="button" id="FAQ_btn">FAQ</button>
+                        <button class="board_head_btn" type="button" id="inquiry_btn">1:1문의</button>
                 </div>
 
-                </div>
+            </div>
 
-                <div class="board_body" style="display: none">
+            <div class="board_body" style="display: none">
 
-                </div>
+            </div>
 
-                <%-- 상세보기 --%>
+            <%-- 상세보기 --%>
 
-                <div id="detail" style="display:none">
+            <div id="detail" style="display:none">
 
-                </div>
-
+            </div>
 
 
             <%--차트--%>
@@ -1166,8 +1190,8 @@
                 $('#currentTime').html(convertTime(Math.floor(audio.currentTime)));
                 $('#duration').html(convertTime(Math.floor(audio.duration)));
 
-                if(!isSessionLoaded){
-                    if(audio.currentTime >= 60) {
+                if (!isSessionLoaded) {
+                    if (audio.currentTime >= 60) {
                         audio.pause();
                         audio.currentTime = 0;
 
@@ -1177,8 +1201,8 @@
                         $('#modal-body1').text('비회원은 1분 미리듣기만 제공됩니다');
                         $('#modal1').modal('toggle');
                     }
-                } else if(s_UserData.membership == 1) {
-                    if(audio.currentTime >= 60) {
+                } else if (s_UserData.membership == 1) {
+                    if (audio.currentTime >= 60) {
                         audio.pause();
                         audio.currentTime = 0;
 
@@ -1624,8 +1648,8 @@
                 }
             }
 
-            if(isDuplicate) {
-                if(pushText == "") {
+            if (isDuplicate) {
+                if (pushText == "") {
                     $('#modal-body2').html(duplicateText + '은(는) 이미 목록에 있는 음악입니다.');
                     $('#modal2').modal('toggle');
                 } else {
@@ -1655,7 +1679,7 @@
             }
 
             for (const i in checkNum) {
-                if(JSON.stringify(libraryData).includes(s_LibraryData[checkNum[i]].file_path)) {
+                if (JSON.stringify(libraryData).includes(s_LibraryData[checkNum[i]].file_path)) {
                     isDuplicate = true;
                     duplicateList += (s_LibraryData[checkNum[i]].file_path).split('.')[0] + " ";
                 } else {
@@ -1875,17 +1899,31 @@
         /**현석 스크립트*/
         $('.suggestion').click(function () {
             allEmpty();
-            $('#modal_add').css("display","")
+            $('#modal_add').css("display", "")
             suggestion(s_SuggestionList);
         })
 
-         function suggestion(jArrays) {
-            
+        function suggestion(jArrays) {
+
             let html = '';
             let data = new Array();
             allEmpty();
             $('#suggestion_body').css('display', 'block');
-            html += '<div id ="suggestion_album"></div>';
+            // html += '<div id ="suggestion_album"></div>';
+            html += '<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">';
+            html += '<div class="carousel-inner">';
+            html += '<div class="carousel-item active" data-bs-interval="10000">';
+            html += '<img class="d-block w-100 carouselImg"></div>';
+            html += '<div class="carousel-item" data-bs-interval="10000">';
+            html += '<img class="d-block w-100 carouselImg"></div>';
+            html += '<div class="carousel-item" data-bs-interval="10000">';
+            html += '<img class="d-block w-100 carouselImg"></div></div>';
+            html += '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">';
+            html += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+            html += '<span class="visually-hidden">Previous</span></button>';
+            html += '<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">';
+            html += '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+            html += '<span class="visually-hidden">Next</span></button></div>';
 
             for (const i in jArrays) {
                 let jArray = jArrays[i];
@@ -1911,12 +1949,17 @@
             $("#suggestion_body").append(html);
 
             // 배열
+            let carouselImg = document.getElementsByClassName('carouselImg');
             let viewDetail = document.getElementsByClassName('viewDetail');
             let selectPlay = document.getElementsByClassName("selectPlay");
             let selectList = document.getElementsByClassName("selectList");
             let s_selectAdd = document.getElementsByClassName("s_selectAdd");
 
-            selects(data,selectPlay,selectList,s_selectAdd);
+            carouselImg[0].src = "img/bannerimg1.jpg";
+            carouselImg[1].src = "img/bannerimg2.png";
+            carouselImg[2].src = "img/bannerimg3.jpeg";
+
+            selects(data, selectPlay, selectList, s_selectAdd);
 
 
             // 추천 노래의 이미지를 눌렀을때
@@ -2057,7 +2100,7 @@
                     $('#suggestion_body').css('display', 'block');
 
 
-        function selects(data, selectPlay, selectList, s_selectAdd){
+        function selects(data, selectPlay, selectList, s_selectAdd) {
             for (let i = 0; i < selectList.length; i++) {
 
                 selectPlay[i].addEventListener('click', function () {
@@ -2099,11 +2142,11 @@
             }
 
             // 여기가 추천에서 add 누른거
-            for (let i = 0; i < s_selectAdd.length ; i++) {
+            for (let i = 0; i < s_selectAdd.length; i++) {
                 s_selectAdd[i].addEventListener('click', function () {
-                    if(isSessionLoaded) {
+                    if (isSessionLoaded) {
 
-                        if(JSON.stringify(libraryData).includes(data[i].file_path)) {
+                        if (JSON.stringify(libraryData).includes(data[i].file_path)) {
                             $('#modal-body2').text((data[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
                             $('#modal2').modal('toggle');
                         } else {
@@ -2131,12 +2174,11 @@
         }
 
 
-
         function playListInit2(data) {
             let html = "";
 
             for (const i in nowPlayList) {
-                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
+                let songName = nowPlayList[i].substring(("<c:url value="/mp3/"/>").length).split('.')[0];
 
                 if (i == audioIndex) {
                     html += '<div style="color: red">' + songName + '</div>';
@@ -2164,7 +2206,7 @@
             let html = "";
 
             for (const i in nowPlayList) {
-                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
+                let songName = nowPlayList[i].substring(("<c:url value="/mp3/"/>").length).split('.')[0];
 
                 if (i == audioIndex) {
                     html += '<div style="color: red">' + songName + '</div>';
@@ -2242,7 +2284,7 @@
         })
 
         // 공지사항 클릭
-        function board_notice(){
+        function board_notice() {
 
             $.ajax({
                 type: 'GET',
@@ -2263,6 +2305,7 @@
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
+            html += '<h2>공지사항</h2>'
             html += '<div class="board_index"><table><tr>';
             html += '<td width=100px;>번호</td>';
             html += '<td width=300px>분류</td>';
@@ -2272,9 +2315,9 @@
             for (const i in board_data) {
                 html += '<div class="notice_index" ><table><tr class="noticeDetail">';
                 html += '<td width=100px>' + board_data[i].id + '</td>';
-                html += '<td width=300px>'+ board_data[i].kind +'</td>';
-                html += '<td width=800px>'+ board_data[i].title +'</td>';
-                html += '<td width=400px>'+ board_data[i].reg_date +'</td>';
+                html += '<td width=300px>' + board_data[i].kind + '</td>';
+                html += '<td width=800px>' + board_data[i].title + '</td>';
+                html += '<td width=400px>' + board_data[i].reg_date + '</td>';
                 html += '</tr></table></div>';
             }
             $('.board_body').empty();
@@ -2282,9 +2325,9 @@
 
             let noticeDetail = document.getElementsByClassName('noticeDetail');
 
-            for (let i = 0; i < noticeDetail.length ; i++) {
+            for (let i = 0; i < noticeDetail.length; i++) {
 
-                noticeDetail[i].onclick = function (){
+                noticeDetail[i].onclick = function () {
                     notice_Detail(board_data[i]);
                 }
             }
@@ -2292,7 +2335,7 @@
 
         }
 
-        function notice_Detail(data){
+        function notice_Detail(data) {
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
@@ -2300,30 +2343,29 @@
             let html = '';
 
             html += '<div id="noticeForm">';
-            html += '<h2>'+data.kind+'</h2>';
+            html += '<div><h2>' + data.kind + '</h2><button type="button" id="indexbtn">목록으로</button></div>';
             html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
             html += '<td width=100px>' + data.id + '</td>';
-            html += '<td width=300px>'+ data.title +'</td>';
-            html += '<td width=100px>'+ data.nickname +'</td>';
-            html += '<td width=300px>'+ data.reg_date +'</td>';
+            html += '<td width=300px>' + data.title + '</td>';
+            html += '<td width=100px>' + data.nickname + '</td>';
+            html += '<td width=300px>' + data.reg_date + '</td>';
             html += '</tr></table></div>';
 
-            html += '<tr><td ><textarea style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>'+data.content+'</textarea></td></tr>';
+            html += '<tr><td ><textarea class="form-control justify-content-start" style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden;  resize: none;" disabled>' + data.content + '</textarea></td></tr>';
             html += '</div>';
 
             $('.board_body').empty();
             $('.board_body').append(html);
 
 
-
-            document.getElementById('indexbtn').addEventListener('click', function (){
+            document.getElementById('indexbtn').addEventListener('click', function () {
                 board_notice();
                 console.log("공지사항으로 돌아가")
             })
         }
 
         // FAQ 클릭
-        function board_FAQ(){
+        function board_FAQ() {
 
             $.ajax({
                 type: 'GET',
@@ -2343,6 +2385,7 @@
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
+            html += '<h2>FAQ</h2>'
             html += '<div class="board_index"><table><tr>';
             html += '<td width=100px;>번호</td>';
             html += '<td width=300px>분류</td>';
@@ -2352,9 +2395,9 @@
             for (const i in board_data) {
                 html += '<div class="notice_index" ><table><tr class="FAQDetail">';
                 html += '<td width=100px>' + board_data[i].id + '</td>';
-                html += '<td width=300px>'+ board_data[i].kind +'</td>';
-                html += '<td width=800px>'+ board_data[i].title +'</td>';
-                html += '<td width=400px>'+ board_data[i].nickname +'</td>';
+                html += '<td width=300px>' + board_data[i].kind + '</td>';
+                html += '<td width=800px>' + board_data[i].title + '</td>';
+                html += '<td width=400px>' + board_data[i].nickname + '</td>';
                 html += '</tr></table></div>';
             }
             $('.board_body').empty();
@@ -2362,15 +2405,15 @@
 
             let FAQDetail = document.getElementsByClassName('FAQDetail');
 
-            for (let i = 0; i < FAQDetail.length ; i++) {
+            for (let i = 0; i < FAQDetail.length; i++) {
 
-                FAQDetail[i].onclick = function (){
+                FAQDetail[i].onclick = function () {
                     FAQ_Detail(board_data[i]);
                 }
             }
         }
 
-        function FAQ_Detail(data){
+        function FAQ_Detail(data) {
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
@@ -2378,26 +2421,26 @@
             let html = '';
 
             html += '<div id="noticeForm">';
-            html += '<h2>'+data.kind+'</h2>';
+            html += '<div><h2>' + data.kind + '</h2><button type="button" id="FAQbtn">목록으로</button></div>';
             html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
             html += '<td width=100px>' + data.id + '</td>';
-            html += '<td width=300px>'+ data.title +'</td>';
-            html += '<td width=100px>'+ data.nickname +'</td>';
+            html += '<td width=300px>' + data.title + '</td>';
+            html += '<td width=100px>' + data.nickname + '</td>';
             html += '</tr></table></div>';
 
-            html += '<tr><td ><textarea style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>'+data.content+'</textarea></td></tr>';
+            html += '<tr><td ><textarea class="form-control justify-content-start" style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
             html += '</div>';
 
             $('.board_body').empty();
             $('.board_body').append(html);
 
-            document.getElementById('FAQbtn').addEventListener('click', function (){
+            document.getElementById('FAQbtn').addEventListener('click', function () {
                 board_FAQ();
             })
         }
 
         // inquriry 클릭
-        function board_inquriry(){
+        function board_inquriry() {
 
             $.ajax({
                 type: 'GET',
@@ -2418,24 +2461,21 @@
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
-            html += '<div><input type="button" value="문의 내역" id ="inquriryHistory">';
-            html += '<input type="button" value="문의하기" id="doInquriry"></div>';
+            html += '<h2>1:1문의</h2>'
             html += '<div class="board_index"><table><tr>';
             html += '<td width=100px;>번호</td>';
             html += '<td width=300px>분류</td>';
             html += '<td width=650px>제목</td>';
-            html += '<td width=150px>작성자</td>';
-            html += '<td width=200px>날짜</td>';
+            html += '<td width=250px>날짜</td>';
             html += '<td width=100px>답변여부</td>';
             html += '</tr></table></div>';
             for (const i in board_data) {
                 html += '<div class="notice_index" ><table><tr class="inquriryDetail">';
                 html += '<td width=100px>' + board_data[i].id + '</td>';
-                html += '<td width=300px>'+ board_data[i].kind +'</td>';
-                html += '<td width=650px>'+ board_data[i].title +'</td>';
-                html += '<td width=150px>'+ board_data[i].nickname +'</td>';
-                html += '<td width=200px>'+ board_data[i].reg_date +'</td>';
-                html += '<td width=100px>'+ board_data[i].checked +'</td>';
+                html += '<td width=300px>' + board_data[i].kind + '</td>';
+                html += '<td width=650px>' + board_data[i].title + '</td>';
+                html += '<td width=250px>' + board_data[i].reg_date + '</td>';
+                html += '<td width=100px>' + board_data[i].checked + '</td>';
                 html += '</tr></table></div>';
             }
             $('.board_body').empty();
@@ -2443,9 +2483,9 @@
 
             let inquriryDetail = document.getElementsByClassName('inquriryDetail');
 
-            for (let i = 0; i < inquriryDetail.length ; i++) {
+            for (let i = 0; i < inquriryDetail.length; i++) {
 
-                inquriryDetail[i].onclick = function (){
+                inquriryDetail[i].onclick = function () {
                     inquriry_Detail(board_data[i]);
                 }
             }
@@ -2454,7 +2494,8 @@
                 do_inquriry();
             })
         }
-        function inquriry_Detail(data){
+
+        function inquriry_Detail(data) {
             allEmpty()
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
@@ -2463,32 +2504,35 @@
 
 
             html += '<div id="noticeForm">';
-            html += '<h2>문의내역</h2>'+'<button type="button" id="delete_btn" >삭제<button type="button" id="indexbtn">목록으로</button>';
+            html += '<div><table><tr>';
+            html += '<td><h2>문의내역</h2><td>';
+            html += '<td><button style = "margin-left:1000px; width: 100px; height: 50px;" type="button" id="delete_btn" >삭제</button>';
+            html += '<td><button style = "margin-left: 30px; width: 100px; height: 50px;" type="button" id="indexbtn">목록으로</button></td>';
+            html += '</tr></table></div>';
             html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
-            html += '<td width=300px>'+ data.kind +'</td>';
-            html += '<td width=300px>'+ data.title +'</td>';
-            html += '<td width=300px>'+ data.nickname +'</td>';
-            html += '<td width=300px>'+ data.reg_date +'</td>';
-            html += '<td width=300px>'+ data.checked +'</td>';
+            html += '<td width=300px>' + data.kind + '</td>';
+            html += '<td width=300px>' + data.title + '</td>';
+            html += '<td width=300px>' + data.reg_date + '</td>';
+            html += '<td width=300px>' + data.checked + '</td>';
             html += '</tr></table></div>';
             html += '<br><h2>문의내용</h2>';
-            html += '<tr><td ><textarea style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>'+data.content+'</textarea></td></tr>';
+            html += '<tr><td ><textarea class="form-control justify-content-start" style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
 
-            if(data.checked == "답변완료"){
+            if (data.checked == "답변완료") {
                 html += '<br>'
                 html += '<h2>답변</h2>';
-                html += '<tr><td ><textarea style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>'+data.answer+'</textarea></td></tr>';
+                html += '<tr><td ><textarea class="form-control justify-content-start" style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>' + data.answer + '</textarea></td></tr>';
             }
             html += '</div>';
             $('.board_body').empty();
             $('.board_body').append(html);
 
-            document.getElementById('indexbtn').addEventListener('click', function (){
+            document.getElementById('indexbtn').addEventListener('click', function () {
                 board_inquriry();
             })
 
-            document.getElementById('delete_btn').addEventListener('click', function (){
-                console.log("데이타 아이디는?"+data.realid);
+            document.getElementById('delete_btn').addEventListener('click', function () {
+                console.log("데이타 아이디는?" + data.realid);
                 $.ajax({
                     type: 'GET',
                     url: '<c:url value="/admin/AdminCenterInquiry?inquiryKind=inquiryDelete"/>',
@@ -2506,50 +2550,55 @@
             })
         }
 
-        function do_inquriry(){
-            document.getElementById("doInquriry").addEventListener('click', function (){
+        function do_inquriry() {
+            document.getElementById("doInquriry").addEventListener('click', function () {
                 allEmpty();
                 $('#boardContainer').css('display', 'block');
                 $('.board_body').css('display', '');
 
                 let html = '';
 
-                html += '<div id="noticeForm">';
-                html += '<div><h2>1:1문의</h2><button type="button" id="indexbtn">목록으로</button></div>';
-                html += '<div>분류<select class="form-select" id="inquriryKind" aria-label="분류를 선택해 주세요">';
+                html += '<div id="noticeForm"><table>';
+                html += '<tr><td><div style = "width: 150px"><h2>문의하기</h2></div>';
+                html += '<td><div><button style="margin-left: 1000px; width: 130px; height: 50px;" type="button" id="indexbtn">목록으로</button></div></td></tr>';
+                html += '<tr><td><div><h4>분류</h4></div></td>';
+                html += '<td><div><select style="width: 150px" id="inquriryKind" aria-label="분류를 선택해 주세요">';
                 html += '<option value="사이트이용">사이트이용</option>';
                 html += '<option value="결제관련">결제관련</option>';
                 html += '<option value="스트리밍">스트리밍</option>';
-                html += '</select></div>';
-                html += '<div>제목<input type="text" id = "inquriryTitle"></div>';
-                html += '<div style="margin-top: 50px">상세내용<textarea id="inquriryContent" style="width: 1580px; height: 400px; overflow: hidden; resize: none"></textarea></div>';
-                html += '<div><input type="button" value="작성하기" id="dobtn"></div>';
-                html += '<div><input type="hidden" value="미확인" id="inquriryChecked">';
-                html += '</div>';
+                html += '</select></div></td></tr>';
+                html += '<tr><td><div><h4>제목</h4></div></td>';
+                html += '<td><div><input type="text" id = "inquriryTitle"></div></td></tr>';
+                html += '<tr><td colspan="2"><div style="margin-top: 20px">상세내용</div></td><tr>';
+                html += '<tr><td colspan="2"><div><textarea id="inquriryContent"  class="form-control justify-content-start" style="width: 1580px; height: 400px; overflow: hidden; resize: none"></textarea></div></td></tr>';
+                html += '<tr><td colspan="2" style="margin-left: 1000px;"><div><input type="button" value="작성하기" id="dobtn"></div>';
+                html += '<div><input type="hidden" value="미확인" id="inquriryChecked"></div></td></tr>';
+                html += '</table></div>';
                 $('.board_body').empty();
                 $('.board_body').append(html);
 
-                document.getElementById('indexbtn').addEventListener('click', function (){
+                document.getElementById('indexbtn').addEventListener('click', function () {
                     board_inquriry();
                 })
 
                 document.getElementById("dobtn").addEventListener('click', function () {
 
-                    if( $('#inquriryKind').val()== ""
-                        || $('#inquriryTitle').val()== ""
-                        || $('#inquriryContent').val()== "" ){
+                    if ($('#inquriryKind').val() == ""
+                        || $('#inquriryTitle').val() == ""
+                        || $('#inquriryContent').val() == "") {
                         alert("형식이 잘못되었습니다");
                     } else {
                         $.ajax({
                             type: 'GET',
                             url: '<c:url value="/board/BoardInquiryReg"/>',
-                            data: {"user_id" : s_UserData.id,
-                                "nickname" : s_UserData.nickname,
-                                "login_id" : s_UserData.login_id,
-                                "kind" : $('#inquriryKind').val(),
-                                "title" : $('#inquriryTitle').val(),
-                                "content" : $('#inquriryContent').val(),
-                                "checked" : $('#inquriryChecked').val()
+                            data: {
+                                "user_id": s_UserData.id,
+                                "nickname": s_UserData.nickname,
+                                "login_id": s_UserData.login_id,
+                                "kind": $('#inquriryKind').val(),
+                                "title": $('#inquriryTitle').val(),
+                                "content": $('#inquriryContent').val(),
+                                "checked": $('#inquriryChecked').val()
                             },
                             async: false,
                             dataType: 'text',
@@ -3604,90 +3653,9 @@
                             console.log(e)
                         }
 
-                    });
-
-                });
-            }
-        }
-
-        function detailBb(json){
-            let detail_bb = document.getElementsByClassName("detail_bb");
-            for (let i = 0; i < detail_bb.length; i++) {
-
-                detail_bb[i].addEventListener('click', function () {
-
-                    allEmpty();
-                    $('#chartTbody').css('display', 'block');
-
-                    console.log("----앨범 정보클릭----");
-                    console.log("i : " + i);
-                    console.log(json);
-                    $.ajax({
-                        url: "<c:url value="/find/FindDetail"/>",
-                        type: "POST",
-                        dataType: 'text',
-                        data: {
-                            'artist' : json[i].artist,
-                            'album' : json[i].album,
-                        },
-                        async: false,
-                        success: function (data) {
-                            let json = JSON.parse(data);
-                            console.log("--앨범 정보 받음--")
-                            console.log(json)
-                            let html = '';
-                            let htmlb = '';
-
-
-                            $.each(json, function (i, item) {
-                                console.log("들어가서 i : " + i);
-                                htmlb = '<div id="detail_albumImg" class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
-                                    '<div id="detailInfo"><div><a class="detail_album">+' + item.album + '</a></div>' +
-                                    '<div><a class="detail_artist">' + item.artist + '</a></div>' +
-                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
-                                    '<div><p>발매일 - ' + item.release_date + '</p></div>' +
-                                    '</div>' +
-                                    // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
-                                    '</div>' +
-                                    '<div class="lyricsD">수록곡</div>'+
-                                    '<div id ="suggestion_lylics">' +
-                                    '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-secondary" id="findTitleHead">' +
-                                    '<tr><th scope="col" width="5%"></th>' +
-                                    '<th scope="col" width="5%">곡/앨범</th>' +
-                                    '<th scope="col" width="20%"></th>' +
-                                    '<th scope="col" width="15%">아티스트</th>' +
-                                    '<th scope="col" width="5%">듣기</th>' +
-                                    ' <th scope="col" width="5%">재생목록</th>' +
-                                    ' <th scope="col" width="5%">내 리스트</th>' +
-                                    ' <th scope="col" width="5%">더보기</th></tr></thead>' +
-                                    '<tbody class="findTbody">' +
-                                    '</tbody></table>' +
-                                    '</div>';
-                                html += '<tr class="b-wrap">'
-                                html += '<td scope="row">'
-                                html += '</td>'
-                                html += '<td>'
-                                html += '<img class="innerImg" src="img/' + item.cover_img + '">'
-                                html += '</td>'
-                                html += '<td id="title">' + item.title + '<br>' + item.album + '</td>'
-                                html += '<td id="artist">' + item.artist + '</td>'
-                                html += '<td>'
-                                html += '<i class="selectPlay fa-solid fa-play"></i>'
-                                html += '</td>'
-                                html += '<td>'
-                                html += '<i class="selectList fa-solid fa-list"></i>'
-                                html += '</td>'
-                                html += '<td>'
-                                html += '<i class="selectAdd fa-solid fa-folder-plus"></i>'
-                                html += '</td>' + '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
-                                    + '<ul class="dropdown-menu">'
-                                    + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
-                                    + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
-                                    + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
-                                    + '</ul>' + '</td>' +
-                                    '</tr>'
-                            })
+            })
+        /** 디테일 클릭 */
+        function detailClick(json) {
 
                             $("#suggestion_body").append(htmlb);
                             $(".findTbody").append(html);
