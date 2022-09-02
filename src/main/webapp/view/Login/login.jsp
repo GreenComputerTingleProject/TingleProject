@@ -8,21 +8,18 @@
     <link rel="stylesheet" href="<c:url value="/bootstrap/"/>css/bootstrap.min.css">
     <script type="text/javascript" src="<c:url value="/bootstrap/"/>js/bootstrap.bundle.min.js"></script>
     <style>
-        header {
-            font-size: 30px;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Noto+Sans+KR:wght@400&display=swap');
 
         div {
             display: block;
         }
 
         .login-container {
-            margin-top: 100px;
-            padding: 60px 120px;
+            padding: 50px 100px;
             width: 680px;
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
-            margin: 70px auto 0 auto;
+            margin: 200px auto 0 auto;
             background-color: #fff;
             border: 1px solid #d9d9d9;
         }
@@ -44,14 +41,15 @@
             box-sizing: border-box;
         }
 
-        .btn-info {
+        .btn-complete {
             margin-top: 25px;
             margin-bottom: 25px;
             width: 100%;
             height: 50px;
-            background: darkorchid;
-            border: 1px solid #fff;
             color: white;
+            background:  #9147ff;
+            border: 1px solid #fff;
+
         }
 
         .btn-info:hover{
@@ -59,7 +57,12 @@
             color: white;
         }
 
-        .logo {
+        #headLogo {
+            font-family: 'Carter One', cursive;
+            color: #9147ff;
+            font-size: 2.5em;
+        }
+        .logo{
             width: 100%;
             height: 100px;
             display: flex;
@@ -67,33 +70,26 @@
             justify-content: center;
         }
 
-        .btn-primary {
-            margin: 5px;
-            float: right;
-        }
-
-        .btn-success {
+        .btn-light {
             margin: 5px;
             float: left;
         }
     </style>
 </head>
 <body>
-<header class="logo">
-    <h4>Tingle</h4>
-</header>
+
 <div class="login-container">
-    <div class="logo">
-        <h1>로그인</h1>
+    <div id="headLogo" class="logo ">
+        <p>Tingle</p>
     </div>
     <form action="<c:url value="/user/UserLoginReg"/>" method="post">
         <input type="text" id="login_id" name="login_id" tabindex="0" placeholder="아이디" value="${login_id}">
         <input type="password" id="login_pw" name="login_pw" placeholder="비밀번호">
-        <input type="submit" class="btn btn-info" value="로그인"/>
-        <a href="<c:url value="/"/>" class="btn btn-success">홈으로</a>
-        <a href="<c:url value="/user/UserSignUp"/>" class="btn btn-success">회원 가입</a>
-        <a href="<c:url value="/user/UserPwReset"/>" class="btn btn-primary">비밀번호 재설정</a>
-        <a href="<c:url value="/user/UserIdFind"/>" class="btn btn-primary">아이디 찾기</a>
+        <input type="submit" class="btn-complete" value="로그인"/>
+        <a href="<c:url value="/"/>" class="btn btn-light">홈으로</a>
+        <a href="<c:url value="/user/UserSignUp"/>" class="btn btn-light">회원 가입</a>
+        <a href="<c:url value="/user/UserPwReset"/>" class="btn btn-light">비밀번호 재설정</a>
+        <a href="<c:url value="/user/UserIdFind"/>" class="btn btn-light">아이디 찾기</a>
     </form>
     <div id="modal1" class="modal">
         <div class="modal-dialog">

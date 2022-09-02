@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,10 +13,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
           integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Noto+Sans+KR:wght@100;300;400;500&display=swap');
+
         * {
             margin: 0;
             padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        a{
+            text-decoration: none;
+        }
+        th{
+            font-weight: normal;
         }
 
         #page-wrapper {
@@ -27,10 +39,16 @@
             width: 250px;
             height: 100%;
             margin-left: -250px;
-            background: black;
+            background: -webkit-gradient(linear,left bottom,left top,from(transparent),color-stop(14%,#000),to(#000));
             overflow-x: hidden;
             overflow-y: auto;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 300;
         }
+        #menuAll{
+            font-size: 1.2rem;
+        }
+
 
         #page-content-wrapper {
             width: 100%;
@@ -46,13 +64,13 @@
         #bottom-player-wrapper {
             width: 100%;
             height: 100px;
-            background: darkmagenta;
+            background: #191919;
             z-index: 2;
             position: fixed;
             left: 0;
             bottom: 0;
             display: flex;
-            justify-content: center;
+            justify-content:space-between;
             align-content: center;
         }
 
@@ -65,25 +83,44 @@
         }
 
         .sidebar-nav li {
-            text-indent: 1.5em;
-            line-height: 2.8em;
+            margin: 5px;
+            text-indent: 1.5rem;
+            line-height: 2em;
         }
 
         .sidebar-nav li a {
             display: block;
             text-decoration: none;
-            color: #999;
+            color: #cccccc;
         }
 
         .sidebar-nav li a:hover {
             color: #fff;
-            background: rgba(255, 255, 255, 0.2);
+
         }
 
         .sidebar-nav > .sidebar-brand {
-            font-size: 1.3em;
-            line-height: 3em;
+            font-size: 1.7rem;
+            line-height: 2.5em;
+
         }
+        #logo {
+            text-indent: 26px;
+            font-family: 'Carter One', cursive;
+            color: #9147ff;
+            /*color: #7717ad;*/
+            /*   color: #6e31df;*/
+            /*    color: #fff;*/
+
+        }
+        .login {
+            padding: 10px 0px 10px 0px;
+            border-bottom: 1px solid #333;
+            border-top: 1px solid #333;
+            opacity: 0.7;
+
+        }
+
 
         td {
             vertical-align: middle;
@@ -111,6 +148,15 @@
         }
 
 
+        .findAlbum_List {
+            list-style: none;
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            padding-inline-start: 40px;
+        }
         .findArtist_List {
             list-style: none;
             display: block;
@@ -123,39 +169,84 @@
 
         .findArtist_li {
             display: inline-block;
-            margin-right: 20px;
-            text-align: -webkit-match-parent;
+            margin-right: 30px;
+            text-align: center;
+        }
+        .findAlbum_li {
+            display: inline-block;
+            margin-right: 30px;
+
+        }
+        .aa {
+            width: 155px;
+            display: block;
+            margin-top: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            color: #000;
+
+        }
+        .bb {
+            width: 155px;
+            display: block;
+            color: #000;
+            opacity: 0.7;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
         }
 
         .b-wrap {
-            border-top: 0;
+
             height: 80px;
-            border-bottom: 1px solid gray;
+
+            /*height: 117px;*/
+            /*overflow: hidden;*/
+            /*white-space: nowrap;*/
+            /*text-overflow: ellipsis;*/
+        }
+
+        #chart_h1{
+            margin-top: 38px;
+            margin-bottom: 30px;
+            font-weight: 500;
         }
 
         .genreBtn {
             height: 32px;
             padding: 0 15px;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 32px;
             text-align: center;
             border-radius: 16px;
-            border: 1px solid purple;
+            border: 0;
             vertical-align: top;
             display: inline-block;
             background: #fff;
+            margin-bottom: 30px;
 
 
+        }
+        .genreBtn:active{
+            background: #9147ff;
+            color: white;
+        }
+        .clicked{
+            background: #9147ff;
+            color: white;
+        }
+        .btnClicked{
+            background: #9147ff;
         }
 
         h1 {
             margin-bottom: 20px;
         }
 
-        .aa {
-            display: block;
 
-        }
 
         /** 하단 플레이어 스타일 */
 
@@ -171,6 +262,12 @@
         #player-play, #player-pause {
             margin: 25px;
             font-size: 50px;
+
+            /*color: #9147ff;*/
+            color: #9147ff;
+          /*  color: #6e31df;*/
+
+
         }
 
         .fa-backward, .fa-forward, #player-volume, #player-volume-mute, #player-list {
@@ -188,15 +285,17 @@
         i:hover {
             cursor: pointer;
         }
-
-        img {
+        img{
             width: 100px;
             height: 100px;
         }
+        #player-img {
+            width: 70px;
+            height: 70px;
+            margin: 15px;
 
-        td {
-            vertical-align: middle;
         }
+
 
         #playList {
             width: 500px;
@@ -243,6 +342,7 @@
             width: 300px;
             height: 5px;
             margin-top: 50px;
+            --bs-progress-bar-bg: #9147ff;
         }
 
         .progress:hover {
@@ -262,6 +362,12 @@
         #player-volume-range {
             width: 100px;
             margin-top: 38px;
+
+        }
+
+        .form-range::-webkit-slider-thumb {
+            background: #9147ff;
+
         }
 
         #control-zone {
@@ -355,7 +461,6 @@
         }
 
         .suggestion_title {
-            margin-left: 5px;
             margin-top: 5px;
             width: 240px;
             height: 25px;
@@ -366,32 +471,70 @@
             -webkit-box-orient: vertical;
         }
 
+        #suggestion_artist{
+            opacity: 0.7;
+        }
+
         .suggestion_detail {
             width: 100%;
             height: 300px;
-            background: #ffffff;
             padding: 10px;
-            border: 1px #1a1e21 solid;
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: space-between;
+            justify-content:flex-start;
             margin-bottom: 10px;
         }
 
         #suggestion_lylics {
             width: 100%;
-            height: 600px;
-            background: #ffffff;
-            border: 1px #1a1e21 solid;
-            padding: 10px;
+            padding: 35px;
+
+        }
+        #sug_lylics{
+            white-space: pre-wrap;
+            width: 40%;
+            padding: 35px;
         }
 
         .suggestion_detail > img {
-            width: 20%;
-            height: 30vh;
+            width: 240px;
+            height: 240px;
+            margin-right: 50px;
+            margin-left: 35px;
+        }
+       .detailArtistImg{
+           width: 240px;
+           height: 240px;
+           margin-right: 50px;
+           margin-left: 35px;
+           border-radius: 50%;
+           overflow: hidden;
+       }
+       #detail_artistImg >.aImg{
+           margin-right: 50px;
+           margin-left: 35px;
+           width: 100%;
+           height: 100%;
+           object-fit: cover;
+       }
+        #detail_artistImg > #detailInfo{
+            padding-top: 40px;
         }
 
+        #detail_albumImg > #detailInfo{
+            padding-top: 46px;
+        }
+        #detail_albumImg > #detailInfo> div> p{
+            margin: 0;
+        }
+        #detail_albumImg > #detailInfo> div:nth-of-type(3){
+            padding-top: 30px;
+        }
+        #detail_albumImg > #detailInfo> div:nth-of-type(4) {
+            padding: 0;
+
+        }
 
         #detailInfo {
             width: 58%;
@@ -409,9 +552,13 @@
             background: #ffffff;
             width: 240px;
             height: 240px;
-
             margin: 0px;
             padding: 0px;
+        }
+
+        .suggestion_box > .select_icon{
+            margin-left: 0px;
+            margin-top: 32px;
         }
 
         .suggestion_box > .viewDetail {
@@ -490,6 +637,15 @@
         }
 
         /*게시판 스타일*/
+        #find_h1{
+            margin-top: 38px;
+            margin-bottom: 42px;
+        }
+        .findResult_h1{
+            cursor: pointer;
+            margin-top: 70px;
+            margin-bottom: 28px;
+        }
 
         fieldset {
             display: flex;
@@ -502,25 +658,33 @@
         .find_fieldset {
             width: 200px;
             height: 40px;
-            border: 1px solid #d2d2d2;
-            border-radius: 20px;
+            border: 1.2px solid #fff;
+            border-radius: 10px;
             vertical-align: middle;
             padding-right: 20px;
             background: #1a1a1a;
+            margin: 20px;
+
         }
 
         #findEnter {
             height: 70%;
-            width: 80%;
+            width: 70%;
             font-size: 13px;
-            border: 0;
             vertical-align: middle;
             padding: 0;
             box-sizing: border-box;
             background: #1a1a1a;
             color: white;
+            border-bottom: none;
 
         }
+        #findEnter:focus{
+            outline: none;
+
+        }
+
+
 
         #ficon {
             color: #a0a0a0;;
@@ -529,25 +693,115 @@
 
         }
 
-        /*.lyricsTd{*/
-        /*    display: inline-block;*/
-        /*    width: 200px;*/
-        /*    white-space: nowrap;*/
-        /*    overflow: hidden;*/
-        /*    text-overflow: ellipsis;*/
-        /*    */
-        /*}*/
-        .b-wrap {
+        .lyricsTd{
+            width: 500px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
 
-            /*height: 117px;*/
-            /*overflow: hidden;*/
-            /*white-space: nowrap;*/
-            /*text-overflow: ellipsis;*/
+        }
+        .lyricsD{
+            width: 70px;
+            height: 30px;
+            padding: 8px;
+            line-height: 15px;
+            margin-left: 30px;
+            color: white;
+            background: #9147ff;
+            text-align: center;
+            border-radius: 20px;
 
         }
 
-        .select_icon > i {
-            padding-right: 15px;
+        .select_icon{
+            margin-top: 80px;
+        }
+
+        .select_icon> i{
+            padding-right: 18px;
+            font-size: 24px;
+            opacity: 0.8;
+        }
+
+         .material-symbols-outlined {
+
+             vertical-align: middle;
+             padding-bottom: 5px;
+             padding-right: 10px;
+             text-indent: 0px;
+             font-variation-settings:
+                     'FILL' 0,
+                     'wght' 300,
+                     'GRAD' 200,
+                     'opsz' 48
+
+         }
+         .more{
+            opacity: 0.8;
+         }
+
+        #detailInfo >div > a{
+            font-size: 1.2em;
+        }
+        #detailInfo >div:first-child >a{
+            color: #000;
+            padding-top: 24px;
+            font-size: 2.0em;
+            text-decoration: none;
+        }
+        #detailInfo >div >p{
+            font-size: 1.3em;
+
+        }
+
+        #detailInfo>div{
+            padding-bottom: 12px;
+        }
+
+
+         .detail_title {
+             color: #666;
+             padding: 12px 0px 5px;
+             -webkit-font-smoothing: antialiased;
+             font-weight: 400;
+             font-size: 18px;
+             cursor: pointer;
+
+
+         }
+
+        .detail_album {
+            margin-bottom: 0;
+            padding-top: 10px;
+            font-size: 14px;
+            color: #969696;
+            -webkit-font-smoothing: antialiased;
+            cursor: pointer;
+        }
+        .detail_artist {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .detail_artist:hover{
+            text-decoration: underline;
+        }
+        .detail_album:hover{
+            text-decoration: underline;
+        }
+        .detail_title:hover{
+            text-decoration: underline;
+        }
+        #rank{
+            font-size: 15px;
+            color: #333;
+            font-weight: 700;
+            -webkit-font-smoothing: antialiased;
         }
 
     </style>
@@ -558,30 +812,38 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
-                <a class="suggestion" href="#">Tingle</a>
+                <a id="logo" class = "suggestion" href="#">Tingle</a>
             </li>
+
             <c:choose>
                 <c:when test="${userData == null}">
-                    <li><a href="<c:url value="/user/UserLogIn"/>">로그인</a></li>
+                    <li class="login"><a href="<c:url value="/user/UserLogIn"/>">
+                        <span class="material-symbols-outlined">account_circle</span>로그인</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="<c:url value="/user/UserLogOut"/>">로그아웃</a></li>
+                    <li class="login"><a href="<c:url value="/user/UserLogOut"/>">
+                        <span class="material-symbols-outlined">account_circle</span>로그아웃</a></li>
                 </c:otherwise>
             </c:choose>
-
+            <div id="menuAll">
             <li>
                 <fieldset class="find_fieldset">
                     <i id="ficon" class="fa-solid fa-magnifying-glass "></i>
-                    <input id="findEnter" class=" find-input iptxt" type="text" placeholder="검색"
+                    <input spellcheck="false"  id="findEnter" class=" find-input iptxt" type="text" placeholder="검색"
                     />
                 </fieldset>
             </li>
-            <li><a class="suggestion btncolor" href="#">추천</a></li>
-            <li><a class="chart" id="chart" href="#">차트</a></li>
-            <li><a id="library" href="#">보관함</a></li>
-            <li><a id="board" href="#">고객센터</a></li>
-            <li><a id="myPage" href="#">마이페이지</a></li>
-            <li><a href="admin/AdminLogin">관리자</a></li>
+            <li class="btncolor" ><a class="suggestion" href="#">
+                <span class="material-symbols-outlined">recommend</span>추천</a></li>
+            <li  class="btncolor"><a class="chart" id="chart" href="#">
+                <span class="material-symbols-outlined">leaderboard</span>차트</a></li>
+            <li  class="btncolor"><a id="library" href="#">
+                <span class="material-symbols-outlined">storage</span>보관함</a></li>
+            <li  class="btncolor"><a id="board" href="#">
+                <span class="material-symbols-outlined">help_center</span>고객센터</a></li>
+            <li  class="btncolor"><a id="myPage" href="#">
+                <span class="material-symbols-outlined">how_to_reg</span>마이페이지</a></li>
+            </div>
         </ul>
     </div>
     <!-- /사이드바 -->
@@ -622,7 +884,7 @@
             <%--차트--%>
             <div class="chartContainer" style="display: none">
                 <h1 id="chart_h1">TOP100</h1>
-                <button id="top100" class="chart genreBtn" type="button">top100</button>
+                <button id="top100" class="chart genreBtn clicked" type="button">TOP100</button>
                 <button id="ballad" class="genreBtn" type="button">발라드</button>
                 <button id="rock" class="genreBtn" type="button">락</button>
                 <button id="hiphop" class="genreBtn" type="button">힙합</button>
@@ -654,11 +916,11 @@
             <div class="find_Container" style="display: none">
                 <h1 id="find_h1">검색결과</h1>
                 <div id="findTitle_Container" style="display: none">
-                    <h1 id="findTitle_h1">곡 <i class="fa-solid fa-angle-right"></i></h1>
+                    <h2 class="findResult_h1" id="findTitle_h1">곡<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <table class="findTitle_table table table-hover">
-                        <thead class="table-dark" id="findTitleHead">
+                        <thead class="table-secondary" id="findTitleHead">
                         <tr>
-                            <th scope="col" width="5%"><input type="checkbox"></th>
+                            <th scope="col" width="5%"></th>
                             <th scope="col" width="5%">곡/앨범</th>
                             <th scope="col" width="20%"></th>
                             <th scope="col" width="15%">아티스트</th>
@@ -675,7 +937,7 @@
                 </div>
 
                 <div id="findArtist_Container" style="display: none">
-                    <h1 id="findArtist_h1">가수 <i class="fa-solid fa-angle-right"></i></h1>
+                    <h2 class="findResult_h1" id="findArtist_h1">가수<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <div class="findArtist_Container">
                         <ul class="findArtist_List">
 
@@ -683,7 +945,7 @@
                     </div>
                 </div>
                 <div id="findAlbum_Container" style="display: none">
-                    <h1 id="findAlbum_h1">앨범 <i class="fa-solid fa-angle-right"></i></h1>
+                    <h2 class="findResult_h1" id="findAlbum_h1">앨범<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <div class="findAlbum_Container">
                         <ul class="findAlbum_List">
 
@@ -692,11 +954,11 @@
                 </div>
 
                 <div id="findLyrics_Container" style="display: none">
-                    <h1 id="findLyrics_h1">가사 <i class="fa-solid fa-angle-right"></i></h1>
+                    <h2 class="findResult_h1" id="findLyrics_h1">가사<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <table class="findLyrics_table table table-hover">
-                        <thead class="table-dark" id="findLyricsHead">
+                        <thead class="table-secondary" id="findLyricsHead">
                         <tr>
-                            <th scope="col" width="5%"><input type="checkbox"></th>
+                            <th scope="col" width="5%"></th>
                             <th scope="col" width="5%">곡/가사</th>
                             <th scope="col" width="20%"></th>
                             <th scope="col" width="15%">아티스트</th>
@@ -975,6 +1237,7 @@
         }
 
         $('#player-play').click(function () {
+
             audio.play();
             $('#player-play').css('display', 'none');
             $('#player-pause').css('display', 'block');
@@ -1048,7 +1311,7 @@
         })
 
         $('#library').click(function () {
-            $('#modal_add').css("display", "none")
+            $('#modal_add').css("display","none")
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
@@ -1067,10 +1330,17 @@
             allEmpty();
             drawLibraryList();
             detailClick(s_LibraryData);
+                    allEmpty();
+                    drawLibraryList();
+                    detailClick(s_LibraryData);
+                    detailTitle(s_LibraryData);
+                    detailArtist(s_LibraryData);
+                    detailAlbum(s_LibraryData);
+
         })
 
         $("#myPage").click(function () {
-            $('#modal_add').css("display", "")
+            $('#modal_add').css("display","")
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
@@ -1102,8 +1372,9 @@
                 html += '<tr>';
                 html += '<td scope="row">' + '<input class="check" type="checkbox" name="check">' + '</td>';
                 html += '<td>' + '<img class="innerImg" src="" alt="">' + '</td>';
-                html += '<td>' + s_LibraryData[i].title + '<br>' + s_LibraryData[i].album + '</td>';
-                html += '<td>' + s_LibraryData[i].artist + '</td>';
+                html += '<td id="title">' + '<span class="detail_title">'+ s_LibraryData[i].title+'</span>' ;
+                html += '<br>'+ '<span  class="detail_album">' +  s_LibraryData[i].album +'</span>'+'</td>';
+                html += '<td id="artist" class="detail_artist">' + s_LibraryData[i].artist + '</td>';
                 html += '<td>' + '<i class="selectPlay fa-solid fa-play"></i>' + '</td>';
                 html += '<td>' + '<i class="selectList fa-solid fa-list"></i>' + '</td>';
                 html += '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
@@ -1131,6 +1402,7 @@
                 innerImg[i].src = coverImgList[i];
 
                 selectPlay[i].addEventListener('click', function () {
+                    playCount(s_LibraryData[i].id)
                     $('#player-play').css('display', 'block');
                     $('#player-pause').css('display', 'none');
                     audio.pause();
@@ -1268,9 +1540,9 @@
             html += '</thead>';
             for (const i in payList) {
                 html += '<tr>';
-                html += '<td>' + payList[i].imp_uid + '</td>';
-                html += '<td>' + payList[i].reg_date + '</td>';
-                html += '<td>' + payList[i].paid_amount + '원' + '</td>';
+                html += '<td>'+payList[i].imp_uid+'</td>';
+                html += '<td>'+payList[i].reg_date+'</td>';
+                html += '<td>'+payList[i].paid_amount + '원' +'</td>';
                 html += '</tr>';
             }
             html += '</table>';
@@ -1315,6 +1587,8 @@
                 $('#btn-group').css('display', 'none');
             }
         }
+
+
 
         $('#modal_play').click(function () {
             let check = document.getElementsByClassName("check");
@@ -1417,11 +1691,11 @@
             $.ajax({
                 type: 'GET',
                 url: '<c:url value="/music/MusicAddLibrary"/>',
-                data: 'music_id=' + s_LibraryDatas,
+                data: 'music_id=' +s_LibraryDatas,
                 async: false,
                 success: function (result) {
-                    if (isDuplicate) {
-                        if (addList == "") {
+                    if(isDuplicate) {
+                        if(addList == "") {
                             $('#modal-body2').html(duplicateList + '은(는) 이미 보관함에 있는 음악입니다.');
                             $('#modal2').modal('toggle');
                         } else {
@@ -1441,11 +1715,16 @@
             });
         })
 
+
+
+
+
+
         function playListInit() {
             let html = "";
 
             for (const i in nowPlayList) {
-                let songName = nowPlayList[i].substring(("<c:url value="/mp3/"/>").length).split('.')[0];
+                let songName = nowPlayList[i].substring( ("<c:url value="/mp3/"/>").length ).split('.')[0];
 
                 if (i == audioIndex) {
                     html += '<div style="color: red">' + songName + '</div>';
@@ -1655,7 +1934,8 @@
                     data.push(jArray[i])
                     html += '<td class="suggestion_box">' + '<button type ="button" class = "viewDetail" >';
                     html += '<img src="img/' + jArray[i].cover_img + '"/></button>';
-                    html += '<div class="suggestion_title">' + jArray[i].title + '</div>';
+                    html += '<div class="suggestion_title">'+jArray[i].title+'</div>';
+                    html += '<div id="suggestion_artist" class="suggestion_title">'+jArray[i].artist+'</div>';
                     html += '<div class="select_icon" style="margin-left: 5px; height= 30px;"><i class="selectPlay fa-solid fa-play"></i>';
                     html += '<i class="selectList fa-solid fa-list"></i>';
                     html += '<i class="s_selectAdd fa-solid fa-folder-plus"></i></div>';
@@ -1685,102 +1965,140 @@
             // 추천 노래의 이미지를 눌렀을때
             for (let i = 0; i < viewDetail.length; i++) {
                 viewDetail[i].addEventListener('click', function () {
+                    allEmpty();
+                    $('#chartTbody').css('display', 'block');
+                    console.log("----앨범 정보클릭----");
+                    console.log("i : " + i);
+                    console.log(data);
+                    $.ajax({
+                        url: "<c:url value="/find/FindDetailTitle"/>",
+                        type: "POST",
+                        dataType: 'text',
+                        data: {
+                            'title' :  data[i].title,
+                            'artist' : data[i].artist,
+                            'album' : data[i].album,
+                        },
+                        async: false,
+                        success: function (re) {
+                            let json = JSON.parse(re);
+                            console.log("--앨범 정보 받음--")
+                            console.log(json)
+                            let html = '';
+                            $.each(json, function (i, item) {
 
+                                html += '<div class="suggestion_detail">' +
+                                    '<img src="img/' + item.cover_img + '">';
+                                html += '<div id="detailInfo">' +
+                                    '<div>' +
+                                    '<a href="#" class="detail_title">' + item.title + '</a>' +
+                                    '</div>';
+                                html += '<div>' +
+                                    '<a href="#" class="detail_album">' + item.album + '</a>' +
+                                    '</div>'
+                                html += '<div>' +
+                                    '<a href="#" class="detail_artist">' + item.artist + '</a>' +
+                                    '</div>';
+                                html += '<div class="select_icon">' +
+                                    '<i class="selectPlay fa-solid fa-play">' +
+                                    '</i>'
+                                html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
+                                html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div>' +
+                                    '</div>';
+                                // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                html += '</div>'
+                                html += '<div class="lyricsD">가사</div>'
+                                html += '<div id ="sug_lylics">'
+                                html += item.lyrics + '</div>'
+                            })
+                            $("#suggestion_body").append(html);
+
+                            let selectPlay = document.getElementsByClassName("selectPlay");
+                            let selectList = document.getElementsByClassName("selectList");
+                            let selectAdd = document.getElementsByClassName("selectAdd");
+                            detailClick(json);
+                            detailTitle(json);
+                            detailArtist(json);
+                            detailAlbum(json);
+                            $.each(json, function (i, item) {
+                                selectPlay[i].addEventListener('click', function () {
+                                    playCount(item.id);
+                                    $('#player-play').css('display', 'block');
+                                    $('#player-pause').css('display', 'none');
+                                    audio.pause();
+
+                                    nowPlayList = [];
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    for (const i in nowPlayList) {
+                                        preloadAudio(nowPlayList[i]);
+                                    }
+
+                                    audioIndex = 0;
+
+                                    playListInit3(item);
+
+                                    setTimeout(() => {
+                                        $('#player-play').css('display', 'none');
+                                        $('#player-pause').css('display', 'block');
+                                        audio.play();
+                                    }, 300);
+                                })
+
+                                selectList[i].addEventListener('click', function () {
+                                    if (nowPlayList.includes("<c:url value="/mp3/"/>" +item.file_path)) {
+                                        $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                                        $('#modal2').modal('toggle');
+                                    } else {
+                                        nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+                                        $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                                        $('#modal2').modal('toggle');
+                                        playListInit3(json[i]);
+                                    }
+                                })
+
+                                selectAdd[i].addEventListener('click', function () {
+                                    if(isSessionLoaded) {
+
+                                        if(JSON.stringify(libraryData).includes(item.file_path)) {
+                                            $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                            $('#modal2').modal('toggle');
+                                        } else {
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: '<c:url value="/music/MusicAddLibrary"/>',
+                                                data: 'music_id=' + item.id,
+                                                async: false,
+                                                success: function (result) {
+                                                    getLibrary();
+                                                    $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                                    $('#modal2').modal('toggle');
+                                                },
+                                                error: function (e) {
+                                                    console.log(e);
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                                        $('#modal1').modal('toggle');
+                                    }
+                                })
+
+                            })
+                        },
+                        error: function (e) {
+
+                            console.log(e)
+                        }
+                    });
+                });
+            }
+         }
                     // 오브젝트 배열
                     $("#suggestion_body").empty();
                     $('#suggestion_body').css('display', 'block');
-                    let html = '';
 
-                    html += '<div class="suggestion_detail"><img src="img/' + data[i].cover_img + '">';
-                    html += '<div id="detailInfo"><div><h4 class="detail_album">' + data[i].album + '<h4></div>'
-                    html += '<div><h3 class="detail_title">' + data[i].title + '</h3></div>';
-                    html += '<div><h3 class="detail_artist">' + data[i].artist + '</h3></div>';
-                    html += '<div><h2 >' + data[i].genre + '</h2></div>';
-                    html += '<div><h2>' + data[i].release_date + '</h2></div>';
-                    html += '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>'
-                    html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
-                    html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>';
-                    html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
-                    html += '</div>'
-                    html += '<div id ="suggestion_lylics">'
-                    html += data[i].lyrics + '</div>'
-                    $("#suggestion_body").append(html);
-
-                    let selectPlay = document.getElementsByClassName("selectPlay");
-                    let selectList = document.getElementsByClassName("selectList");
-                    let selectAdd = document.getElementsByClassName("selectAdd");
-
-                    selectPlay[0].addEventListener('click', function () {
-                        $('#player-play').css('display', 'block');
-                        $('#player-pause').css('display', 'none');
-                        audio.pause();
-
-                        nowPlayList = [];
-                        nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
-
-                        for (const i in nowPlayList) {
-                            preloadAudio(nowPlayList[i]);
-                        }
-
-                        audioIndex = 0;
-
-                        playListInit3(data[i]);
-
-                        setTimeout(() => {
-                            $('#player-play').css('display', 'none');
-                            $('#player-pause').css('display', 'block');
-                            audio.play();
-                        }, 300);
-                    })
-
-                    selectList[0].addEventListener('click', function () {
-                        if (nowPlayList.includes("<c:url value="/mp3/"/>" + data[i].file_path)) {
-                            $('#modal-body2').text((data[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
-                            $('#modal2').modal('toggle');
-                        } else {
-                            nowPlayList.push("<c:url value="/mp3/"/>" + data[i].file_path);
-                            $('#modal-body2').text((data[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
-                            $('#modal2').modal('toggle');
-                            playListInit3(data[i]);
-                        }
-                    })
-
-                    selectAdd[0].addEventListener('click', function () {
-                        if (isSessionLoaded) {
-
-                            if (JSON.stringify(libraryData).includes(data[i].file_path)) {
-                                $('#modal-body2').text((data[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
-                                $('#modal2').modal('toggle');
-                            } else {
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '<c:url value="/music/MusicAddLibrary"/>',
-                                    data: 'music_id=' + data[i].id,
-                                    async: false,
-                                    success: function (result) {
-                                        getLibrary();
-                                        $('#modal-body2').text((data[i].file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
-                                        $('#modal2').modal('toggle');
-                                    },
-                                    error: function (e) {
-                                        console.log(e);
-                                    }
-                                });
-                            }
-                        } else {
-                            $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
-                            $('#modal1').modal('toggle');
-                        }
-                    })
-
-
-                    document.getElementById('go_suggestion').addEventListener('click', function () {
-                        // suggestion();
-                    })
-
-                })
-            }
-        }
 
         function selects(data, selectPlay, selectList, s_selectAdd) {
             for (let i = 0; i < selectList.length; i++) {
@@ -1940,15 +2258,15 @@
 
 
         // 게시판 클릭시 - 현석
-        document.getElementById("notice_btn").addEventListener('click', function () {
+        document.getElementById("notice_btn").addEventListener('click', function (){
             board_notice();
         })
 
-        document.getElementById("FAQ_btn").addEventListener('click', function () {
+        document.getElementById("FAQ_btn").addEventListener('click', function (){
             board_FAQ();
         })
 
-        document.getElementById("inquiry_btn").addEventListener('click', function () {
+        document.getElementById("inquiry_btn").addEventListener('click', function (){
             if (!isSessionLoaded) {
                 $('#modal-body1').text('로그인 후에 이용할 수 있습니다');
                 $('#modal1').modal('toggle');
@@ -1959,6 +2277,7 @@
         })
 
         $('#board').click(function () {
+            console.log("sssss");
             board_notice();
             $('#modal_add').css("display", "")
 
@@ -2159,7 +2478,6 @@
                 html += '<td width=100px>' + board_data[i].checked + '</td>';
                 html += '</tr></table></div>';
             }
-            html += '<div style="margin-left: 1400px; margin-top: 10px;"><button style="width: 100px; height: 50px;" type="button" id="doInquriry">문의하기</dutton></div>';
             $('.board_body').empty();
             $(".board_body").append(html);
 
@@ -2297,10 +2615,62 @@
             })
         }
 
-        //차트 클릭시
-        $('.chart').click(function () {
+ // /** 메뉴 버튼 클릭시 */
+ //        var btncolor = document.getElementsByClassName("btncolor");
+ //
+ //        function handleCClick(event) {
+ //            console.log(event.target);
+ //
+ //            console.log(event.target.classList);
+ //
+ //            if (event.target.classList[1] === "btnClicked") {
+ //                event.target.classList.remove("btnClicked");
+ //            } else {
+ //                for (var i = 0; i < btncolor.length; i++) {
+ //                    btncolor[i].classList.remove("btnClicked");
+ //                }
+ //
+ //                event.target.classList.add("btnClicked");
+ //            }
+ //        }
+ //
+ //        function btnCInit() {
+ //            for (var i = 0; i < btncolor.length; i++) {
+ //                btncolor[i].addEventListener("click",handleCClick);
+ //            }
+ //        }
+ //
+ //        btnCInit();
+        /** 차트 장르 버튼 클릭시 */
+        var genreBtn = document.getElementsByClassName("genreBtn");
 
+        function handleClick(event) {
+            console.log(event.target);
+
+            console.log(event.target.classList);
+
+            if (event.target.classList[1] === "clicked") {
+                event.target.classList.remove("clicked");
+            } else {
+                for (var i = 0; i < genreBtn.length; i++) {
+                    genreBtn[i].classList.remove("clicked");
+                }
+
+                event.target.classList.add("clicked");
+            }
+        }
+
+        function btnInit() {
+            for (var i = 0; i < genreBtn.length; i++) {
+                genreBtn[i].addEventListener("click", handleClick);
+            }
+        }
+
+
+    /**차트 클릭시*/
+        $('.chart').click(function () {
             allEmpty();
+            btnInit();
             // $('#top100').attr("style", "background: purple");
             $('.chartTable').attr("style", "display:");
             $('.chartContainer').attr("style", "display:");
@@ -2338,8 +2708,10 @@
                             '<td>' +
                             '<img class="innerImg" src="img/' + item.cover_img + '">' +
                             '</td>' +
-                            '<td id="title">' + item.title + '<br>' + item.album + '</td>' +
-                            '<td id="artist">' + item.artist + '</td>' +
+                            '<td id="title">' +
+                            '<strong class="detail_title">'+item.title+'</strong>'  + '<br>'+ '<p class="detail_album">' + item.album +'</p>'+
+                            '</td>' +
+                            '<td id="artist" class="detail_artist">' + item.artist + '</td>' +
                             '<td>' +
                             '<i class="selectPlay fa-solid fa-play"></i>' +
                             '</td>' +
@@ -2364,6 +2736,9 @@
 
                     playButtonCLick(json);
                     detailClick(json);
+                    detailTitle(json);
+                    detailAlbum(json);
+                    detailArtist(json);
 
                     /** 발라드 클릭시 */
                     $('#ballad').click(function () {
@@ -2467,7 +2842,7 @@
 
                     });
 
-                    /** 클래식 클릭시*/
+                /** 클래식 클릭시*/
                     $('#classic').click(function () {
 
                         console.log("클릭")
@@ -2514,7 +2889,7 @@
                 }
             });
 
-            /** chart success 함수 */
+           /** chart success 함수 */
             function success(data) {
                 const json = JSON.parse(data);
                 s_LibraryData = json;
@@ -2529,8 +2904,10 @@
                         '<td>' +
                         '<img class="innerImg" src="img/' + item.cover_img + '">' +
                         '</td>' +
-                        '<td id="title">' + item.title + '<br>' + item.album + '</td>' +
-                        '<td id="artist">' + item.artist + '</td>' +
+                        '<td id="title">' +
+                        '<span class="detail_title">'+item.title+'</span>'  + '<br>'+ '<span  class="detail_album">' + item.album +'</span>'+
+                        '</td>' +
+                        '<td id="artist" class="detail_artist">' + item.artist + '</td>' +
                         '<td>' +
                         '<i class="selectPlay fa-solid fa-play"></i>' +
                         '</td>' +
@@ -2549,132 +2926,296 @@
                         '</tr>');
                     $(".chartTbody").append(html);
                 })
-                playButtonCLick(json);
-                detailClick(json);
-            }
+               playButtonCLick(json);
+               detailClick(json);
+               detailTitle(json);
+               detailAlbum(json);
+               detailArtist(json);
+             }
 
-        })
-
-        /** 디테일 클릭 */
-        function detailClick(json) {
-
-            let dropMusicInfo = document.getElementsByClassName("dropMusicInfo");
-            let dropAlbumInfo = document.getElementsByClassName("dropAlbumInfo");
-            let dropArtistInfo = document.getElementsByClassName("dropArtistInfo");
+            })
 
 
-            for (let i = 0; i < dropMusicInfo.length; i++) {
-
-                dropMusicInfo[i].addEventListener('click', function () {
+        function detailTitle(json){
+            let detail_title = document.getElementsByClassName("detail_title");
+            for (let i = 0; i < detail_title.length; i++) {
+                detail_title[i].addEventListener('click',function (){
                     allEmpty();
-                    console.log("곡정보 클릭!");
                     $('#chartTbody').css('display', 'block');
-                    let html = '';
 
-                    html += '<div class="suggestion_detail">' +
-                        '<img src="img/' + json[i].cover_img + '">';
-                    html += '<div id="detailInfo">' +
-                        '<div>' +
-                        '<h3 class="detail_title ">' + json[i].title + '</h3>' +
-                        '</div>';
-                    html += '<div>' +
-                        '<h4 class="detail_album ">' + json[i].album + '<h4>' +
-                        '</div>'
-                    html += '<div>' +
-                        '<h3 class="detail_artist ">' + json[i].artist + '</h3>' +
-                        '</div>';
-                    html += '<div class="select_icon">' +
-                        '<i class="selectPlay fa-solid fa-play">' +
-                        '</i>'
-                    html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
-                    html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div>' +
-                        '</div>';
-                    // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
-                    html += '</div>'
-                    html += '<div id ="suggestion_lylics">'
-                    html += json[i].lyrics + '</div>'
-                    $("#suggestion_body").append(html);
+                    console.log("----앨범 정보클릭----");
+                    console.log("i : " + i);
+                    console.log(json);
+                    $.ajax({
+                        url: "<c:url value="/find/FindDetailTitle"/>",
+                        type: "POST",
+                        dataType: 'text',
+                        data: {
+                            'title' :  json[i].title,
+                            'artist' : json[i].artist,
+                            'album' : json[i].album,
+                        },
+                        async: false,
+                        success: function (data) {
+                            let json = JSON.parse(data);
+                            console.log("--앨범 정보 받음--")
+                            console.log(json)
+                            let html = '';
+                            $.each(json, function (i, item) {
+                                html += '<div class="suggestion_detail">' +
+                                    '<img src="img/' + item.cover_img + '">';
+                                html += '<div id="detailInfo">' +
+                                    '<div>' +
+                                    '<a href="#" class="detail_title">' + item.title + '</a>' +
+                                    '</div>';
+                                html += '<div>' +
+                                    '<a href="#" class="detail_album">' + item.album + '</a>' +
+                                    '</div>'
+                                html += '<div>' +
+                                    '<a href="#" class="detail_artist">' + item.artist + '</a>' +
+                                    '</div>';
+                                html += '<div class="select_icon">' +
+                                    '<i class="selectPlay fa-solid fa-play">' +
+                                    '</i>'
+                                html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
+                                html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div>' +
+                                    '</div>';
+                                // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                html += '</div>'
+                                html += '<div class="lyricsD">가사</div>'
+                                html += '<div id ="sug_lylics">'
+                                html += item.lyrics + '</div>'
+                            })
+                            $("#suggestion_body").append(html);
 
-                    let selectPlay = document.getElementsByClassName("selectPlay");
-                    let selectList = document.getElementsByClassName("selectList");
-                    let selectAdd = document.getElementsByClassName("selectAdd");
+                            let selectPlay = document.getElementsByClassName("selectPlay");
+                            let selectList = document.getElementsByClassName("selectList");
+                            let selectAdd = document.getElementsByClassName("selectAdd");
+                            detailClick(json);
+                            detailTitle(json);
+                            detailArtist(json);
+                            detailAlbum(json);
+                            $.each(json, function (i, item) {
+                                selectPlay[i].addEventListener('click', function () {
+                                    playCount(item.id);
+                                    $('#player-play').css('display', 'block');
+                                    $('#player-pause').css('display', 'none');
+                                    audio.pause();
 
+                                    nowPlayList = [];
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
 
-                    selectPlay[0].addEventListener('click', function () {
-                        $('#player-play').css('display', 'block');
-                        $('#player-pause').css('display', 'none');
-                        audio.pause();
-
-                        nowPlayList = [];
-                        nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
-
-                        for (const i in nowPlayList) {
-                            preloadAudio(nowPlayList[i]);
-                        }
-
-                        audioIndex = 0;
-
-                        playListInit3(json[i]);
-
-                        setTimeout(() => {
-                            $('#player-play').css('display', 'none');
-                            $('#player-pause').css('display', 'block');
-                            audio.play();
-                        }, 300);
-                    })
-
-                    selectList[0].addEventListener('click', function () {
-                        if (nowPlayList.includes("<c:url value="/mp3/"/>" + json[i].file_path)) {
-                            $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
-                            $('#modal2').modal('toggle');
-                        } else {
-                            nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
-                            $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
-                            $('#modal2').modal('toggle');
-                            playListInit3(json[i]);
-                        }
-                    })
-
-                    selectAdd[0].addEventListener('click', function () {
-                        if (isSessionLoaded) {
-
-                            if (JSON.stringify(libraryData).includes(json[i].file_path)) {
-                                $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
-                                $('#modal2').modal('toggle');
-                            } else {
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '<c:url value="/music/MusicAddLibrary"/>',
-                                    data: 'music_id=' + json[i].id,
-                                    async: false,
-                                    success: function (result) {
-                                        getLibrary();
-                                        $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
-                                        $('#modal2').modal('toggle');
-                                    },
-                                    error: function (e) {
-                                        console.log(e);
+                                    for (const i in nowPlayList) {
+                                        preloadAudio(nowPlayList[i]);
                                     }
-                                });
-                            }
-                        } else {
-                            $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
-                            $('#modal1').modal('toggle');
+
+                                    audioIndex = 0;
+
+                                    playListInit3(item);
+
+                                    setTimeout(() => {
+                                        $('#player-play').css('display', 'none');
+                                        $('#player-pause').css('display', 'block');
+                                        audio.play();
+                                    }, 300);
+                                })
+
+                                selectList[i].addEventListener('click', function () {
+                                    if (nowPlayList.includes("<c:url value="/mp3/"/>" +item.file_path)) {
+                                        $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                                        $('#modal2').modal('toggle');
+                                    } else {
+                                        nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+                                        $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                                        $('#modal2').modal('toggle');
+                                        playListInit3(json[i]);
+                                    }
+                                })
+
+                                selectAdd[i].addEventListener('click', function () {
+                                    if(isSessionLoaded) {
+
+                                        if(JSON.stringify(libraryData).includes(item.file_path)) {
+                                            $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                            $('#modal2').modal('toggle');
+                                        } else {
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: '<c:url value="/music/MusicAddLibrary"/>',
+                                                data: 'music_id=' + item.id,
+                                                async: false,
+                                                success: function (result) {
+                                                    getLibrary();
+                                                    $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                                    $('#modal2').modal('toggle');
+                                                },
+                                                error: function (e) {
+                                                    console.log(e);
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                                        $('#modal1').modal('toggle');
+                                    }
+                                })
+
+                            })
+                        },
+                        error: function (e) {
+
+                            console.log(e)
                         }
-                    })
-
-                    detailClick(json);
+                    });
                 });
+            }
+        }
+        function detailLt(json){
+            let detail_Lt = document.getElementsByClassName("detail_Lt");
+            for (let i = 0; i < detail_Lt.length; i++) {
+                detail_Lt[i].addEventListener('click',function (){
+                    allEmpty();
+                    $('#chartTbody').css('display', 'block');
 
+                    console.log("----앨범 정보클릭----");
+                    console.log("i : " + i);
+                    console.log(json);
+                    $.ajax({
+                        url: "<c:url value="/find/FindDetailTitle"/>",
+                        type: "POST",
+                        dataType: 'text',
+                        data: {
+                            'title' :  json[i].title,
+                            'artist' : json[i].artist,
+                            'album' : json[i].album,
+                        },
+                        async: false,
+                        success: function (data) {
+                            let json = JSON.parse(data);
+                            console.log("--앨범 정보 받음--")
+                            console.log(json)
+                            let html = '';
+                            $.each(json, function (i, item) {
+                                html += '<div class="suggestion_detail">' +
+                                    '<img src="img/' + item.cover_img + '">';
+                                html += '<div id="detailInfo">' +
+                                    '<div>' +
+                                    '<a href="#" class="detail_title">' + item.title + '</a>' +
+                                    '</div>';
+                                html += '<div>' +
+                                    '<a href="#" class="detail_album">' + item.album + '</a>' +
+                                    '</div>'
+                                html += '<div>' +
+                                    '<a href="#" class="detail_artist">' + item.artist + '</a>' +
+                                    '</div>';
+                                html += '<div class="select_icon">' +
+                                    '<i class="selectPlay fa-solid fa-play">' +
+                                    '</i>'
+                                html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
+                                html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div>' +
+                                    '</div>';
+                                // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                html += '</div>'
+                                html += '<div class="lyricsD">가사</div>'
+                                html += '<div id ="sug_lylics">'
+                                html += item.lyrics + '</div>'
+                            })
+                            $("#suggestion_body").append(html);
 
-                dropArtistInfo[i].addEventListener('click', function () {
+                            let selectPlay = document.getElementsByClassName("selectPlay");
+                            let selectList = document.getElementsByClassName("selectList");
+                            let selectAdd = document.getElementsByClassName("selectAdd");
+                            detailClick(json);
+                            detailTitle(json);
+                            detailArtist(json);
+                            detailAlbum(json);
+                            $.each(json, function (i, item) {
+                                selectPlay[i].addEventListener('click', function () {
+                                    playCount(item.id);
+                                    $('#player-play').css('display', 'block');
+                                    $('#player-pause').css('display', 'none');
+                                    audio.pause();
+
+                                    nowPlayList = [];
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    for (const i in nowPlayList) {
+                                        preloadAudio(nowPlayList[i]);
+                                    }
+
+                                    audioIndex = 0;
+
+                                    playListInit3(item);
+
+                                    setTimeout(() => {
+                                        $('#player-play').css('display', 'none');
+                                        $('#player-pause').css('display', 'block');
+                                        audio.play();
+                                    }, 300);
+                                })
+
+                                selectList[i].addEventListener('click', function () {
+                                    if (nowPlayList.includes("<c:url value="/mp3/"/>" +item.file_path)) {
+                                        $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                                        $('#modal2').modal('toggle');
+                                    } else {
+                                        nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+                                        $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                                        $('#modal2').modal('toggle');
+                                        playListInit3(json[i]);
+                                    }
+                                })
+
+                                selectAdd[i].addEventListener('click', function () {
+                                    if(isSessionLoaded) {
+
+                                        if(JSON.stringify(libraryData).includes(item.file_path)) {
+                                            $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                            $('#modal2').modal('toggle');
+                                        } else {
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: '<c:url value="/music/MusicAddLibrary"/>',
+                                                data: 'music_id=' + item.id,
+                                                async: false,
+                                                success: function (result) {
+                                                    getLibrary();
+                                                    $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                                    $('#modal2').modal('toggle');
+                                                },
+                                                error: function (e) {
+                                                    console.log(e);
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                                        $('#modal1').modal('toggle');
+                                    }
+                                })
+
+                            })
+                        },
+                        error: function (e) {
+
+                            console.log(e)
+                        }
+                    });
+                });
+            }
+        }
+        function detailArtist(json){
+            let detail_artist = document.getElementsByClassName("detail_artist");
+            for (let i = 0; i < detail_artist.length; i++) {
+
+                detail_artist[i].addEventListener('click', function () {
                     allEmpty();
                     $('#chartTbody').css('display', 'block');
                     console.log("----아티스트 정보클릭----");
                     console.log("i : " + i);
                     console.log(json);
                     $.ajax({
-                        url: "<c:url value="/find/FindResult"/>",
+                        url: "<c:url value="/find/FindDetailResult"/>",
                         type: "POST",
                         dataType: 'text',
                         data: 'find-input=' + json[i].artist,
@@ -2687,18 +3228,15 @@
                             let htmlb = '';
 
                             $.each(json[1], function (i, item) {
-                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.artist_img + '">' +
-                                    '<div id="detailInfo"><div><h4 class="detail_artist ">' + item.artist + '<h4></div>' +
-                                    '<div><h2>' + item.genre + '</h2></div>' +
-                                    // '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>' +
-                                    // '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
-                                    // '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>' +
-                                    // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                htmlb = '<div id="detail_artistImg" class="suggestion_detail"><div class="detailArtistImg"><img class="aImg" src="img/' + item.artist_img + '"></div>' +
+                                    '<div id="detailInfo"><div><a class="detail_artist ">' + item.artist + '</a></div>' +
+                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
                                     '</div></div>' +
+                                    '<div class="lyricsD">곡</div>'+
                                     '<div id ="suggestion_lylics">' +
                                     '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-dark" id="findTitleHead">' +
-                                    '<tr><th scope="col" width="5%"><input type="checkbox"></th>' +
+                                    ' <thead class="table-secondary" id="findTitleHead">' +
+                                    '<tr><th scope="col" width="5%"></th>' +
                                     '<th scope="col" width="5%">곡/앨범</th>' +
                                     '<th scope="col" width="20%"></th>' +
                                     '<th scope="col" width="15%">아티스트</th>' +
@@ -2712,7 +3250,6 @@
 
                                 html += '<tr class="b-wrap">'
                                 html += '<td scope="row">'
-                                html += '<input class="check" type="checkbox" name="check">'
                                 html += '</td>'
                                 html += '<td>'
                                 html += '<img class="innerImg" src="img/' + item.cover_img + '">'
@@ -2739,16 +3276,21 @@
 
                             $("#suggestion_body").append(htmlb);
                             $(".findTbody").append(html);
+
 
                             let selectPlay = document.getElementsByClassName("selectPlay");
                             let selectList = document.getElementsByClassName("selectList");
                             let selectAdd = document.getElementsByClassName("selectAdd");
 
                             detailClick(json[1]);
+                            detailTitle(json[1]);
+                            detailArtist(json[1]);
+                            detailAlbum(json[1]);
 
                             $.each(json[1], function (i, item) {
 
                                 selectPlay[i].addEventListener('click', function () {
+                                    playCount(item.id);
                                     $('#player-play').css('display', 'block');
                                     $('#player-pause').css('display', 'none');
                                     audio.pause();
@@ -2772,88 +3314,81 @@
                                 })
 
                                 selectList[i].addEventListener('click', function () {
-                                    if (nowPlayList.includes("<c:url value="/mp3/"/>" + item.file_path)) {
-                                        $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
-                                        $('#modal2').modal('toggle');
-                                    } else {
-                                        nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
-                                        $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
-                                        $('#modal2').modal('toggle');
-                                        playListInit3(item);
-                                    }
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    playListInit3(item);
                                 })
 
                                 selectAdd[i].addEventListener('click', function () {
-                                    if (isSessionLoaded) {
-
-                                        if (JSON.stringify(libraryData).includes(item.file_path)) {
-                                            $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '<c:url value="/music/MusicAddLibrary"/>',
+                                        data: 'music_id=' + json[i].id,
+                                        async: false,
+                                        success: function (result) {
+                                            getLibrary();
+                                            $('#modal-body2').text('보관함에 추가되었습니다');
                                             $('#modal2').modal('toggle');
-                                        } else {
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '<c:url value="/music/MusicAddLibrary"/>',
-                                                data: 'music_id=' + item.id,
-                                                async: false,
-                                                success: function (result) {
-                                                    getLibrary();
-                                                    $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
-                                                    $('#modal2').modal('toggle');
-                                                },
-                                                error: function (e) {
-                                                    console.log(e);
-                                                }
-                                            });
+
+                                        },
+                                        error: function (e) {
+                                            console.log(e);
                                         }
-                                    } else {
-                                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
-                                        $('#modal1').modal('toggle');
-                                    }
+                                    });
                                 })
+                                // document.getElementById('go_suggestion').addEventListener('click', function () {
+                                //     suggestion();
+                                // })
+
                             })
+
+
                         },
                         error: function (e) {
+
                             console.log(e)
                         }
-                    });
-                });
 
-                dropAlbumInfo[i].addEventListener('click', function () {
+                    });
+
+                });
+            }
+        }
+        function detailAr(json){
+            let detail_ar = document.getElementsByClassName("detail_ar");
+            for (let i = 0; i < detail_ar.length; i++) {
+
+
+                detail_ar[i].addEventListener('click', function () {
                     allEmpty();
                     $('#chartTbody').css('display', 'block');
-
-                    console.log("----앨범 정보클릭----");
+                    console.log("----아티스트 정보클릭----");
                     console.log("i : " + i);
                     console.log(json);
                     $.ajax({
-                        url: "<c:url value="/find/FindResult"/>",
+                        url: "<c:url value="/find/FindDetailResult"/>",
                         type: "POST",
                         dataType: 'text',
-                        data: 'find-input=' + json[i].album,
+                        data: 'find-input=' + json[i].artist,
                         async: false,
                         success: function (data) {
                             let json = JSON.parse(data);
-                            console.log("--앨범 정보 받음--")
+                            console.log("--아티스트 정보 받음--")
                             console.log(json)
                             let html = '';
                             let htmlb = '';
 
-                            $.each(json[2], function (i, item) {
-
-                                htmlb = '<div class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
-                                    '<div id="detailInfo"><div><h4 class="detail_album ">' + item.album + '<h4></div>' +
-                                    '<div><h3 class="detail_artist ">' + item.artist + '</h3></div>' +
-                                    '<div><h2>' + item.genre + '</h2></div>' +
-                                    '<div><h2>' + item.release_date + '</h2></div>' +
-                                    '<div class="select_icon">' +
-                                    '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
-                                    '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>' +
-                                    // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
-                                    '</div>' +
+                            $.each(json[1], function (i, item) {
+                                htmlb = '<div id="detail_artistImg" class="suggestion_detail"><div class="detailArtistImg"><img class="aImg" src="img/' + item.artist_img + '"></div>' +
+                                    '<div id="detailInfo"><div><a class="detail_artist ">' + item.artist + '</a></div>' +
+                                    '<div><p>장르 - ' + item.genre + '</p></div>' +
+                                    // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                    '</div></div>' +
+                                    '<div class="lyricsD">곡</div>'+
                                     '<div id ="suggestion_lylics">' +
                                     '<table class="findTitle_table table table-hover">' +
-                                    ' <thead class="table-dark" id="findTitleHead">' +
-                                    '<tr><th scope="col" width="5%"><input type="checkbox"></th>' +
+                                    ' <thead class="table-secondary" id="findTitleHead">' +
+                                    '<tr><th scope="col" width="5%"></th>' +
                                     '<th scope="col" width="5%">곡/앨범</th>' +
                                     '<th scope="col" width="20%"></th>' +
                                     '<th scope="col" width="15%">아티스트</th>' +
@@ -2864,9 +3399,9 @@
                                     '<tbody class="findTbody">' +
                                     '</tbody></table>' +
                                     '</div>';
+
                                 html += '<tr class="b-wrap">'
                                 html += '<td scope="row">'
-                                html += '<input class="check" type="checkbox" name="check">'
                                 html += '</td>'
                                 html += '<td>'
                                 html += '<img class="innerImg" src="img/' + item.cover_img + '">'
@@ -2888,20 +3423,26 @@
                                     + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
                                     + '</ul>' + '</td>' +
                                     '</tr>'
+
                             })
 
                             $("#suggestion_body").append(htmlb);
                             $(".findTbody").append(html);
 
-                            detailClick(json[2]);
 
                             let selectPlay = document.getElementsByClassName("selectPlay");
                             let selectList = document.getElementsByClassName("selectList");
                             let selectAdd = document.getElementsByClassName("selectAdd");
 
-                            $.each(json[2], function (i, item) {
+                            detailClick(json[1]);
+                            detailTitle(json[1]);
+                            detailArtist(json[1]);
+                            detailAlbum(json[1]);
+
+                            $.each(json[1], function (i, item) {
 
                                 selectPlay[i].addEventListener('click', function () {
+                                    playCount(item.id);
                                     $('#player-play').css('display', 'block');
                                     $('#player-pause').css('display', 'none');
                                     audio.pause();
@@ -2925,441 +3466,1270 @@
                                 })
 
                                 selectList[i].addEventListener('click', function () {
-                                    if (nowPlayList.includes("<c:url value="/mp3/"/>" + item.file_path)) {
-                                        $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
-                                        $('#modal2').modal('toggle');
-                                    } else {
-                                        nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
-                                        $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
-                                        $('#modal2').modal('toggle');
-                                        playListInit3(item);
-                                    }
+                                    nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                    playListInit3(item);
                                 })
 
                                 selectAdd[i].addEventListener('click', function () {
-                                    if (isSessionLoaded) {
-
-                                        if (JSON.stringify(libraryData).includes(item.file_path)) {
-                                            $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '<c:url value="/music/MusicAddLibrary"/>',
+                                        data: 'music_id=' + json[i].id,
+                                        async: false,
+                                        success: function (result) {
+                                            getLibrary();
+                                            $('#modal-body2').text('보관함에 추가되었습니다');
                                             $('#modal2').modal('toggle');
-                                        } else {
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: '<c:url value="/music/MusicAddLibrary"/>',
-                                                data: 'music_id=' + item.id,
-                                                async: false,
-                                                success: function (result) {
-                                                    getLibrary();
-                                                    $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
-                                                    $('#modal2').modal('toggle');
-                                                },
-                                                error: function (e) {
-                                                    console.log(e);
-                                                }
-                                            });
+
+                                        },
+                                        error: function (e) {
+                                            console.log(e);
                                         }
-                                    } else {
-                                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
-                                        $('#modal1').modal('toggle');
-                                    }
+                                    });
                                 })
+                                // document.getElementById('go_suggestion').addEventListener('click', function () {
+                                //     suggestion();
+                                // })
+
                             })
+
+
                         },
                         error: function (e) {
 
                             console.log(e)
                         }
+
                     });
+
                 });
             }
         }
-
-        /** 플레이버튼 클릭시 함수 */
-        function playButtonCLick(json) {
-            let selectPlay = document.getElementsByClassName("selectPlay");
-            let selectList = document.getElementsByClassName("selectList");
-            let selectAdd = document.getElementsByClassName("selectAdd");
-            let check = document.getElementsByClassName("check");
-            let totalCheck = document.getElementById("ChartTotalCheckbox");
-            let unCheck = document.getElementById("unCheck");
-
-            for (let i = 0; i < selectList.length; i++) {
-
-                selectPlay[i].addEventListener('click', function () {
-                    $('#player-play').css('display', 'block');
-                    $('#player-pause').css('display', 'none');
-                    audio.pause();
-
-                    nowPlayList = [];
-                    nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
-
-                    for (const i in nowPlayList) {
-                        preloadAudio(nowPlayList[i]);
-                    }
-
-                    audioIndex = 0;
-
-                    playListInit();
-
-                    setTimeout(() => {
-                        $('#player-play').css('display', 'none');
-                        $('#player-pause').css('display', 'block');
-                        audio.play();
-                    }, 300);
-                })
-
-                selectList[i].addEventListener('click', function () {
-                    if (nowPlayList.includes("<c:url value="/mp3/"/>" + json[i].file_path)) {
-                        $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
-                        $('#modal2').modal('toggle');
-                    } else {
-                        nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
-                        $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
-                        $('#modal2').modal('toggle');
-                        playListInit();
-                    }
-                })
-
-                check[i].addEventListener('change', function () {
-
-                    checkBoxJudge(totalCheck, check);
-                })
-
-                selectAdd[i].addEventListener('click', function () {
-                    if (isSessionLoaded) {
-
-                        if (JSON.stringify(libraryData).includes(json[i].file_path)) {
-                            $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
-                            $('#modal2').modal('toggle');
-                        } else {
-                            $.ajax({
-                                type: 'GET',
-                                url: '<c:url value="/music/MusicAddLibrary"/>',
-                                data: 'music_id=' + json[i].id,
-                                async: false,
-                                success: function (result) {
-                                    getLibrary();
-                                    $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
-                                    $('#modal2').modal('toggle');
-                                },
-                                error: function (e) {
-                                    console.log(e);
-                                }
-                            });
-                        }
-                    } else {
-                        $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
-                        $('#modal1').modal('toggle');
-                    }
-                })
-            }
-
-            totalCheck.addEventListener('change', function () {
-
-                totalChange(totalCheck, check);
-            })
-
-            unCheck.addEventListener('click', function () {
-
-                totalCheck.checked = false;
-                totalChange(totalCheck, check);
-            })
-        }
-
-        /** find엔터 */
-        $("#findEnter").keydown(function (key) {
-            if (key.keyCode == 13) {
-
-                if ($('.find-input').val() != '') {
-                    console.log('Enter');
-                    allEmpty();
-
-                    $('.find_Container').attr("style", "display:");
-                    $('#findTitle_Container').attr("style", "display:");
-                    $('#findAlbum_Container').attr("style", "display:");
-                    $('#findArtist_Container').attr("style", "display:");
-                    $('#findLyrics_Container').attr("style", "display:");
-                    $('#findLyrics_h1').attr("style", "display:");
-                    $('#findAlbum_h1').attr("style", "display:");
-                    $('#findArtist_h1').attr("style", "display:");
-                    $('#findTitle_h1').attr("style", "display:");
-
-                    $('#modal_add').css("display", "")
-                    $('#find_h1').html('\'' + $('.find-input').val() + '\'' + " 검색결과");
-
-                    $.ajax({
-                        url: "<c:url value="/find/FindResult"/>",
-                        type: "POST",
-                        dataType: 'text',
-                        data: 'find-input=' + $('.find-input').val(),
-                        async: false,
-                        success: function (data) {
-                            console.log($('.find-input').val());
-                            const json = JSON.parse(data);
-                            s_LibraryData = json[0];
-
-                            if (json[0].length > 0) {
-                                $('#findTitleHead').attr("style", "display:");
-                            } else {
-                                $('#findTitleHead').attr("style", "display:none");
-                            }
-                            if (json[3].length > 0) {
-                                $('#findLyricsHead').attr("style", "display:");
-                            } else {
-                                $('#findLyricsHead').attr("style", "display:none");
-                            }
-
-                            /** 곡 검색*/
-
-                            $(".findTbody").empty();
-                            let html = "";
-
-                            $.each(json[0], function (i, item) {
-
-                                if (i < 5) {
-
-                                    html = $('<tr class="b-wrap">' +
-                                        '<td scope="row">' +
-                                        '<input class="check" type="checkbox" name="check">' +
-                                        '</td>' +
-                                        '<td>' +
-                                        '<img class="innerImg" src="img/' + item.cover_img + '">' +
-                                        '</td>' +
-                                        '<td id="title">' + item.title + '<br>' + item.album + '</td>' +
-                                        '<td id="artist">' + item.artist + '</td>' +
-                                        '<td>' +
-                                        '<i class="selectPlay fa-solid fa-play"></i>' +
-                                        '</td>' +
-                                        '<td>' +
-                                        '<i class="selectList fa-solid fa-list"></i>' +
-                                        '</td>' +
-                                        '<td>' +
-                                        '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
-                                        '</td>' +
-                                        '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
-                                        + '<ul class="dropdown-menu">'
-                                        + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
-                                        + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
-                                        + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
-                                        + '</ul>' + '</td>' +
-                                        '</tr>');
-
-                                    $(".findTbody").append(html);
-
-                                } else {
-
-                                    html = $('<tr class="b-wrap" style="display: none">' +
-                                        '<td scope="row">' +
-                                        '<input class="check" type="checkbox" name="check">' +
-                                        '</td>' +
-                                        '<td>' +
-                                        '<img class="innerImg" src="img/' + item.cover_img + '">' +
-                                        '</td>' +
-                                        '<td id="title">' + item.title + '<br>' + item.album + '</td>' +
-                                        '<td id="artist">' + item.artist + '</td>' +
-                                        '<td>' +
-                                        '<i class="selectPlay fa-solid fa-play"></i>' +
-                                        '</td>' +
-                                        '<td>' +
-                                        '<i class="selectList fa-solid fa-list"></i>' +
-                                        '</td>' +
-                                        '<td>' +
-                                        '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
-                                        '</td>' +
-                                        '<td>' +
-                                        '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
-                                        + '<ul class="dropdown-menu">'
-                                        + '<li><a class="dropMusicInfo dropdown-item" href="#">상세 정보</a></li>'
-                                        + '<li><a class="dropLike dropdown-item" href="#">좋아요</a></li>'
-                                        + '</ul>' +
-                                        '</td>' +
-                                        '</tr>');
-
-
-                                    $(".findTbody").append(html);
-                                }
-
-                                $('#findTitle_h1').click(function () {
-                                    $('#findTitle_h1').attr("style", "display:none");
-                                    $('#findAlbum_Container').attr("style", "display:none");
-                                    $('#findArtist_Container').attr("style", "display:none");
-                                    $('#findLyrics_Container').attr("style", "display:none");
-                                    $('.b-wrap').attr("style", "display:");
-
-
-                                });
-
-                            });
-
-                            /** 가수 검색*/
-
-                            $(".findArtist_List").empty();
-                            $.each(json[1], function (i, item) {
-
-                                if (i < 5) {
-                                    html = $(
-                                        '<li class="findArtist_li">' +
-                                        ' <div>' +
-                                        ' <div>' +
-                                        '<a>' +
-                                        '<img class="artist_img" src="img/' + item.artist_img + '">' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '<a class="aa" href="#">' + item.artist + '</a>' +
-                                        '</div>' +
-                                        '</li>');
-
-                                    $(".findArtist_List").append(html);
-                                } else {
-                                    html = $(
-                                        '<li class="findArtist_li" style="display: none">' +
-                                        ' <div>' +
-                                        ' <div>' +
-                                        '<a>' +
-                                        '<img class="artist_img" src="img/' + item.artist_img + '">' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '<a class="aa" href="#">' + item.artist + '</a>' +
-                                        '</div>' +
-                                        '</li>');
-
-
-                                    $(".findArtist_List").append(html);
-                                }
-
-                                $('#findArtist_h1').click(function () {
-
-                                    $('#findArtist_h1').attr("style", "display:none");
-                                    $('#findTitle_Container').attr("style", "display:none");
-                                    $('#findAlbum_Container').attr("style", "display:none");
-                                    $('#findLyrics_Container').attr("style", "display:none");
-                                    $('.findArtist_li').attr("style", "display:");
-
-                                });
-                            });
-
-                            /** 앨범 검색*/
-
-                            $(".findAlbum_List").empty();
-                            $.each(json[2], function (i, item) {
-
-                                if (i < 5) {
-                                    console.log(i);
-                                    html = $(
-                                        '<li class="findArtist_li">' +
-                                        '<div>' +
-                                        '<div>' +
-                                        '<a>' +
-                                        '<img class="album_img" src="img/' + item.cover_img + '">' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '<div>' +
-                                        '<a class="aa" href="#">' + item.album + '</a>' +
-                                        '<a class="aa" href="#">' + item.artist + '</a>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</li>');
-
-                                    $(".findAlbum_List").append(html);
-                                } else {
-                                    html = $(
-                                        '<li class="findAlbum_li" style="display: none">' +
-                                        '<div>' +
-                                        '<div>' +
-                                        '<a>' +
-                                        '<img class="album_img" src="img/' + item.cover_img + '">' +
-                                        '</a>' +
-                                        '</div>' +
-                                        '<div>' +
-                                        '<a class="aa" href="#">' + item.album + '</a>' +
-                                        '<a class="aa" href="#">' + item.artist + '</a>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</li>');
-
-                                    $(".findAlbum_List").append(html);
-                                }
-
-                                $('#findAlbum_h1').click(function () {
-                                    $('#findAlbum_h1').attr("style", "display:none");
-                                    $('#findTitle_Container').attr("style", "display:none");
-                                    $('#findArtist_Container').attr("style", "display:none");
-                                    $('#findLyrics_Container').attr("style", "display:none");
-                                    $('.findAlbum_li').attr("style", "display:");
-
-                                })
-                            });
-
-                            /** 가사 검색*/
-                            $(".findLyricsTbody").empty();
-                            $.each(json[3], function (i, item) {
-
-                                if (i < 5) {
-
-                                    html = $('<tr class="b-wrap" style="height: 117px">' +
-                                        '<td scope="row">' +
-                                        '<input class="check" type="checkbox" name="check">' +
-                                        '</td>' +
-                                        '<td>' +
-                                        '<img class="innerImg" src="img/' + item.cover_img + '">' +
-                                        '</td>' +
-                                        '<td id="title" class="lyricsTd">' + item.title + '<br>' + item.lyrics + '</td>' +
-                                        '<td id="artist">' + item.artist + '</td>' +
-                                        '<td id="lyrics">' + item.album + '</td>' +
-                                        '</tr>');
-
-                                    $(".findLyricsTbody").append(html);
-
-                                } else {
-
-                                    html = $('<tr class="b-wrap" style="height: 117px; display: none" >' +
-                                        '<td scope="row">' +
-                                        '<input class="check" type="checkbox" name="check">' +
-                                        '</td>' +
-                                        '<td>' +
-                                        '<img class="innerImg" src="img/' + item.cover_img + '">' +
-                                        '</td>' +
-                                        '<td id="title" class="lyricsTd">' + item.title + '<br>' + item.lyrics + '</td>' +
-                                        '<td id="artist">' + item.artist + '</td>' +
-                                        '<td id="lyrics">' + item.album + '</td>' +
-                                        '</tr>');
-
-                                    $(".findLyricsTbody").append(html);
-
-                                }
-                                ;
-
-                                $('#findLyrics_h1').click(function () {
-                                    $('#findLyrics_h1').attr("style", "display:none");
-                                    $('#findAlbum_Container').attr("style", "display:none");
-                                    $('#findArtist_Container').attr("style", "display:none");
-                                    $('#findTitle_Container').attr("style", "display:none");
-                                    $('.b-wrap').attr("style", "display:");
-
-                                });
-
-                            });
-
-
-                            $('.find-input').val("");
-
-
-                            playButtonCLick(json[0]);
-                            detailClick(json[0]);
-
-                        },
-                        error: function (e) {
-                            alert("실패" + $('.find-input').val())
-                            console.log(e);
-                        }
-                    });
-                } else {
-                    alert('검색어를 입력해주세요');
-                    $('.find-input').focus();
-                }
-            }
-        });
-
+         function detailBr(json) {
+             let detail_br = document.getElementsByClassName("detail_br");
+             for (let i = 0; i < detail_br.length; i++) {
+
+
+                 detail_br[i].addEventListener('click', function () {
+                     allEmpty();
+                     $('#chartTbody').css('display', 'block');
+                     console.log("----아티스트 정보클릭----");
+                     console.log("i : " + i);
+                     console.log(json);
+                     $.ajax({
+                         url: "<c:url value="/find/FindDetailResult"/>",
+                         type: "POST",
+                         dataType: 'text',
+                         data: 'find-input=' + json[i].artist,
+                         async: false,
+                         success: function (data) {
+                             let json = JSON.parse(data);
+                             console.log("--아티스트 정보 받음--")
+                             console.log(json)
+                             let html = '';
+                             let htmlb = '';
+
+                             $.each(json[1], function (i, item) {
+                                 htmlb = '<div id="detail_artistImg" class="suggestion_detail"><div class="detailArtistImg"><img class="aImg" src="img/' + item.artist_img + '"></div>' +
+                                     '<div id="detailInfo"><div><a class="detail_artist ">' + item.artist + '</a></div>' +
+                                     '<div><p>장르 - ' + item.genre + '</p></div>' +
+                                     // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                     '</div></div>' +
+                                     '<div class="lyricsD">곡</div>' +
+                                     '<div id ="suggestion_lylics">' +
+                                     '<table class="findTitle_table table table-hover">' +
+                                     ' <thead class="table-secondary" id="findTitleHead">' +
+                                     '<tr><th scope="col" width="5%"></th>' +
+                                     '<th scope="col" width="5%">곡/앨범</th>' +
+                                     '<th scope="col" width="20%"></th>' +
+                                     '<th scope="col" width="15%">아티스트</th>' +
+                                     '<th scope="col" width="5%">듣기</th>' +
+                                     ' <th scope="col" width="5%">재생목록</th>' +
+                                     ' <th scope="col" width="5%">내 리스트</th>' +
+                                     ' <th scope="col" width="5%">더보기</th></tr></thead>' +
+                                     '<tbody class="findTbody">' +
+                                     '</tbody></table>' +
+                                     '</div>';
+
+                                 html += '<tr class="b-wrap">'
+                                 html += '<td scope="row">'
+                                 html += '</td>'
+                                 html += '<td>'
+                                 html += '<img class="innerImg" src="img/' + item.cover_img + '">'
+                                 html += '</td>'
+                                 html += '<td id="title">' + item.title + '<br>' + item.album + '</td>'
+                                 html += '<td id="artist">' + item.artist + '</td>'
+                                 html += '<td>'
+                                 html += '<i class="selectPlay fa-solid fa-play"></i>'
+                                 html += '</td>'
+                                 html += '<td>'
+                                 html += '<i class="selectList fa-solid fa-list"></i>'
+                                 html += '</td>'
+                                 html += '<td>'
+                                 html += '<i class="selectAdd fa-solid fa-folder-plus"></i>'
+                                 html += '</td>' + '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                     + '<ul class="dropdown-menu">'
+                                     + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                     + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                     + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                     + '</ul>' + '</td>' +
+                                     '</tr>'
+
+                             })
+
+                             $("#suggestion_body").append(htmlb);
+                             $(".findTbody").append(html);
+
+
+                             let selectPlay = document.getElementsByClassName("selectPlay");
+                             let selectList = document.getElementsByClassName("selectList");
+                             let selectAdd = document.getElementsByClassName("selectAdd");
+
+                             detailClick(json[1]);
+                             detailTitle(json[1]);
+                             detailArtist(json[1]);
+                             detailAlbum(json[1]);
+
+                             $.each(json[1], function (i, item) {
+
+                                 selectPlay[i].addEventListener('click', function () {
+                                     playCount(item.id);
+                                     $('#player-play').css('display', 'block');
+                                     $('#player-pause').css('display', 'none');
+                                     audio.pause();
+
+                                     nowPlayList = [];
+                                     nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                     for (const i in nowPlayList) {
+                                         preloadAudio(nowPlayList[i]);
+                                     }
+
+                                     audioIndex = 0;
+
+                                     playListInit3(item);
+
+                                     setTimeout(() => {
+                                         $('#player-play').css('display', 'none');
+                                         $('#player-pause').css('display', 'block');
+                                         audio.play();
+                                     }, 300);
+                                 })
+
+                                 selectList[i].addEventListener('click', function () {
+                                     nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                     playListInit3(item);
+                                 })
+
+                                 selectAdd[i].addEventListener('click', function () {
+                                     $.ajax({
+                                         type: 'GET',
+                                         url: '<c:url value="/music/MusicAddLibrary"/>',
+                                         data: 'music_id=' + json[i].id,
+                                         async: false,
+                                         success: function (result) {
+                                             getLibrary();
+                                             $('#modal-body2').text('보관함에 추가되었습니다');
+                                             $('#modal2').modal('toggle');
+
+                                         },
+                                         error: function (e) {
+                                             console.log(e);
+                                         }
+                                     });
+                                 })
+                                 // document.getElementById('go_suggestion').addEventListener('click', function () {
+                                 //     suggestion();
+                                 // })
+
+                             })
+
+
+                         },
+                         error: function (e) {
+
+                             console.log(e)
+                         }
+
+                     })
+
+                     /** 디테일 클릭 */
+                     function detailClick(json) {
+
+                         titleInfo(json);
+                         artistInfo(json);
+                         albumInfo(json);
+                     }
+
+                     function detailAlbum(json) {
+                         let detail_album = document.getElementsByClassName("detail_album");
+                         for (let i = 0; i < detail_album.length; i++) {
+
+                             detail_album[i].addEventListener('click', function () {
+
+                                 allEmpty();
+                                 $('#chartTbody').css('display', 'block');
+
+                                 console.log("----앨범 정보클릭----");
+                                 console.log("i : " + i);
+                                 console.log(json);
+                                 $.ajax({
+                                     url: "<c:url value="/find/FindDetail"/>",
+                                     type: "POST",
+                                     dataType: 'text',
+                                     data: {
+                                         'artist': json[i].artist,
+                                         'album': json[i].album,
+                                     },
+                                     async: false,
+                                     success: function (data) {
+                                         let json = JSON.parse(data);
+                                         console.log("--앨범 정보 받음--")
+                                         console.log(json)
+                                         let html = '';
+                                         let htmlb = '';
+
+
+                                         $.each(json, function (i, item) {
+                                             console.log("들어가서 i : " + i);
+                                             htmlb = '<div id="detail_albumImg" class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
+                                                 '<div id="detailInfo"><div><a class="detail_album">' + item.album + '</a></div>' +
+                                                 '<div><a class="detail_artist">' + item.artist + '</a></div>' +
+                                                 '<div><p>장르 - ' + item.genre + '</p></div>' +
+                                                 '<div><p>발매일 - ' + item.release_date + '</p></div>' +
+                                                 '</div>' +
+                                                 // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                                 '</div>' +
+                                                 '<div class="lyricsD">수록곡</div>' +
+                                                 '<div id ="suggestion_lylics">' +
+                                                 '<table class="findTitle_table table table-hover">' +
+                                                 ' <thead class="table-secondary" id="findTitleHead">' +
+                                                 '<tr><th scope="col" width="5%"></th>' +
+                                                 '<th scope="col" width="5%">곡/앨범</th>' +
+                                                 '<th scope="col" width="20%"></th>' +
+                                                 '<th scope="col" width="15%">아티스트</th>' +
+                                                 '<th scope="col" width="5%">듣기</th>' +
+                                                 ' <th scope="col" width="5%">재생목록</th>' +
+                                                 ' <th scope="col" width="5%">내 리스트</th>' +
+                                                 ' <th scope="col" width="5%">더보기</th></tr></thead>' +
+                                                 '<tbody class="findTbody">' +
+                                                 '</tbody></table>' +
+                                                 '</div>';
+                                             html += '<tr class="b-wrap">'
+                                             html += '<td scope="row">'
+                                             html += '</td>'
+                                             html += '<td>'
+                                             html += '<img class="innerImg" src="img/' + item.cover_img + '">'
+                                             html += '</td>'
+                                             html += '<td id="title">' + item.title + '<br>' + item.album + '</td>'
+                                             html += '<td id="artist">' + item.artist + '</td>'
+                                             html += '<td>'
+                                             html += '<i class="selectPlay fa-solid fa-play"></i>'
+                                             html += '</td>'
+                                             html += '<td>'
+                                             html += '<i class="selectList fa-solid fa-list"></i>'
+                                             html += '</td>'
+                                             html += '<td>'
+                                             html += '<i class="selectAdd fa-solid fa-folder-plus"></i>'
+                                             html += '</td>' + '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                                 + '<ul class="dropdown-menu">'
+                                                 + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                                 + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                                 + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                                 + '</ul>' + '</td>' +
+                                                 '</tr>'
+                                         })
+
+                                         $("#suggestion_body").append(htmlb);
+                                         $(".findTbody").append(html);
+
+
+                                         let selectPlay = document.getElementsByClassName("selectPlay");
+                                         let selectList = document.getElementsByClassName("selectList");
+                                         let selectAdd = document.getElementsByClassName("selectAdd");
+
+                                         detailClick(json);
+                                         detailTitle(json);
+                                         detailArtist(json);
+                                         detailAlbum(json);
+
+                                         $.each(json, function (i, item) {
+                                             selectPlay[i].addEventListener('click', function () {
+                                                 playCount(item.id);
+                                                 $('#player-play').css('display', 'block');
+                                                 $('#player-pause').css('display', 'none');
+                                                 audio.pause();
+
+                                                 nowPlayList = [];
+                                                 nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                                 for (const i in nowPlayList) {
+                                                     preloadAudio(nowPlayList[i]);
+                                                 }
+
+                                                 audioIndex = 0;
+
+                                                 playListInit3(item);
+
+                                                 setTimeout(() => {
+                                                     $('#player-play').css('display', 'none');
+                                                     $('#player-pause').css('display', 'block');
+                                                     audio.play();
+                                                 }, 300);
+                                             })
+
+                                             selectList[i].addEventListener('click', function () {
+                                                 nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                                 playListInit3(item);
+                                             })
+
+
+                                             selectAdd[i].addEventListener('click', function () {
+                                                 $.ajax({
+                                                     type: 'GET',
+                                                     url: '<c:url value="/music/MusicAddLibrary"/>',
+                                                     data: 'music_id=' + json[i].id,
+                                                     async: false,
+                                                     success: function (result) {
+                                                         getLibrary();
+                                                         $('#modal-body2').text('보관함에 추가되었습니다');
+                                                         $('#modal2').modal('toggle');
+
+                                                     },
+                                                     error: function (e) {
+                                                         console.log(e);
+                                                     }
+                                                 });
+                                             })
+
+                                         })
+
+
+                                     },
+                                     error: function (e) {
+
+                                         console.log(e)
+                                     }
+
+                                 });
+
+
+                             });
+
+                         }
+
+                     }
+
+                     /** -------------------------------------------------------------------------------------------- */
+                     function titleInfo(json) {
+                         let dropMusicInfo = document.getElementsByClassName("dropMusicInfo");
+                         for (let i = 0; i < dropMusicInfo.length; i++) {
+                             dropMusicInfo[i].addEventListener('click', function () {
+
+                                 allEmpty();
+                                 $('#chartTbody').css('display', 'block');
+
+                                 console.log("----앨범 정보클릭----");
+                                 console.log("i : " + i);
+                                 console.log(json);
+                                 $.ajax({
+                                     url: "<c:url value="/find/FindDetailTitle"/>",
+                                     type: "POST",
+                                     dataType: 'text',
+                                     data: {
+                                         'title': json[i].title,
+                                         'artist': json[i].artist,
+                                         'album': json[i].album,
+                                     },
+                                     async: false,
+                                     success: function (data) {
+                                         let json = JSON.parse(data);
+                                         console.log("--앨범 정보 받음--")
+                                         console.log(json)
+                                         let html = '';
+                                         $.each(json, function (i, item) {
+                                             html += '<div class="suggestion_detail">' +
+                                                 '<img src="img/' + item.cover_img + '">';
+                                             html += '<div id="detailInfo">' +
+                                                 '<div>' +
+                                                 '<a href="#" class="detail_title">' + item.title + '</a>' +
+                                                 '</div>';
+                                             html += '<div>' +
+                                                 '<a href="#" class="detail_album">' + item.album + '</a>' +
+                                                 '</div>'
+                                             html += '<div>' +
+                                                 '<a href="#" class="detail_artist">' + item.artist + '</a>' +
+                                                 '</div>';
+                                             html += '<div class="select_icon">' +
+                                                 '<i class="selectPlay fa-solid fa-play">' +
+                                                 '</i>'
+                                             html += '<i class="selectList fa-solid fa-list" id = "selectList"></i>';
+                                             html += '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div>' +
+                                                 '</div>';
+                                             // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                             html += '</div>'
+                                             html += '<div class="lyricsD">가사</div>'
+                                             html += '<div id ="sug_lylics">'
+                                             html += item.lyrics + '</div>'
+                                         })
+                                         $("#suggestion_body").append(html);
+
+                                         let selectPlay = document.getElementsByClassName("selectPlay");
+                                         let selectList = document.getElementsByClassName("selectList");
+                                         let selectAdd = document.getElementsByClassName("selectAdd");
+                                         detailClick(json);
+                                         detailTitle(json);
+                                         detailArtist(json);
+                                         detailAlbum(json);
+                                         $.each(json, function (i, item) {
+                                             selectPlay[i].addEventListener('click', function () {
+                                                 playCount(item.id);
+                                                 $('#player-play').css('display', 'block');
+                                                 $('#player-pause').css('display', 'none');
+                                                 audio.pause();
+
+                                                 nowPlayList = [];
+                                                 nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                                 for (const i in nowPlayList) {
+                                                     preloadAudio(nowPlayList[i]);
+                                                 }
+
+                                                 audioIndex = 0;
+
+                                                 playListInit3(item);
+
+                                                 setTimeout(() => {
+                                                     $('#player-play').css('display', 'none');
+                                                     $('#player-pause').css('display', 'block');
+                                                     audio.play();
+                                                 }, 300);
+                                             })
+
+                                             selectList[i].addEventListener('click', function () {
+                                                 if (nowPlayList.includes("<c:url value="/mp3/"/>" + item.file_path)) {
+                                                     $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                                                     $('#modal2').modal('toggle');
+                                                 } else {
+                                                     nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+                                                     $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                                                     $('#modal2').modal('toggle');
+                                                     playListInit3(json[i]);
+                                                 }
+                                             })
+
+                                             selectAdd[i].addEventListener('click', function () {
+                                                 if (isSessionLoaded) {
+
+                                                     if (JSON.stringify(libraryData).includes(item.file_path)) {
+                                                         $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                                         $('#modal2').modal('toggle');
+                                                     } else {
+                                                         $.ajax({
+                                                             type: 'GET',
+                                                             url: '<c:url value="/music/MusicAddLibrary"/>',
+                                                             data: 'music_id=' + item.id,
+                                                             async: false,
+                                                             success: function (result) {
+                                                                 getLibrary();
+                                                                 $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                                                 $('#modal2').modal('toggle');
+                                                             },
+                                                             error: function (e) {
+                                                                 console.log(e);
+                                                             }
+                                                         });
+                                                     }
+                                                 } else {
+                                                     $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                                                     $('#modal1').modal('toggle');
+                                                 }
+                                             })
+
+                                         })
+                                     },
+                                     error: function (e) {
+
+                                         console.log(e)
+                                     }
+                                 });
+                             });
+                         }
+                     }
+
+                     function artistInfo(json) {
+                         let dropArtistInfo = document.getElementsByClassName("dropArtistInfo");
+                         for (let i = 0; i < dropArtistInfo.length; i++) {
+
+                             dropArtistInfo[i].addEventListener('click', function () {
+                                 allEmpty();
+                                 $('#chartTbody').css('display', 'block');
+                                 console.log("----아티스트 정보클릭----");
+                                 console.log("i : " + i);
+                                 console.log(json);
+                                 $.ajax({
+                                     url: "<c:url value="/find/FindDetailResult"/>",
+                                     type: "POST",
+                                     dataType: 'text',
+                                     data: 'find-input=' + json[i].artist
+                                     ,
+                                     async: false,
+                                     success: function (data) {
+                                         let json = JSON.parse(data);
+                                         console.log("--아티스트 정보 받음--")
+                                         console.log(json)
+                                         let html = '';
+                                         let htmlb = '';
+
+                                         $.each(json[1], function (i, item) {
+                                             htmlb = '<div id="detail_artistImg" class="suggestion_detail"><div class="detailArtistImg"><img class="aImg" src="img/' + item.artist_img + '"></div>' +
+                                                 '<div id="detailInfo"><div><a class="detail_artist">' + item.artist + '</a></div>' +
+                                                 '<div><p>장르 - ' + item.genre + '</p></div>' +
+                                                 // '<div class="select_icon"><i class="selectPlay fa-solid fa-play"></i>' +
+                                                 // '<i class="selectList fa-solid fa-list" id = "selectList"></i>' +
+                                                 // '<i class="selectAdd fa-solid fa-folder-plus"></i>' + '</div></div>' +
+                                                 // // html += '<div id="indexbtn"><button type="button" id="go_suggestion" ><h5>뒤로<h5></button></div>'
+                                                 '</div></div>' +
+                                                 '<div class="lyricsD">곡</div>' +
+                                                 '<div id ="suggestion_lylics">' +
+                                                 '<table class="findTitle_table table table-hover">' +
+                                                 ' <thead class="table-secondary" id="findTitleHead">' +
+                                                 '<tr><th scope="col" width="5%"></th>' +
+                                                 '<th scope="col" width="5%">곡/앨범</th>' +
+                                                 '<th scope="col" width="20%"></th>' +
+                                                 '<th scope="col" width="15%">아티스트</th>' +
+                                                 '<th scope="col" width="5%">듣기</th>' +
+                                                 ' <th scope="col" width="5%">재생목록</th>' +
+                                                 ' <th scope="col" width="5%">내 리스트</th>' +
+                                                 ' <th scope="col" width="5%">더보기</th></tr></thead>' +
+                                                 '<tbody class="findTbody">' +
+                                                 '</tbody></table>' +
+                                                 '</div>';
+
+                                             html += '<tr class="b-wrap">'
+                                             html += '<td scope="row">'
+                                             html += '</td>'
+                                             html += '<td>'
+                                             html += '<img class="innerImg" src="img/' + item.cover_img + '">'
+                                             html += '</td>'
+                                             html += '<td id="title">' + item.title + '<br>' + item.album + '</td>'
+                                             html += '<td id="artist">' + item.artist + '</td>'
+                                             html += '<td>'
+                                             html += '<i class="selectPlay fa-solid fa-play"></i>'
+                                             html += '</td>'
+                                             html += '<td>'
+                                             html += '<i class="selectList fa-solid fa-list"></i>'
+                                             html += '</td>'
+                                             html += '<td>'
+                                             html += '<i class="selectAdd fa-solid fa-folder-plus"></i>'
+                                             html += '</td>' + '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                                 + '<ul class="dropdown-menu">'
+                                                 + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                                 + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                                 + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                                 + '</ul>' + '</td>' +
+                                                 '</tr>'
+
+                                         })
+
+                                         $("#suggestion_body").append(htmlb);
+                                         $(".findTbody").append(html);
+
+
+                                         let selectPlay = document.getElementsByClassName("selectPlay");
+                                         let selectList = document.getElementsByClassName("selectList");
+                                         let selectAdd = document.getElementsByClassName("selectAdd");
+
+                                         detailClick(json[1]);
+                                         detailTitle(json[1]);
+                                         detailArtist(json[1]);
+                                         detailAlbum(json[1]);
+
+                                         $.each(json[1], function (i, item) {
+
+                                             selectPlay[i].addEventListener('click', function () {
+                                                 playCount(item.id);
+                                                 $('#player-play').css('display', 'block');
+                                                 $('#player-pause').css('display', 'none');
+                                                 audio.pause();
+
+                                                 nowPlayList = [];
+                                                 nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                                 for (const i in nowPlayList) {
+                                                     preloadAudio(nowPlayList[i]);
+                                                 }
+
+                                                 audioIndex = 0;
+
+                                                 playListInit3(item);
+
+                                                 setTimeout(() => {
+                                                     $('#player-play').css('display', 'none');
+                                                     $('#player-pause').css('display', 'block');
+                                                     audio.play();
+                                                 }, 300);
+                                             })
+
+                                             selectList[i].addEventListener('click', function () {
+                                                 if (nowPlayList.includes("<c:url value="/mp3/"/>" + item.file_path)) {
+                                                     $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                                                     $('#modal2').modal('toggle');
+                                                 } else {
+                                                     nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+                                                     $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                                                     $('#modal2').modal('toggle');
+                                                     playListInit3(item);
+                                                 }
+                                             })
+
+                                             selectAdd[i].addEventListener('click', function () {
+                                                 if (isSessionLoaded) {
+
+                                                     if (JSON.stringify(libraryData).includes(item.file_path)) {
+                                                         $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                                         $('#modal2').modal('toggle');
+                                                     } else {
+                                                         $.ajax({
+                                                             type: 'GET',
+                                                             url: '<c:url value="/music/MusicAddLibrary"/>',
+                                                             data: 'music_id=' + item.id,
+                                                             async: false,
+                                                             success: function (result) {
+                                                                 getLibrary();
+                                                                 $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                                                 $('#modal2').modal('toggle');
+                                                             },
+                                                             error: function (e) {
+                                                                 console.log(e);
+                                                             }
+                                                         });
+                                                     }
+                                                 } else {
+                                                     $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                                                     $('#modal1').modal('toggle');
+                                                 }
+                                             })
+                                         })
+                                     },
+                                     error: function (e) {
+                                         console.log(e)
+                                     }
+                                 });
+                             });
+                         }
+                     }
+
+                     function albumInfo(json) {
+                         let dropAlbumInfo = document.getElementsByClassName("dropAlbumInfo");
+                         for (let i = 0; i < dropAlbumInfo.length; i++) {
+                             dropAlbumInfo[i].addEventListener('click', function () {
+
+                                 allEmpty();
+                                 $('#chartTbody').css('display', 'block');
+
+                                 console.log("----앨범 정보클릭----");
+                                 console.log("i : " + i);
+                                 console.log(json);
+                                 $.ajax({
+                                     url: "<c:url value="/find/FindDetail"/>",
+                                     type: "POST",
+                                     dataType: 'text',
+                                     data: {
+                                         'artist': json[i].artist,
+                                         'album': json[i].album,
+                                     },
+                                     async: false,
+                                     success: function (data) {
+                                         let json = JSON.parse(data);
+                                         console.log("--앨범 정보 받음--")
+                                         console.log(json)
+                                         let html = '';
+                                         let htmlb = '';
+
+                                         $.each(json, function (i, item) {
+                                             console.log("들어가서 i : " + i);
+                                             htmlb = '<div id="detail_albumImg" class="suggestion_detail"><img src="img/' + item.cover_img + '">' +
+                                                 '<div id="detailInfo"><div><a class="detail_album ">' + item.album + '</a></div>' +
+                                                 '<div><a class="detail_artist ">' + item.artist + '</a></div>' +
+                                                 '<div><p>장르 - ' + item.genre + '</p></div>' +
+                                                 '<div><p>발매일 - ' + item.release_date + '</p></div>' +
+                                                 '</div>' +
+                                                 '</div>' +
+                                                 '<div class="lyricsD">수록곡</div>' +
+                                                 '<div id ="suggestion_lylics">' +
+                                                 '<table class="findTitle_table table table-hover">' +
+                                                 ' <thead class="table-secondary" id="findTitleHead">' +
+                                                 '<tr><th scope="col" width="5%"></th>' +
+                                                 '<th scope="col" width="5%">곡/앨범</th>' +
+                                                 '<th scope="col" width="20%"></th>' +
+                                                 '<th scope="col" width="15%">아티스트</th>' +
+                                                 '<th scope="col" width="5%">듣기</th>' +
+                                                 ' <th scope="col" width="5%">재생목록</th>' +
+                                                 ' <th scope="col" width="5%">내 리스트</th>' +
+                                                 ' <th scope="col" width="5%">더보기</th></tr></thead>' +
+                                                 '<tbody class="findTbody">' +
+                                                 '</tbody></table>' +
+                                                 '</div>';
+                                             html += '<tr class="b-wrap">'
+                                             html += '<td scope="row">'
+                                             html += '</td>'
+                                             html += '<td>'
+                                             html += '<img class="innerImg" src="img/' + item.cover_img + '">'
+                                             html += '</td>'
+                                             html += '<td id="title">' + item.title + '<br>' + item.album + '</td>'
+                                             html += '<td id="artist">' + item.artist + '</td>'
+                                             html += '<td>'
+                                             html += '<i class="selectPlay fa-solid fa-play"></i>'
+                                             html += '</td>'
+                                             html += '<td>'
+                                             html += '<i class="selectList fa-solid fa-list"></i>'
+                                             html += '</td>'
+                                             html += '<td>'
+                                             html += '<i class="selectAdd fa-solid fa-folder-plus"></i>'
+                                             html += '</td>' + '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                                 + '<ul class="dropdown-menu">'
+                                                 + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                                 + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                                 + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                                 + '</ul>' + '</td>' +
+                                                 '</tr>'
+                                         })
+
+                                         $("#suggestion_body").append(htmlb);
+                                         $(".findTbody").append(html);
+
+
+                                         let selectPlay = document.getElementsByClassName("selectPlay");
+                                         let selectList = document.getElementsByClassName("selectList");
+                                         let selectAdd = document.getElementsByClassName("selectAdd");
+                                         detailClick(json);
+                                         detailTitle(json);
+                                         detailArtist(json);
+                                         detailAlbum(json);
+
+                                         $.each(json, function (i, item) {
+
+                                             selectPlay[i].addEventListener('click', function () {
+                                                 playCount(item.id);
+                                                 $('#player-play').css('display', 'block');
+                                                 $('#player-pause').css('display', 'none');
+                                                 audio.pause();
+
+                                                 nowPlayList = [];
+                                                 nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+
+                                                 for (const i in nowPlayList) {
+                                                     preloadAudio(nowPlayList[i]);
+                                                 }
+
+                                                 audioIndex = 0;
+
+                                                 playListInit3(item);
+
+                                                 setTimeout(() => {
+                                                     $('#player-play').css('display', 'none');
+                                                     $('#player-pause').css('display', 'block');
+                                                     audio.play();
+                                                 }, 300);
+                                             })
+
+                                             selectList[i].addEventListener('click', function () {
+                                                 if (nowPlayList.includes("<c:url value="/mp3/"/>" + item.file_path)) {
+                                                     $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                                                     $('#modal2').modal('toggle');
+                                                 } else {
+                                                     nowPlayList.push("<c:url value="/mp3/"/>" + item.file_path);
+                                                     $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                                                     $('#modal2').modal('toggle');
+                                                     playListInit3(item);
+                                                 }
+                                             })
+
+
+                                             selectAdd[i].addEventListener('click', function () {
+                                                 if (isSessionLoaded) {
+
+                                                     if (JSON.stringify(libraryData).includes(item.file_path)) {
+                                                         $('#modal-body2').text((item.file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                                         $('#modal2').modal('toggle');
+                                                     } else {
+                                                         $.ajax({
+                                                             type: 'GET',
+                                                             url: '<c:url value="/music/MusicAddLibrary"/>',
+                                                             data: 'music_id=' + item.id,
+                                                             async: false,
+                                                             success: function (result) {
+                                                                 getLibrary();
+                                                                 $('#modal-body2').text((item.file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                                                 $('#modal2').modal('toggle');
+                                                             },
+                                                             error: function (e) {
+                                                                 console.log(e);
+                                                             }
+                                                         });
+                                                     }
+                                                 } else {
+                                                     $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                                                     $('#modal1').modal('toggle');
+                                                 }
+                                             })
+
+
+                                         })
+                                     },
+                                     error: function (e) {
+
+                                         console.log(e)
+                                     }
+                                 });
+                             });
+                         }
+
+                     }
+
+                     /** 디테일 클릭 */
+                     function detailClick(json) {
+
+                         titleInfo(json);
+                         albumInfo(json);
+                         artistInfo(json);
+
+
+                     }
+
+                     /** 플레이버튼 클릭시 카운트 */
+                     function playCount(json) {
+                         $.ajax({
+                             type: 'POST',
+                             url: '<c:url value="/chart/PlayCount"/>',
+                             async: false,
+                             dataType: 'text',
+                             data: "id=" + json,
+                             success: function () {
+                                 console.log("카운트성공");
+                             },
+                             error: function () {
+
+                             }
+                         })
+                     }
+
+                     /** 플레이버튼 클릭시 함수 */
+                     function playButtonCLick(json) {
+                         let selectPlay = document.getElementsByClassName("selectPlay");
+                         let selectList = document.getElementsByClassName("selectList");
+                         let selectAdd = document.getElementsByClassName("selectAdd");
+                         let check = document.getElementsByClassName("check");
+                         let totalCheck = document.getElementById("ChartTotalCheckbox");
+                         let unCheck = document.getElementById("unCheck");
+
+                         for (let i = 0; i < selectList.length; i++) {
+
+                             selectPlay[i].addEventListener('click', function () {
+                                 playCount(json[i].id);
+
+                                 $('#player-play').css('display', 'block');
+                                 $('#player-pause').css('display', 'none');
+                                 audio.pause();
+
+                                 nowPlayList = [];
+                                 nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
+
+                                 for (const i in nowPlayList) {
+                                     preloadAudio(nowPlayList[i]);
+                                 }
+
+                                 audioIndex = 0;
+
+                                 playListInit();
+
+                                 setTimeout(() => {
+                                     $('#player-play').css('display', 'none');
+                                     $('#player-pause').css('display', 'block');
+                                     audio.play();
+                                 }, 300);
+                             })
+
+                             selectList[i].addEventListener('click', function () {
+                                 if (nowPlayList.includes("<c:url value="/mp3/"/>" + json[i].file_path)) {
+                                     $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 목록에 있는 음악입니다');
+                                     $('#modal2').modal('toggle');
+                                 } else {
+                                     nowPlayList.push("<c:url value="/mp3/"/>" + json[i].file_path);
+                                     $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 재생목록에 추가되었습니다.");
+                                     $('#modal2').modal('toggle');
+                                     playListInit();
+                                 }
+                             })
+
+                             check[i].addEventListener('change', function () {
+
+                                 checkBoxJudge(totalCheck, check);
+                             })
+
+                             selectAdd[i].addEventListener('click', function () {
+                                 if (isSessionLoaded) {
+
+                                     if (JSON.stringify(libraryData).includes(json[i].file_path)) {
+                                         $('#modal-body2').text((json[i].file_path).split('.')[0] + ' 은(는) 이미 보관함에 있는 음악입니다');
+                                         $('#modal2').modal('toggle');
+                                     } else {
+                                         $.ajax({
+                                             type: 'GET',
+                                             url: '<c:url value="/music/MusicAddLibrary"/>',
+                                             data: 'music_id=' + json[i].id,
+                                             async: false,
+                                             success: function (result) {
+                                                 getLibrary();
+                                                 $('#modal-body2').text((json[i].file_path).split('.')[0] + " 이(가) 보관함에 추가되었습니다.");
+                                                 $('#modal2').modal('toggle');
+                                             },
+                                             error: function (e) {
+                                                 console.log(e);
+                                             }
+                                         });
+                                     }
+                                 } else {
+                                     $('#modal-body1').text('보관함 기능은 로그인 후 이용하실 수 있습니다.');
+                                     $('#modal1').modal('toggle');
+                                 }
+                             })
+                         }
+
+                         totalCheck.addEventListener('change', function () {
+
+                             totalChange(totalCheck, check);
+                         })
+
+                         unCheck.addEventListener('click', function () {
+
+                             totalCheck.checked = false;
+                             totalChange(totalCheck, check);
+                         })
+                     }
+
+
+                     /** find엔터 */
+                     $("#findEnter").keydown(function (key) {
+                         if (key.keyCode == 13) {
+
+                             if ($('.find-input').val() != '') {
+
+                                 allEmpty();
+
+                                 $('.find_Container').attr("style", "display:");
+                                 $('#findTitle_Container').attr("style", "display:");
+                                 $('#findAlbum_Container').attr("style", "display:");
+                                 $('#findArtist_Container').attr("style", "display:");
+                                 $('#findLyrics_Container').attr("style", "display:");
+                                 $('#findLyrics_h1').attr("style", "display:");
+                                 $('#findAlbum_h1').attr("style", "display:");
+                                 $('#findArtist_h1').attr("style", "display:");
+                                 $('#findTitle_h1').attr("style", "display:");
+
+                                 $('#modal_add').css("display", "")
+                                 $('#find_h1').html('\'' + $('.find-input').val() + '\'' + " 검색결과");
+
+                                 $.ajax({
+                                     url: "<c:url value="/find/FindResult"/>",
+                                     type: "POST",
+                                     dataType: 'text',
+                                     data: 'find-input=' + $('.find-input').val(),
+                                     async: false,
+                                     success: function (data) {
+                                         console.log($('.find-input').val());
+                                         const json = JSON.parse(data);
+                                         s_LibraryData = json[0];
+
+                                         if (json[0].length > 0) {
+                                             $('#findTitleHead').attr("style", "display:");
+                                         } else {
+                                             $('#findTitleHead').attr("style", "display:none");
+                                         }
+                                         if (json[3].length > 0) {
+                                             $('#findLyricsHead').attr("style", "display:");
+                                         } else {
+                                             $('#findLyricsHead').attr("style", "display:none");
+                                         }
+
+                                         /** 곡 검색*/
+
+                                         $(".findTbody").empty();
+                                         let html = "";
+
+                                         $.each(json[0], function (i, item) {
+                                             console.log("곡" + json[i]);
+                                             if (i < 5) {
+
+                                                 html = $('<tr class="b-wrap">' +
+                                                     '<td scope="row">' +
+                                                     '<input class="check" type="checkbox" name="check" style="display: none">' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<img class="innerImg" src="img/' + item.cover_img + '">' +
+                                                     '</td>' +
+                                                     '<td id="title">' +
+                                                     '<span class="detail_title">' + item.title + '</span>' + '<br>' + '<span  class="detail_album">' + item.album + '</span>' +
+                                                     '</td>' +
+                                                     '<td id="artist" class="detail_artist">' + item.artist + '</td>' +
+                                                     '<td>' +
+                                                     '<i class="selectPlay fa-solid fa-play"></i>' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<i class="selectList fa-solid fa-list"></i>' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
+                                                     '</td>' +
+                                                     '<td>' + '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                                     + '<ul class="dropdown-menu">'
+                                                     + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                                     + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                                     + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                                     + '</ul>' + '</td>' +
+                                                     '</tr>');
+
+                                                 $(".findTbody").append(html);
+
+                                             } else {
+
+                                                 html = $('<tr class="b-wrap" style="display: none">' +
+                                                     '<td scope="row">' +
+                                                     '<input class="check" type="checkbox" name="check" style="display: none">' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<img class="innerImg" src="img/' + item.cover_img + '">' +
+                                                     '</td>' +
+                                                     '<td id="title">' +
+                                                     '<span class="detail_title">' + item.title + '</span>' + '<br>' + '<span  class="detail_album">' + item.album + '</span>' +
+                                                     '</td>' +
+                                                     '<td id="artist" class="detail_artist">' + item.artist + '</td>' +
+                                                     '<td>' +
+                                                     '<i class="selectPlay fa-solid fa-play"></i>' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<i class="selectList fa-solid fa-list"></i>' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<i class="selectAdd fa-solid fa-folder-plus"></i>' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown"></i>'
+                                                     + '<ul class="dropdown-menu">'
+                                                     + '<li><a class="dropMusicInfo dropdown-item" href="#">곡 정보</a></li>'
+                                                     + '<li><a class="dropAlbumInfo dropdown-item" href="#">앨범 정보</a></li>'
+                                                     + '<li><a class="dropArtistInfo dropdown-item" href="#">아티스트 정보</a></li>'
+                                                     + '</ul>' +
+                                                     '</td>' +
+                                                     '</tr>');
+
+
+                                                 $(".findTbody").append(html);
+                                             }
+
+                                             $('#findTitle_h1').click(function () {
+                                                 $('#findTitle_h1').attr("style", "display:none");
+                                                 $('#findAlbum_Container').attr("style", "display:none");
+                                                 $('#findArtist_Container').attr("style", "display:none");
+                                                 $('#findLyrics_Container').attr("style", "display:none");
+                                                 $('.b-wrap').attr("style", "display:");
+
+
+                                             });
+
+                                             detailTitle(json[0]);
+                                             detailArtist(json[0]);
+                                             detailAlbum(json[0]);
+
+                                         });
+
+                                         /** 가수 검색*/
+
+                                         $(".findArtist_List").empty();
+                                         $.each(json[1], function (i, item) {
+                                             console.log("가수" + json[i]);
+
+                                             if (i < 5) {
+                                                 html = $(
+                                                     '<li class="findArtist_li">' +
+                                                     ' <div>' +
+                                                     ' <div>' +
+                                                     '<a>' +
+                                                     '<img class="artist_img" src="img/' + item.artist_img + '">' +
+                                                     '</a>' +
+                                                     '</div>' +
+                                                     '<a class="aa detail_ar" href="#">' + item.artist + '</a>' +
+                                                     '</div>' +
+                                                     '</li>');
+
+                                                 $(".findArtist_List").append(html);
+                                             } else {
+                                                 html = $(
+                                                     '<li class="findArtist_li" style="display: none">' +
+                                                     ' <div>' +
+                                                     ' <div>' +
+                                                     '<a>' +
+                                                     '<img class="artist_img" src="img/' + item.artist_img + '">' +
+                                                     '</a>' +
+                                                     '</div>' +
+                                                     '<a class="aa detail_ar" href="#">' + item.artist + '</a>' +
+                                                     '</div>' +
+                                                     '</li>');
+
+
+                                                 $(".findArtist_List").append(html);
+                                             }
+
+                                             $('#findArtist_h1').click(function () {
+
+                                                 $('#findArtist_h1').attr("style", "display:none");
+                                                 $('#findTitle_Container').attr("style", "display:none");
+                                                 $('#findAlbum_Container').attr("style", "display:none");
+                                                 $('#findLyrics_Container').attr("style", "display:none");
+                                                 $('.findArtist_li').attr("style", "display:");
+
+                                             });
+                                             // detailTitle(json[1]);
+                                             detailAr(json[1]);
+                                             // detailAlbum(json[1]);
+                                         });
+
+                                         /** 앨범 검색*/
+
+                                         $(".findAlbum_List").empty();
+                                         $.each(json[2], function (i, item) {
+                                             if (i < 5) {
+                                                 html = $(
+                                                     '<li class="findAlbum_li">' +
+                                                     '<div>' +
+                                                     '<div>' +
+                                                     '<a>' +
+                                                     '<img class="album_img" src="img/' + item.cover_img + '">' +
+                                                     '</a>' +
+                                                     '</div>' +
+                                                     '<div>' +
+                                                     '<a class="aa detail_bb" href="#">' + item.album + '</a>' +
+                                                     '<a class="bb detail_br" href="#">' + item.artist + '</a>' +
+                                                     '</div>' +
+                                                     '</div>' +
+                                                     '</li>');
+
+                                                 $(".findAlbum_List").append(html);
+                                             } else {
+                                                 html = $(
+                                                     '<li class="findAlbum_li" style="display: none">' +
+                                                     '<div>' +
+                                                     '<div>' +
+                                                     '<a>' +
+                                                     '<img class="album_img" src="img/' + item.cover_img + '">' +
+                                                     '</a>' +
+                                                     '</div>' +
+                                                     '<div>' +
+                                                     '<a class="aa detail_bb" href="#">' + item.album + '</a>' +
+                                                     '<a class="bb detail_br" href="#">' + item.artist + '</a>' +
+                                                     '</div>' +
+                                                     '</div>' +
+                                                     '</li>');
+
+                                                 $(".findAlbum_List").append(html);
+                                             }
+
+                                             $('#findAlbum_h1').click(function () {
+                                                 $('#findAlbum_h1').attr("style", "display:none");
+                                                 $('#findTitle_Container').attr("style", "display:none");
+                                                 $('#findArtist_Container').attr("style", "display:none");
+                                                 $('#findLyrics_Container').attr("style", "display:none");
+                                                 $('.findAlbum_li').attr("style", "display:");
+
+                                             })
+                                             // detailTitle(json[2]);
+                                             detailBr(json[2]);
+                                             detailBb(json[2]);
+                                         });
+
+                                         /** 가사 검색*/
+                                         $(".findLyricsTbody").empty();
+                                         $.each(json[3], function (i, item) {
+
+                                             if (i < 5) {
+
+                                                 html = $('<tr class="b-wrap detail_Lt" style="height: 117px">' +
+                                                     '<td scope="row">' +
+                                                     '<input class="check" type="checkbox" name="check" style="display: none">' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<img class="innerImg" src="img/' + item.cover_img + '">' +
+                                                     '</td>' +
+                                                     '<td id="title">' +
+                                                     '<span>' + item.title + '</span>' + '<br>' + '<span class="lyricsTd">' + item.lyrics + '</span>' +
+                                                     '</td>' +
+                                                     '<td id="artist" class="detail_artist">' + item.artist + '</td>' +
+                                                     '<td id="lyrics" class="detail_album">' + item.album + '</td>' +
+                                                     '</tr>');
+
+                                                 $(".findLyricsTbody").append(html);
+
+                                             } else {
+
+                                                 html = $('<tr class="b-wrap detail_Lt" style="height: 117px; display: none" >' +
+                                                     '<td scope="row">' +
+                                                     '<input class="check" type="checkbox" name="check" style="display: none">' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<img class="innerImg" src="img/' + item.cover_img + '">' +
+                                                     '</td>' +
+                                                     '<td id="title">' +
+                                                     '<span>' + item.title + '</span>' + '<br>' + '<span class="lyricsTd">' + item.lyrics + '</span>' +
+                                                     '</td>' +
+                                                     '<td id="artist" class="detail_artist">' + item.artist + '</td>' +
+                                                     '<td id="lyrics" class="detail_album">' + item.album + '</td>' +
+                                                     '</tr>');
+
+                                                 $(".findLyricsTbody").append(html);
+
+                                             }
+                                             ;
+
+                                             $('#findLyrics_h1').click(function () {
+                                                 $('#findLyrics_h1').attr("style", "display:none");
+                                                 $('#findAlbum_Container').attr("style", "display:none");
+                                                 $('#findArtist_Container').attr("style", "display:none");
+                                                 $('#findTitle_Container').attr("style", "display:none");
+                                                 $('.b-wrap').attr("style", "display:");
+
+                                             });
+                                             detailLt(json[3]);
+                                             // detailArtist(json[3]);
+                                             // detailAlbum(json[3]);
+
+                                         });
+
+
+                                         $('.find-input').val("");
+
+                                         detailClick(json[0]);
+                                         playButtonCLick(json[0]);
+
+                                     },
+                                     error: function (e) {
+                                         alert("실패" + $('.find-input').val())
+                                         console.log(e);
+                                     }
+                                 });
+                             } else {
+                                 alert('검색어를 입력해주세요');
+                                 $('.find-input').focus();
+                             }
+                         }
+                     });
+
+                 })
+             }
+         }
     }
 </script>
 </html>

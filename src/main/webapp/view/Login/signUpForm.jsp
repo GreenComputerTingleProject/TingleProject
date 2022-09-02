@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<c:url value="/bootstrap/"/>css/bootstrap.min.css">
     <script type="text/javascript" src="<c:url value="/bootstrap/"/>js/bootstrap.bundle.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Noto+Sans+KR:wght@100&display=swap');
         header {
             font-size: 30px;
         }
@@ -17,12 +18,11 @@
         }
 
         .sign-container {
-            margin-top: 100px;
             padding: 60px 120px;
             width: 680px;
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
-            margin: 70px auto 0 auto;
+            margin: 30px auto 0 auto;
             background-color: #fff;
             border: 1px solid #d9d9d9;
         }
@@ -49,7 +49,8 @@
             margin-bottom: 25px;
             width: 100%;
             height: 50px;
-            background: darkorchid;
+            background:  #9147ff;
+            color: white;
             border: 1px solid #fff;
             color: white;
         }
@@ -58,6 +59,11 @@
             background: #6f42c1;
             color: white;
         }
+        #headLogo {
+            font-family: 'Carter One', cursive;
+            color: #9147ff;
+            font-size: 2.5em;
+        }
 
         .logo {
             width: 100%;
@@ -65,27 +71,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
         }
 
-        .btn-success {
-            margin: 5px;
-            float: left;
+        .btn-secondary{
+
+                font-size: 12px;
         }
+
     </style>
 </head>
 <body>
-<header class="logo">
+<header id="headLogo" class="logo">
     <h4>Tingle</h4>
 </header>
 <div class="sign-container">
     <div class="logo">
-        <h1>회원가입</h1>
+        <p>회원가입</p>
     </div>
     <form action="<c:url value="/user/UserSignupReg"/>" method="post">
         <div class="form-id">
             <input type="text" id="login_id" name="login_id" tabindex="0" placeholder="아이디">
             <button type="button" class="btn-close" onclick="btnClose('login_id')"></button>
-            <button type="button" id="idCheck" class="btn btn-primary">중복 확인</button>
+            <button type="button" id="idCheck" class="btn btn-secondary">중복 확인</button>
             <br>
             <span id="checkResult"></span>
         </div>
@@ -108,13 +116,13 @@
         <div class="form-tel">
             <input type="text" id="tel" name="tel" placeholder="휴대폰 번호 (-제외)">
             <button type="button" class="btn-close" onclick="btnClose('tel')"></button>
-            <button type="button" id="phoneCheck" class="btn btn-primary">인증 받기</button>
+            <button type="button" id="phoneCheck" class="btn btn-secondary">인증 받기</button>
             <br>
             <span id="phoneResult"></span>
             <div id="certi" style="display: none">
                 <input type="text" id="certification" placeholder="인증 번호">
                 <button type="button" class="btn-close" onclick="btnClose('certification')"></button>
-                <button type="button" id="certificationBtn" class="btn btn-primary">인증 확인</button>
+                <button type="button" id="certificationBtn" class="btn btn-secondary">인증 확인</button>
                 <br>
                 <span id="phoneResult2"></span>
             </div>
@@ -122,7 +130,7 @@
         <div>
             <input type="submit" class="btn btn-info" value="가입완료"/>
         </div>
-        <a href="<c:url value="/user/UserLogIn"/>" class="btn btn-success">돌아가기</a>
+        <a href="<c:url value="/user/UserLogIn"/>" class="btn btn-secondary">돌아가기</a>
     </form>
 
     <div id="modal1" class="modal">

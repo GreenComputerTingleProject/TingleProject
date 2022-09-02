@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class MusicDTO {
     Integer id, cnt, genre_no, artist_no;
-    String title, artist, album, genre, file_path, cover_img, lyrics, artist_img, release_date2;
+    String title, artist, album, genre, file_path, cover_img, lyrics, artist_img, release_date2,mood;
     Date release_date;
 
     public String getRelease_date2() {
@@ -46,19 +46,20 @@ public class MusicDTO {
         this.sdf = sdf;
     }
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 
     public MusicDTO() {
 
     }
 
-    public MusicDTO(Integer id, Integer cnt, String title, String artist, String album, String genre, String file_path, String cover_img, String lyrics, Date release_date) {
+    public MusicDTO(Integer id, Integer cnt, String title, String artist, String album, String genre, String mood, String file_path, String cover_img, String lyrics, Date release_date) {
         this.id = id;
         this.cnt = cnt;
         this.title = title;
         this.artist = artist;
         this.album = album;
         this.genre = genre;
+        this.mood = mood;
         this.file_path = file_path;
         this.cover_img = cover_img;
         this.lyrics = lyrics;
@@ -111,6 +112,14 @@ public class MusicDTO {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public String getMood() {
+        return mood;
+    }
+
+    public void setMood(String mood) {
+        this.mood = mood;
     }
 
     public String getFile_path() {

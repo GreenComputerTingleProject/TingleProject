@@ -6,8 +6,10 @@
     <script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
     <script src="<c:url value="/jquery/"/>jquery-ui.min.js"></script>
     <link rel="stylesheet" href="<c:url value="/bootstrap/"/>css/bootstrap.min.css">
+
     <script type="text/javascript" src="<c:url value="/bootstrap/"/>js/bootstrap.bundle.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Noto+Sans+KR:wght@100&display=swap');
         header {
             font-size: 30px;
         }
@@ -17,12 +19,11 @@
         }
 
         .sign-container {
-            margin-top: 100px;
             padding: 60px 120px;
             width: 680px;
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
-            margin: 70px auto 0 auto;
+            margin: 30px auto 0 auto;
             background-color: #fff;
             border: 1px solid #d9d9d9;
         }
@@ -49,7 +50,8 @@
             margin-bottom: 25px;
             width: 100%;
             height: 50px;
-            background: darkorchid;
+            background:  #9147ff;
+            color: white;
             border: 1px solid #fff;
             color: white;
         }
@@ -59,22 +61,31 @@
             color: white;
         }
 
-        .logo {
+        #headLogo {
+            font-family: 'Carter One', cursive;
+            color: #9147ff;
+            font-size: 2.5em;
+        }
+        .logo{
             width: 100%;
             height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
 
-        .btn-success {
+        }
+        .btn-secondary{
+            font-size: 12px;
+        }
+        .btn-light {
             margin: 5px;
             float: left;
         }
     </style>
 </head>
 <body>
-<header class="logo">
+
+<header id="headLogo" class="logo">
     <h4>Tingle</h4>
 </header>
 <div class="sign-container">
@@ -89,13 +100,13 @@
         <div class="form-tel">
             <input type="text" id="tel" name="tel" placeholder="휴대폰 번호 (-제외)">
             <button type="button" class="btn-close" onclick="btnClose('tel')"></button>
-            <button type="button" id="phoneCheck" class="btn btn-primary">인증 받기</button>
+            <button type="button" id="phoneCheck" class="btn btn-secondary">인증 받기</button>
             <br>
             <span id="phoneResult"></span>
             <div id="certi" style="display: none">
                 <input type="text" id="certification" placeholder="인증 번호">
                 <button type="button" class="btn-close" onclick="btnClose('certification')"></button>
-                <button type="button" id="certificationBtn" class="btn btn-primary">인증 확인</button>
+                <button type="button" id="certificationBtn" class="btn btn-secondary">인증 확인</button>
                 <br>
                 <span id="phoneResult2"></span>
             </div>
@@ -103,7 +114,7 @@
         <div>
             <input type="submit" class="btn btn-info" value="아이디 찾기"/>
         </div>
-        <a href="<c:url value="/user/UserLogIn"/>" class="btn btn-success">돌아가기</a>
+        <a href="<c:url value="/user/UserLogIn"/>" class="btn btn-secondary">돌아가기</a>
     </form>
 
     <div id="modal1" class="modal">

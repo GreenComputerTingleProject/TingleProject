@@ -15,7 +15,6 @@ public class ChartTop100 implements ChartService {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
 
-
         System.out.println("chart 실행");
         ArrayList<MusicDTO> chartList = new MusicDAO().chartList();
 
