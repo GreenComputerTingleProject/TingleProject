@@ -325,6 +325,14 @@
 
         /** 현석 스타일*/
 
+        img { width: 100px; height: 100px; }
+        option {text-align: center;}
+        .input-group-prepend { width: 25%; }
+        .input-group { width: 100%; margin: auto;}
+        .input-group-text { justify-content: center; background:white ; color: black;}
+        form { background-color: white;}
+        a:hover {background-color: white;}
+
 
         #carouselExampleInterval {
             width: 100%;
@@ -419,26 +427,27 @@
         }
 
         #boardContainer {
-            width: 1580px;
-            height: 100px;
+            width: 100%;
+            height: 130px;
             margin-bottom: 10px;
         }
 
         .board_body {
-            width: 1580px;
+
+            width: 100%;
             height: 800px;
 
         }
 
         .board_index {
-            width: 1580px;
-            height: 80px;
+            width: 100%;
+            height: 50px;
             background: #ffffff;
             text-align: center;
-            line-height: 70px;
+            line-height: 40px;
             border-top: 8px #1a1e21 solid;
             border-bottom: 3px #1a1e21 solid;
-            font-size: 20px;
+            font-size: 15px;
             margin-top: 5px;
             margin-bottom: 5px;
 
@@ -467,6 +476,17 @@
 
         #noticeForm {
             margin-top: 50px;
+        }
+
+        .board_head_btn{
+            width: 120px;
+            padding: 0;
+            margin-right: 5px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 5px;
+            transition: all 0.2s ;
         }
 
         /*게시판 스타일*/
@@ -579,11 +599,11 @@
 
             <%--게시판--%>
             <div id="boardContainer" style="display: none">
-                <div><h1>팅글고객센터 입니다</h1></div>
+                <div><h1>고객센터</h1></div>
                 <div>
-                    <input type="button" value="공지사항" id="notice_btn">
-                    <input type="button" value="자주받는 질문" id="FAQ_btn">
-                    <input type="button" value="1:1문의" id="inquiry_btn">
+                    <button class="board_head_btn" type="button"  id="notice_btn">공지사항</button>
+                        <button class="board_head_btn" type="button" id="FAQ_btn">FAQ</button>
+                        <button class="board_head_btn" type="button" id="inquiry_btn">1:1문의</button>
                 </div>
 
             </div>
@@ -1966,6 +1986,7 @@
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
+            html += '<h2>공지사항</h2>'
             html += '<div class="board_index"><table><tr>';
             html += '<td width=100px;>번호</td>';
             html += '<td width=300px>분류</td>';
@@ -2003,7 +2024,7 @@
             let html = '';
 
             html += '<div id="noticeForm">';
-            html += '<h2>' + data.kind + '</h2>';
+            html += '<div><h2>' + data.kind + '</h2><button type="button" id="indexbtn">목록으로</button></div>';
             html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
             html += '<td width=100px>' + data.id + '</td>';
             html += '<td width=300px>' + data.title + '</td>';
@@ -2011,7 +2032,7 @@
             html += '<td width=300px>' + data.reg_date + '</td>';
             html += '</tr></table></div>';
 
-            html += '<tr><td ><textarea style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
+            html += '<tr><td ><textarea class="form-control justify-content-start" style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden;  resize: none;" disabled>' + data.content + '</textarea></td></tr>';
             html += '</div>';
 
             $('.board_body').empty();
@@ -2045,6 +2066,7 @@
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
+            html += '<h2>FAQ</h2>'
             html += '<div class="board_index"><table><tr>';
             html += '<td width=100px;>번호</td>';
             html += '<td width=300px>분류</td>';
@@ -2080,14 +2102,14 @@
             let html = '';
 
             html += '<div id="noticeForm">';
-            html += '<h2>' + data.kind + '</h2>';
+            html += '<div><h2>' + data.kind + '</h2><button type="button" id="FAQbtn">목록으로</button></div>';
             html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
             html += '<td width=100px>' + data.id + '</td>';
             html += '<td width=300px>' + data.title + '</td>';
             html += '<td width=100px>' + data.nickname + '</td>';
             html += '</tr></table></div>';
 
-            html += '<tr><td ><textarea style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
+            html += '<tr><td ><textarea class="form-control justify-content-start" style="margin-top: 50px; width: 1580px; height: 600px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
             html += '</div>';
 
             $('.board_body').empty();
@@ -2120,14 +2142,12 @@
             allEmpty();
             $('#boardContainer').css('display', 'block');
             $('.board_body').css('display', '');
-            html += '<div><input type="button" value="문의 내역" id ="inquriryHistory">';
-            html += '<input type="button" value="문의하기" id="doInquriry"></div>';
+            html += '<h2>1:1문의</h2>'
             html += '<div class="board_index"><table><tr>';
             html += '<td width=100px;>번호</td>';
             html += '<td width=300px>분류</td>';
             html += '<td width=650px>제목</td>';
-            html += '<td width=150px>작성자</td>';
-            html += '<td width=200px>날짜</td>';
+            html += '<td width=250px>날짜</td>';
             html += '<td width=100px>답변여부</td>';
             html += '</tr></table></div>';
             for (const i in board_data) {
@@ -2135,11 +2155,11 @@
                 html += '<td width=100px>' + board_data[i].id + '</td>';
                 html += '<td width=300px>' + board_data[i].kind + '</td>';
                 html += '<td width=650px>' + board_data[i].title + '</td>';
-                html += '<td width=150px>' + board_data[i].nickname + '</td>';
-                html += '<td width=200px>' + board_data[i].reg_date + '</td>';
+                html += '<td width=250px>' + board_data[i].reg_date + '</td>';
                 html += '<td width=100px>' + board_data[i].checked + '</td>';
                 html += '</tr></table></div>';
             }
+            html += '<div style="margin-left: 1400px; margin-top: 10px;"><button style="width: 100px; height: 50px;" type="button" id="doInquriry">문의하기</dutton></div>';
             $('.board_body').empty();
             $(".board_body").append(html);
 
@@ -2166,21 +2186,24 @@
 
 
             html += '<div id="noticeForm">';
-            html += '<h2>문의내역</h2>' + '<button type="button" id="delete_btn" >삭제<button type="button" id="indexbtn">목록으로</button>';
+            html += '<div><table><tr>';
+            html += '<td><h2>문의내역</h2><td>';
+            html += '<td><button style = "margin-left:1000px; width: 100px; height: 50px;" type="button" id="delete_btn" >삭제</button>';
+            html += '<td><button style = "margin-left: 30px; width: 100px; height: 50px;" type="button" id="indexbtn">목록으로</button></td>';
+            html += '</tr></table></div>';
             html += '<div class="notice_detail_index" ><table><tr class="noticeDetail">';
             html += '<td width=300px>' + data.kind + '</td>';
             html += '<td width=300px>' + data.title + '</td>';
-            html += '<td width=300px>' + data.nickname + '</td>';
             html += '<td width=300px>' + data.reg_date + '</td>';
             html += '<td width=300px>' + data.checked + '</td>';
             html += '</tr></table></div>';
             html += '<br><h2>문의내용</h2>';
-            html += '<tr><td ><textarea style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
+            html += '<tr><td ><textarea class="form-control justify-content-start" style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>' + data.content + '</textarea></td></tr>';
 
             if (data.checked == "답변완료") {
                 html += '<br>'
                 html += '<h2>답변</h2>';
-                html += '<tr><td ><textarea style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>' + data.answer + '</textarea></td></tr>';
+                html += '<tr><td ><textarea class="form-control justify-content-start" style="width: 1580px; height: 300px; overflow: hidden; resize: none" disabled>' + data.answer + '</textarea></td></tr>';
             }
             html += '</div>';
             $('.board_body').empty();
@@ -2217,18 +2240,22 @@
 
                 let html = '';
 
-                html += '<div id="noticeForm">';
-                html += '<div><h2>1:1문의</h2><button type="button" id="indexbtn">목록으로</button></div>';
-                html += '<div>분류<select class="form-select" id="inquriryKind" aria-label="분류를 선택해 주세요">';
+                html += '<div id="noticeForm"><table>';
+                html += '<tr><td><div style = "width: 150px"><h2>문의하기</h2></div>';
+                html += '<td><div><button style="margin-left: 1000px; width: 130px; height: 50px;" type="button" id="indexbtn">목록으로</button></div></td></tr>';
+                html += '<tr><td><div><h4>분류</h4></div></td>';
+                html += '<td><div><select style="width: 150px" id="inquriryKind" aria-label="분류를 선택해 주세요">';
                 html += '<option value="사이트이용">사이트이용</option>';
                 html += '<option value="결제관련">결제관련</option>';
                 html += '<option value="스트리밍">스트리밍</option>';
-                html += '</select></div>';
-                html += '<div>제목<input type="text" id = "inquriryTitle"></div>';
-                html += '<div style="margin-top: 50px">상세내용<textarea id="inquriryContent" style="width: 1580px; height: 400px; overflow: hidden; resize: none"></textarea></div>';
-                html += '<div><input type="button" value="작성하기" id="dobtn"></div>';
-                html += '<div><input type="hidden" value="미확인" id="inquriryChecked">';
-                html += '</div>';
+                html += '</select></div></td></tr>';
+                html += '<tr><td><div><h4>제목</h4></div></td>';
+                html += '<td><div><input type="text" id = "inquriryTitle"></div></td></tr>';
+                html += '<tr><td colspan="2"><div style="margin-top: 20px">상세내용</div></td><tr>';
+                html += '<tr><td colspan="2"><div><textarea id="inquriryContent"  class="form-control justify-content-start" style="width: 1580px; height: 400px; overflow: hidden; resize: none"></textarea></div></td></tr>';
+                html += '<tr><td colspan="2" style="margin-left: 1000px;"><div><input type="button" value="작성하기" id="dobtn"></div>';
+                html += '<div><input type="hidden" value="미확인" id="inquriryChecked"></div></td></tr>';
+                html += '</table></div>';
                 $('.board_body').empty();
                 $('.board_body').append(html);
 
