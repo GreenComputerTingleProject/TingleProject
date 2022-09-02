@@ -129,24 +129,20 @@
     <span class="input-group-text justify-content-start" style="width: 75%;">${inquiryData.reg_date}</span>
   </div>
   <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text" style="background-color: mediumslateblue; color:honeydew;">내용</span>
-    </div>
-    <span class="input-group-text justify-content-start" style="width: 75%;">${inquiryData.content}</span>
+    <span class="input-group-text" style="background-color: mediumslateblue; color:honeydew; width: 25%">내용</span>
+    <textarea class="form-control justify-content-start" style="width: 75%; height: 20vh;" disabled>${inquiryData.content}</textarea>
+  </div>
+  <div class="input-group">
+    <span class="input-group-text" style="background-color: mediumslateblue; color:honeydew; width: 25%">내용</span>
+    <textarea class="form-control justify-content-start"name ="answer" style="width: 75%; height: 20vh;">${inquiryData.answer}</textarea>
+    <input type="hidden" value="${inquiryData.id}" name ="id">
+    <input type="hidden" value="inquiryAnswer" name ="inquiryKind">
   </div>
   <div class="input-group">
     <div class="input-group-prepend">
       <span class="input-group-text" style="background-color: mediumslateblue; color:honeydew;">답변여부</span>
     </div>
     <span class="input-group-text justify-content-start" style="width: 75%;">${inquiryData.checked}</span>
-  </div>
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text"style="background-color: mediumslateblue; color:honeydew;">답변</span>
-    </div>
-    <input type="text" class="form-control" name ="answer" value="${inquiryData.answer}" style="background: orchid; color: honeydew;">
-    <input type="hidden" value="${inquiryData.id}" name ="id">
-    <input type="hidden" value="inquiryAnswer" name ="inquiryKind">
   </div>
 
   <div class="input-group">

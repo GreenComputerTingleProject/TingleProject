@@ -94,6 +94,7 @@
   td {border-bottom: 1px solid #dddddd; }
   h5:hover { color: orchid;}
 
+
 </style>
 <script src="<c:url value="/jquery/"/>jquery-3.6.0.js"></script>
 <script>
@@ -130,18 +131,18 @@
         <th>제목</th>
         <th>분류</th>
         <th>날짜</th>
-        <th>내용</th>
+
       </tr>
       </thead>
       <c:forEach items="${noticeData }" var="dto" >
         <tbody>
-        <tr>
+        <tr >
           <td><a style="color: red;" href="AdminCenter?id=${dto.id }&noticeKind=noticeDetail">${dto.id }</a></td>
           <td>${dto.nickname}</td>
           <td>${dto.title}</td>
           <td>${dto.kind}</td>
           <td>${dto.reg_date}</td>
-          <td>${dto.content}</td>
+
         </tr>
         </tbody>
       </c:forEach>
