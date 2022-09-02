@@ -12,10 +12,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
           integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Noto+Sans+KR:wght@100;300;400;500&display=swap');
+
         * {
             margin: 0;
             padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        a{
+            text-decoration: none;
+        }
+        th{
+            font-weight: normal;
         }
 
         #page-wrapper {
@@ -27,10 +38,16 @@
             width: 250px;
             height: 100%;
             margin-left: -250px;
-            background: black;
+            background: -webkit-gradient(linear,left bottom,left top,from(transparent),color-stop(14%,#000),to(#000));
             overflow-x: hidden;
             overflow-y: auto;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 300;
         }
+        #menuAll{
+            font-size: 1.2rem;
+        }
+
 
         #page-content-wrapper {
             width: 100%;
@@ -46,13 +63,13 @@
         #bottom-player-wrapper {
             width: 100%;
             height: 100px;
-            background: darkmagenta;
+            background: #191919;
             z-index: 2;
             position: fixed;
             left: 0;
             bottom: 0;
             display: flex;
-            justify-content: center;
+            justify-content:space-between;
             align-content: center;
         }
 
@@ -65,25 +82,44 @@
         }
 
         .sidebar-nav li {
-            text-indent: 1.5em;
-            line-height: 2.8em;
+            margin: 5px;
+            text-indent: 1.5rem;
+            line-height: 2em;
         }
 
         .sidebar-nav li a {
             display: block;
             text-decoration: none;
-            color: #999;
+            color: #cccccc;
         }
 
         .sidebar-nav li a:hover {
             color: #fff;
-            background: rgba(255, 255, 255, 0.2);
+
         }
 
         .sidebar-nav > .sidebar-brand {
-            font-size: 1.3em;
-            line-height: 3em;
+            font-size: 1.7rem;
+            line-height: 2.5em;
+
         }
+        #logo {
+            text-indent: 26px;
+            font-family: 'Carter One', cursive;
+            color: #9147ff;
+            /*color: #7717ad;*/
+            /*   color: #6e31df;*/
+            /*    color: #fff;*/
+
+        }
+        .login {
+            padding: 10px 0px 10px 0px;
+            border-bottom: 1px solid #333;
+            border-top: 1px solid #333;
+            opacity: 0.7;
+
+        }
+
 
         td {
             vertical-align: middle;
@@ -111,6 +147,15 @@
         }
 
 
+        .findAlbum_List {
+            list-style: none;
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            padding-inline-start: 40px;
+        }
         .findArtist_List {
             list-style: none;
             display: block;
@@ -123,39 +168,84 @@
 
         .findArtist_li {
             display: inline-block;
-            margin-right: 20px;
-            text-align: -webkit-match-parent;
+            margin-right: 30px;
+            text-align: center;
+        }
+        .findAlbum_li {
+            display: inline-block;
+            margin-right: 30px;
+
+        }
+        .aa {
+            width: 155px;
+            display: block;
+            margin-top: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            color: #000;
+
+        }
+        .bb {
+            width: 155px;
+            display: block;
+            color: #000;
+            opacity: 0.7;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
         }
 
         .b-wrap {
-            border-top: 0;
+
             height: 80px;
-            border-bottom: 1px solid gray;
+
+            /*height: 117px;*/
+            /*overflow: hidden;*/
+            /*white-space: nowrap;*/
+            /*text-overflow: ellipsis;*/
+        }
+
+        #chart_h1{
+            margin-top: 38px;
+            margin-bottom: 30px;
+            font-weight: 500;
         }
 
         .genreBtn {
             height: 32px;
             padding: 0 15px;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 32px;
             text-align: center;
             border-radius: 16px;
-            border: 1px solid purple;
+            border: 0;
             vertical-align: top;
             display: inline-block;
             background: #fff;
+            margin-bottom: 30px;
 
 
+        }
+        .genreBtn:active{
+            background: #9147ff;
+            color: white;
+        }
+        .clicked{
+            background: #9147ff;
+            color: white;
+        }
+        .btnClicked{
+            background: #9147ff;
         }
 
         h1 {
             margin-bottom: 20px;
         }
 
-        .aa {
-            display: block;
 
-        }
 
         /** 하단 플레이어 스타일 */
 
@@ -171,6 +261,12 @@
         #player-play, #player-pause {
             margin: 25px;
             font-size: 50px;
+
+            /*color: #9147ff;*/
+            color: #9147ff;
+          /*  color: #6e31df;*/
+
+
         }
 
         .fa-backward, .fa-forward, #player-volume, #player-volume-mute, #player-list {
@@ -188,15 +284,17 @@
         i:hover {
             cursor: pointer;
         }
-
-        img {
+        img{
             width: 100px;
             height: 100px;
         }
+        #player-img {
+            width: 70px;
+            height: 70px;
+            margin: 15px;
 
-        td {
-            vertical-align: middle;
         }
+
 
         #playList {
             width: 500px;
@@ -243,6 +341,7 @@
             width: 300px;
             height: 5px;
             margin-top: 50px;
+            --bs-progress-bar-bg: #9147ff;
         }
 
         .progress:hover {
@@ -262,6 +361,12 @@
         #player-volume-range {
             width: 100px;
             margin-top: 38px;
+
+        }
+
+        .form-range::-webkit-slider-thumb {
+            background: #9147ff;
+
         }
 
         #control-zone {
@@ -355,7 +460,6 @@
         }
 
         .suggestion_title {
-            margin-left: 5px;
             margin-top: 5px;
             width: 240px;
             height: 25px;
@@ -366,32 +470,70 @@
             -webkit-box-orient: vertical;
         }
 
+        #suggestion_artist{
+            opacity: 0.7;
+        }
+
         .suggestion_detail {
             width: 100%;
             height: 300px;
-            background: #ffffff;
             padding: 10px;
-            border: 1px #1a1e21 solid;
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: space-between;
+            justify-content:flex-start;
             margin-bottom: 10px;
         }
 
         #suggestion_lylics {
             width: 100%;
-            height: 600px;
-            background: #ffffff;
-            border: 1px #1a1e21 solid;
-            padding: 10px;
+            padding: 35px;
+
+        }
+        #sug_lylics{
+            white-space: pre-wrap;
+            width: 40%;
+            padding: 35px;
         }
 
         .suggestion_detail > img {
-            width: 20%;
-            height: 30vh;
+            width: 240px;
+            height: 240px;
+            margin-right: 50px;
+            margin-left: 35px;
+        }
+       .detailArtistImg{
+           width: 240px;
+           height: 240px;
+           margin-right: 50px;
+           margin-left: 35px;
+           border-radius: 50%;
+           overflow: hidden;
+       }
+       #detail_artistImg >.aImg{
+           margin-right: 50px;
+           margin-left: 35px;
+           width: 100%;
+           height: 100%;
+           object-fit: cover;
+       }
+        #detail_artistImg > #detailInfo{
+            padding-top: 40px;
         }
 
+        #detail_albumImg > #detailInfo{
+            padding-top: 46px;
+        }
+        #detail_albumImg > #detailInfo> div> p{
+            margin: 0;
+        }
+        #detail_albumImg > #detailInfo> div:nth-of-type(3){
+            padding-top: 30px;
+        }
+        #detail_albumImg > #detailInfo> div:nth-of-type(4) {
+            padding: 0;
+
+        }
 
         #detailInfo {
             width: 58%;
@@ -409,9 +551,13 @@
             background: #ffffff;
             width: 240px;
             height: 240px;
-
             margin: 0px;
             padding: 0px;
+        }
+
+        .suggestion_box > .select_icon{
+            margin-left: 0px;
+            margin-top: 32px;
         }
 
         .suggestion_box > .viewDetail {
@@ -490,6 +636,15 @@
         }
 
         /*게시판 스타일*/
+        #find_h1{
+            margin-top: 38px;
+            margin-bottom: 42px;
+        }
+        .findResult_h1{
+            cursor: pointer;
+            margin-top: 70px;
+            margin-bottom: 28px;
+        }
 
         fieldset {
             display: flex;
@@ -502,25 +657,33 @@
         .find_fieldset {
             width: 200px;
             height: 40px;
-            border: 1px solid #d2d2d2;
-            border-radius: 20px;
+            border: 1.2px solid #fff;
+            border-radius: 10px;
             vertical-align: middle;
             padding-right: 20px;
             background: #1a1a1a;
+            margin: 20px;
+
         }
 
         #findEnter {
             height: 70%;
-            width: 80%;
+            width: 70%;
             font-size: 13px;
-            border: 0;
             vertical-align: middle;
             padding: 0;
             box-sizing: border-box;
             background: #1a1a1a;
             color: white;
+            border-bottom: none;
 
         }
+        #findEnter:focus{
+            outline: none;
+
+        }
+
+
 
         #ficon {
             color: #a0a0a0;;
@@ -529,25 +692,115 @@
 
         }
 
-        /*.lyricsTd{*/
-        /*    display: inline-block;*/
-        /*    width: 200px;*/
-        /*    white-space: nowrap;*/
-        /*    overflow: hidden;*/
-        /*    text-overflow: ellipsis;*/
-        /*    */
-        /*}*/
-        .b-wrap {
+        .lyricsTd{
+            width: 500px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
 
-            /*height: 117px;*/
-            /*overflow: hidden;*/
-            /*white-space: nowrap;*/
-            /*text-overflow: ellipsis;*/
+        }
+        .lyricsD{
+            width: 70px;
+            height: 30px;
+            padding: 8px;
+            line-height: 15px;
+            margin-left: 30px;
+            color: white;
+            background: #9147ff;
+            text-align: center;
+            border-radius: 20px;
 
         }
 
-        .select_icon > i {
-            padding-right: 15px;
+        .select_icon{
+            margin-top: 80px;
+        }
+
+        .select_icon> i{
+            padding-right: 18px;
+            font-size: 24px;
+            opacity: 0.8;
+        }
+
+         .material-symbols-outlined {
+
+             vertical-align: middle;
+             padding-bottom: 5px;
+             padding-right: 10px;
+             text-indent: 0px;
+             font-variation-settings:
+                     'FILL' 0,
+                     'wght' 300,
+                     'GRAD' 200,
+                     'opsz' 48
+
+         }
+         .more{
+            opacity: 0.8;
+         }
+
+        #detailInfo >div > a{
+            font-size: 1.2em;
+        }
+        #detailInfo >div:first-child >a{
+            color: #000;
+            padding-top: 24px;
+            font-size: 2.0em;
+            text-decoration: none;
+        }
+        #detailInfo >div >p{
+            font-size: 1.3em;
+
+        }
+
+        #detailInfo>div{
+            padding-bottom: 12px;
+        }
+
+
+         .detail_title {
+             color: #666;
+             padding: 12px 0px 5px;
+             -webkit-font-smoothing: antialiased;
+             font-weight: 400;
+             font-size: 18px;
+             cursor: pointer;
+
+
+         }
+
+        .detail_album {
+            margin-bottom: 0;
+            padding-top: 10px;
+            font-size: 14px;
+            color: #969696;
+            -webkit-font-smoothing: antialiased;
+            cursor: pointer;
+        }
+        .detail_artist {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            font-weight: 400;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .detail_artist:hover{
+            text-decoration: underline;
+        }
+        .detail_album:hover{
+            text-decoration: underline;
+        }
+        .detail_title:hover{
+            text-decoration: underline;
+        }
+        #rank{
+            font-size: 15px;
+            color: #333;
+            font-weight: 700;
+            -webkit-font-smoothing: antialiased;
         }
 
     </style>
@@ -558,30 +811,38 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
-                <a class="suggestion" href="#">Tingle</a>
+                <a id="logo" class = "suggestion" href="#">Tingle</a>
             </li>
+
             <c:choose>
                 <c:when test="${userData == null}">
-                    <li><a href="<c:url value="/user/UserLogIn"/>">로그인</a></li>
+                    <li class="login"><a href="<c:url value="/user/UserLogIn"/>">
+                        <span class="material-symbols-outlined">account_circle</span>로그인</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="<c:url value="/user/UserLogOut"/>">로그아웃</a></li>
+                    <li class="login"><a href="<c:url value="/user/UserLogOut"/>">
+                        <span class="material-symbols-outlined">account_circle</span>로그아웃</a></li>
                 </c:otherwise>
             </c:choose>
-
+            <div id="menuAll">
             <li>
                 <fieldset class="find_fieldset">
                     <i id="ficon" class="fa-solid fa-magnifying-glass "></i>
-                    <input id="findEnter" class=" find-input iptxt" type="text" placeholder="검색"
+                    <input spellcheck="false"  id="findEnter" class=" find-input iptxt" type="text" placeholder="검색"
                     />
                 </fieldset>
             </li>
-            <li><a class="suggestion btncolor" href="#">추천</a></li>
-            <li><a class="chart" id="chart" href="#">차트</a></li>
-            <li><a id="library" href="#">보관함</a></li>
-            <li><a id="board" href="#">고객센터</a></li>
-            <li><a id="myPage" href="#">마이페이지</a></li>
-            <li><a href="admin/AdminLogin">관리자</a></li>
+            <li class="btncolor" ><a class="suggestion" href="#">
+                <span class="material-symbols-outlined">recommend</span>추천</a></li>
+            <li  class="btncolor"><a class="chart" id="chart" href="#">
+                <span class="material-symbols-outlined">leaderboard</span>차트</a></li>
+            <li  class="btncolor"><a id="library" href="#">
+                <span class="material-symbols-outlined">storage</span>보관함</a></li>
+            <li  class="btncolor"><a id="board" href="#">
+                <span class="material-symbols-outlined">help_center</span>고객센터</a></li>
+            <li  class="btncolor"><a id="myPage" href="#">
+                <span class="material-symbols-outlined">how_to_reg</span>마이페이지</a></li>
+            </div>
         </ul>
     </div>
     <!-- /사이드바 -->
@@ -622,7 +883,7 @@
             <%--차트--%>
             <div class="chartContainer" style="display: none">
                 <h1 id="chart_h1">TOP100</h1>
-                <button id="top100" class="chart genreBtn" type="button">top100</button>
+                <button id="top100" class="chart genreBtn clicked" type="button">TOP100</button>
                 <button id="ballad" class="genreBtn" type="button">발라드</button>
                 <button id="rock" class="genreBtn" type="button">락</button>
                 <button id="hiphop" class="genreBtn" type="button">힙합</button>
@@ -654,11 +915,11 @@
             <div class="find_Container" style="display: none">
                 <h1 id="find_h1">검색결과</h1>
                 <div id="findTitle_Container" style="display: none">
-                    <h1 id="findTitle_h1">곡 <i class="fa-solid fa-angle-right"></i></h1>
+                    <h2 class="findResult_h1" id="findTitle_h1">곡<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <table class="findTitle_table table table-hover">
-                        <thead class="table-dark" id="findTitleHead">
+                        <thead class="table-secondary" id="findTitleHead">
                         <tr>
-                            <th scope="col" width="5%"><input type="checkbox"></th>
+                            <th scope="col" width="5%"></th>
                             <th scope="col" width="5%">곡/앨범</th>
                             <th scope="col" width="20%"></th>
                             <th scope="col" width="15%">아티스트</th>
@@ -675,7 +936,7 @@
                 </div>
 
                 <div id="findArtist_Container" style="display: none">
-                    <h1 id="findArtist_h1">가수 <i class="fa-solid fa-angle-right"></i></h1>
+                    <h2 class="findResult_h1" id="findArtist_h1">가수<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <div class="findArtist_Container">
                         <ul class="findArtist_List">
 
@@ -683,7 +944,7 @@
                     </div>
                 </div>
                 <div id="findAlbum_Container" style="display: none">
-                    <h1 id="findAlbum_h1">앨범 <i class="fa-solid fa-angle-right"></i></h1>
+                    <h2 class="findResult_h1" id="findAlbum_h1">앨범<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <div class="findAlbum_Container">
                         <ul class="findAlbum_List">
 
@@ -692,11 +953,11 @@
                 </div>
 
                 <div id="findLyrics_Container" style="display: none">
-                    <h1 id="findLyrics_h1">가사 <i class="fa-solid fa-angle-right"></i></h1>
+                    <h2 class="findResult_h1" id="findLyrics_h1">가사<span class="material-symbols-outlined more">arrow_forward_ios</span></h2>
                     <table class="findLyrics_table table table-hover">
-                        <thead class="table-dark" id="findLyricsHead">
+                        <thead class="table-secondary" id="findLyricsHead">
                         <tr>
-                            <th scope="col" width="5%"><input type="checkbox"></th>
+                            <th scope="col" width="5%"></th>
                             <th scope="col" width="5%">곡/가사</th>
                             <th scope="col" width="20%"></th>
                             <th scope="col" width="15%">아티스트</th>
