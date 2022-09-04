@@ -139,7 +139,7 @@
             <c:forEach items="${musicData }" var="dto" >
                 <tbody>
                 <tr>
-                    <td><a href=AdminMusicDetail?id=${dto.id }">${dto.id }</a></td>
+                    <td><a style="color: red;" href=AdminMusicDetail?id=${dto.id }">${dto.id }</a></td>
                     <td>${dto.title}</td>
                     <td>${dto.artist}</td>
                     <td>${dto.album}</td>

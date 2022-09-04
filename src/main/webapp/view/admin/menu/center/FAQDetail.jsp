@@ -105,9 +105,7 @@
     <a class="btn btn-dark col-md-4" href="AdminCenterFAQ?id=${FAQData.id}&FAQKind=FAQModify" style="background-color: mediumpurple; border-color: mediumpurple;"><h5 style="line-height: inherit; font-size: 20px;">수정</h5></a>
     <a class="btn btn-dark col-md-4" href="AdminCenterFAQ?id=${FAQData.id}&FAQKind=FAQDelete" style="background-color: rebeccapurple; border-color:rebeccapurple"><h5 style="line-height: inherit; font-size: 20px;">삭제</h5></a>
     <a class="btn btn-dark col-md-4" href="AdminCenterFAQ?FAQKind=FAQList" style="background-color: indigo; border-color: indigo;"><h5 style="line-height: inherit; font-size: 20px;">목록으로</h5></a>
-                                    <%--<a href = "AdminCenterFAQ?id=${FAQData.id}&FAQKind=FAQModify">수정</a>
-                                    <a href = "AdminCenterFAQ?id=${FAQData.id}&FAQKind=FAQDelete">삭제</a>
-                                    <a href = "AdminCenterFAQ?FAQKind=FAQList">목록으로</a>--%>
+
   </div>
 </form>
 

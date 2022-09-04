@@ -132,7 +132,7 @@
       <c:forEach items="${FAQData }" var="dto" >
         <tbody>
         <tr>
-          <td><a href="AdminCenterFAQ?id=${dto.id }&FAQKind=FAQDetail">${dto.id }</a></td>
+          <td><a style="color: red;" href="AdminCenterFAQ?id=${dto.id }&FAQKind=FAQDetail">${dto.id }</a></td>
           <td>${dto.kind}</td>
           <td>${dto.title}</td>
           <td>${dto.nickname}</td>

@@ -96,7 +96,7 @@
       <c:forEach items="${inquiryData }" var="dto" >
         <tbody>
           <tr>
-            <td><a href="AdminCenterInquiry?id=${dto.id }&inquiryKind=inquiryDetail">${dto.id }</a></td>
+            <td><a style="color: red;" href="AdminCenterInquiry?id=${dto.id }&inquiryKind=inquiryDetail">${dto.id }</a></td>
             <td>${dto.user_id}</td>
             <td>${dto.login_id}</td>
             <td>${dto.nickname}</td>

@@ -141,7 +141,7 @@
             <c:forEach items="${userData }" var="dto" >
                 <tbody>
                 <tr>
-                    <td><a href="AdminUserDetail?id=${dto.id}">${dto.id}</a></td>
+                    <td><a style="color: red;" href="AdminUserDetail?id=${dto.id}">${dto.id}</a></td>
                     <td>${dto.login_id}</td>
                     <td>${dto.login_pw}</td>
                     <td>${dto.name}</td>

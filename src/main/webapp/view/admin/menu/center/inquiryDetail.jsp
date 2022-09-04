@@ -144,7 +144,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"style="background-color: mediumslateblue; color:honeydew;">답변</span>
       </div>
-      <input type="text" class="form-control" name ="answer" value="${inquiryData.answer}">
+      <input type="text" class="form-control" name ="answer" value="${inquiryData.answer}" style="background: orchid; color: honeydew;">
       <input type="hidden" value="${inquiryData.id}" name ="id">
       <input type="hidden" value="inquiryAnswer" name ="inquiryKind">
     </div>

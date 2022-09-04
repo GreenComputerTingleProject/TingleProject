@@ -136,7 +136,7 @@
       <c:forEach items="${noticeData }" var="dto" >
         <tbody>
         <tr>
-          <td><a href="AdminCenter?id=${dto.id }&noticeKind=noticeDetail">${dto.id }</a></td>
+          <td><a style="color: red;" href="AdminCenter?id=${dto.id }&noticeKind=noticeDetail">${dto.id }</a></td>
           <td>${dto.nickname}</td>
           <td>${dto.title}</td>
           <td>${dto.kind}</td>

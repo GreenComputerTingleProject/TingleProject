@@ -374,15 +374,19 @@
             background: #ffffff;
         }
 
-        #indexbtn {
+
+        .noticeDetail:hover{ background: ghostwhite; cursor: pointer;}
+        .fqListBody:hover{ background: ghostwhite; cursor: pointer;}
+        .inquriryDetail:hover{ background: ghostwhite; cursor: pointer;}
+        /*#indexbtn {
             width: 18%;
             height: 30vh;
             background: #ffffff;
-        }
+        }*/
 
-        td {
+        /*td {
             background: #0dcaf0;
-        }
+        }*/
 
         td > button {
             width: 100%;
@@ -394,33 +398,37 @@
             height: 30vh;
         }
 
-        #boardContainer {
+
+        /*#boardContainer {
             width: 100%;
             height: 10vh;
             background: #0dcaf0;
             margin-bottom: 10px;
-        }
+        }*/
 
-        .board_body{
+        /*.board_body{
             width: 100%;
             height: 90vh;
             background: #20c997;
         }
-
-        .board_index {
+*/
+       /* .board_index {
             width: 100%;
             height: 5vh;
             background: #6f42c1;
         }
+*/
+
+
 
         .notice_index {
             cursor : pointer;
-            background: #f0f0f0;
+            /*background: #f0f0f0;*/
         }
 
-        .notice_index:hover {
+       /* .notice_index:hover {
             background: #f0f0f0;
-        }
+        }*/
         /*게시판 스타일*/
 
         fieldset {
@@ -528,25 +536,150 @@
                 </div>
             </div>
 
-                <%--게시판--%>
-                <div id ="boardContainer" style="display: none">
-                <div><h1>팅글고객센터 입니다</h1></div>
+                <%--게시판 --%>
+                <div id ="boardContainer"  style="display: none" >
+                            <h2 class="nav navbar-text justify-content-center"><b>팅글고객센터</b></h2>
+                            <br>
+                            <div class="btn-group" style="display: flex; width: 30%;">
+                                <button id="notice_btn" class="btn btn-sm" style="width: 10%; background: mediumpurple; color: honeydew; border-top-color: deepskyblue; border-right-color: dodgerblue; ">공지사항</button>
+                                <button id="FAQ_btn" class="btn btn-sm"  style="width: 10%; background: rebeccapurple; color: honeydew; border-top-color: deepskyblue; border-right-color: dodgerblue; ">자주받는 질문</button>
+                                <button id="inquiry_btn" class="btn btn-sm"  style="width: 10%; background: indigo; color: honeydew; border-top-color: deepskyblue; border-right-color: dodgerblue;">1:1문의</button>
+                            </div>
+                </div>
+                    <%-- 게시판) 리스트 시작--%>
+                <div class="tingleBoardList" style="display: none;">
+                    <form style=" background: white;">
+                        <h5 class="nav navbar-text"><b style="font-family: 맑은 고딕;">공지사항</b></h5><hr style="margin: 0;">
+                                <table style="border-collapse: collapse; width: 100%; ">
+                                    <thead>
+                                        <tr style="text-align: center; background: mediumslateblue; color: honeydew; width: 100%;">
+                                            <th>번호</th>
+                                            <th>분류</th>
+                                            <th>제목</th>
+                                            <th>날짜</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="board_body notice_index" style="display: none;">
+
+                                    </tbody>
+                                </table>
+                        </form>
+                </div>
+                <%--게시판) 공지사항 리스트 끝--%>
+
+                <%--게시판) 공지사항 디테일 시작--%>
+                <div id="detail" style="display: none;" class="tingleBoardDetail">
+                    <form style=" background: white;">
+                        <h5 class="nav navbar-text"><b style="font-family: 맑은 고딕;">공지사항</b></h5><hr style="margin: 0;">
+                        <br>
+                        <div class="input-group tingleDetailBody">
+
+                        </div>
+                    </form>
+                </div>
+                <%--게시판) 공지사항 디테일 끝--%>
+
+                <%--게시판) 자주받는질문 리스트 시작--%>
+                <div class="tingleFQList" style="display: none;">
+                        <form>
+                            <h5 class="nav navbar-text"><b style="font-family: 맑은 고딕;">자주받는질문</b></h5><hr style="margin: 0;">
+                                <table style="border-collapse: collapse; width: 100%;" >
+                                   <thead>
+                                    <tr style="text-align: center; background: mediumslateblue; color: honeydew; width: 100%;">
+                                        <th>번호</th>
+                                        <th>분류</th>
+                                        <th>제목</th>
+                                    </tr>
+                                   </thead>
+                                    <tbody class="fqListBody" style="display: none;">
+
+                                    </tbody>
+                                </table>
+                        </form>
+                </div>
+                    <%--게시판) 자주받는질문 리스트 시작--%>
+
+                <%--게시판) 자주받는질문 디테일 시작--%>
+                <div style="display: none;" class="tingleFQDetail">
+                    <form style=" background: white;">
+                        <h5 class="nav navbar-text"><b style="font-family: 맑은 고딕;">자주받는질문</b></h5><hr style="margin: 0;">
+                        <br>
+                        <div class="input-group fqDetailBody">
+
+                        </div>
+                    </form>
+                </div>
+                <%--게시판) 자주받는질문 디테일 끝--%>
+
+
+                <%--게시판) 1:1문의 리스트 시작--%>
+                <div class="tingleDieDieList" style="display: none;">
+                    <form>
+                        <h5 class="nav navbar-text"><b style="font-family: 맑은 고딕;">1:1문의</b></h5><hr style="margin: 0;">
+                        <div class="btn-group" style="text-align: left;">
+                            <input type="button" class="btn col-2 justify-content-center" id="inquriryHistory" value="문의내역" style="background: midnightblue; color: honeydew;">
+                            <input type="button" class="btn col-2 justify-content-center" id="doInquriry" value="문의하기" style="background: midnightblue; color: honeydew;">
+                        </div>
+                        <br>
+                        <table style="border-collapse: collapse; width: 100%;" >
+                            <thead>
+                            <tr style="text-align: center; background: mediumslateblue; color: honeydew; width: 100%;">
+                                <th>번호</th>
+                                <th>분류</th>
+                                <th>제목</th>
+                                <th>날짜</th>
+                                <th>답변여부</th>
+                            </tr>
+                            </thead>
+                            <tbody class="dieDieListBody" style="display: none;">
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+                <%--게시판) 1:1문의 리스트 끝--%>
+
+                <%--게시판) 1:1문의 디테일 시작--%>
+                <div style="display: none;" class="tingleDieDieDetail">
+                    <form style=" background: white;">
+                        <h5 class="nav navbar-text"><b style="font-family: 맑은 고딕;">문의내역</b></h5><hr style="margin: 0;">
+                        <br>
+                        <div class="input-group dieDieDetailBody">
+
+                        </div>
+                    </form>
+                </div>
+                <%--게시판) 1:1문의 디테일 끝--%>
+
+                <%--게시판) 1:1문의 문의하기 시작--%>
+                <div style="display: none;" class="tingleDieDieInsert">
+                    <form>
+                        <h5 class="nav navbar-text"><b style="font-family: 맑은 고딕;">1:1문의 글쓰기</b></h5><hr style="margin: 0;">
+                            <div class="input-group dieDieInsertBody" style="width: 100%;">
+
+                            </div>
+                    </form>
+                </div>
+                <%--게시판) 1:1문의 문의하기 끝--%>
+
+                <%--<div id="boardContainer"><h1>팅글고객센터 입니다</h1></div>
                 <div>
                     <input type="button" value="공지사항" id="notice_btn">
                     <input type="button" value="자주받는 질문" id="FAQ_btn">
                     <input type="button" value="1:1문의" id="inquiry_btn">
                 </div>
-                </div>
+                </div>--%>
 
-                <div class="board_body" style="display: none">
+                <%--<div class="board_body" style="display: none">
 
-                </div>
+                </div>--%>
 
                 <%-- 상세보기 --%>
 
-                <div id="detail" style="display:none">
+                <%--<div id="detail" style="display:none;">
 
-                </div>
+                </div>--%>
 
 
 
@@ -730,7 +863,7 @@
     </div>
     <!--/모달-->
 
-    <!--보관함에서 쓰는 미니모달-->
+    <%--보관함에서 쓰는 미니모달--%>
     <div id="btn-group" class="btn-group">
         <button id="unCheck" class="btn btn-primary"><i class="fa-solid fa-x"></i></button>
         <button id="modal_play" class="btn btn-primary"><i class="selectPlay fa-solid fa-play"></i></button>
@@ -738,7 +871,8 @@
         <button id="modal_add" class="btn btn-primary"><i class="fa-solid fa-folder-plus"></i></button>
 
     </div>
-    <!--/미니모달-->
+ <%--   미니모달--%>
+</div>
 </div>
 </body>
 <script>
@@ -1845,6 +1979,16 @@
             $('#findArtist_Container').css("display", "none");
             $('#findLyrics_Container').css("display", "none");
             $("#boardContainer").attr("style", "display:none");
+            $(".tingleBoardList").attr("style","display:none");
+            $(".tingleBoardDetail").attr("style","display:none");
+            $(".tingleFQList").attr("style","display:none");
+            $(".fqListBody").attr("style","display:none");
+            $(".tingleFQDetail").attr("style","display:none");
+            $(".fqDetailBody").attr("style","display:none");
+            $(".tingleDieDieList").attr("style","display:none");
+            $(".dieDieListBody").attr("style","display:none");
+            $(".tingleDieDieDetail").attr("style","display:none");
+            $(".dieDieDetailBody").attr("style","display:none");
             $(".findTbody").empty();
             $(".findArtist_List").empty();
             $(".findAlbum_List").empty();
@@ -1896,22 +2040,25 @@
 
             allEmpty();
             $('#boardContainer').css('display', 'block');
+            $('.tingleBoardList').css('display', 'block');
             $('.board_body').css('display', '');
-            html += '게시판 바디입니다';
-            html += '<div class="board_index"><table width="100%"><tr>';
-            html += '<td width="25%">번호</td>';
-            html += '<td>분류</td>';
-            html += '<td>제목</td>';
-            html += '<td>날짜</td>';
-            html += '</tr></table></div>';
+            $('.tingleBoardDetail').css('display','none');
+            $('.tingleDieDieInsert').css('display', 'none');
+            $('.tingleDieDieDetail').css('display', 'none');
+            $('.tingleFQList').css('display', 'none');
+            $('.tingleFQDetail').css('display', 'none');
+            $('.tingleDieDieList').css('display', 'none');
+
             for (const i in board_data) {
-                html += '<div class="notice_index" ><table width="100%"><tr class="noticeDetail">';
-                html += '<td width="25%">' + board_data[i].id + '</td>';
+                html += '<tr class="noticeDetail" style="text-align: center; border-bottom: 1px solid #dddddd;">';
+                html += '<td>' + board_data[i].id + '</td>';
                 html += '<td>'+ board_data[i].kind +'</td>';
                 html += '<td>'+ board_data[i].title +'</td>';
                 html += '<td>'+ board_data[i].reg_date +'</td>';
-                html += '</tr></table></div>';
+                html += '</tr>';
             }
+
+
             $('.board_body').empty();
             $('.board_body').append(html);
 
@@ -1930,21 +2077,47 @@
         function notice_Detail(data){
             allEmpty();
             $('#boardContainer').css('display', 'block');
-            $('.board_body').css('display', '');
+            $('.tingleBoardDetail').css('display','block');
+            $('.tingleDieDieInsert').css('display', 'none');
+            $('.tingleBoardList').css('display', 'block');
+            $('.tingleDieDieDetail').css('display', 'none');
+            $('.tingleFQList').css('display', 'none');
+            $('.tingleFQDetail').css('display', 'none');
+            $('.tingleDieDieList').css('display', 'none');
+
 
             let html = '';
+            html += '<div class="input-group-prepend" style="width:25%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"제목"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 75%; ">'+ data.title + '</span></div>';
+            html += '<div class="input-group">';
+            html += '<div class="input-group-prepend" style="width:25%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"사용자"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 75%; ">'+ data.nickname + '</span></div>';
+            html += '<div class="input-group">';
+            html += '<div class="input-group-prepend" style="width:25%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"날짜"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 75%; ">'+ data.reg_date + '</span></div>';
+            html += '<div class="input-group">';
+            html += '<div class="input-group-prepend" style="width:25%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;  text-align: center;">'+"내용"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 75%; ">'+ data.content + '</span></div>';
+            html += '<div style="margin-top: 35px; width: 100%; text-align: center;"><input type="button" class="btn col-2 justify-content-center" id="indexbtn" value="목록으로 돌아가기" style="background: midnightblue; color: honeydew;">';
 
-            html += '<div id="noticeForm">';
-            html += '<div id="noticeheader"><h2>'+"공지사항"+'<h2><input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
-            html += '<div>';
-            html += '<div>'+data.title+'</div>';
-            html += '<div>'+data.nickname+'</div>';
-            html += '<div>'+data.reg_date+'</div>';
-            html += '</div>';
-            html += '<div>'+data.content+'</div>';
-            html += '</div>';
-            $('.board_body').empty();
-            $('.board_body').append(html);
+            $('.tingleBoardList').css('display', 'none');
+                       $('.tingleDetailBody').empty();
+                       $('.tingleDetailBody').append(html);
+
+            /*
+             html += '<div>';
+             html += '<div>'+data.title+'</div>';
+             html += '<div>'+data.nickname+'</div>';
+             html += '<div>'+data.reg_date+'</div>';
+             html += '</div>';
+             html += '<div>'+data.content+'</div>';
+             html += '</div>';
+             $('.board_body').empty();
+             $('.board_body').append(html);*/
 
             document.getElementById('indexbtn').addEventListener('click', function (){
                 board_notice();
@@ -1970,10 +2143,33 @@
             });
 
             let html = '';
+
             allEmpty();
+            $('.tingleFQList').css('display','block');
+            $('.fqListBody').css('display','');
             $('#boardContainer').css('display', 'block');
-            $('.board_body').css('display', '');
-            html += '자주받는 질문입니다(멍청이들의모임)';
+            $('.tingleBoardList').css('display', 'none');
+            $('.tingleBoardDetail').css('display', 'none');
+            $('.tingleDieDieInsert').css('display', 'none');
+            $('.dieDieInsertBody').css('display', 'none');
+            $('.tingleDieDieDetail').css('display', 'none');
+            $('.tingleFQDetail').css('display', 'none');
+            $('.tingleDieDieList').css('display', 'none');
+
+
+            for (const i in board_data) {
+                html += '<tr class="FAQDetail" style="text-align: center; border-bottom: 1px solid #dddddd;">';
+                html += '<td>' + board_data[i].id + '</td>';
+                html += '<td>'+ board_data[i].kind +'</td>';
+                html += '<td>'+ board_data[i].title +'</td>';
+                html += '</tr>';
+
+            }
+
+            $('.fqListBody').empty();
+            $('.fqListBody').append(html);
+
+           /* html += '자주받는 질문입니다(멍청이들의모임)';
             html += '<div class="board_index"><table width="100%"><tr>';
             html += '<td width="33%">번호</td>';
             html += '<td>분류</td>';
@@ -1986,8 +2182,9 @@
                 html += '<td>'+ board_data[i].title +'</td>';
                 html += '</tr></table></div>';
             }
+
             $('.board_body').empty();
-            $(".board_body").append(html);
+            $(".board_body").append(html);*/
 
             let FAQDetail = document.getElementsByClassName('FAQDetail');
 
@@ -2002,10 +2199,40 @@
         function FAQ_Detail(data){
             allEmpty();
             $('#boardContainer').css('display', 'block');
-            $('.board_body').css('display', '');
+            $('.tingleBoardList').css('display', 'none');
+            $('.tingleBoardDetail').css('display', 'none');
+            $('.tingleFQList').css('display', 'none');
+            $('.tingleFQDetail').css('display', 'block');
+            $('.fqDetailBody').css('display', '');
+            $('.tingleDieDieInsert').css('display', 'none');
+            $('.dieDieInsertBody').css('display', 'none');
+            $('.tingleDieDieDetail').css('display', 'none');
+            $('.tingleDieDieList').css('display', 'none');
 
             let html = '';
 
+            html += '<div class="input-group-prepend" style="width:30%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"분류"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 70%; ">'+ [data.kind] + '</span></div>';
+            html += '<div class="input-group">';
+            html += '<div class="input-group-prepend" style="width:30%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"제목"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 70%; ">'+ data.title + '</span></div>';
+            html += '<div class="input-group">';
+            html += '<div class="input-group-prepend" style="width:30%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"내용"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 70%; ">'+ data.content + '</span></div>';
+            html += '<div class="input-group">';
+
+            html += '<div style="margin-top: 35px; width: 100%; text-align: center;"><input type="button" class="btn col-2 justify-content-center" id="FAQbtn" value="목록으로 돌아가기" style="background: midnightblue; color: honeydew;">';
+
+            $('.fqDetailBody').empty();
+            $('.fqDetailBody').append(html);
+
+
+         /*    html += '<div style="margin-top: 40px;  text-align: center;"><input type="button" class="btn col-2 justify-content-center" id="FAQbtn" value="목록으로 돌아가기" style="background: midnightblue; color: honeydew;"></div>';
+             html += '</div>';*/
+/*
             html += '<div id="noticeForm">';
             html += '<div id="noticeheader"><h2>'+"FAQ"+'<h2><input type="button" id="FAQbtn" value="목록으로 돌아가기"></div>';
             html += '<div>';
@@ -2015,7 +2242,7 @@
             html += '<div>'+data.content+'</div>';
             html += '</div>';
             $('.board_body').empty();
-            $('.board_body').append(html);
+            $('.board_body').append(html);*/
 
             document.getElementById('FAQbtn').addEventListener('click', function (){
                 board_FAQ();
@@ -2043,29 +2270,31 @@
             let html = '';
             allEmpty();
             $('#boardContainer').css('display', 'block');
-            $('.board_body').css('display', '');
+            $('.tingleBoardList').css('display', 'none');
+            $('.tingleBoardDetail').css('display', 'none');
+            $('.tingleFQList').css('display', 'none');
+            $('.tingleFQDetail').css('display', 'none');
+            $('.tingleDieDieList').css('display', 'block');
+            $('.dieDieListBody').css('display', '');
+            $('.tingleDieDieInsert').css('display', 'none');
+            $('.dieDieInsertBody').css('display', 'none');
+            $('.tingleDieDieDetail').css('display', 'none');
 
-            html += '1:1문의입니다';
-            html += '<div><input type="button" value="문의 내역" id ="inquriryHistory">';
-            html += '<input type="button" value="문의하기" id="doInquriry"></div>';
-            html += '<div class="board_index"><table width="100%"><tr>';
-            html += '<td width="20%">번호</td>';
-            html += '<td>분류</td>';
-            html += '<td>제목</td>';
-            html += '<td>날짜</td>';
-            html += '<td>답변여부</td>';
-            html += '</tr></table></div>';
+
             for (const i in board_data) {
-                html += '<div class="notice_index" ><table width="100%"><tr class="inquriryDetail">';
-                html += '<td width="20%">' + board_data[i].id + '</td>';
+
+                html += '<tr class="inquriryDetail" style="text-align: center; border-bottom: 1px solid #dddddd;">';
+                html += '<td>' + board_data[i].id + '</td>';
                 html += '<td>'+ board_data[i].kind +'</td>';
                 html += '<td>'+ board_data[i].title +'</td>';
                 html += '<td>'+ board_data[i].reg_date +'</td>';
                 html += '<td>'+ board_data[i].checked +'</td>';
-                html += '</tr></table></div>';
+                html += '</tr>';
             }
-            $('.board_body').empty();
-            $(".board_body").append(html);
+
+            $('.dieDieListBody').empty();
+            $(".dieDieListBody").append(html);
+
 
             let inquriryDetail = document.getElementsByClassName('inquriryDetail');
 
@@ -2083,11 +2312,35 @@
         function inquriry_Detail(data){
             allEmpty()
             $('#boardContainer').css('display', 'block');
-            $('.board_body').css('display', '');
+            $('.tingleBoardList').css('display', 'none');
+            $('.tingleBoardDetail').css('display', 'none');
+            $('.tingleFQList').css('display', 'none');
+            $('.tingleFQDetail').css('display', 'none');
+            $('.tingleDieDieList').css('display', 'none');
+            $('.tingleDieDieDetail').css('display', 'block');
+            $('.dieDieDetailBody').css('display', '');
+            $('.tingleDieDieInsert').css('display', 'none');
+            $('.dieDieInsertBody').css('display', 'none');
 
             let html = '';
 
-            html += '<div id="noticeForm">';
+            html += '<div class="input-group-prepend" style="width:30%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"분류"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 70%; ">'+ [data.kind] + '</span></div>';
+            html += '<div class="input-group">';
+            html += '<div class="input-group-prepend" style="width:30%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"제목"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 70%; ">'+ data.title + '</span></div>';
+            html += '<div class="input-group">';
+            html += '<div class="input-group-prepend" style="width:30%;">'+
+                    '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"내용"+'</span></div>'+
+                    '<span class="input-group-text justify-content-center" style="width: 70%; ">'+ data.content + '</span></div>';
+            html += '<div style="margin-top: 35px; width: 100%; text-align: center;"><input type="button" class="btn col-2 justify-content-center" id="indexbtn" value="목록으로 돌아가기" style="background: midnightblue; color: honeydew;">';
+
+            $('.dieDieDetailBody').empty();
+            $('.dieDieDetailBody').append(html);
+
+            /*html += '<div id="noticeForm">';
             html += '<div id="noticeheader"><h2>'+"문의내역"+'<h2><input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
             html += '<div>';
             html += '<div>['+data.kind+']</div>';
@@ -2099,7 +2352,7 @@
             }
             html += '</div>';
             $('.board_body').empty();
-            $('.board_body').append(html);
+            $('.board_body').append(html);*/
 
             document.getElementById('indexbtn').addEventListener('click', function (){
                 board_inquriry();
@@ -2110,19 +2363,55 @@
             document.getElementById("doInquriry").addEventListener('click', function (){
                 allEmpty();
                 $('#boardContainer').css('display', 'block');
-                $('.board_body').css('display', '');
+                $('.tingleBoardList').css('display', 'none');
+                $('.tingleBoardDetail').css('display', 'none');
+                $('.tingleFQList').css('display', 'none');
+                $('.tingleFQDetail').css('display', 'none');
+                $('.tingleDieDieList').css('display', 'none');
+                $('.tingleDieDieDetail').css('display', 'none');
+                $('.dieDieDetailBody').css('display', 'none');
+                $('.tingleDieDieInsert').css('display', 'block');
+                $('.dieDieInsertBody').css('display', '');
+
+
 
                 let html = '';
+                html += '<div style="width: 100%;"><input type="button" class="btn col-2 btn-danger" id="indexbtn" value="목록으로 돌아가기" style="color: honeydew;"></div><br>';
+                html += '<div class="input-group" style="margin-top: 10px;">';
+                html += '<div class="input-group-prepend" style="width:25%;">';
+                html += '<span class="input-group-text justify-content-center" style="background-color: mediumslateblue; color:honeydew;">'+"사용자"+'</span>';
+                html += '</div>';
+                html += '<span class="input-group-text justify-content-center" style="width: 75%; ">'+s_UserData.nickname+'</span>';
+                html += '</div>';
+                html += '<div class="input-group" style="width:100%;">';
+                html += '<div class="input-group-prepend" style="width:25%;">';
+                html += '<span class="input-group-text justify-content-center" style="height: 100%; background-color: mediumslateblue; color:honeydew; ">'+"분류"+'</span>';
+                html += '</div>';
+                html += '<input type="text" class="form-control" id = "inquriryKind"></div>';
+                html += '<div class="input-group" style="width:100%;">';
+                html += '<div class="input-group-prepend" style="width:25%;">';
+                html += '<span class="input-group-text justify-content-center" style="height: 100%; background-color: mediumslateblue; color:honeydew;">'+"제목"+'</span>';
+                html += '</div>';
+                html += '<input type="text" class="form-control" id = "inquriryTitle"></div>';
+                html += '<div class="input-group" style="width:100%; height:170px;">';
+                html += '<div class="input-group-prepend" style="width:25%;">';
+                html += '<span class="input-group-text justify-content-center" style="height: 100%; background-color: mediumslateblue; color:honeydew;">'+"상세내용"+'</span>';
+                html += '</div>';
+                html += '<input type="text" class="form-control" id = "inquriryContent" style="height:100%;"></div>';
+                html += '<div style="margin-top: 27px; width: 100%; text-align: center;"><input type="button" class="btn col-2 justify-content-center" id="dobtn" value="작성하기" style="background: midnightblue; color: honeydew;"></div>';
+                html += '<div><input type="hidden" value="미확인" id="inquriryChecked"></div>';
 
-                html += '<div>1:1문의 글쓰기<input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
+                $('.dieDieInsertBody').empty();
+                $('.dieDieInsertBody').append(html);
+
+                /*html += '<div>1:1문의 글쓰기<input type="button" id="indexbtn" value="목록으로 돌아가기"></div>';
                 html += '<div>'+s_UserData.nickname+'</div>';
                 html += '<div>분류<input type="text" id = "inquriryKind"></div>';
                 html += '<div>제목<input type="text" id = "inquriryTitle"></div>';
                 html += '<div>상세내용<input type="text" id="inquriryContent"></div>';
                 html += '<div><input type="button" value="작성하기" id="dobtn"></div>';
-                html += '<div><input type="hidden" value="미확인" id="inquriryChecked">';
-                $('.board_body').empty();
-                $('.board_body').append(html);
+                html += '<div><input type="hidden" value="미확인" id="inquriryChecked">';*/
+
 
                 document.getElementById('indexbtn').addEventListener('click', function (){
                     board_inquriry();

@@ -42,8 +42,8 @@
     body { background: #f0f0f0;}
     form { width:100%; height:250px; background: white; }
     form>div { margin: 25px;}
-    /*.btn-sm { background-color: lightgoldenrodyellow;}*/
-
+    .btn {background-color: mediumslateblue; color: honeydew;}
+    .btn:hover { background: indigo; border-color:indigo; color: honeydew;}
 </style>
 <%--<img class="img-responsive center-block" src="<c:url value="/img/"/>j_8.png" alt="" style="width: 50px; height: 50px;">
 --%>
@@ -57,7 +57,7 @@
             <input type="password" name="login_pw" class="form-control" placeholder="PASSWORD">
         </div>
         <div class="form-group" style="text-align: center;">
-            <input type="submit" value="Login" class="btn btn-sm" style="background-color: mediumslateblue; color: honeydew; /*hover:lightgoldenrodyellow;*/">
+            <input type="submit" value="Login" class="btn btn-sm">
         </div>
     </form>
 </div>
